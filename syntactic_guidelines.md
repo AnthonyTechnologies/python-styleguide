@@ -34,7 +34,6 @@
     - [2.9.15 Generics](#2915-generics)
   - [2.10 Docstrings](#210-docstrings)
     - [2.10.1 Modules](#2101-modules)
-      - [2.10.1.1 Test modules](#21011-test-modules)
     - [2.10.2 Functions and Methods](#2102-functions-and-methods)
       - [2.10.2.1 Overridden Methods](#21021-overridden-methods)
     - [2.10.3 Classes](#2103-classes)
@@ -1072,40 +1071,21 @@ of the first line. There are more formatting guidelines for docstrings below.
 Every file should contain license boilerplate. Choose the appropriate boilerplate for the license used by the project 
 (for example, Apache 2.0, BSD, LGPL, GPL).
 
-Files should start with a docstring describing the contents and usage of the module.
+Guidelines:
+- Files should start with a docstring describing the contents and usage of the module
+- The first line of the module should be file name exactly as it is in the file system (typically lowercase)
+- The second line should be a one-line summary of the module or program, terminated by a period
+- The third line should be blank
+- Starting from the fourth line, the rest of docstring should include a detailed description of the module or program
 
 ```python
-"""A one-line summary of the module or program, terminated by a period.
+"""file_name.py
+A one-line summary of the module or program, terminated by a period.
 
-Leave one blank line.  The rest of this docstring should contain an overall description of the module or program.
-Optionally, it may also contain a brief description of exported classes and functions and/or usage examples.
-
-Typical usage example:
-
-  foo = ClassFoo()
-  bar = foo.function_bar()
+Leave one blank line. The rest of this docstring should contain an overall description of the module or program. The 
+description can be broken up into multiple paragraphs to present the functionality into logical sections. Bullet-point 
+and numerical lists may be used as well, but only add them if they are needed.
 """
-```
-
-##### 2.10.1.1 Test modules
-Module-level docstrings for test files are not required. They should be included only when there is additional 
-information that can be provided.
-
-Examples include some specifics on how the test should be run, an explanation of an unusual setup pattern, dependency on 
-the external environment, and so on.
-
-```python
-"""This blaze test uses golden files.
-
-You can update those files by running `blaze run //foo/bar:foo_test -- --update_golden_files` from the `google3`
-directory.
-"""
-```
-
-Docstrings that do not provide any new information should not be used.
-
-```python
-"""Tests for foo.bar."""
 ```
 
 #### 2.10.2 Functions and Methods

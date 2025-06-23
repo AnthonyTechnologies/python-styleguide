@@ -7,9 +7,12 @@
 - [3 Example-Specific File Structure Guidelines](#3-example-specific-file-structure-guidelines)
   - [3.1 Example-Specific File Header](#31-example-specific-file-header)
   - [3.2 Main Section for Examples](#32-main-section-for-examples)
-- [4 Example-Specific Documentation](#4-example-specific-documentation)
-  - [4.1 Print Statements](#41-print-statements)
-  - [4.2 Error Handling](#42-error-handling)
+  - [3.3 Example Category Functions](#33-example-category-functions)
+- [4 Example Semantics and Syntax](#4-example-semantics-and-syntax)
+  - [4.1 Example Documentation](#41-example-documentation)
+    - [4.1.1 Print Statements](#411-print-statements)
+    - [4.1.2 Error Handling](#412-error-handling)
+  - [4.2 Assertions](#42-assertions)
 - [5 Example Content Guidelines](#5-example-content-guidelines)
   - [5.1 Self-Contained Examples](#51-self-contained-examples)
   - [5.2 Progressive Complexity](#52-progressive-complexity)
@@ -80,24 +83,26 @@ examples/
 ```
 
 
-## 3 Example-Specific File Structure Guidelines
+## 3 Example Structure
 
 Example files should follow the general Python file layout guidelines as described in [Code and File Layout](code_file_layout.md), 
 with some additional example-specific considerations outlined below.
 
 
-### 3.1 Example-Specific File Header
+### 3.1 Example File Header
 
 In addition to the standard file header requirements, example files should include a docstring that clearly explains:
 
 1. What the example demonstrates
 2. A numbered list of key concepts or features being demonstrated
+3. In the import section, have imports from the example's package in the Third-Party Packages section instead of the 
+   Local Packages section
 
 Example:
 ```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" sentinelobject_example.py
+"""sentinelobject_example.py
 An example of how to create and use SentinelObject.
 
 This example demonstrates:
@@ -106,6 +111,15 @@ This example demonstrates:
 3. Using sentinel objects in dictionaries
 4. Comparing sentinel objects
 """
+# Imports #
+# Standard Libraries #
+
+# Third-Party Packages #
+from baseobjects.bases import SentinelObject
+
+# Local Packages #
+
+
 ```
 
 For general file header guidelines, imports organization, and definitions structure, refer to the [Code and File Layout](code_file_layout.md) document.
@@ -119,12 +133,15 @@ The main section in example files is particularly important as it demonstrates t
 2. Organize demonstrations in a logical sequence, from basic to advanced
 3. Use print statements to explain what's happening and show results
 4. Include comments to explain the purpose of each demonstration
+5. Include comments to show the executed outcome and the expected outcome
+6. If the main is excessive, it can broken down into supporting functions which categorize sections of the example  
 
-Example:
+Examples:
 ```python
 # Main #
 if __name__ == "__main__":
     # Create a data processor with some sample data
+    expected = "10 Hello [1, 2, 3]"
     print("Creating a data processor...")
     processor = DataProcessor({
         "item1": 10,
@@ -136,25 +153,141 @@ if __name__ == "__main__":
     print("\nDemonstrating basic caching with timed_cache...")
     print("First call (not cached):")
     result1 = processor.process_data("item1")
-    print(f"Result: {result1}")
+    print(f"Result: {result1} == {expected}")
 
     # More demonstrations...
 ```
 
+```python
+# Functions #
+# Example Sections #
+def method_execution_overview():
+  """A long function which demonstrates usage of method execution."""
+  print(f"Method Execution Overview: \n")
+  ...
 
-## 4 Example-Specific Documentation
+
+def arbitrate_state_overview():
+  """A long function which demonstrates usage of arbitrate state."""
+  print(f"Arbitrate State Overview: \n")
+  ...
+
+
+async def method_execution_async_overview():
+  """A long function which demonstrates async usage of method execution."""
+  ...
+
+
+# Main #
+if __name__ == "__main__":
+  # Set Default Process Context
+  method_execution_overview()
+  asyncio.run(method_execution_async_overview())
+  arbitrate_state_overview()
+```
+
+
+### 3.3 Example Category Functions
+
+Example Category Functions break down the main section into example categories which focus on one aspect of the 
+examples. These functions follow the same guidelines as the main section:
+
+1. Organize demonstrations in a logical sequence, from basic to advanced
+2. Use print statements to explain what's happening and show results
+3. Include comments to explain the purpose of each demonstration
+4. Include comments to show the executed outcome and the expected outcome 
+
+Examples:
+```python
+# Functions #
+# Example Sections #
+def arbitrate_state_overview():
+    print(f"Arbitrate State Overview: \n")
+
+    # Create Process Arbitrate
+    arbitrate = ProcessArbitratorExample(2, secret=-1)
+
+    # Check Values
+    print(f"Default Values:")
+    print(f"number: {arbitrate.number} == 2")
+    print(f"item: {arbitrate.item} == 10")
+    print(f"secret: {arbitrate.secret} == -1")
+    print(f"")
+
+    # Start Server
+    arbitrate.start_server()  # All attributes are sent to the server (including untransmittable attributes)
+
+    # Check Server Status
+    assert arbitrate.is_proxy()
+    assert arbitrate.is_alive()
+
+    # Make a local change which will not be reflected in the server
+    arbitrate.number = 1
+    arbitrate.item = 50
+    arbitrate.secret = -20
+
+    print(f"Local Changes:")
+    print(f"Local vs Server number: {arbitrate.number} != {arbitrate.get_attribute('number')}")
+    print(f"Local vs Server item: {arbitrate.item} != {arbitrate.get_attribute('item')}")
+    print(f"Local vs Server secret: {arbitrate.secret} != {arbitrate.get_attribute('secret')}")
+    print(f"")
+
+    # Update local values from the server (except for untransmittable attributes)
+    arbitrate.update()
+
+    print(f"Local Update:")
+    print(f"Local vs Server number: {arbitrate.number} == {arbitrate.get_attribute('number')}")
+    print(f"Local vs Server item: {arbitrate.item} == {arbitrate.get_attribute('item')}")
+    print(f"Local vs Server secret: {arbitrate.secret} != {arbitrate.get_attribute('secret')}")
+    print(f"")
+
+    # Update server values from the local (except for untransmittable attributes)
+    arbitrate.number = 1
+    arbitrate.item = 50
+    arbitrate.secret = -20
+    arbitrate.update_server()
+
+    print(f"Sever Update:")
+    print(f"Local vs Server number: {arbitrate.number} == {arbitrate.get_attribute('number')}")
+    print(f"Local vs Server item: {arbitrate.item} == {arbitrate.get_attribute('item')}")
+    print(f"Local vs Server secret: {arbitrate.secret} != {arbitrate.get_attribute('secret')}")
+    print(f"")
+
+    # Stop Server
+    arbitrate.stop_server()
+
+    # Check Server Status
+    assert not arbitrate.is_proxy()
+    assert not arbitrate.is_alive()
+
+
+# Main #
+if __name__ == "__main__":
+    # Examples # 
+    arbitrate_state_overview()
+```
+
+
+## 4 Example Semantics and Syntax
+
+Examples should conform to the semantics and syntax described in[Semantics Guidelines](semantics_guidelines.md) and 
+[Syntactic Guidelines](syntactic_guidelines.md), but in some cases it may be necessary to deviate from the general 
+guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide. 
+
+
+### 4.1 Example Documentation
 
 For general code style, docstrings, and comments guidelines, refer to the [Syntactic Guidelines](syntactic_guidelines.md)
 document, particularly sections 2.10 (Docstrings) and 2.11 (Comments). The following sections cover documentation 
 aspects specific to example files.
 
 
-### 4.1 Print Statements
+#### 4.1.1 Print Statements
 
 Print statements in examples serve as a narrative to guide the user through the demonstration:
 
 1. Use print statements to indicate what's being demonstrated
-2. Print input values and results to show the effect of operations
+2. Print input values, results, and expected results to show the effect of operations
 3. Use descriptive messages that explain what's happening
 4. Format output to make it easy to read and understand
 
@@ -164,10 +297,10 @@ Example:
 print("\nDemonstrating LRU cache with maxsize=2...")
 print("Processing item1:")
 advanced1 = processor.advanced_process("item1", 2)
-print(f"Result: {advanced1}")
+print(f"Result: {advanced1} == 'item1item1'")
 ```
 
-### 4.2 Error Handling
+#### 4.1.1 Error Handling
 
 Examples should demonstrate proper error handling:
 
@@ -185,6 +318,34 @@ except KeyError:
     print(f"Error: Key '{user_input}' not found in data")
 except Exception as e:
     print(f"Unexpected error: {e}")
+```
+
+
+### 4.2 Assertions
+
+Assertions are a base Python feature that allows for checking the state of a program at runtime. Assertions are 
+discouraged in source code because they do not conform to Python's error handling principles. However, assertions are 
+permitted for debugging, testing, examples, and tutorials because assertions are good for explaining the behavior of a 
+program, and in these scenarios error handling is managed by the user rather than the program. 
+
+Guidelines:
+- Each test should include at least one assertion
+- Assertions should be specific and verify a single aspect of behavior
+- Use appropriate assertion methods for the type of comparison being made
+- Include descriptive error messages in assertions to make test failures more informative
+
+Example:
+```python
+# Simple assertions
+assert result == expected
+assert instance is not None
+
+# More complex assertions
+assert id(new.immutable) == id(test_object.immutable)
+assert id(new.mutable) != id(test_object.mutable)
+assert unpickled.immutable == test_object.immutable
+assert unpickled.mutable == test_object.mutable
+assert unpickled is not test_object
 ```
 
 
@@ -272,18 +433,13 @@ Include examples that demonstrate how to handle edge cases:
 3. Include examples of boundary conditions
 4. Show how to handle resource constraints or performance issues
 
-Example:
 
-```python
-# Edge case: Empty input
-print("\nEdge case: Empty input")
-result = processor.process_data("")
+### 5.5 Implement Base Classes
 
-# Edge case: Very large input
-print("\nEdge case: Very large input")
-large_key = "x" * 1000
-result = processor.process_data(large_key)
-```
+Examples should demonstrate how to implement base classes. Base classes are useful for creating reusable components 
+that can be used in multiple scenarios. The examples should demonstrate how to use base classes to implement common 
+functionality.
+
 
 ## 6 Example Styles
 
@@ -303,7 +459,8 @@ Provides practical, ready-to-use code snippets for common tasks.
 # Solution:
 data = {"a": 1, "b": 2, "c": 3, "d": 4}
 filtered = {k: v for k, v in data.items() if v > 2}
-print(f"Filtered dictionary: {filtered}")  # Output: Filtered dictionary: {'c': 3, 'd': 4}
+expected = {'c': 3, 'd': 4}
+print(f"Filtered dictionary: {filtered} == {expected}")  # Output: Filtered dictionary: {'c': 3, 'd': 4}
 ```
 
 ### 6.2 Compare and Contrast
@@ -320,12 +477,12 @@ result1 = []
 for item in data:
     if process_condition(item):
         result1.append(transform(item))
-print(f"Result: {result1}")
+print(f"Result: {result1} == {expected_result1}")
 
 # Approach 2: Using a list comprehension (more concise)
 print("\nApproach 2: Using a list comprehension")
 result2 = [transform(item) for item in data if process_condition(item)]
-print(f"Result: {result2}")
+print(f"Result: {result2} == {expected_result2}")
 ```
 
 ### 6.3 Step-by-Step Transformation
@@ -342,15 +499,15 @@ print(f"Initial data: {data}")
 
 # Step 1: Square each number
 squared = [x**2 for x in data]
-print(f"After squaring: {squared}")
+print(f"After squaring: {squared} == {expected_squared}")
 
 # Step 2: Filter out values less than 10
 filtered = [x for x in squared if x >= 10]
-print(f"After filtering: {filtered}")
+print(f"After filtering: {filtered} == {expected_filtered}")
 
 # Step 3: Calculate the sum
 total = sum(filtered)
-print(f"Final result (sum): {total}")
+print(f"Final result (sum): {total} == {expected_total}")
 ```
 
 ### 6.4 Annotated Examples
@@ -371,11 +528,11 @@ processor = DataProcessor(
 # Process data with automatic caching
 # The first call will be slow as it computes the result
 result1 = processor.process("example_key")  
-print(f"First call result: {result1}")
+print(f"First call result: {result1} == {expected_result1}")
 
 # The second call will be fast as it retrieves from cache
 result2 = processor.process("example_key")  
-print(f"Second call result: {result2}")
+print(f"Second call result: {result2}  == {expected_result2}")
 ```
 
 ### 6.5 Interactive Examples
@@ -431,7 +588,7 @@ except KeyError as e:
 print("\nCorrect approach:")
 data = {"a": 1, "b": 2}
 value = data.get("c", 0)  # Returns 0 if key doesn't exist
-print(f"Value: {value}")
+print(f"Value: {value}  == {expected_value1}")
 ```
 
 ### 6.7 Incremental Complexity
@@ -449,7 +606,7 @@ result1 = cache.get("key", None)
 if result1 is None:
     result1 = expensive_computation("key")
     cache["key"] = result1
-print(f"Result: {result1}")
+print(f"Result: {result1} == {expected_result1}")
 
 # Stage 2: Add timeout functionality
 print("\nStage 2: Add timeout functionality")
@@ -469,7 +626,7 @@ if result2 is None:
     result2 = expensive_computation(key)
     cache_with_time[key] = (current_time, result2)
 
-print(f"Result: {result2}")
+print(f"Result: {result2} == {expected_result2}")
 ```
 
 ### 6.8 Visual Learning

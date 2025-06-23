@@ -6,27 +6,27 @@
 - [2 General Python File Layout](#2-general-python-file-layout)
   - [2.1 Shebang Line](#21-shebang-line)
   - [2.2 Future Imports](#22-future-imports)
-  - [2.3 Header Section](#23-header-section)
-  - [2.4 Imports](#24-imports)
-  - [2.5 Definitions Section](#25-definitions-section)
-    - [2.5.1 Constants](#251-constants)
-    - [2.5.2 Functions](#252-functions)
-    - [2.5.3 Classes](#253-classes)
-      - [2.5.3.1 Static Methods](#2531-static-methods)
-      - [2.5.3.2 Class Attributes](#2532-class-attributes)
-      - [2.5.3.3 Class Magic Methods](#2533-class-magic-methods)
-      - [2.5.3.4 Class Methods](#2534-class-methods)
-      - [2.5.3.5 Attributes](#2535-attributes)
-      - [2.5.3.6 Properties](#2536-properties)
-      - [2.5.3.7 Magic Methods](#2537-magic-methods)
-        - [2.5.3.7.1 Class Magic Method Subcategories](#25371-magic-method-subcategories)
-      - [2.5.3.8 Instance Methods](#2538-instance-methods)
-        - [2.5.3.8.1 Instance Method Subcategories](#25381-instance-method-subcategories)
-      - [2.5.3.9 Getters and Setters](#2539-getters-and-setters)
-      - [2.5.3.10 Additional Definitions](#25310-additional-definitions)
-  - [2.6 Main](#26-main)
-- [3 \_\_init__.py File Layout](#3-\_\_init__py-file-layout)
-
+  - [2.3 Module Docstring](#23-module-docstring)
+  - [2.4 Header Section](#24-header-section)
+  - [2.5 Imports](#25-imports)
+  - [2.6 Definitions Section](#26-definitions-section)
+    - [2.6.1 Constants](#261-constants)
+    - [2.6.2 Functions](#262-functions)
+    - [2.6.3 Classes](#263-classes)
+      - [2.6.3.1 Static Methods](#2631-static-methods)
+      - [2.6.3.2 Class Attributes](#2632-class-attributes)
+      - [2.6.3.3 Class Magic Methods](#2633-class-magic-methods)
+      - [2.6.3.4 Class Methods](#2634-class-methods)
+      - [2.6.3.5 Attributes](#2635-attributes)
+      - [2.6.3.6 Properties](#2636-properties)
+      - [2.6.3.7 Magic Methods](#2637-magic-methods)
+        - [2.6.3.7.1 Magic Method Subcategories](#2637-1-magic-method-subcategories)
+      - [2.6.3.8 Instance Methods](#2638-instance-methods)
+        - [2.6.3.8.1 Instance Method Subcategories](#2638-1-instance-method-subcategories)
+      - [2.6.3.9 Getters and Setters](#2639-getters-and-setters)
+      - [2.6.3.10 Additional Definitions](#26310-additional-definitions)
+  - [2.7 Main](#27-main)
+- [3 \_\_init__.py File Layout](#3-__init__py-file-layout)
 
 ## 1 Background
 
@@ -70,7 +70,9 @@ Python syntax features today. Once you no longer need to run on a version where 
 In code that may execute on versions as old as 3.5 rather than >= 3.7, import:
 
 ```python
+# Futures #
 from __future__ import generator_stop
+from __future__ import annotations
 ```
 
 For more information read the Python future statement definitions documentation.
@@ -79,10 +81,35 @@ Please don't remove these imports until you are confident the code is only ever 
 environment. Even if you do not currently use the feature a specific future import enables in your code today, keeping 
 it in place in the file prevents later modifications of the code from inadvertently depending on the older behavior.
 
-Use other `from __future__ import` statements as you see fit.
+Guidelines:
+- The Future Imports section should almost always go in the Imports section.
+- A Future Imports section may be put immediately after Shebang Line if and only if the imported modify either 
+  docstrings or header variable assignments 
 
 
-### 2.3 Header Section
+### 2.3 Module Docstring
+The module docstring describes the contents of the file. The guidelines for docstrings can be found in 
+[Syntactic Guidelines](syntactic_guidelines.md) under 2.10.1 Docstrings and modules specifically, under 2.10.1 Modules.
+The guidelines here are a reiteration of what is also in [Syntactic Guidelines](syntactic_guidelines.md).
+
+Guidelines:
+- Files should start with a docstring describing the contents and usage of the module
+- The first line of the module should be file name exactly as it is in the file system (typically lowercase)
+- The second line should be a one-line summary of the module or program, terminated by a period
+- The third line should be blank
+- Starting from the fourth line, the rest of docstring should include a detailed description of the module or program
+
+```python
+"""file_name.py
+A one-line summary of the module or program, terminated by a period.
+
+Leave one blank line. The rest of this docstring should contain an overall description of the module or program. The 
+description can be broken up into multiple paragraphs to present the functionality into logical sections. Bullet-point 
+and numerical lists may be used as well, but only add them if they are needed.
+"""
+```
+
+### 2.4 Header Section
 The header section contains metadata about the file and the package. This section must be included in all Python files.
 
 Guidelines:
@@ -109,39 +136,43 @@ __version__ = "1.12.0"
 ```
 
 
-### 2.4 Imports
-In general, python files must be short, so the imported items must be easily trackable. Also, with trackback tools, 
-it is straightforward to find which definition is used.
+### 2.5 Imports
+Python import statements are how python links code across multiple files. Imported items must be easily trackable. Also, 
+with trackback tools, it is straightforward to find which definition is used.
 
 Guidelines:
-- Imports are always put at the top of the file, just after any module comments and docstrings and before module globals and constants.
+- Imports are always put at the top of the file, just after any module comments and docstrings and before module globals 
+  and constants
 - The Imports section must have the header comment: `# Imports #`
-- Import must be grouped, in order, by standard library, third party, and project modules.
+- Import must be grouped, in order, by future, standard library, third party, and project modules
+  - The future import group must have the header comment: `# Futures #`
   - The standard library import group must have the header comment: `# Standard Libraries #`
   - The third party import group must have the header comment: `# Third Party Libraries #`
   - The project import group must have the header comment: `# Project Libraries #`
-- There must be one blank line between each import group.
+- The future import group should be omitted if there are no future imports
+- There must be one blank line between each import group
 - Within each grouping, imports must be sorted lexicographically, ignoring case, according to each module's full package path
-- Imports must be grouped from most generic to least generic.
-- Package and module imports must be on separate lines.
-- Preferably,`from x import y` must be used individual types, classes, or functions. 
-- Avoid wildcard imports (`from module import *`). Except when a module's `__init__.py` is importing all items from a sub-module.
-- For conflicts, import the parent module/package then call the item from that module/package.
-- For some conflicts, if a normally lower case class name conflicts, it can be imported as a camel case variant. (e.g., `from datetime import tzinfo as TZInfo`)
+- Imports must be grouped from most generic to least generic
+- Package and module imports must be on separate lines
+- Preferably,`from x import y` must be used individual types, classes, or functions 
+- Avoid wildcard imports (`from module import *`). Except when a module's `__init__.py` is importing all items from a sub-module
+- For conflicts, import the parent module/package then call the item from that module/package
+- For some conflicts, if a normally lower case class name conflicts, it can be imported as a camel case variant
+  (e.g., `from datetime import tzinfo as TZInfo`)
 - Use `from x import y as z` in any of the following circumstances:
-  - Two modules named y are to be imported.
-  - y conflicts with a top-level name defined in the current module.
-  - y conflicts with a common parameter name that is part of the public API (e.g., features).
-  - y is an inconveniently long name.
-  - y is too generic in the context of your code (e.g., from storage.file_system import options as fs_options).
-- Use `import y as z` only when z is a standard abbreviation (e.g., `import numpy as np`).
+  - Two modules named y are to be imported
+  - y conflicts with a top-level name defined in the current module
+  - y conflicts with a common parameter name that is part of the public API (e.g., features)
+  - y is an inconveniently long name
+  - y is too generic in the context of your code (e.g., from storage.file_system import options as fs_options)
+- Use `import y as z` only when z is a standard abbreviation (e.g., `import numpy as np`)
 
 Exemptions:
 - Symbols from the following modules are used to support static analysis and type checking:
   - typing module
   - collections.abc module
   - typing_extensions module
-- Redirects from the six.moves module.
+- Redirects from the six.moves module
 
 Examples:
 
@@ -169,7 +200,7 @@ import os, sys
 ```
 
 
-### 2.5 Definitions Section
+### 2.6 Definitions Section
 The definitions section is a section of code that defines constants, functions, classes, etc. If there are no 
 definitions, the section may be omitted.
 
@@ -184,7 +215,7 @@ Definitions should be organized into the following subsections with the recommen
 However, the definition subsections may be organized in any order that makes sense for the code and may be omitted if 
 there are no definitions in that section. 
 
-#### 2.5.1 Constants
+#### 2.6.1 Constants
 Constants are values that must not be changed during program execution. They are typically defined at the module level.
 
 Guidelines:
@@ -200,7 +231,7 @@ Example:
 EXCEL_INIT_DATE = datetime(1899, 12, 30)  # The initial date of Excel's date system
 ```
 
-#### 2.5.2 Functions
+#### 2.6.2 Functions
 Functions are reusable blocks of code that perform specific tasks. They must be defined at the module level.
 
 Guidelines:
@@ -231,7 +262,7 @@ def excel_date_to_datetime(timestamp: int | float | str | bytes, tzinfo: tzinfo 
     raise TypeError(f"{timestamp.__class__} cannot be converted to a datetime")
 ```
 
-#### 2.5.3 Classes
+#### 2.6.3 Classes
 Classes are blueprints for creating objects that encapsulate data and behavior. They must be defined at the module level.
 
 Guidelines:
@@ -267,7 +298,7 @@ However, the only required section is the docstring. All other sections may be o
 
 The docstring standards and best practices are described in the Syntactic Guidelines document.
 
-##### 2.5.3.1 Static Methods
+##### 2.6.3.1 Static Methods
 Static methods are methods that don't operate on instance data and don't require an instance of the class to be called.
 
 Guidelines:
@@ -294,7 +325,7 @@ def create_from_data(data: dict) -> "MyClass":
     return MyClass(**data)
 ```
 
-##### 2.5.3.2 Class Attributes
+##### 2.6.3.2 Class Attributes
 Class attributes are variables that are shared by all instances of a class. They are defined at the class level.
 
 Guidelines:
@@ -316,7 +347,7 @@ _kwarg: ClassVar[str | None] = None
 _parse_method: ClassVar[str] = "parse_first"
 ```
 
-##### 2.5.3.3 Class Magic Methods
+##### 2.6.3.3 Class Magic Methods
 Class magic methods are special methods that are invoked by Python's syntax rather than by explicit method calls. They 
 are defined at the class level and operate on the class itself rather than instances.
 
@@ -344,7 +375,7 @@ def __new__(cls, *args: Any, **kwargs: Any) -> Any:
     return super().__new__(cls)
 ```
 
-##### 2.5.3.4 Class Methods
+##### 2.6.3.4 Class Methods
 Class methods are methods that operate on the class itself rather than instances. They receive the class as their first argument (conventionally named `cls`).
 
 Guidelines:
@@ -372,7 +403,7 @@ def from_dict(cls, data: dict) -> "MyClass":
     return cls(**data)
 ```
 
-##### 2.5.3.5 Attributes
+##### 2.6.3.5 Attributes
 Instance attributes are variables that are specific to each instance of a class. They are typically defined in class 
 scope and can be initialized in the `__init__` or `construct` methods.
 
@@ -404,7 +435,7 @@ def __init__(self, *args: Any, **kwargs: Any) -> None:
     super().__init__(*args, **kwargs)
 ```
 
-##### 2.5.3.6 Properties
+##### 2.6.3.6 Properties
 Properties may be used to control getting or setting attributes that require trivial computations or logic. Property 
 implementations must match the general expectations of regular attribute access: that they are cheap, straightforward, 
 and unsurprising.
@@ -422,7 +453,7 @@ a power feature.
 Inheritance with properties can be non-obvious. Do not use properties to implement computations a subclass may ever want 
 to override and extend.
 
-##### 2.5.3.7 Magic Methods
+##### 2.6.3.7 Magic Methods
 Magic methods (also known as dunder methods) are special methods that are invoked by Python's syntax rather than by explicit method calls. They are defined at the instance level.
 
 Guidelines:
@@ -455,7 +486,7 @@ def __copy__(self) -> Any:
     return self.copy()
 ```
 
-###### 2.5.3.7.1 Magic Method Subcategories
+###### 2.6.3.7.1 Magic Method Subcategories
 Magic methods should be organized into subcategories based on their functionality. This helps improve code readability 
 and organization. Each subcategory should be preceded by a comment indicating the subcategory name.
 
@@ -524,7 +555,7 @@ def __eq__(self, other: Any) -> bool:
     return self.data == other.data
 ```
 
-##### 2.5.3.8 Instance Methods
+##### 2.6.3.8 Instance Methods
 Instance methods are methods that operate on instance data and require an instance of the class to be called. They 
 receive the instance as their first argument (conventionally named `self`).
 
@@ -560,7 +591,7 @@ def set_kwarg(self, kwarg: str | None) -> None:
     self._kwarg = kwarg
 ```
 
-###### 2.5.3.8.1 Instance Method Subcategories
+###### 2.6.3.8.1 Instance Method Subcategories
 Instance methods should be organized into subcategories based on their functionality. This helps improve code 
 readability and organization. Each subcategory should be preceded by a comment indicating the subcategory name.
 
@@ -634,7 +665,7 @@ def dispatch_call(self, method_name: str, *args: Any, **kwargs: Any) -> Any:
     return method(*args, **kwargs)
 ```
 
-##### 2.5.3.9 Getters and Setters
+##### 2.6.3.9 Getters and Setters
 Getter and setter methods (also called accessors and mutators) are a type of method which must be used when they 
 provide a meaningful role or behavior for getting or setting a variable's value.
 
@@ -652,7 +683,7 @@ If the past behavior allowed access through a property, do not bind the new gett
 code still attempting to access the variable by the old method must break visibly, so they are made aware of the 
 change in complexity.
 
-##### 2.5.3.10 Additional Definitions
+##### 2.6.3.10 Additional Definitions
 In some cases, there is other code that is not part of the class, function, or module structure. Those can be defined 
 at the end of the definitions section.
 
@@ -663,7 +694,7 @@ Alternatively, a class or function may need to be registered to an object which 
 that case, the registration may be defined in a definitions section called: `# Registration #`.
 
 
-### 2.6 Main
+### 2.7 Main
 In Python, pydoc as well as unit tests require modules to be importable. If a file is meant to be used as an executable, 
 its main functionality must be in a `main()` function, and your code must always check if `__name__ == '__main__'` 
 before executing your main program, so that it is not executed when the module is imported.
