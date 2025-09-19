@@ -37,8 +37,8 @@ This document focuses on performance test-specific aspects. For general code org
 conventions, docstrings, and other standard practices, please refer to:
 
 - [Code File Layout](code_file_layout.md) - For file organization and structure
-- [Syntactic Guidelines](syntactic_guidelines.md) - For naming conventions, docstrings, and code formatting
-- [Semantics Guidelines](semantics_guidelines.md) - For general code organization principles
+- [Syntactic Guidelines](syntax.md) - For naming conventions, docstrings, and code formatting
+- [Semantics Guidelines](semantics.md) - For general code organization principles
 - [Unit Tests](unit_tests.md) - For general testing practices and patterns
 
 
@@ -489,8 +489,8 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
 
 ## 4 Performance Test Semantics and Syntax
 
-Performance Tests should conform to the semantics and syntax described in[Semantics Guidelines](semantics_guidelines.md) 
-and [Syntactic Guidelines](syntactic_guidelines.md), but in some cases it may be necessary to deviate from the general 
+Performance Tests should conform to the semantics and syntax described in[Semantics Guidelines](semantics.md) 
+and [Syntactic Guidelines](syntax.md), but in some cases it may be necessary to deviate from the general 
 guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide. 
 
 

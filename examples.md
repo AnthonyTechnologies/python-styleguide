@@ -46,9 +46,9 @@ Python files rather than Jupyter notebooks, so it is easier to implement their c
 This document provides guidelines specific to creating effective examples for Python packages. It focuses on 
 example-specific considerations while referencing other style guides for general Python coding practices:
 
-- For general Python code style and syntax, refer to [Syntactic Guidelines](syntactic_guidelines.md)
+- For general Python code style and syntax, refer to [Syntactic Guidelines](syntax.md)
 - For file structure and organization, refer to [Code and File Layout](code_file_layout.md)
-- For semantic aspects of code, refer to [Semantics Guidelines](semantics_guidelines.md)
+- For semantic aspects of code, refer to [Semantics Guidelines](semantics.md)
 
 The Examples Guidelines is built upon these foundational documents, adding specific guidance for creating educational 
 and demonstrative code examples.
@@ -270,14 +270,14 @@ if __name__ == "__main__":
 
 ## 4 Example Semantics and Syntax
 
-Examples should conform to the semantics and syntax described in[Semantics Guidelines](semantics_guidelines.md) and 
-[Syntactic Guidelines](syntactic_guidelines.md), but in some cases it may be necessary to deviate from the general 
+Examples should conform to the semantics and syntax described in[Semantics Guidelines](semantics.md) and 
+[Syntactic Guidelines](syntax.md), but in some cases it may be necessary to deviate from the general 
 guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide. 
 
 
 ### 4.1 Example Documentation
 
-For general code style, docstrings, and comments guidelines, refer to the [Syntactic Guidelines](syntactic_guidelines.md)
+For general code style, docstrings, and comments guidelines, refer to the [Syntactic Guidelines](syntax.md)
 document, particularly sections 2.10 (Docstrings) and 2.11 (Comments). The following sections cover documentation 
 aspects specific to example files.
 
@@ -689,7 +689,7 @@ Incremental Complexity are suggested because other sections of the project shoul
 ## 7 Example-Specific Best Practices
 
 For general code readability, performance, and maintainability guidelines, refer to the 
-[Syntactic Guidelines](syntactic_guidelines.md) and [Semantics Guidelines](semantics_guidelines.md) documents. The 
+[Syntactic Guidelines](syntax.md) and [Semantics Guidelines](semantics.md) documents. The 
 following are best practices specific to example files:
 
 - **Educational Focus**: Examples should prioritize clarity and educational value over code optimization. Sometimes a slightly less efficient approach may be more instructive.

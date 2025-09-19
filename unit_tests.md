@@ -32,8 +32,8 @@ Unit tests and test suites should follow the guidelines set forth by the general
 organization, file structure, naming conventions, docstrings, and other standard practices in:
 
 - [Code File Layout](code_file_layout.md) - For file organization and structure
-- [Syntactic Guidelines](syntactic_guidelines.md) - For naming conventions, docstrings, and code formatting
-- [Semantics Guidelines](semantics_guidelines.md) - For general code organization principles
+- [Syntactic Guidelines](syntax.md) - For naming conventions, docstrings, and code formatting
+- [Semantics Guidelines](semantics.md) - For general code organization principles
 
 The guidelines in this document are supplemental to the general guidelines and focus on test-specific code to ensure 
 consistency, maintainability, and effectiveness of the test suite across the project.
@@ -111,7 +111,7 @@ changed in the future, but the test code should still verify that the class is w
 In pytests, tests themselves can be organized into classes and sub-classed which can be used to parameterize tests or 
 create test suites to verify different implementations of the code.
 
-For creating documentation, follow the general docstring guidelines in [Syntactic Guidelines](syntactic_guidelines.md), 
+For creating documentation, follow the general docstring guidelines in [Syntactic Guidelines](syntax.md), 
 section 2.10, with special attention to section 2.10.1.1 for test modules.
 
 
@@ -129,7 +129,7 @@ Guidelines:
   - Test involving defining classes should either be defined as inner classes or defined elsewhere and assigned to a class attribute.
   - Test involving defining functions should either be defined as inner functions or defined elsewhere and assigned to a class attribute.
 
-For test method naming and organization, follow the general method guidelines in [Syntactic Guidelines](syntactic_guidelines.md) 
+For test method naming and organization, follow the general method guidelines in [Syntactic Guidelines](syntax.md) 
 and [Code File Layout](code_file_layout.md).
 
 
@@ -375,8 +375,8 @@ if __name__ == "__main__":
 
 ## 5 Test Semantics and Syntax
 
-Tests should conform to the semantics and syntax described in[Semantics Guidelines](semantics_guidelines.md) and 
-[Syntactic Guidelines](syntactic_guidelines.md), but in some cases it may be necessary to deviate from the general 
+Tests should conform to the semantics and syntax described in[Semantics Guidelines](semantics.md) and 
+[Syntactic Guidelines](syntax.md), but in some cases it may be necessary to deviate from the general 
 guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide. 
 
 

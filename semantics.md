@@ -1,4 +1,4 @@
-# Anthony's Python Style Guide: Semantics Guidelines (Google Style Guide Remix)
+# Anthony's Python Style Guide: Semantics (Google Style Guide Remix)
 
 ## Table of Contents
 

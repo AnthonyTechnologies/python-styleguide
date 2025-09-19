@@ -28,6 +28,7 @@
   - [2.7 Main](#27-main)
 - [3 \_\_init__.py File Layout](#3-__init__py-file-layout)
 
+
 ## 1 Background
 
 This document provides comprehensive guidelines for organizing Python code in a file. It details the standard structure 
@@ -89,8 +90,8 @@ Guidelines:
 
 ### 2.3 Module Docstring
 The module docstring describes the contents of the file. The guidelines for docstrings can be found in 
-[Syntactic Guidelines](syntactic_guidelines.md) under 2.10.1 Docstrings and modules specifically, under 2.10.1 Modules.
-The guidelines here are a reiteration of what is also in [Syntactic Guidelines](syntactic_guidelines.md).
+[Syntactic Guidelines](syntax.md) under 2.10.1 Docstrings and modules specifically, under 2.10.1 Modules.
+The guidelines here are a reiteration of what is also in [Syntactic Guidelines](syntax.md).
 
 Guidelines:
 - Files should start with a docstring describing the contents and usage of the module

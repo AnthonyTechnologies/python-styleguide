@@ -1,4 +1,4 @@
-# Anthony's Python Style Guide: Syntactic Guidelines (Google Style Guide Remix)
+# Anthony's Python Style Guide: Syntax (Google Style Guide Remix)
 
 ## Table of Contents
 
