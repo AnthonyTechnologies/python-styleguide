@@ -244,7 +244,7 @@ Example:
 class BaseObjectTestSuite(BaseClassTestSuite):
     """Base test suite for children of BaseObject.
 
-    This class provides common test functionality for child class of BaseObject, including tests_old_ for copying and
+    This class provides common test functionality for child class of BaseObject, including tests for copying and
     pickling. Subclasses should set the TestClass attribute and may override or extend the test methods.
 
     Attributes:
@@ -320,7 +320,7 @@ class BaseTestObject(BaseObject):
 class TestBaseObject(BaseObjectTestSuite):
     """Test the BaseObject class.
 
-    This class tests_old_ the functionality of the BaseObject class, which is the base class for all objects in the
+    This class tests the functionality of the BaseObject class, which is the base class for all objects in the
     baseobjects package. It creates a test subclass of BaseObject to test with.
     """
 
@@ -426,7 +426,7 @@ Example:
 # Fixtures
 @pytest.fixture
 def test_object(self) -> 'TestBaseObject.BaseTestObject':
-    """Create a test object instance for use in tests_old_.
+    """Create a test object instance for use in tests.
 
     Returns:
         BaseTestObject: An instance of the test class.
@@ -499,18 +499,18 @@ Guidelines:
 
 Running tests:
 ```bash
-# Run all tests_old_
+# Run all tests
 pytest
 
-# Run tests_old_ in a specific file
-pytest tests_old_/bases/test_baseobject.py
+# Run tests in a specific file
+pytest tests/bases/test_baseobject.py
 
 # Run a specific test
-pytest tests_old_/bases/test_baseobject.py::TestBaseObject::test_deepcopy
+pytest tests/bases/test_baseobject.py::TestBaseObject::test_deepcopy
 
-# Run tests_old_ with verbose output
+# Run tests with verbose output
 pytest -v
 
-# Run tests_old_ with output capturing disabled
+# Run tests with output capturing disabled
 pytest -s
 ```

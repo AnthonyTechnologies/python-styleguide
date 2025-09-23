@@ -462,8 +462,8 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
             test_wrapper: A fixture providing a DynamicWrapperTestObject.
         """
         # This is a concrete method that is specific to this test suite and not required by the parent class.
-        # It tests_old_ a specific feature of the DynamicWrapperTestObject class (_setattr method) that may not
-        # be present in all wrapper classes. This shows how concrete test suites can add additional tests_old_
+        # It tests a specific feature of the DynamicWrapperTestObject class (_setattr method) that may not
+        # be present in all wrapper classes. This shows how concrete test suites can add additional tests
         # that are specific to the class being tested.
         def setattr_method() -> None:
             test_wrapper._setattr("one", "test")
