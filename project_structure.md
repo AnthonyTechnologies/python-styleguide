@@ -21,7 +21,8 @@
 ## 1 Background
 
 This document describes an opinionated, practical structure for Python projects used in this repository and intended to
-be reusable for most Python packages.
+be reusable for most Python packages. The original structure was inspired by ["Hypermodern Python"](https://cjolowicz.github.io/posts/hypermodern-python-01-setup/)
+by [Claudio Jolowicz](https://github.com/cjolowicz).
 
 A consistent structure improves:
 - Discoverability: developers can quickly find code, tests, docs, and examples.
@@ -86,6 +87,7 @@ Recommended conventions:
 - Centralize tool configurations (ruff/flake8, black, isort, pytest, coverage, mypy, sphinx) inside pyproject.toml when supported.
 - Treat pyproject.toml as the source of truth for package metadata.
 - Keep versioning unified (prefer single-source versioning via package __init__ or Poetry’s version field).
+- When using Poetry, it’s acceptable to expose metadata via the PEP 621 [project] table and set dynamic fields (e.g., version, readme) that are sourced from [tool.poetry]. Document this clearly in your README/CONTRIBUTING to avoid confusion.
 
 #### 3.1.2 Development Tools
 
@@ -164,6 +166,8 @@ extends/overrides root pyproject [tool.ruff] settings for files under tests/.
 Documentation consolidates user and developer knowledge.
 
 Related guidelines:
+- Documentation — see [documentation.md](documentation.md) for guidelines on writing, organizing, and maintaining
+  documentation, including docstrings, user guides, and API references.
 - Project Tooling — see [project_tools.md](project_tools.md) for how documentation is built and served via nox (docs and docs-build sessions) and where Sphinx is configured.
 
 Common layout:

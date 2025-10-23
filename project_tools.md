@@ -4,12 +4,12 @@
 
 - [1 Overview](#1-overview)
 - [2 Pre-commit](#2-pre-commit)
-  - [2.1 What it does in this project](#21-what-it-does-in-this-project)
+  - [2.1 What it does in a project](#21-what-it-does-in-a-project)
   - [2.2 Installation](#22-installation)
   - [2.3 Running hooks](#23-running-hooks)
   - [2.4 Updating hooks](#24-updating-hooks)
 - [3 Nox](#3-nox)
-  - [3.1 What it does in this project](#31-what-it-does-in-this-project)
+  - [3.1 What it does in a project](#31-what-it-does-in-a-project)
   - [3.2 Installation](#32-installation)
   - [3.3 Common sessions](#33-common-sessions)
   - [3.4 Running sessions](#34-running-sessions)
@@ -18,7 +18,7 @@
 
 ## 1 Overview
 
-This document describes the core development tools used across the project and how they fit into day‑to‑day workflows.
+This document describes the core development tools used across projects and how they fit into day‑to‑day workflows.
 Two orchestration tools are central:
 
 - pre-commit — automates formatting and quick static checks on each commit/push.
@@ -35,7 +35,7 @@ and consistent by catching issues early.
 
 Configuration: .pre-commit-config.yaml (repository root)
 
-### 2.1 What it does in this project
+### 2.1 What it does in a project
 
 Current hooks configured in .pre-commit-config.yaml include:
 
@@ -80,7 +80,7 @@ Nox provides reproducible automation by running tasks inside session‑scoped vi
 
 Configuration/entrypoint: noxfile.py (repository root)
 
-### 3.1 What it does in this project
+### 3.1 What it does in a project
 
 Nox orchestrates common dev tasks, including:
 
