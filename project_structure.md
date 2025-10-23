@@ -3,186 +3,264 @@
 ## Table of Contents
 
 - [1 Background](#1-background)
-- [2 Project Directory Structure](#2-project-directory-structure)
-  - [2.1 Overview](#21-overview)
-  - [2.2 Source Code Directory](#22-source-code-directory)
-  - [2.3 Tests Directory](#23-tests-directory)
-  - [2.4 Examples Directory](#24-examples-directory)
-  - [2.5 Documentation Directory](#25-documentation-directory)
-  - [2.6 Tutorials Directory](#26-tutorials-directory)
-- [3 Configuration Files](#3-configuration-files)
-  - [3.1 Project Configuration](#31-project-configuration)
-  - [3.2 Development Tools](#32-development-tools)
+- [2 Project Overview](#2-project-overview)
+- [3 Project Root Structure](#3-project-root-structure)
+  - [3.1 Configurations](#31-configurations)
+    - [3.1.1 Python Project Config](#311-python-project-config)
+    - [3.1.2 Development Tools](#312-development-tools)
+  - [3.2 Source Code](#32-source-code)
+  - [3.3 Tests](#33-tests)
+  - [3.4 Documentation](#34-documentation)
+  - [3.5 Examples](#35-examples)
+  - [3.6 Tutorials](#36-tutorials)
 - [4 Implementation Guidelines](#4-implementation-guidelines)
-  - [4.1 Applying This Structure Generically](#41-applying-this-structure-generically)
+  - [4.1 Applying Generically](#41-applying-generically)
   - [4.2 Best Practices](#42-best-practices)
 
 
 ## 1 Background
 
-This document outlines the recommended project structure for Python projects. A well-organized project structure
-enhances code readability, maintainability, and collaboration. Following these guidelines ensures consistency across 
-projects and makes it easier for developers to navigate and understand the codebase.
+This document describes an opinionated, practical structure for Python projects used in this repository and intended to
+be reusable for most Python packages.
 
-## 2 Project Directory Structure
+A consistent structure improves:
+- Discoverability: developers can quickly find code, tests, docs, and examples.
+- Maintainability: changes affect a single, well‑defined place.
+- Tooling integration: common tools (pytest, nox, pre-commit, type checkers, doc builders) work with little or no extra configuration.
 
-### 2.1 Overview
 
-A well-structured Python project typically includes the following top-level directories:
+## 2 Project Overview
+
+At a high level, a Python project is split into:
+- Configurations that define behavior of the project and its tools.
+- Source code (installable package under src/).
+- Tests that mirror source code.
+- Documentation (narrative guides, API references, and style guides).
+- Examples that demonstrate typical usage.
+- Tutorials for step-by-step learning paths.
+
+This separation keeps responsibilities clear and enables parallel development across these areas.
+
+
+## 3 Project Root Structure
+
+A typical repository root resembles the following:
 
 ```
 project_root/
-├── src/                  # Source code
-├── tests/                # Test files
-├── examples/             # Example usage
-├── docs/                 # Documentation
-├── tutorials/            # Detailed tutorials
-├── LICENSE.rst           # License information
-├── README.rst            # Project overview
-├── CONTRIBUTING.rst      # Contribution guidelines
-├── pyproject.toml        # Project configuration
-└── poetry.lock           # Dependency lock file
+├── .github                 # GitHub workflow configurations
+├── docs/                   # Project documentation (incl. python-styleguide)
+├── examples/               # Runnable usage examples mirroring src/ API areas
+├── src/                    # Source code (installable packages live here)
+├── tests/                  # Test suite mirroring src/ (unit, integration, perf)
+├── tutorials/              # In‑depth, step‑by‑step guides
+├── .codecov.yml            # Code coverage configuration
+├── .editorconfig           # General config for code editors
+├── .gitignore              # Specifies which files Git should ignore
+├── .pre-commit-config.yaml # Pre-commit hook configurations
+├── CODE_OF_CONDUCT.rst     # Community standards
+├── CONTRIBUTING.rst        # How to contribute
+├── LICENSE.rst             # License
+├── noxfile.py              # Automation for tests, linting, docs, etc.
+├── poetry.lock             # Dependency lockfile (Poetry)
+├── pyproject.toml          # Config for the project and build/tooling
+└── README.rst              # Project overview (reStructuredText)
 ```
 
-### 2.2 Source Code Directory (`src/`)
+### 3.1 Configurations
 
-The `src/` directory contains the actual implementation of your package. Using a `src/` layout (as opposed to placing modules directly in the project root) provides several benefits:
+Configuration files define how the project is built, tested, documented, formatted, and released. Keep these files at
+the repository root so tools can auto-discover them.
 
-- Ensures your package is installed in development mode exactly as it would be when installed from PyPI
-- Prevents accidental imports from the project root
-- Makes namespace packages easier to work with
+Related guidelines:
+- Project Tooling — see [project_tools.md](project_tools.md) for how pre-commit, nox, and other tools are configured and used in this repository.
 
-Within the `src/` directory, organize your code into logical modules:
+#### 3.1.1 Python Project Config
 
+Primary, language- and build-related configuration:
+- pyproject.toml — Canonical project configuration per PEP 517/518 (build-system, metadata, tool configs).
+- poetry.lock — Dependency lock file when using Poetry for dependency management.
+- setup.cfg/setup.py — Only if legacy build backends are required.
+
+Recommended conventions:
+- Centralize tool configurations (ruff/flake8, black, isort, pytest, coverage, mypy, sphinx) inside pyproject.toml when supported.
+- Treat pyproject.toml as the source of truth for package metadata.
+- Keep versioning unified (prefer single-source versioning via package __init__ or Poetry’s version field).
+
+#### 3.1.2 Development Tools
+
+Operational/configuration files for development workflows:
+- .pre-commit-config.yaml — Pre-commit hooks for formatting, linting, and sanity checks.
+- noxfile.py — Automated sessions for tests, linting, type checks, building docs, releasing.
+- codecov.yml or .codecov.yml — Code coverage reporting configuration.
+- .editorconfig — Uniform editor behavior.
+- .gitignore — Ignore patterns for VCS.
+- conftest.py — Shared pytest fixtures (typically resides in tests/ but configures test behavior project-wide).
+
+Good practices:
+- Ensure CI runs nox sessions to keep local and CI workflows aligned.
+- Make pre-commit mandatory in contributor docs.
+
+### 3.2 Source Code
+
+The src/ layout prevents accidental imports from the project root and mirrors how the package will be installed from a wheel/SDist.
+
+Related guidelines:
+- Code and File Layout — see [code_file_layout.md](code_file_layout.md) for file structure, headers, imports, and definitions layout.
+- Syntactic Guidelines — see [syntax.md](syntax.md) for naming, docstrings, comments, and formatting rules.
+- Semantics Guidelines — see [semantics.md](semantics.md) for code organization principles and design guidance.
+
+Structure:
 ```
 src/
 └── your_package/
     ├── module1/
     ├── module2/
     ├── module3/
-    └── __init__.py
+    ├── __init__.py
+    └── py.typed         # Present if you ship typing information
 ```
 
-Each module should focus on a specific functionality domain. For example, in the `baseobjects` package:
+Guidelines:
+- Organize by domain: each top-level subpackage focuses on a clear concern (e.g., bases, collections, functions, operations for baseobjects).
+- Keep public API explicit via __all__ or documented imports in __init__.py.
+- Consider private implementation modules prefixed with _ when appropriate.
 
-- `bases/`: Low-level base classes
-- `collections/`: Objects for storing other objects
-- `functions/`: Objects for creating function and method objects
-- `operations/`: Functions for specific operations
+### 3.3 Tests
 
-### 2.3 Tests Directory (`tests/`)
+Tests should mirror the source structure to make navigation intuitive.
 
-The `tests/` directory should mirror the structure of your `src/` directory, making it easy to locate tests for specific modules:
+Related guidelines:
+- Unit Tests — see [unit_tests.md](unit_tests.md) for conventions on structure, naming, fixtures, and assertions.
+- Performance Tests — see [performance_tests.md](performance_tests.md) for organizing and executing performance-focused tests.
 
+Structure:
 ```
 tests/
 ├── module1/
 ├── module2/
 ├── module3/
+├── .ruff_tests.toml
 └── __init__.py
 ```
 
-For performance-critical code, consider adding a `performance/` subdirectory within each module's test directory to separate performance tests from functional tests:
+Recommendations:
+- Separate performance tests when applicable:
+  ```
+  tests/
+  └── module1/
+      ├── performance/
+      └── functional_test.py
+  ```
+- Include unit, integration, and property-based tests where they add value.
+- Prefer descriptive test names and arrange-act-assert structure.
 
+Linting:
+- This directory uses a local Ruff configuration at tests/.ruff_tests.toml to tailor linting rules for tests. It
+extends/overrides root pyproject [tool.ruff] settings for files under tests/.
+
+### 3.4 Documentation
+
+Documentation consolidates user and developer knowledge.
+
+Related guidelines:
+- Project Tooling — see [project_tools.md](project_tools.md) for how documentation is built and served via nox (docs and docs-build sessions) and where Sphinx is configured.
+
+Common layout:
 ```
-tests/
-└── module1/
-    ├── performance/
-    └── functional_test.py
+docs/
+├── api/                  # API documentation (generated)
+├── guides/               # User/developer guides
+├── notes/                # Development notes / design docs
+└── python-styleguide/    # Style guidelines for this repo
 ```
 
-### 2.4 Examples Directory (`examples/`)
+Guidelines:
+- Author in a format supported by your doc toolchain (e.g., Sphinx/reStructuredText, MkDocs/Markdown).
+- Keep API docs generated from code docstrings where possible.
+- Cross-link examples and tutorials to relevant guides.
 
-The `examples/` directory should also mirror your package structure, providing usage examples for each module:
+### 3.5 Examples
 
+Examples demonstrate common usage scenarios and should mirror the src/ structure:
+
+Related guidelines:
+- Examples — see [examples.md](examples.md) for structure, formatting, narrative style, and expectations for runnable snippets.
 ```
 examples/
 ├── module1/
 ├── module2/
 ├── module3/
+├── .ruff_examples.toml
 └── __init__.py
 ```
 
-Each example should be a standalone script that demonstrates how to use a specific feature or component of your package.
+Guidelines:
+- Each example should be a runnable, minimal script focused on one concept.
+- Include comments and expected outputs when helpful.
 
-### 2.5 Documentation Directory (`docs/`)
+Linting:
+- This directory uses a local Ruff configuration at examples/.ruff_examples.toml to tailor linting rules for example code. It extends/overrides root pyproject [tool.ruff] settings for files under examples/.
 
-The `docs/` directory contains all project documentation:
+### 3.6 Tutorials
 
-```
-docs/
-├── api/                  # API documentation
-├── guides/               # User guides
-├── notes/                # Development notes
-└── python-styleguide/    # Style guidelines
-```
+Tutorials provide step-by-step learning paths and deeper explorations.
 
-Documentation should be written in a format that can be processed by documentation generators like Sphinx.
+Related guidelines:
+- Module Tutorials — see [module_tutorials.md](module_tutorials.md) for how to design, structure, and validate tutorials focused on a single module.
+- Package Tutorials — see [package_tutorials.md](package_tutorials.md) for end-to-end package tutorials, including structure, scope, and documentation tips.
 
-### 2.6 Tutorials Directory (`tutorials/`)
-
-For more complex packages, a separate `tutorials/` directory can provide in-depth, step-by-step guides:
-
+Suggested layout:
 ```
 tutorials/
 ├── getting_started/
 ├── advanced_usage/
-└── specific_features/
+├── specific_features/
+└── .ruff_tutorials.toml
 ```
 
-## 3 Configuration Files
+Guidelines:
+- Build progressively: start from basics and layer complexity.
+- Include prerequisites, goals, time estimates, and validation steps.
 
-### 3.1 Project Configuration
-
-- `pyproject.toml`: Modern Python project configuration using PEP 518 standard
-- `poetry.lock`: Dependency lock file when using Poetry for dependency management
-- `setup.py` or `setup.cfg`: Traditional project configuration (if not using pyproject.toml)
-
-### 3.2 Development Tools
-
-- `.pre-commit-config.yaml`: Configuration for pre-commit hooks
-- `noxfile.py`: Configuration for automated testing with nox
-- `conftest.py`: Shared pytest fixtures
-- `codecov.yml`: Configuration for code coverage reporting
+Linting:
+- This directory uses a local Ruff configuration at tutorials/.ruff_tutorials.toml to tailor linting rules for tutorial content. It extends/overrides root pyproject [tool.ruff] settings for files under tutorials/.
 
 ## 4 Implementation Guidelines
 
-### 4.1 Applying This Structure Generically
+### 4.1 Applying Generically
 
-This structure can be applied to any Python project by following these steps:
+To apply this structure to a new or existing project:
 
-1. **Start with the basic directory structure**:
-   - Create `src/`, `tests/`, `docs/`, and `examples/` directories
-   - Add appropriate configuration files
+Related guidelines:
+- Syntactic Guidelines — see [syntax.md](syntax.md) for code-level conventions you’ll apply when creating modules and packages.
+- Semantics Guidelines — see [semantics.md](semantics.md) for organizing code by responsibility and maintaining cohesion.
+- Project Tooling — see [project_tools.md](project_tools.md) for automating checks and workflows via pre-commit and nox.
 
-2. **Identify logical modules**:
-   - Break your code into logical, focused modules
-   - Create a directory for each module under `src/your_package/`
-
-3. **Mirror the structure**:
-   - Create matching directories in `tests/` and `examples/` for each module
-   - Ensure tests and examples are organized to match your source code
-
-4. **Document everything**:
-   - Create comprehensive documentation in the `docs/` directory
-   - Include a detailed README with installation and basic usage instructions
+1. Create foundational directories:
+   - src/, tests/, docs/, examples/, tutorials/ (as needed)
+   - Add root configuration files.
+2. Identify logical domains:
+   - Split source into coherent subpackages per domain.
+   - Avoid “misc” or overly broad modules.
+3. Mirror structure across artifacts:
+   - Align tests and examples with src/ modules.
+4. Automate common flows:
+   - Use nox to standardize test, lint, type-check, build, docs sessions.
+   - Wire pre-commit to run formatters/linters locally.
+5. Document:
+   - Provide README, contribution guide, and usage docs.
+   - Maintain a changelog and API docs for public packages.
 
 ### 4.2 Best Practices
 
-1. **Keep modules focused**: Each module should have a clear, specific purpose.
+1. Keep modules focused and cohesive.
+2. Maintain parallel structure for code, tests, and examples.
+3. Use descriptive, consistent naming.
+4. Separate implementation details with private modules (prefix with _).
+5. Provide typing information (py.typed) and type hints.
+6. Document public APIs with docstrings; generate API docs.
+7. Include unit, integration, and, where helpful, performance tests.
+8. Prefer automation (nox, pre-commit) to enforce consistency.
 
-2. **Maintain parallel structure**: Tests and examples should mirror your source code structure.
-
-3. **Use descriptive names**: Directory and file names should clearly indicate their purpose.
-
-4. **Separate implementation from interface**: Consider using private modules (prefixed with `_`) for implementation details.
-
-5. **Include type hints**: Use `py.typed` file to indicate your package supports type checking.
-
-6. **Document public APIs**: Every public class, function, and method should have docstrings.
-
-7. **Provide examples**: Include example usage for all major features.
-
-8. **Test thoroughly**: Include unit tests, integration tests, and where appropriate, performance tests.
-
-By following these guidelines, you'll create a Python project that is easy to navigate, maintain, and contribute to.
+By following these guidelines, you’ll create a Python project that is easy to navigate, test, and maintain.
