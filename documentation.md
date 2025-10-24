@@ -1,4 +1,4 @@
-# Anthony's Python Style Guide: Documentation (Sphinx)
+# Anthony's Python Style Guide: Documentation
 
 ## Table of Contents
 
@@ -22,7 +22,11 @@
   - [5.4 Cross-referencing and intersphinx](#54-cross-referencing-and-intersphinx)
   - [5.5 Source links and readability](#55-source-links-and-readability)
 - [6 Where Things Are Configured](#6-where-things-are-configured)
-- [7 Troubleshooting](#7-troubleshooting)
+- [8 Troubleshooting](#8-troubleshooting)
+- [7 Style Guide](#7-style-guide)
+  - [7.1 Git Submodule](#71-git-submodule)
+  - [7.2 Keep it up to date](#72-keep-it-up-to-date)
+  - [7.3 Render or link it in Sphinx](#73-render-or-link-it-in-sphinx)
 
 
 ## 1 Overview
@@ -116,7 +120,7 @@ Read the Docs (RTD) builds are configured via a YAML file located at docs/.readt
 Notes and recommendations:
 - Keep docs/requirements.txt aligned with extensions and themes configured in docs/conf.py (e.g., sphinx, sphinx-rtd-theme, sphinx-click; optional furo, myst-parser). Pin versions to ensure reproducible RTD builds.
 - Local builds via nox -s docs-build / nox -s docs do not use .readthedocs.yaml; they rely on noxfile.py’s session dependencies. When changing Sphinx extensions or themes, update both the nox sessions and docs/requirements.txt to keep parity with RTD.
-- If you change the location of conf.py or the Python version, reflect those changes in docs/.readthedocs.yaml to avoid RTD build failures.
+- If the location of conf.py or the Python version changes, reflect those changes in docs/.readthedocs.yaml to avoid RTD build failures.
 
 
 ## 4 Building the Docs
@@ -134,11 +138,11 @@ All commands are executed via Nox to ensure reproducibility.
 
 - Serve docs with live reload on changes:
   - nox -s docs
-- Opens a browser window by default (can be disabled by removing --open-browser in noxfile.py or overriding with posargs).
+- A browser window opens by default; this behavior can be disabled by removing --open-browser in noxfile.py or by overriding with positional arguments.
 
 ### 4.3 Cleaning builds
 
-- The docs-build and docs sessions remove docs/_build before each run. If you need a fully clean environment, also delete any cached auto-generated API stubs you may have created locally.
+- The docs-build and docs sessions remove docs/_build before each run. If a fully clean environment is needed, also delete any cached auto-generated API stubs that may have been created locally.
 
 
 ## 5 Authoring Guidelines
@@ -168,7 +172,7 @@ All commands are executed via Nox to ensure reproducibility.
         :prog: tool-name
         :show-nested:
 
-- Replace package.module:cli with the import path and callable for your Click entry point.
+- The token package.module:cli should be replaced with the import path and callable for the project's Click entry point.
 
 ### 5.4 Cross-referencing and intersphinx
 
@@ -189,12 +193,108 @@ All commands are executed via Nox to ensure reproducibility.
 - pyproject.toml — Project metadata and tooling configs (ruff, mypy, coverage) that indirectly affect example code in docs.
 
 
-## 7 Troubleshooting
+## 7 Style Guide
+
+Projects may also include this style guide as a Git submodule repository in docs/python-styleguide. This keeps the style 
+guide close to the project documentation to allow pinning known-good revision and pull updates. It is especially useful 
+for projects with a large number of contributors and AI Agents helping with writing code.
+
+### 7.1 Git Submodule
+
+Run these commands from the repository root (replace the remote URL if the fork or hosting differs):
+
+```bash
+# Add the style guide as a submodule under docs/python-styleguide
+git submodule add -b main https://github.com/example-org/python-styleguide.git docs/python-styleguide
+
+# Commit the .gitmodules entry and submodule pointer
+git commit -m "docs: add python-styleguide as submodule"
+
+# If cloning a repo that already has the submodule, initialize it with:
+git submodule update --init --recursive
+```
+
+Notes:
+- Submodules are pinned to a specific commit; they do not auto-track the remote branch. This is desirable for reproducible docs builds.
+- If submodules are not preferred, git subtree is an alternative; however, submodules are simpler to keep read-only and clearly versioned.
+
+### 7.2 Keep it up to date
+
+To pull the latest from the style guide:
+
+```bash
+# Option A: update from the superproject, keeping the pointer fast-forwarded
+git submodule update --remote --merge docs/python-styleguide
+
+# Option B: cd into the submodule and pull explicitly
+cd docs/python-styleguide
+git fetch origin
+git checkout main
+git pull --ff-only
+cd -
+
+# Commit the updated submodule pointer in the superproject
+git commit -am "docs: bump python-styleguide submodule"
+```
+
+CI/hosting considerations:
+- Read the Docs: ensure submodules are fetched. In docs/.readthedocs.yaml add:
+
+  ```yaml
+  submodules:
+    include:
+      - docs/python-styleguide
+  ```
+
+- Other CI: ensure the checkout step initializes submodules, e.g., git submodule update --init --recursive.
+
+### 7.3 Render or link it in Sphinx
+
+This repository largely uses Markdown (.md) files. To render them inside the project's Sphinx documentation:
+
+1) Enable MyST-Parser in docs/conf.py:
+
+```python
+extensions = [
+    # existing extensions...
+    "myst_parser",
+]
+```
+
+Ensure myst-parser is installed in the documentation environment (nox session and/or docs/requirements.txt).
+
+2) Include the files in a toctree, for example in docs/index.rst:
+
+.. code-block:: rst
+
+   .. toctree::
+      :maxdepth: 2
+      :caption: Python Style Guide
+
+      python-styleguide/README.rst
+      python-styleguide/documentation.md
+      python-styleguide/syntax.md
+      python-styleguide/semantics.md
+      python-styleguide/project_structure.md
+      python-styleguide/code_file_layout.md
+      python-styleguide/module_tutorials.md
+      python-styleguide/package_tutorials.md
+      python-styleguide/unit_tests.md
+      python-styleguide/performance_tests.md
+      python-styleguide/project_tools.md
+      python-styleguide/examples.md
+
+If enabling Markdown rendering is not desired, it is still possible to:
+- Link to the files as plain hyperlinks (they will render on Git hosting platforms but not as Sphinx pages), or
+- Include only README.rst (since it is already in ReST) and link out to the rest of the repository.
+
+
+## 8 Troubleshooting
 
 - Import errors during autodoc
-  - Sphinx imports modules to extract docstrings. The configuration ensures src/ is on sys.path. If you see import errors, confirm the module is installable or visible under src/ and that any optional dependencies are available.
+  - Sphinx imports modules to extract docstrings. The configuration ensures src/ is on sys.path. If import errors occur, confirm the module is installable or visible under src/ and that any optional dependencies are available.
 - Missing API pages
-  - autosummary only generates pages for entries you include in autosummary tables. Ensure your .rst files include the relevant modules/objects, or generate stubs ahead of time if needed.
+  - autosummary only generates pages for entries included in autosummary tables. Ensure .rst files include the relevant modules/objects, or generate stubs ahead of time if needed.
 - Theme issues or missing styles
   - Confirm sphinx_rtd_theme is installed in the session environment. The nox sessions install it automatically.
 - Markdown not rendering

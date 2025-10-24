@@ -743,4 +743,4 @@ result = processor.process_data("item1")
 print(f"Result: {result}")
 ```
 
-By following these guidelines, you can create examples that effectively demonstrate the functionality of your library and help users understand how to use it in their own projects.
+By following these guidelines, developers can create examples that effectively demonstrate library functionality and help users understand how to apply it in their own projects.

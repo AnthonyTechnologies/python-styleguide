@@ -120,9 +120,9 @@ install the package regardless of their setup.
 - Formatting: Markdown and Code Cells
 - Instructions: Clear, step-by-step installation instructions using pip or conda.
     ```python
-    # !pip install your-package-name
+    # !pip install example-package-name
     # or
-    # !conda install -c your-channel your-package-name
+    # !conda install -c example-channel example-package-name
     ```
 - Dependencies: Mention any critical dependencies if they are not automatically handled.
 - Verification (Optional):** A small code snippet to verify successful installation.
@@ -348,7 +348,7 @@ help create a professional and easily navigable document.
 - In Markdown cells, use backticks for inline code: `my_function()`.
 - Use triple backticks for code blocks:
     ```python
-    # your python code here
+    # Python code goes here
     ```
 - Specify the language for syntax highlighting in Markdown code blocks (e.g., ` ```python`).
 
@@ -387,4 +387,4 @@ ensure the tutorial achieves its educational goals while maintaining user engage
 - **Keep it Updated:** As the package evolves, update the tutorial to reflect changes.
 - **Clear Outputs Before Distribution (Usually):** Unless the outputs are essential for understanding without running (e.g., a complex plot that takes time to generate), it's often best to "Clear All Outputs" before distributing the `.ipynb` file. This reduces file size and allows users to generate outputs themselves. Alternatively, ensure all outputs are clean and directly relevant.
 
-By following this style guide, you can create high-quality Jupyter Notebook tutorials that significantly enhance the user experience for your Python package.
+By following this style guide, developers can create high-quality Jupyter Notebook tutorials that significantly enhance the user experience for Python packages.

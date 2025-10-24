@@ -1,4 +1,4 @@
-# Anthony's Python Style Guide: Syntax (Google Style Guide Remix)
+# Anthony's Python Style Guide: Syntax
 
 ## Table of Contents
 
@@ -97,7 +97,7 @@ easier for developers to understand and contribute to the codebase.
 Names should be descriptive. This includes functions, classes, variables, attributes, files and any other type of named 
 entities.
 
-Avoid abbreviation. In particular, do not use abbreviations that are ambiguous or unfamiliar to readers outside your 
+Avoid abbreviation. In particular, do not use abbreviations that are ambiguous or unfamiliar to readers outside the 
 project, and do not abbreviate by deleting letters within a word.
 
 Always use a .py filename extension. Never use dashes.
@@ -129,7 +129,7 @@ Prepending a single underscore (`_`) has some support for protecting module vari
 protected member access). Note that it is okay for unit tests to access protected constants from the modules under test.
 
 Prepending a double underscore (`__` aka "dunder") to an instance variable or method effectively makes the variable or 
-method private to its class (using name mangling); we discourage its use as it impacts readability and testability, and 
+method private to its class (using name mangling); its use is discouraged as it impacts readability and testability, and 
 isn't really private. Prefer a single underscore.
 
 Place related classes and top-level functions together in a module.
@@ -163,7 +163,7 @@ Examples:
 
 
 #### 2.1.3 File Naming
-Python filenames must have a .py extension and must not contain dashes (-). If you want an executable to be accessible 
+Python filenames must have a .py extension and must not contain dashes (-). If an executable should be accessible 
 without the extension, use a symbolic link or a simple bash wrapper containing `exec "$0.py" "$@"`.
 
 Unit test files follow PEP 8 compliant lower_with_under method names, for example, test_<method_under_test>_<state>. 
@@ -173,7 +173,7 @@ starting with test to separate logical components of the name. One possible patt
 
 
 ### 2.2 Semicolons
-Do not terminate your lines with semicolons, and do not use semicolons to put two statements on the same line.
+Do not terminate lines with semicolons, and do not use semicolons to put two statements on the same line.
 
 ### 2.3 Line length
 Maximum line length is 120 characters.
@@ -186,8 +186,7 @@ Explicit exceptions to the 120 character limit:
 
 Do not use a backslash for explicit line continuation.
 
-Instead, make use of Python's implicit line joining inside parentheses, brackets and braces. If necessary, you can add 
-an extra pair of parentheses around an expression.
+Instead, make use of Python's implicit line joining inside parentheses, brackets, and braces. If necessary, an extra pair of parentheses can be added around an expression.
 
 Note that this rule doesn't prohibit backslash-escaped newlines within strings (see below).
 
@@ -246,7 +245,7 @@ x = ('This will build a very long long '
      'long long long long long long string')
 ```
 
-Prefer to break lines at the highest possible syntactic level. If you must break a line twice, break it at the same 
+Prefer breaking lines at the highest possible syntactic level. If a line must be broken twice, break it at the same 
 syntactic level both times.
 
 Correct:
@@ -312,9 +311,9 @@ per the notes above when it is sensible.
 ### 2.4 Statements
 Generally only one statement per line.
 
-However, you may put the result of a test on the same line as the test only if the entire statement fits on one line. In 
-particular, you can never do so with try/except since the try and except can't both fit on the same line, and you can 
-only do so with an if only if there is no else.
+However, placing the result of a test on the same line as the test is acceptable only if the entire statement fits on one line. In 
+particular, this must never be done with try/except since the try and except cannot both fit on the same line, and it is 
+acceptable with an if only when there is no else.
 
 Examples:
 
@@ -373,12 +372,11 @@ return (foo)
 
 
 ### 2.6 Indentation
-Indent your code blocks with 4 spaces.
+Indent code blocks with 4 spaces.
 
 Never use the tab character. 
 
-Some editors will automatically use spaces when you press the tab key. Ensure that your editor is set to use 4 spaces 
-for indentation. 
+Some editors automatically insert spaces when the Tab key is pressed. Ensure the editor is configured to use 4 spaces for indentation.
 
 Implied line continuation should align wrapped elements vertically (see line length examples), or use a hanging 4-space 
 indent. Closing (round, square or curly) brackets can be placed at the end of the expression, or on separate lines, but 
@@ -458,7 +456,7 @@ foo = {
 #### 2.6.1 Trailing Commas in Sequences of Items
 Trailing commas in sequences of items are required if and only if the closing container token `]`, `)`, or `}` does not 
 appear on the same line as the final element, as well as for tuples with a single element. The presence of a trailing 
-comma is also used as a hint to our Python code auto-formatter Black or Pyink to direct it to auto-format the container 
+comma is also used as a hint to the Python code auto-formatter Black or Pyink to direct it to auto-format the container 
 of items to one item per line when the `,` after the final element is present.
 
 Correct:
@@ -485,10 +483,10 @@ golomb4 = [
 ### 2.7 Blank Lines
 Two blank lines between top-level definitions, be they function or class definitions. One blank line between method 
 definitions and between the docstring of a class and the first method. No blank line following a def line. Use single 
-blank lines as you judge appropriate within functions or methods.
+blank lines as judged appropriate within functions or methods.
 
 Blank lines need not be anchored to the definition. For example, related comments immediately preceding function, class, 
-and method definitions can make sense. Consider if your comment might be more useful as part of the docstring.
+and method definitions can make sense. Consider whether the comment might be more useful as part of the docstring.
 
 
 ### 2.8 Whitespace
@@ -548,7 +546,7 @@ dict ['key'] = list [index]
 No trailing whitespace.
 
 Surround binary operators with a single space on either side for assignment (`=`), comparisons (`==`, `<`, `>`, `!=`, 
-`<>`, `<=`, `>=`, `in`, `not in`, `is`, `is not`), and Booleans (`and`, `or`, `not`). Use your better judgment for the 
+`<>`, `<=`, `>=`, `in`, `not in`, `is`, `is not`), and Booleans (`and`, `or`, `not`). Use best judgment for the 
 insertion of spaces around arithmetic operators (`+`, `-`, `*`, `/`, `//`, `%`, `**`, `@`).
 
 Correct:
@@ -613,7 +611,7 @@ Type annotations (or "type hints") are for function or method arguments and retu
 def func(a: int) -> list[int]:
 ```
 
-You can also declare the type of a variable using similar syntax:
+It is also possible to declare the type of a variable using similar syntax:
 
 ```python
 a: SomeType = some_func()
@@ -685,7 +683,7 @@ def my_method(
   ...
 ```
 
-pylint allows you to move the closing parenthesis to a new line and align with the opening one, but this is less 
+pylint allows moving the closing parenthesis to a new line and aligning with the opening one, but this is less 
 readable.
 
 Incorrect:
@@ -732,8 +730,8 @@ def my_function(
 ```
 
 #### 2.9.3 Forward Declarations
-If you need to use a class name (from the same module) that is not yet defined – for example, if you need the class name 
-inside the declaration of that class, or if you use a class that is defined later in the code – either use `from 
+If it is necessary to use a class name (from the same module) that is not yet defined – for example, if the class name is needed 
+inside the declaration of that class, or when using a class that is defined later in the code – either use `from 
 __future__ import annotations` or use a string for the class name.
 
 Correct:
@@ -774,7 +772,7 @@ def func(a:int=0) -> int:
 #### 2.9.5 NoneType
 
 In the Python type system, `NoneType` is a "first class" type, and for typing purposes, `None` is an alias for 
-`NoneType`. If an argument can be `None`, it has to be declared! You can use `|` union type expressions (recommended in 
+`NoneType`. If an argument can be `None`, it has to be declared. Use `|` union type expressions (recommended in 
 new Python 3.10+ code), or the older `Optional` and `Union` syntaxes.
 
 Use explicit `X | None` instead of implicit. Earlier versions of type checkers allowed `a: str = None` to be interpreted 
@@ -797,7 +795,7 @@ def implicit_optional(a: str = None) -> str:
 ```
 
 #### 2.9.6 Type Aliases
-You can declare aliases of complex types. The name of an alias should be CapWorded. If the alias is used only in this 
+It is possible to declare aliases of complex types. The name of an alias should be CapWorded. If the alias is used only in this 
 module, it should be _Private.
 
 Note that the `: TypeAlias` annotation is only supported in versions 3.10+.
@@ -810,7 +808,7 @@ ComplexTFMap: TypeAlias = Mapping[str, _LossAndGradient]
 ```
 
 #### 2.9.7 Ignoring Types
-You can disable type checking on a line with the special comment `# type: ignore`.
+Type checking can be disabled on a line with the special comment `# type: ignore`.
 
 pytype has a disable option for specific errors (similar to lint):
 
@@ -831,7 +829,7 @@ a: Foo = SomeUndecoratedFunction()
 
 **Type Comments**
 
-Though you may see them remaining in the codebase (they were necessary before Python 3.6), do not add any more uses of a 
+Though they may remain in the codebase (they were necessary before Python 3.6), do not add any more uses of a 
 `# type: <type name>` comment on the end of the line:
 
 ```python
@@ -935,7 +933,7 @@ type in the code above, use `AnyStr`.
 
 For symbols (including types, functions, and constants) from the typing or collections.abc modules used to support 
 static analysis and type checking, always import the symbol itself. This keeps common annotations more concise and 
-matches typing practices used around the world. You are explicitly allowed to import multiple specific symbols on one 
+matches typing practices used around the world. It is acceptable to import multiple specific symbols on one 
 line from the typing and collections.abc modules. For example:
 
 ```python
@@ -944,7 +942,7 @@ from typing import Any, Generic, cast, TYPE_CHECKING
 ```
 
 Given that this way of importing adds items to the local namespace, names in typing or collections.abc should be treated 
-similarly to keywords, and not be defined in your Python code, typed or not. If there is a collision between a type and 
+similarly to keywords, and not be defined in the Python code, typed or not. If there is a collision between a type and 
 an existing name in a module, import it using `import x as y`.
 
 ```python
@@ -952,7 +950,7 @@ from typing import Any as AnyType
 ```
 
 When annotating function signatures, prefer abstract container types like `collections.abc.Sequence` over concrete types 
-like `list`. If you need to use a concrete type (for example, a tuple of typed elements), prefer built-in types like 
+like `list`. If a concrete type is needed (for example, a tuple of typed elements), prefer built-in types like 
 `tuple` over the parametric type aliases from the typing module (e.g., `typing.Tuple`).
 
 ```python
@@ -1003,8 +1001,8 @@ def f(x: "sketch.Sketch"): ...
 #### 2.9.14 Circular Dependencies
 
 Circular dependencies that are caused by typing are code smells. Such code is a good candidate for refactoring. Although 
-technically it is possible to keep circular dependencies, various build systems will not let you do so because each 
-module has to depend on the other.
+technically it is possible to keep circular dependencies, various build systems do not permit this because each 
+module must depend on the other.
 
 Replace modules that create circular dependency imports with `Any`. Set an alias with a meaningful name, and use the 
 real type name from this module (any attribute of `Any` is `Any`). Alias definitions should be separated from the last 
@@ -1061,7 +1059,7 @@ Be sure to use the right style for module, function, method docstrings and inlin
 
 Python uses docstrings to document code. A docstring is a string that is the first statement in a package, module, class 
 or function. These strings can be extracted automatically through the `__doc__` member of the object and are used by 
-pydoc. (Try running pydoc on your module to see how it looks.) Always use the three-double-quote `"""` format for 
+pydoc. (For example, run pydoc on a module to preview the output.) Always use the three-double-quote `"""` format for 
 docstrings (per PEP 257). A docstring should be organized as a summary line (one physical line not exceeding 120 
 characters) terminated by a period, question mark, or exclamation point. When writing more (encouraged), this must be 
 followed by a blank line, followed by the rest of the docstring starting at the same cursor position as the first quote 
@@ -1134,7 +1132,7 @@ object returned by next(), instead of the generator object itself that the call 
 
 **Raises:**
 List all exceptions that are relevant to the interface followed by a description. Use a similar exception name + colon + 
-space or newline and hanging indent style as described in Args:. You should not document exceptions that get raised if 
+space or newline and hanging indent style as described in Args:. Exceptions should not be documented if 
 the API specified in the docstring is violated (because this would paradoxically make behavior under violation of the 
 API part of the API).
 
@@ -1335,8 +1333,8 @@ Comments Guidelines:
 Good Example:
 ```python
 # Find Location in the Array
-# We use a weighted dictionary search to find out where i is in the array. We extrapolate position based on the largest 
-# num in the array and the array size and then do binary search to get the exact number.
+# A weighted dictionary search is used to determine where i is in the array. The position is extrapolated based on the
+# largest number in the array and the array size, and then a binary search is performed to obtain the exact index.
 if i & (i-1) == 0:  # True if i is 0 or a power of 2.
 ```
 Bad Example:
@@ -1362,10 +1360,10 @@ consistent TODO format that can be searched to find out how to get more details.
 Avoid adding TODOs that refer to an individual or team as the context:
 
 ```python
-# TODO: @yourusername - File an issue and use a '*' for repetition.
+# TODO: @username - File an issue and use a '*' for repetition.
 ```
 
-If your TODO is of the form "At a future date do something" make sure that you either include a very specific date 
+If a TODO is of the form "At a future date do something" ensure that it either includes a very specific date 
 ("Fix by November 2009") or a very specific event ("Remove this code when all clients can handle XML responses.") that 
 future code maintainers will comprehend. Issues are ideal for tracking this.
 
@@ -1375,7 +1373,7 @@ Pay attention to punctuation, spelling, and grammar; it is easier to read well-w
 
 Comments should be as readable as narrative text, with proper capitalization and punctuation. In many cases, complete 
 sentences are more readable than sentence fragments. Shorter comments, such as comments at the end of a line of code, 
-can sometimes be less formal, but you should be consistent with your style.
+can sometimes be less formal, but the style should remain consistent.
 
 
 ### 2.13 Mathematical Notation
@@ -1391,7 +1389,7 @@ When using names based on established notation:
 
 ### 2.14 Strings
 Use an f-string, the % operator, or the format method for formatting strings, even when the parameters are all strings. 
-Use your best judgment to decide between string formatting options. A single join with + is okay but do not format with 
+Use sound judgment to decide between string formatting options. A single join with + is okay but do not format with 
 +.
 
 Correct:
@@ -1435,13 +1433,13 @@ for last_name, first_name in employee_list:
 employee_table += '</table>'
 ```
 
-Be consistent with your choice of string quote character within a file. Pick `'` or `"` and stick with it. It is okay to 
+Be consistent with the choice of string quote character within a file. Pick `'` or `"` and stick with it. It is okay to 
 use the other quote character on a string to avoid the need to backslash-escape quote characters within the string.
 Typically, double quotes `"` should be used for strings and `'` should be used for single characters.
 
 Correct:
 ```python
-Python('Why are you hiding your eyes?')
+Python('Why hide the eyes?')
 Gollum("I'm scared of lint errors.")
 Narrator('"Good!" thought a happy Python reviewer.')
 Character('I')
@@ -1449,7 +1447,7 @@ Character('I')
 
 Incorrect:
 ```python
-Python("Why are you hiding your eyes?")
+Python("Why hide the eyes?")
 Gollum('The lint. It burns. It burns us.')
 Gollum("Always the great lint. Watching. Watching."
 Character("I")
@@ -1458,21 +1456,21 @@ Character("I")
 Prefer `"""` for multi-line strings rather than `'''`. Projects may choose to use `'''` for all non-docstring multi-line 
 strings if and only if they also use `'` for regular strings. Docstrings must use `"""` regardless.
 
-Multi-line strings do not flow with the indentation of the rest of the program. If you need to avoid embedding extra 
+Multi-line strings do not flow with the indentation of the rest of the program. If it is necessary to avoid embedding extra 
 space in the string, use either concatenated single-line strings or a multi-line string with `textwrap.dedent()` to 
 remove the initial space on each line:
 
 Correct:
 ```python
-long_string = """This is fine if your use case can accept
+long_string = """This is fine if the use case can accept
     extraneous leading spaces."""
 ```
 ```python
-long_string = ("And this is fine if you cannot accept\n" +
+long_string = ("And this is fine if one cannot accept\n" +
                "extraneous leading spaces.")
 ```
 ```python
-long_string = ("And this too is fine if you cannot accept\n"
+long_string = ("And this too is fine if one cannot accept\n"
                "extraneous leading spaces.")
 ```
 ```python
@@ -1636,15 +1634,15 @@ def connect_to_next_port(self, minimum: int) -> int:
 Libraries or packages may define their own exceptions. When doing so they must inherit from an existing exception class. 
 Exception names should end in Error and should not introduce repetition (foo.FooError).
 
-Never use catch-all `except:` statements, or catch `Exception` or `StandardError`, unless you are:
+Never use catch-all `except:` statements, or catch `Exception` or `StandardError`, unless any of the following apply:
 - re-raising the exception, or
 - creating an isolation point in the program where exceptions are not propagated but are recorded and suppressed instead, such as protecting a thread from crashing by guarding its outermost block.
 
 Python is very tolerant in this regard and `except:` will really catch everything including misspelled names, sys.exit()
-calls, Ctrl+C interrupts, unittest failures and all kinds of other exceptions that you simply don't want to catch.
+calls, Ctrl+C interrupts, unittest failures and all kinds of other exceptions that should not be caught.
 
 Minimize the amount of code in a try/except block. The larger the body of the try, the more likely that an exception 
-will be raised by a line of code that you didn't expect to raise an exception. In those cases, the try/except block 
+will be raised by a line of code that was not expected to raise an exception. In those cases, the try/except block 
 hides a real error.
 
 Use the `finally` clause to execute code whether or not an exception is raised in the try block. This is often useful 
@@ -1728,8 +1726,8 @@ return (
 
 ### 2.17 Default Iterators and Operators
 Use default iterators and operators for types that support them, like lists, dictionaries, and files. The built-in types 
-define iterator methods, too. Prefer these methods to methods that return lists, except that you should not mutate a 
-container while iterating over it.
+define iterator methods, too. Prefer these methods to methods that return lists, except that a container should not be 
+mutated while iterating over it.
 
 Examples:
 
@@ -1839,21 +1837,20 @@ Conditions using Python booleans are easier to read and less error-prone. In mos
 May look strange to C/C++ developers.
 
 #### 2.14.4 Decision
-Use the "implicit" false if possible, e.g., `if foo:` rather than `if foo != []:`. There are a few caveats that you 
-should keep in mind though:
+Use the "implicit" false if possible, e.g., `if foo:` rather than `if foo != []:`. There are a few caveats to keep in mind:
 
 Always use `if foo is None:` (or `is not None`) to check for a None value. E.g., when testing whether a variable or 
 argument that defaults to None was set to some other value. The other value might be a value that's false in a boolean 
 context!
 
-Never compare a boolean variable to False using `==`. Use `if not x:` instead. If you need to distinguish False from 
-None then chain the expressions, such as `if not x and x is not None:`.
+Never compare a boolean variable to False using `==`. Use `if not x:` instead. If distinguishing False from 
+None is necessary, then chain the expressions, such as `if not x and x is not None:`.
 
 For sequences (strings, lists, tuples), use the fact that empty sequences are false, so `if seq:` and `if not seq:` are 
 preferable to `if len(seq):` and `if not len(seq):` respectively.
 
-When handling integers, implicit false may involve more risk than benefit (i.e., accidentally handling None as 0). You 
-may compare a value which is known to be an integer (and is not the result of len()) against the integer 0.
+When handling integers, implicit false may involve more risk than benefit (i.e., accidentally handling None as 0). A 
+value that is known to be an integer (and is not the result of len()) may be compared against the integer 0.
 
 Examples:
 
@@ -1981,12 +1978,12 @@ Decorators are a special case of "top-level code" - see main for more discussion
 Okay in most cases.
 
 #### 2.12.1 Definition
-You can specify values for variables at the end of a function's parameter list, e.g., `def foo(a, b=0):`. If foo is 
+It is possible to specify values for variables at the end of a function's parameter list, e.g., `def foo(a, b=0):`. If foo is 
 called with only one argument, b is set to 0. If it is called with two arguments, b has the value of the second argument.
 
 #### 2.12.2 Pros
-Often you have a function that uses lots of default values, but on rare occasions you want to override the defaults. 
-Default argument values provide an easy way to do this, without having to define lots of functions for the rare 
+Often a function uses many default values, but on rare occasions the defaults must be overridden. 
+Default argument values provide an easy way to do so, without having to define many functions for the rare 
 exceptions. As Python does not support overloaded methods/functions, default arguments are an easy way of "faking" the 
 overloading behavior.
 

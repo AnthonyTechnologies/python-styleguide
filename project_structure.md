@@ -21,8 +21,7 @@
 ## 1 Background
 
 This document describes an opinionated, practical structure for Python projects used in this repository and intended to
-be reusable for most Python packages. The original structure was inspired by ["Hypermodern Python"](https://cjolowicz.github.io/posts/hypermodern-python-01-setup/)
-by [Claudio Jolowicz](https://github.com/cjolowicz).
+be reusable for most Python packages. The structure is a fork of ["Hypermodern Python"](https://cjolowicz.github.io/posts/hypermodern-python-01-setup/) by [Claudio Jolowicz](https://github.com/cjolowicz).
 
 A consistent structure improves:
 - Discoverability: developers can quickly find code, tests, docs, and examples.
@@ -87,7 +86,7 @@ Recommended conventions:
 - Centralize tool configurations (ruff/flake8, black, isort, pytest, coverage, mypy, sphinx) inside pyproject.toml when supported.
 - Treat pyproject.toml as the source of truth for package metadata.
 - Keep versioning unified (prefer single-source versioning via package __init__ or Poetry’s version field).
-- When using Poetry, it’s acceptable to expose metadata via the PEP 621 [project] table and set dynamic fields (e.g., version, readme) that are sourced from [tool.poetry]. Document this clearly in your README/CONTRIBUTING to avoid confusion.
+- When using Poetry, it’s acceptable to expose metadata via the PEP 621 [project] table and set dynamic fields (e.g., version, readme) that are sourced from [tool.poetry]. Document this clearly in the README/CONTRIBUTING to avoid confusion.
 
 #### 3.1.2 Development Tools
 
@@ -115,12 +114,12 @@ Related guidelines:
 Structure:
 ```
 src/
-└── your_package/
+└── package_name/
     ├── module1/
     ├── module2/
     ├── module3/
     ├── __init__.py
-    └── py.typed         # Present if you ship typing information
+    └── py.typed         # Present if typing information is shipped
 ```
 
 Guidelines:
@@ -180,7 +179,7 @@ docs/
 ```
 
 Guidelines:
-- Author in a format supported by your doc toolchain (e.g., Sphinx/reStructuredText, MkDocs/Markdown).
+- Author in a format supported by the documentation toolchain (e.g., Sphinx/reStructuredText, MkDocs/Markdown).
 - Keep API docs generated from code docstrings where possible.
 - Cross-link examples and tutorials to relevant guides.
 
@@ -237,7 +236,7 @@ Linting:
 To apply this structure to a new or existing project:
 
 Related guidelines:
-- Syntactic Guidelines — see [syntax.md](syntax.md) for code-level conventions you’ll apply when creating modules and packages.
+- Syntactic Guidelines — see [syntax.md](syntax.md) for code-level conventions to apply when creating modules and packages.
 - Semantics Guidelines — see [semantics.md](semantics.md) for organizing code by responsibility and maintaining cohesion.
 - Project Tooling — see [project_tools.md](project_tools.md) for automating checks and workflows via pre-commit and nox.
 
@@ -267,4 +266,4 @@ Related guidelines:
 7. Include unit, integration, and, where helpful, performance tests.
 8. Prefer automation (nox, pre-commit) to enforce consistency.
 
-By following these guidelines, you’ll create a Python project that is easy to navigate, test, and maintain.
+By following these guidelines, the result is a Python project that is easy to navigate, test, and maintain.

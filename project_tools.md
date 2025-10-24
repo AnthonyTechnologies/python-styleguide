@@ -54,10 +54,10 @@ per‑tool settings in pyproject.toml where applicable (e.g., [tool.ruff], [tool
 
 ### 2.2 Installation
 
-- Ensure you have Python and pip available.
-- Install pre-commit into your active environment:
+- Ensure Python and pip are available in the environment.
+- Install pre-commit into the active environment:
   - pip install pre-commit
-- Install the git hooks into this repository:
+- Install the git hooks into the repository:
   - pre-commit install --install-hooks
 
 ### 2.3 Running hooks

@@ -65,8 +65,8 @@ New language version semantic changes may be gated behind a special future impor
 within earlier runtimes.
 
 Use of `from __future__ import` statements is encouraged. It allows a given source file to start using more modern 
-Python syntax features today. Once you no longer need to run on a version where the features are hidden behind a 
-`__future__` import, feel free to remove those lines.
+Python syntax features today. Once it is no longer necessary to run on a version where the features are hidden behind a 
+`__future__` import, those lines may be removed.
 
 In code that may execute on versions as old as 3.5 rather than >= 3.7, import:
 
@@ -78,9 +78,9 @@ from __future__ import annotations
 
 For more information read the Python future statement definitions documentation.
 
-Please don't remove these imports until you are confident the code is only ever used in a sufficiently modern 
-environment. Even if you do not currently use the feature a specific future import enables in your code today, keeping 
-it in place in the file prevents later modifications of the code from inadvertently depending on the older behavior.
+Please do not remove these imports until it is certain the code is only ever used in a sufficiently modern 
+environment. Even if the specific feature enabled by a particular future import is not currently used in the code, keeping 
+it in place prevents later modifications from inadvertently depending on the older behavior.
 
 Guidelines:
 - The Future Imports section should almost always go in the Imports section.
@@ -165,7 +165,7 @@ Guidelines:
   - y conflicts with a top-level name defined in the current module
   - y conflicts with a common parameter name that is part of the public API (e.g., features)
   - y is an inconveniently long name
-  - y is too generic in the context of your code (e.g., from storage.file_system import options as fs_options)
+  - y is too generic in the context of the code (e.g., from storage.file_system import options as fs_options)
 - Use `import y as z` only when z is a standard abbreviation (e.g., `import numpy as np`)
 
 Exemptions:
@@ -697,8 +697,8 @@ that case, the registration may be defined in a definitions section called: `# R
 
 ### 2.7 Main
 In Python, pydoc as well as unit tests require modules to be importable. If a file is meant to be used as an executable, 
-its main functionality must be in a `main()` function, and your code must always check if `__name__ == '__main__'` 
-before executing your main program, so that it is not executed when the module is imported.
+its main functionality must be in a `main()` function, and the code must always check if `__name__ == '__main__'` 
+before executing the main program, so that it is not executed when the module is imported.
 
 When using absl, use app.run:
 

@@ -1,4 +1,4 @@
-# Anthony's Python Style Guide: Semantics (Google Style Guide Remix)
+# Anthony's Python Style Guide: Semantics
 
 ## Table of Contents
 
@@ -70,14 +70,11 @@ Prefer small and focused functions.
 We recognize that long functions are sometimes appropriate, so no hard limit is placed on function length. If a function 
 exceeds about 40 lines, think about whether it can be broken up without harming the structure of the program.
 
-Even if your long function works perfectly now, someone modifying it in a few months may add new behavior. This could 
-result in bugs that are hard to find. Keeping your functions short and simple makes it easier for other people to read 
-and modify your code.
+Even if a long function works perfectly now, someone modifying it in a few months may add new behavior. This could 
+result in bugs that are hard to find. Keeping functions short and simple makes it easier for other people to read 
+and modify the code.
 
-You could find long and complicated functions when working with some code. Do not be intimidated by modifying existing 
-code: if working with such a function proves to be difficult, you find that errors are hard to debug, or you want to 
-use a piece of it in several different contexts, consider breaking up the function into smaller and more manageable 
-pieces.
+Long and complicated functions may be encountered when working with existing code. Do not be intimidated by modifying such code: if working with a function proves to be difficult, if errors are hard to debug, or if a piece of it is needed in several different contexts, consider breaking up the function into smaller and more manageable pieces.
 
 
 ### 2.3 Nested/Local/Inner Classes and Functions
@@ -147,7 +144,7 @@ Do not rely on the atomicity of built-in types.
 
 While Python's built-in data types such as dictionaries appear to have atomic operations, there are corner cases where 
 they aren't atomic (e.g. if `__hash__` or `__eq__` are implemented as Python methods) and their atomicity should not be 
-relied upon. Neither should you rely on atomic variable assignment (since this in turn depends on dictionaries).
+relied upon. Avoid relying on atomic variable assignment (since this in turn depends on dictionaries).
 
 Use the queue module's Queue data type as the preferred way to communicate data between threads. Otherwise, use the 
 threading module and its locking primitives. Prefer condition variables and `threading.Condition` instead of using 

@@ -1,1 +1,0 @@
-# Anthony's Python Style Guide
