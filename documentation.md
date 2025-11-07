@@ -177,7 +177,7 @@ All commands are executed via Nox to ensure reproducibility.
 ### 5.4 Cross-referencing and intersphinx
 
 - Use Sphinx cross-reference roles to link to symbols:
-  - :py:mod:`baseobjects.module`, :py:class:`baseobjects.Class`, :py:meth:`baseobjects.Class.method`.
+  - :py:mod:`package.module`, :py:class:`package.Class`, :py:meth:`package.Class.method`.
 - For Python stdlib references, intersphinx provides automatic links, e.g., :class:`dict`, :mod:`asyncio`.
 
 ### 5.5 Source links and readability
@@ -195,8 +195,8 @@ All commands are executed via Nox to ensure reproducibility.
 
 ## 7 Style Guide
 
-Projects may also include this style guide as a Git submodule repository in docs/python-styleguide. This keeps the style 
-guide close to the project documentation to allow pinning known-good revision and pull updates. It is especially useful 
+Projects may also include this style guide as a Git submodule repository in docs/python-styleguide. This keeps the style
+guide close to the project documentation to allow pinning known-good revision and pull updates. It is especially useful
 for projects with a large number of contributors and AI Agents helping with writing code.
 
 ### 7.1 Git Submodule

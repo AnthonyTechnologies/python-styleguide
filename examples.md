@@ -34,29 +34,29 @@
 
 ## 1 Background
 
-Examples are crucial for helping users understand how to use a library or framework. They provide practical 
-demonstrations of the library's functionality and serve as reference implementations for common use cases. Well-crafted 
+Examples are crucial for helping users understand how to use a library or framework. They provide practical
+demonstrations of the library's functionality and serve as reference implementations for common use cases. Well-crafted
 examples can significantly reduce the learning curve for new users and serve as a quick reference for experienced users.
 
-Examples are supplementary to the library's documentation. While tutorials and reference guides provide a conceptual 
-overview of the library and are meant to educate users on its features and usage, examples provide more in-depth 
-explanations and demonstrations on how to use the library in real-world scenarios. Additionally, examples are written in 
+Examples are supplementary to the library's documentation. While tutorials and reference guides provide a conceptual
+overview of the library and are meant to educate users on its features and usage, examples provide more in-depth
+explanations and demonstrations on how to use the library in real-world scenarios. Additionally, examples are written in
 Python files rather than Jupyter notebooks, so it is easier to implement their content into other projects.
 
-This document provides guidelines specific to creating effective examples for Python packages. It focuses on 
+This document provides guidelines specific to creating effective examples for Python packages. It focuses on
 example-specific considerations while referencing other style guides for general Python coding practices:
 
 - For general Python code style and syntax, refer to [Syntactic Guidelines](syntax.md)
 - For file structure and organization, refer to [Code and File Layout](code_file_layout.md)
 - For semantic aspects of code, refer to [Semantics Guidelines](semantics.md)
 
-The Examples Guidelines is built upon these foundational documents, adding specific guidance for creating educational 
+The Examples Guidelines is built upon these foundational documents, adding specific guidance for creating educational
 and demonstrative code examples.
 
 
 ## 2 Directory Hierarchy
 
-Examples should be organized in a directory structure that mirrors the package structure. This makes it easy for users 
+Examples should be organized in a directory structure that mirrors the package structure. This makes it easy for users
 to find examples relevant to the specific components they're interested in.
 
 - Each major package should have its own directory under the `examples/` directory
@@ -85,7 +85,7 @@ examples/
 
 ## 3 Example Structure
 
-Example files should follow the general Python file layout guidelines as described in [Code and File Layout](code_file_layout.md), 
+Example files should follow the general Python file layout guidelines as described in [Code and File Layout](code_file_layout.md),
 with some additional example-specific considerations outlined below.
 
 
@@ -95,7 +95,7 @@ In addition to the standard file header requirements, example files should inclu
 
 1. What the example demonstrates
 2. A numbered list of key concepts or features being demonstrated
-3. In the import section, have imports from the example's package in the Third-Party Packages section instead of the 
+3. In the import section, have imports from the example's package in the Third-Party Packages section instead of the
    Local Packages section
 
 Example:
@@ -134,7 +134,7 @@ The main section in example files is particularly important as it demonstrates t
 3. Use print statements to explain what's happening and show results
 4. Include comments to explain the purpose of each demonstration
 5. Include comments to show the executed outcome and the expected outcome
-6. If the main is excessive, it can broken down into supporting functions which categorize sections of the example  
+6. If the main is excessive, it can broken down into supporting functions which categorize sections of the example
 
 Examples:
 ```python
@@ -189,13 +189,13 @@ if __name__ == "__main__":
 
 ### 3.3 Example Category Functions
 
-Example Category Functions break down the main section into example categories which focus on one aspect of the 
+Example Category Functions break down the main section into example categories which focus on one aspect of the
 examples. These functions follow the same guidelines as the main section:
 
 1. Organize demonstrations in a logical sequence, from basic to advanced
 2. Use print statements to explain what's happening and show results
 3. Include comments to explain the purpose of each demonstration
-4. Include comments to show the executed outcome and the expected outcome 
+4. Include comments to show the executed outcome and the expected outcome
 
 Examples:
 ```python
@@ -263,22 +263,22 @@ def arbitrate_state_overview():
 
 # Main #
 if __name__ == "__main__":
-    # Examples # 
+    # Examples #
     arbitrate_state_overview()
 ```
 
 
 ## 4 Example Semantics and Syntax
 
-Examples should conform to the semantics and syntax described in[Semantics Guidelines](semantics.md) and 
-[Syntactic Guidelines](syntax.md), but in some cases it may be necessary to deviate from the general 
-guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide. 
+Examples should conform to the semantics and syntax described in[Semantics Guidelines](semantics.md) and
+[Syntactic Guidelines](syntax.md), but in some cases it may be necessary to deviate from the general
+guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide.
 
 
 ### 4.1 Example Documentation
 
 For general code style, docstrings, and comments guidelines, refer to the [Syntactic Guidelines](syntax.md)
-document, particularly sections 2.10 (Docstrings) and 2.11 (Comments). The following sections cover documentation 
+document, particularly sections 2.10 (Docstrings) and 2.11 (Comments). The following sections cover documentation
 aspects specific to example files.
 
 
@@ -323,10 +323,10 @@ except Exception as e:
 
 ### 4.2 Assertions
 
-Assertions are a base Python feature that allows for checking the state of a program at runtime. Assertions are 
-discouraged in source code because they do not conform to Python's error handling principles. However, assertions are 
-permitted for debugging, testing, examples, and tutorials because assertions are good for explaining the behavior of a 
-program, and in these scenarios error handling is managed by the user rather than the program. 
+Assertions are a base Python feature that allows for checking the state of a program at runtime. Assertions are
+discouraged in source code because they do not conform to Python's error handling principles. However, assertions are
+permitted for debugging, testing, examples, and tutorials because assertions are good for explaining the behavior of a
+program, and in these scenarios error handling is managed by the user rather than the program.
 
 Guidelines:
 - Each test should include at least one assertion
@@ -436,15 +436,15 @@ Include examples that demonstrate how to handle edge cases:
 
 ### 5.5 Implement Base Classes
 
-Examples should demonstrate how to implement base classes. Base classes are useful for creating reusable components 
-that can be used in multiple scenarios. The examples should demonstrate how to use base classes to implement common 
+Examples should demonstrate how to implement base classes. Base classes are useful for creating reusable components
+that can be used in multiple scenarios. The examples should demonstrate how to use base classes to implement common
 functionality.
 
 
 ## 6 Example Styles
 
-Different example styles can be used to enhance the learning experience for users. Each style has its own strengths and 
-is suitable for different learning objectives. The following sections provide an overview of the different styles and 
+Different example styles can be used to enhance the learning experience for users. Each style has its own strengths and
+is suitable for different learning objectives. The following sections provide an overview of the different styles and
 examples that demonstrate them.
 
 ### 6.1 Cookbook Style
@@ -527,11 +527,11 @@ processor = DataProcessor(
 
 # Process data with automatic caching
 # The first call will be slow as it computes the result
-result1 = processor.process("example_key")  
+result1 = processor.process("example_key")
 print(f"First call result: {result1} == {expected_result1}")
 
 # The second call will be fast as it retrieves from cache
-result2 = processor.process("example_key")  
+result2 = processor.process("example_key")
 print(f"Second call result: {result2}  == {expected_result2}")
 ```
 
@@ -670,7 +670,7 @@ root.right.right = Node("G")
 ```
 
 ### 6.9 Example Styles Conclusions
-When creating examples, consider which style or combination of styles will best help users understand the concept being 
+When creating examples, consider which style or combination of styles will best help users understand the concept being
 demonstrated. Different styles are more effective for different types of learning objectives:
 
 - Use **Cookbook Style** for practical, task-oriented learning
@@ -682,14 +682,14 @@ demonstrated. Different styles are more effective for different types of learnin
 - Use **Incremental Complexity** for building comprehensive understanding of complex features
 - Use **Visual Learning** for concepts that benefit from spatial or structural representation
 
-For this style guide, primarily a mixture of Step-by-Step Transformation, Annotated Examples, Interactive Examples, and 
-Incremental Complexity are suggested because other sections of the project should cover the goals of the other styles.  
+For this style guide, primarily a mixture of Step-by-Step Transformation, Annotated Examples, Interactive Examples, and
+Incremental Complexity are suggested because other sections of the project should cover the goals of the other styles.
 
 
 ## 7 Example-Specific Best Practices
 
-For general code readability, performance, and maintainability guidelines, refer to the 
-[Syntactic Guidelines](syntax.md) and [Semantics Guidelines](semantics.md) documents. The 
+For general code readability, performance, and maintainability guidelines, refer to the
+[Syntactic Guidelines](syntax.md) and [Semantics Guidelines](semantics.md) documents. The
 following are best practices specific to example files:
 
 - **Educational Focus**: Examples should prioritize clarity and educational value over code optimization. Sometimes a slightly less efficient approach may be more instructive.
@@ -721,8 +721,8 @@ processor.set_maxsize(MAX_CACHE_SIZE)
 
 - **Self-Contained**: Examples should be runnable without requiring external files or dependencies beyond the library itself.
 - **Progressive Disclosure**: Structure examples to start with basic concepts and gradually introduce more complex features.
-- **Tests as Inspiration**: If there are unit tests, use them as a reference but do not copy them exactly. The examples should 
-  educate the user on how to use key aspects of the module and how they can use it to create new programs, not just 
+- **Tests as Inspiration**: If there are unit tests, use them as a reference but do not copy them exactly. The examples should
+  educate the user on how to use key aspects of the module and how they can use it to create new programs, not just
   test it.
 
 ## 8 Testing Examples

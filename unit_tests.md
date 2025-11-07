@@ -21,32 +21,32 @@
 
 ## 1 Background
 
-Unit tests are used to verify the correctness of the code being tested to ensure that it is working as expected. 
+Unit tests are used to verify the correctness of the code being tested to ensure that it is working as expected.
 Typically, unit tests are written to verify individual components of the code.
 
-Test suites are collections of related tests that validate a specific component, feature, or functionality of the 
-software. They help organize tests logically and provide a structured way to verify multiple aspects of the code. Test 
+Test suites are collections of related tests that validate a specific component, feature, or functionality of the
+software. They help organize tests logically and provide a structured way to verify multiple aspects of the code. Test
 suites can inherit from base test suites to provide consistent testing patterns across similar components.
 
-Unit tests and test suites should follow the guidelines set forth by the general styleguide such as the code 
+Unit tests and test suites should follow the guidelines set forth by the general styleguide such as the code
 organization, file structure, naming conventions, docstrings, and other standard practices in:
 
 - [Code File Layout](code_file_layout.md) - For file organization and structure
 - [Syntactic Guidelines](syntax.md) - For naming conventions, docstrings, and code formatting
 - [Semantics Guidelines](semantics.md) - For general code organization principles
 
-The guidelines in this document are supplemental to the general guidelines and focus on test-specific code to ensure 
+The guidelines in this document are supplemental to the general guidelines and focus on test-specific code to ensure
 consistency, maintainability, and effectiveness of the test suite across the project.
 
 
 ## 2 pytest
 
-**pytest** testing framework is the preferred framework for Python projects, as it provides more features and 
+**pytest** testing framework is the preferred framework for Python projects, as it provides more features and
 flexibility than python's unittest library.
 
-In pytest, tests can be created by defining a test function with a `test_` prefix. pytest can then run the tests using 
-its Python or command line interface and display diagnostics about the tests. Additionally, the pytest API offers an 
-extensive array of options for customizing the run conditions and diagnostic information of these tests. For more 
+In pytest, tests can be created by defining a test function with a `test_` prefix. pytest can then run the tests using
+its Python or command line interface and display diagnostics about the tests. Additionally, the pytest API offers an
+extensive array of options for customizing the run conditions and diagnostic information of these tests. For more
 information on pytest, see the [pytest documentation](https://docs.pytest.org/en/latest/).
 
 The pytest package has many features, and this styleguide will offer guidance on how to use them.
@@ -54,16 +54,16 @@ The pytest package has many features, and this styleguide will offer guidance on
 
 ## 3 Directory Hierarchy
 
-Base Test Suites or test suites which cover general implements should be located in the package source codes under 
-`testsuite`. Under normal circumstances, test suites should not be placed in the project source as only developers need 
-test suites; not package users. However, given that PYPI currently does not support alternate package installations. 
-These test suites should be included in the source to allow developers using PYPI to expand or create their own test 
+Base Test Suites or test suites which cover general implements should be located in the package source codes under
+`testsuite`. Under normal circumstances, test suites should not be placed in the project source as only developers need
+test suites; not package users. However, given that PYPI currently does not support alternate package installations.
+These test suites should be included in the source to allow developers using PYPI to expand or create their own test
 suites.
 
 Example:
 ```
 src/
-  baseobjects/                  # The main source package
+  templatepackage/                  # The main source package
     testsuite/
       bases/
         __init__.py
@@ -74,9 +74,9 @@ src/
       ...
 ```
 
-Concrete Test Suites and unit tests for individual or specific components should be organized in a directory structure 
-outside the source code that mirrors the package structure. This makes it easy for users to find tests relevant to the 
-specific components they're interested in. It also allows pytest to automatically discover tests when running the tests 
+Concrete Test Suites and unit tests for individual or specific components should be organized in a directory structure
+outside the source code that mirrors the package structure. This makes it easy for users to find tests relevant to the
+specific components they're interested in. It also allows pytest to automatically discover tests when running the tests
 using the `pytest` command.
 
 - Each major package should have its own directory under the `tests/` directory
@@ -108,16 +108,16 @@ The purpose of test code is to not only verify that the code is working as expec
 testing extensions of the code. For example, a class may outline functionality that is not implemented yet or may be
 changed in the future, but the test code should still verify that the class is working as expected.
 
-In pytests, tests themselves can be organized into classes and sub-classed which can be used to parameterize tests or 
+In pytests, tests themselves can be organized into classes and sub-classed which can be used to parameterize tests or
 create test suites to verify different implementations of the code.
 
-For creating documentation, follow the general docstring guidelines in [Syntactic Guidelines](syntax.md), 
+For creating documentation, follow the general docstring guidelines in [Syntactic Guidelines](syntax.md),
 section 2.10, with special attention to section 2.10.1.1 for test modules.
 
 
 ### 4.1 Test Classes
 
-Test classes should be used to group related test methods and even create test suites. Base test classes should be 
+Test classes should be used to group related test methods and even create test suites. Base test classes should be
 created to provide consistent testing patterns across the project.
 
 Test classes should inherit from appropriate base test classes to ensure consistent testing patterns across the project.
@@ -129,13 +129,13 @@ Guidelines:
   - Test involving defining classes should either be defined as inner classes or defined elsewhere and assigned to a class attribute.
   - Test involving defining functions should either be defined as inner functions or defined elsewhere and assigned to a class attribute.
 
-For test method naming and organization, follow the general method guidelines in [Syntactic Guidelines](syntax.md) 
+For test method naming and organization, follow the general method guidelines in [Syntactic Guidelines](syntax.md)
 and [Code File Layout](code_file_layout.md).
 
 
 ### 4.2 Test Methods
 
-Test methods should be designed to test a specific aspect of the class or function being tested. Each test method should 
+Test methods should be designed to test a specific aspect of the class or function being tested. Each test method should
 be focused, independent, and provide clear feedback when it fails.
 
 Guidelines:
@@ -175,7 +175,7 @@ to reduce code duplication and ensure consistent testing.
 
 ### 4.3 Test Suites
 
-Test suites, in this style guide, are Test Classes designed to function as test suites: a collection of related tests 
+Test suites, in this style guide, are Test Classes designed to function as test suites: a collection of related tests
 that validate a specific component, feature, or functionality of the software.
 
 Guidelines:
@@ -200,16 +200,16 @@ this style guide consists of Base Test Suites and Concrete Test Suites.
 
 #### 4.3.1 Base Test Suites
 
-Base Test Suites are test suites contain a collection of tests for validating a component, feature, or functionality of 
+Base Test Suites are test suites contain a collection of tests for validating a component, feature, or functionality of
 the software with a focus on testing general aspects of the component, feature, or functionality.
 
-Typically, a Base Test Suites have a target to test such as `TestClass` or `test_target` and will be composed of 
-abstract and concrete methods which test the target against various unit tests which the target must pass. Establishing 
-a test target allows subclassed test suites to interchange test targets to validate. The concrete tests defined in a 
-Base Test Suite ensure that test targets are tested similarly, while the abstract tests enforce that certain test must 
+Typically, a Base Test Suites have a target to test such as `TestClass` or `test_target` and will be composed of
+abstract and concrete methods which test the target against various unit tests which the target must pass. Establishing
+a test target allows subclassed test suites to interchange test targets to validate. The concrete tests defined in a
+Base Test Suite ensure that test targets are tested similarly, while the abstract tests enforce that certain test must
 be done, but the implementation of the test can be defined in a more test suite.
 
-It is not required, but the `baseobjects` package provides base test suites which server as a great foundation for test 
+It is not required, but the `templatepackage` package provides base test suites which server as a great foundation for test
 suites. These classes provide common functionality and ensure consistency across tests.
 
 - `BaseTestSuite`: The abstract base class for all test suites
@@ -219,10 +219,10 @@ suites. These classes provide common functionality and ensure consistency across
 
 Guidelines:
 - Inherit from test suites which are related to the target
-- If there are multiple relevant test suites, then multiple inherit and/or mixin classes should be used 
+- If there are multiple relevant test suites, then multiple inherit and/or mixin classes should be used
 - If there is no relevant test suite to inherit from, then inherit a base test suite
 - Ensure there is an attribute that will be the target for testing; it may be defined in a parent test suite
-- Ensure the annotations for the test target match what will be tested 
+- Ensure the annotations for the test target match what will be tested
 - Abstract methods should be used when:
   - The implementation details depend on the specific class or function being tested
   - The test is required for all subclasses, but the implementation varies
@@ -233,9 +233,9 @@ Guidelines:
   - The test behavior is consistent regardless of the specific class or function being tested
   - The test can be implemented in a general way that works for all subclasses
   - The test suite wants to provide a default implementation that subclasses can optionally override
-- Generic test suites can be named similar to `BaseOjectTestSuite` where the component being validated should be 
+- Generic test suites can be named similar to `BaseOjectTestSuite` where the component being validated should be
   inserted between Base and TestSuite
-- Specific test suites which define most of the suite's implementation can be named similar to `ObjectTestSuite` where 
+- Specific test suites which define most of the suite's implementation can be named similar to `ObjectTestSuite` where
   the component being tested is before TestSuite
 
 Example:
@@ -300,12 +300,12 @@ Concrete Test Suites are subclasses of Base Test Suites and focus on validating 
 creating tests which may pertain only to a specific test target.
 
 Guidelines:
-- Should inherit from a Base Test Suite 
+- Should inherit from a Base Test Suite
 - Should be named with a `Test` prefix followed by the name of the class or component being tested
 - Test classes should contain most of their resources within their scope so the resource may be changed to suit different test variations.
   - Test involving defining classes should either be defined as inner classes or defined elsewhere and assigned to a class attribute.
-  - Test involving defining functions should either be defined as inner functions or defined elsewhere and assigned to a class attribute. 
-- Test classes should define a test target attribute that points to the class being tested such that the tested class 
+  - Test involving defining functions should either be defined as inner functions or defined elsewhere and assigned to a class attribute.
+- Test classes should define a test target attribute that points to the class being tested such that the tested class
   can interchanged with other similar classes which will be tested using the same test suite.
 
 Example:
@@ -321,7 +321,7 @@ class TestBaseObject(BaseObjectTestSuite):
     """Test the BaseObject class.
 
     This class tests the functionality of the BaseObject class, which is the base class for all objects in the
-    baseobjects package. It creates a test subclass of BaseObject to test with.
+    templatepackage package. It creates a test subclass of BaseObject to test with.
     """
 
     # Attributes #
@@ -375,18 +375,18 @@ if __name__ == "__main__":
 
 ## 5 Test Semantics and Syntax
 
-Tests should conform to the semantics and syntax described in[Semantics Guidelines](semantics.md) and 
-[Syntactic Guidelines](syntax.md), but in some cases it may be necessary to deviate from the general 
-guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide. 
+Tests should conform to the semantics and syntax described in[Semantics Guidelines](semantics.md) and
+[Syntactic Guidelines](syntax.md), but in some cases it may be necessary to deviate from the general
+guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide.
 
 
 ### 5.1 Assertions
 
-Assertions are a base Python feature that allows for checking the state of a program at runtime and are used by pytest 
-as the primary means of verifying test conditions. Assertions are discouraged in source code because they do not conform 
-to Python's error handling principles. However, assertions are permitted for debugging, testing, examples, and tutorials 
-because assertions are good for explaining the behavior of a program, and in these scenarios error handling 
-is managed by the user rather than the program. 
+Assertions are a base Python feature that allows for checking the state of a program at runtime and are used by pytest
+as the primary means of verifying test conditions. Assertions are discouraged in source code because they do not conform
+to Python's error handling principles. However, assertions are permitted for debugging, testing, examples, and tutorials
+because assertions are good for explaining the behavior of a program, and in these scenarios error handling
+is managed by the user rather than the program.
 
 Guidelines:
 - Each test should include at least one assertion

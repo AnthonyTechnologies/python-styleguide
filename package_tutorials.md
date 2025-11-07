@@ -31,23 +31,23 @@
 
 ## 1 Background
 
-A tutorial is a step-by-step guide to a specific topic. It provides a clear and concise explanation of the topic, 
+A tutorial is a step-by-step guide to a specific topic. It provides a clear and concise explanation of the topic,
 demonstrating the functionality and use cases. It is designed to be self-contained and easy to follow.
-However, the purpose of a tutorial is to not only educate users on functionality but also provide inspiration for new 
+However, the purpose of a tutorial is to not only educate users on functionality but also provide inspiration for new
 approaches to solving problems.
 
 This document provides comprehensive guidelines for creating effective Jupyter Notebook tutorials for Python packages.
 
-It outlines best practices for structuring tutorials, defining the target audience, presenting code examples, formatting 
-content, and leveraging Jupyter Notebook features. These guidelines help developers create clear, accessible, and 
-educational tutorials that enable users to quickly understand and effectively use the packages, enhancing the overall 
+It outlines best practices for structuring tutorials, defining the target audience, presenting code examples, formatting
+content, and leveraging Jupyter Notebook features. These guidelines help developers create clear, accessible, and
+educational tutorials that enable users to quickly understand and effectively use the packages, enhancing the overall
 user experience and adoption of the project's components.
 
 
 ## 2 Jupyter Notebook
 
-Jupyter Notebooks are a powerful tool for creating interactive tutorials. They allow users to combine text, code, and 
-visualizations into a single document. They are ideal for educational purposes, as they provide a clear and concise 
+Jupyter Notebooks are a powerful tool for creating interactive tutorials. They allow users to combine text, code, and
+visualizations into a single document. They are ideal for educational purposes, as they provide a clear and concise
 explanation of a topic, demonstrating the functionality and use cases.
 
 When creating a tutorial, it is important to consider an report the following:
@@ -57,7 +57,7 @@ When creating a tutorial, it is important to consider an report the following:
 
 ## 3 Directory Hierarchy
 
-Tutorials should be organized in a directory structure that mirrors the package structure. This makes it easy for users 
+Tutorials should be organized in a directory structure that mirrors the package structure. This makes it easy for users
 to find tutorials relevant to the specific components they're interested in.
 
 - Each major package should have its own directory under the `tutorials/` directory
@@ -98,12 +98,12 @@ A clear and logical flow is essential. These sections are recommended:
 ### 4.1 Title and Introduction
 
 The Title and Introduction section sets the stage for the package's tutorial. It should provide users with a clear
-understanding of what they will learn and how this package fits into the larger package ecosystem. This section serves as 
+understanding of what they will learn and how this package fits into the larger package ecosystem. This section serves as
 the entry point to the tutorial and should be engaging while remaining informative and concise.
 
 - Formatting: Markdown Cell
 - Clear Title: "Using [PackageName]", "[PackageName] for [Specific Task]", etc.
-- Brief Overview: 
+- Brief Overview:
     - Explain the package's primary responsibilities and features.
     - Explain how this package relates to the parent package.
     - Explain what will be covered in this tutorial.
@@ -160,7 +160,7 @@ core of working with the package.
 - Introduce the fundamental concepts and objects of the package.
 - Provide simple, executable examples for the most common use cases.
 - Explain the basic operations and typical usage patterns.
-- Give a brief overview of the key modules in the package and direct users to view the module tutorials rather than 
+- Give a brief overview of the key modules in the package and direct users to view the module tutorials rather than
   going into detail.
 - Explain each code cell:
     - What the code does.
@@ -183,9 +183,9 @@ capabilities, so they can make informed decisions when using the package.
 
 ### 4.6 Examples
 
-The Examples section demonstrates how the package can be used to solve real-world problems. This section provides users 
-with a concrete example of how the package can be used to solve a real-world problem. It's important to provide users 
-with a concrete example of how the package can be used to solve a real-world problem, so they can make informed 
+The Examples section demonstrates how the package can be used to solve real-world problems. This section provides users
+with a concrete example of how the package can be used to solve a real-world problem. It's important to provide users
+with a concrete example of how the package can be used to solve a real-world problem, so they can make informed
 decisions when using the package.
 
 - Formatting: Markdown and Code Cells
@@ -236,8 +236,8 @@ helps users solidify their understanding and shows them paths for continued expl
 
 ## 5 Content Guidelines
 
-The contents of a tutorial should be accessible, practical, and valuable to users. How the information is presented is 
-crucial to ensure that it is easy to follow and understand. 
+The contents of a tutorial should be accessible, practical, and valuable to users. How the information is presented is
+crucial to ensure that it is easy to follow and understand.
 
 
 ## 5.1 Define The Audience and Scope
@@ -250,7 +250,7 @@ crucial to ensure that it is easy to follow and understand.
 - Depending on the goal of the tutorial, the target audience may be different.
 - Tailor the language, complexity of examples, and depth of explanation to the intended audience.
 
-**package Scope:** The scope clearly defines what this package does and what it *doesn't* do. 
+**package Scope:** The scope clearly defines what this package does and what it *doesn't* do.
 - Consider how does this tutorial fits into the understanding of the broader package.
 
 **Prerequisites:** The requirements in knowledge and resources required to complete the tutorial.
@@ -301,7 +301,7 @@ demonstrate the package's functionality and provide examples of how to use it.
 - Every code cell must be runnable independently or in sequence.
 - Ensure imports and variable initializations are correctly placed.
 - Test all code cells thoroughly.
-- Display Outputs: Ensure cell outputs are visible and illustrative. 
+- Display Outputs: Ensure cell outputs are visible and illustrative.
 - For plots, make sure they render correctly in the notebook.
 
 
@@ -312,12 +312,12 @@ dependencies or setup requirements. These examples should be complete, runnable 
 functionality while being independent of external resources. This approach makes the tutorial more accessible and
 reduces potential points of failure.
 
-- Avoid reliance on external files or services if possible. If necessary, provide clear instructions on how to 
+- Avoid reliance on external files or services if possible. If necessary, provide clear instructions on how to
   obtain/set them up, or include mock data/objects directly in the notebook.
 - For data, consider including a small CSV or generating data programmatically.
-- If there are unit tests, use them as a reference but do not copy them exactly. The tutorial and examples should 
-  educate the user on how to use key aspects of the package and how they can use it to create new programs, not just 
-  test it.  
+- If there are unit tests, use them as a reference but do not copy them exactly. The tutorial and examples should
+  educate the user on how to use key aspects of the package and how they can use it to create new programs, not just
+  test it.
 
 
 ### 5.7 Error Handling Examples
@@ -331,7 +331,7 @@ error conditions, making their code more robust and maintainable. It is optional
 
 ## 6 Formatting and Style
 
-This section provides specific formatting and style guidelines to ensure consistency and readability. These conventions 
+This section provides specific formatting and style guidelines to ensure consistency and readability. These conventions
 help create a professional and easily navigable document.
 
 

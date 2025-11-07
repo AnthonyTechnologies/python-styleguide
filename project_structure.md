@@ -123,7 +123,7 @@ src/
 ```
 
 Guidelines:
-- Organize by domain: each top-level subpackage focuses on a clear concern (e.g., bases, collections, functions, operations for baseobjects).
+- Organize by domain: each top-level subpackage focuses on a clear subject (e.g., bases, collections, functions, operations for baseobjects).
 - Keep public API explicit via __all__ or documented imports in __init__.py.
 - Consider private implementation modules prefixed with _ when appropriate.
 

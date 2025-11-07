@@ -17,23 +17,23 @@
 
 ## 1 Background
 
-Performance testing is a critical aspect of software development that ensures code not only functions correctly but also 
-executes efficiently. These tests help identify performance regressions, validate optimizations, and ensure that 
+Performance testing is a critical aspect of software development that ensures code not only functions correctly but also
+executes efficiently. These tests help identify performance regressions, validate optimizations, and ensure that
 implementations meet performance requirements.
 
-The performance tests in this guide are designed around the unit testing framework described in 
-[Unit Tests](unit_tests.md) as test performance should be tested against individual components of the code similar to 
+The performance tests in this guide are designed around the unit testing framework described in
+[Unit Tests](unit_tests.md) as test performance should be tested against individual components of the code similar to
 unit tests.
 
-Unlike unit tests that verify functional correctness, performance tests measure execution time, memory usage, and other 
-performance metrics. They often compare the performance of custom implementations against standard library equivalents 
-or previous versions to ensure that optimizations are effective and that new features don't introduce performance 
+Unlike unit tests that verify functional correctness, performance tests measure execution time, memory usage, and other
+performance metrics. They often compare the performance of custom implementations against standard library equivalents
+or previous versions to ensure that optimizations are effective and that new features don't introduce performance
 regressions.
 
-Performance tests are not required for all modules and classes, but they should be created for any that may have a 
+Performance tests are not required for all modules and classes, but they should be created for any that may have a
 significant performance impact.
 
-This document focuses on performance test-specific aspects. For general code organization, file structure, naming 
+This document focuses on performance test-specific aspects. For general code organization, file structure, naming
 conventions, docstrings, and other standard practices, please refer to:
 
 - [Code File Layout](code_file_layout.md) - For file organization and structure
@@ -46,10 +46,10 @@ conventions, docstrings, and other standard practices, please refer to:
 
 Performance Tests mostly follow the Unit Test Directory Hierarchy with some differences.
 
-Performance Base Test Suites or performance test suites which cover general implements should be located in the package 
-source codes under `testsuite`, along with the other unit test suites. Under normal circumstances, test suites should 
-not be placed in the project source as only developers need test suites; not package users. However, given that PYPI 
-currently does not support alternate package installations. These test suites should be included in the source to allow 
+Performance Base Test Suites or performance test suites which cover general implements should be located in the package
+source codes under `testsuite`, along with the other unit test suites. Under normal circumstances, test suites should
+not be placed in the project source as only developers need test suites; not package users. However, given that PYPI
+currently does not support alternate package installations. These test suites should be included in the source to allow
 developers using PYPI to expand or create their own test suites.
 
 Example:
@@ -68,7 +68,7 @@ src/
       ...
 ```
 
-Concrete Performance Test and performance test for individual or specific components should follow a specific directory 
+Concrete Performance Test and performance test for individual or specific components should follow a specific directory
 structure to separate them from regular unit tests:
 
 - Each module should have a corresponding `performance` directory in the `tests` directory
@@ -92,14 +92,14 @@ tests/
 
 ## 3 Performance Test Structure
 
-The purpose of performance tests is to not only measure the performance components of the code but also provide a set 
+The purpose of performance tests is to not only measure the performance components of the code but also provide a set
 of tools for measuring the performance of extensions to the code. The structure of performance tests should follow the
 structure described in [Unit Tests](unit_tests.md).
 
 
 ### 3.1 Performance Test Classes
 
-Performance test classes should be used to group related test methods and even create test suites as described in 
+Performance test classes should be used to group related test methods and even create test suites as described in
 [Unit Tests](unit_tests.md), section 4.1, with the following additional requirements specific to performance testing:
 
 - Test classes should define comparison objects that match the functionality of the test objects but use standard library or alternative implementations
@@ -108,7 +108,7 @@ Performance test classes should be used to group related test methods and even c
 
 ### 3.3 Performance Test Methods
 
-Performance test methods should follow the general test method guidelines in [Unit Tests](unit_tests.md), with the 
+Performance test methods should follow the general test method guidelines in [Unit Tests](unit_tests.md), with the
 following additional requirements specific to performance testing:
 
 - Test methods should be focused on measuring a specific performance aspect (speed, memory usage, etc.)
@@ -149,7 +149,7 @@ def test_copy_speed(self, test_object: "TestBaseObject.BaseTestObject") -> None:
 
 ### 3.3 Performance Test Suites
 
-Performance Test Suites, in this style guide, are Test Classes designed to function as test suites: a collection of 
+Performance Test Suites, in this style guide, are Test Classes designed to function as test suites: a collection of
 related tests that assay the performance of a specific component, feature, or functionality of the software. Performance
 Test Suites should follow the general test suite guidelines in [Unit Tests](unit_tests.md).
 
@@ -160,17 +160,17 @@ this style guide consists of Base Performance Test Suites and Concrete Test Suit
 
 #### 3.3.1 Base Performance Test Suites
 
-Base Performance Test Suites are test suites contain a collection of tests assaying the performance of a component, 
-feature, or functionality of the software with a focus on testing general aspects of the component, feature, or 
+Base Performance Test Suites are test suites contain a collection of tests assaying the performance of a component,
+feature, or functionality of the software with a focus on testing general aspects of the component, feature, or
 functionality. Generally, Base Performance Test Suites follow the guidelines in [Unit Tests](unit_tests.md).
 
-As in [Unit Test](unit_tests.md), a Base Performance Test Suites have a target to test such as `TestClass` or 
-`test_target` and will be composed of abstract and concrete methods which test the target against various unit tests 
-which the target must pass. Establishing a test target allows subclassed test suites to interchange test targets to 
-assay performance. 
+As in [Unit Test](unit_tests.md), a Base Performance Test Suites have a target to test such as `TestClass` or
+`test_target` and will be composed of abstract and concrete methods which test the target against various unit tests
+which the target must pass. Establishing a test target allows subclassed test suites to interchange test targets to
+assay performance.
 
-The concrete performance tests defined in a Base Performance Test Suites ensure that test targets are 
-tested similarly, while the abstract tests enforce that certain test must be done, but the implementation of the test 
+The concrete performance tests defined in a Base Performance Test Suites ensure that test targets are
+tested similarly, while the abstract tests enforce that certain test must be done, but the implementation of the test
 can be defined in a more specific test suite.
 
 Abstract methods should be used when:
@@ -185,17 +185,17 @@ Concrete methods should be used when:
 - The test can be implemented in a general way that works for all subclasses
 - The test suite wants to provide a default implementation that subclasses can optionally override
 
-It is not required, but the `baseobjects` package provides base performance test suites which server as a great 
-foundation for performance test suites. These classes provide common functionality and ensure consistency across 
+It is not required, but the `baseobjects` package provides base performance test suites which server as a great
+foundation for performance test suites. These classes provide common functionality and ensure consistency across
 performance tests.
 
 - `BasePerformanceTestSuite`: The abstract base class for performance tests
 
 
 Additional Guidelines:
-- Generic test suites can be named similar to `BaseOjectPerformanceTestSuite` where the component being validated 
+- Generic test suites can be named similar to `BaseOjectPerformanceTestSuite` where the component being validated
   should be inserted between Base and PerformanceTestSuite
-- Specific test suites which define most of the suite's implementation can be named similar to 
+- Specific test suites which define most of the suite's implementation can be named similar to
   `ObjectPerformanceTestSuite` where the component being tested is before PerformanceTestSuite
 
 Example:
@@ -362,10 +362,10 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
 
 Concrete Performance Test Suites are subclasses of Base Performance Test Suites and focus on validating tests defined by
 the Base Performance Test Suite and creating tests which may pertain only to a specific test target. Concrete
-Performance Test Suites follow the guidelines in [Unit Tests](unit_tests.md).  
+Performance Test Suites follow the guidelines in [Unit Tests](unit_tests.md).
 
 Additional Guidelines:
-- Should inherit from a Base Performance Test Suite 
+- Should inherit from a Base Performance Test Suite
 - Should be named with a `Performance` suffix
 
 Example:
@@ -489,9 +489,9 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
 
 ## 4 Performance Test Semantics and Syntax
 
-Performance Tests should conform to the semantics and syntax described in[Semantics Guidelines](semantics.md) 
-and [Syntactic Guidelines](syntax.md), but in some cases it may be necessary to deviate from the general 
-guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide. 
+Performance Tests should conform to the semantics and syntax described in[Semantics Guidelines](semantics.md)
+and [Syntactic Guidelines](syntax.md), but in some cases it may be necessary to deviate from the general
+guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide.
 
 
 ### 4.1 Benchmarking
