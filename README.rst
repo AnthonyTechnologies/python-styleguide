@@ -15,8 +15,8 @@ Design Goals
 - Modularity
 - Project Tools Integration
 
-What this style guide covers
-----------------------------
+Contents
+--------
 The guide is split into focused documents that can be read independently:
 
 `Syntax <syntax.md>`_: ``syntax.md`` — formatting, naming, imports, typing, docstrings, comments, strings, exceptions, comprehensions, decorators, default arguments, and more.
@@ -56,7 +56,7 @@ Contributing
 ------------
 - Proposals for clarifications or updates should reference the section being changed and provide brief rationale.
 
-Related resources
+Related Resources
 -----------------
 - Google Python Style Guide: https://google.github.io/styleguide/pyguide.html
 - Hypermodern Python: https://cjolowicz.github.io/posts/hypermodern-python-01-setup/
