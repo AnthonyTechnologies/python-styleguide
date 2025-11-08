@@ -5,28 +5,28 @@
 - [1 Overview](#1-overview)
 - [2 Project Layout and Entry Points](#2-project-layout-and-entry-points)
 - [3 Sphinx Configuration](#3-sphinx-configuration)
-  - [3.1 Enabled extensions and rationale](#31-enabled-extensions-and-rationale)
-  - [3.2 HTML theme](#32-html-theme)
+  - [3.1 Enabled Extensions and Rationale](#31-enabled-extensions-and-rationale)
+  - [3.2 HTML Theme](#32-html-theme)
   - [3.3 Intersphinx](#33-intersphinx)
-  - [3.4 Type hints and docstring styles](#34-type-hints-and-docstring-styles)
+  - [3.4 Type Hints and Docstring Styles](#34-type-hints-and-docstring-styles)
   - [3.5 Todos](#35-todos)
-  - [3.6 Read the Docs build configuration](#36-read-the-docs-build-configuration)
+  - [3.6 Read the Docs Build Configuration](#36-read-the-docs-build-configuration)
 - [4 Building the Docs](#4-building-the-docs)
-  - [4.1 One‑off build](#41-one-off-build)
-  - [4.2 Live rebuilds during authoring](#42-live-rebuilds-during-authoring)
-  - [4.3 Cleaning builds](#43-cleaning-builds)
+  - [4.1 One‑Off Build](#41-one-off-build)
+  - [4.2 Live Rebuilds During Authoring](#42-live-rebuilds-during-authoring)
+  - [4.3 Cleaning Builds](#43-cleaning-builds)
 - [5 Authoring Guidelines](#5-authoring-guidelines)
   - [5.1 reStructuredText vs. Markdown](#51-restructuredtext-vs-markdown)
-  - [5.2 API docs via autodoc + autosummary](#52-api-docs-via-autodoc--autosummary)
+  - [5.2 API Docs via Autodoc + Autosummary](#52-api-docs-via-autodoc--autosummary)
   - [5.3 Click CLIs](#53-click-clis)
-  - [5.4 Cross-referencing and intersphinx](#54-cross-referencing-and-intersphinx)
-  - [5.5 Source links and readability](#55-source-links-and-readability)
+  - [5.4 Cross-Referencing and Intersphinx](#54-cross-referencing-and-intersphinx)
+  - [5.5 Source Links and Readability](#55-source-links-and-readability)
 - [6 Where Things Are Configured](#6-where-things-are-configured)
 - [8 Troubleshooting](#8-troubleshooting)
 - [7 Style Guide](#7-style-guide)
   - [7.1 Git Submodule](#71-git-submodule)
-  - [7.2 Keep it up to date](#72-keep-it-up-to-date)
-  - [7.3 Render or link it in Sphinx](#73-render-or-link-it-in-sphinx)
+  - [7.2 Keep It Up to Date](#72-keep-it-up-to-date)
+  - [7.3 Render or Link It in Sphinx](#73-render-or-link-it-in-sphinx)
 
 
 ## 1 Overview
@@ -71,7 +71,7 @@ extensions = [
 html_theme = "sphinx_rtd_theme"
 ```
 
-### 3.1 Enabled extensions and rationale
+### 3.1 Enabled Extensions and Rationale
 
 - sphinx.ext.autodoc — imports modules and pulls in docstrings to build API pages.
 - sphinx.ext.autosummary — auto-generates summary tables and stub pages for modules/classes/functions. autosummary_generate = True.
@@ -81,7 +81,7 @@ html_theme = "sphinx_rtd_theme"
 - sphinx.ext.todo — allows .. todo:: directives. todo_include_todos = True during development.
 - sphinx_click — renders documentation for Click-based CLIs declaratively.
 
-### 3.2 HTML theme
+### 3.2 HTML Theme
 
 - Default theme: sphinx_rtd_theme (Read the Docs theme)
   - Navigation is configured for readability with navigation_depth=4 and no collapses.
@@ -93,7 +93,7 @@ html_theme = "sphinx_rtd_theme"
   - python → https://docs.python.org/3
 - Add additional mappings in conf.py if cross-referencing external libraries becomes useful.
 
-### 3.4 Type hints and docstring styles
+### 3.4 Type Hints and Docstring Styles
 
 - autodoc_typehints = "description" — Sphinx/Napoleon shows type hints in the parameter/returns sections instead of inline signatures to improve readability for long types.
 - Google and NumPy docstring styles are both supported; prefer Google style for new content unless aligning with an established convention in a specific module.
@@ -102,7 +102,7 @@ html_theme = "sphinx_rtd_theme"
 
 - .. todo:: directives are included in builds (todo_include_todos = True). Use sparingly and convert todos into issues as work is planned.
 
-### 3.6 Read the Docs build configuration
+### 3.6 Read the Docs Build Configuration
 
 Read the Docs (RTD) builds are configured via a YAML file located at docs/.readthedocs.yaml. Typical key settings:
 
@@ -127,20 +127,20 @@ Notes and recommendations:
 
 All commands are executed via Nox to ensure reproducibility.
 
-### 4.1 One-off build
+### 4.1 One‑Off Build
 
 - Build static HTML into docs/_build:
   - nox -s docs-build
 - Optional: pass extra sphinx-build options after the session name:
   - nox -s docs-build -- -W  # treat warnings as errors
 
-### 4.2 Live rebuilds during authoring
+### 4.2 Live Rebuilds During Authoring
 
 - Serve docs with live reload on changes:
   - nox -s docs
 - A browser window opens by default; this behavior can be disabled by removing --open-browser in noxfile.py or by overriding with positional arguments.
 
-### 4.3 Cleaning builds
+### 4.3 Cleaning Builds
 
 - The docs-build and docs sessions remove docs/_build before each run. If a fully clean environment is needed, also delete any cached auto-generated API stubs that may have been created locally.
 
@@ -152,7 +152,7 @@ All commands are executed via Nox to ensure reproducibility.
 - The canonical format is reStructuredText (.rst). The docs use index.rst and standard Sphinx/ReST directives.
 - Although the docs sessions install myst-parser, it is not currently enabled in conf.py. If enabling Markdown is desired in the future, add "myst_parser" to extensions and follow MyST’s syntax rules. Until then, prefer .rst.
 
-### 5.2 API docs via autodoc + autosummary
+### 5.2 API Docs via Autodoc + Autosummary
 
 - Keep public APIs well-documented with complete docstrings. autosummary_generate is enabled, which can generate index pages and per-object stubs when you include autosummary tables in .rst files.
 - Provide clear type hints; they will be rendered in the description sections.
@@ -174,13 +174,13 @@ All commands are executed via Nox to ensure reproducibility.
 
 - The token package.module:cli should be replaced with the import path and callable for the project's Click entry point.
 
-### 5.4 Cross-referencing and intersphinx
+### 5.4 Cross-Referencing and Intersphinx
 
 - Use Sphinx cross-reference roles to link to symbols:
   - :py:mod:`package.module`, :py:class:`package.Class`, :py:meth:`package.Class.method`.
 - For Python stdlib references, intersphinx provides automatic links, e.g., :class:`dict`, :mod:`asyncio`.
 
-### 5.5 Source links and readability
+### 5.5 Source Links and Readability
 
 - viewcode adds “View Source” links to documented objects. Ensure source files remain readable and follow the code style guide so rendered source is approachable.
 
@@ -218,7 +218,7 @@ Notes:
 - Submodules are pinned to a specific commit; they do not auto-track the remote branch. This is desirable for reproducible docs builds.
 - If submodules are not preferred, git subtree is an alternative; however, submodules are simpler to keep read-only and clearly versioned.
 
-### 7.2 Keep it up to date
+### 7.2 Keep It Up to Date
 
 To pull the latest from the style guide:
 
@@ -248,7 +248,7 @@ CI/hosting considerations:
 
 - Other CI: ensure the checkout step initializes submodules, e.g., git submodule update --init --recursive.
 
-### 7.3 Render or link it in Sphinx
+### 7.3 Render or Link It in Sphinx
 
 This repository largely uses Markdown (.md) files. To render them inside the project's Sphinx documentation:
 

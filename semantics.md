@@ -9,7 +9,7 @@
     - [2.1.2 Pros](#212-pros)
     - [2.1.3 Cons](#213-cons)
     - [2.1.4 Decision](#214-decision)
-  - [2.2 Function length](#22-function-length)
+  - [2.2 Function Length](#22-function-length)
   - [2.3 Nested/Local/Inner Classes and Functions](#23-nestedlocalinner-classes-and-functions)
     - [2.3.1 Definition](#231-definition)
     - [2.3.2 Pros](#232-pros)
@@ -64,7 +64,7 @@ constant or `SIR_LANCELOTS_FAVORITE_COLOR = "blue"` for a public API constant. C
 with underscores. See Naming below.
 
 
-### 2.2 Function length
+### 2.2 Function Length
 Prefer small and focused functions.
 
 We recognize that long functions are sometimes appropriate, so no hard limit is placed on function length. If a function

@@ -16,7 +16,7 @@
   - [4.8 Troubleshooting / FAQs](#48-troubleshooting--faqs)
   - [4.9 Conclusion and Next Steps](#49-conclusion-and-next-steps)
 - [5 Content Guidelines](#5-content-guidelines)
-  - [5.1 Define The Audience and Scope](#51-define-the-audience-and-scope)
+  - [5.1 Define the Audience and Scope](#51-define-the-audience-and-scope)
   - [5.2 Language](#52-language)
   - [5.3 Logical Flow](#53-logical-flow)
   - [5.4 Markdown Cells](#54-markdown-cells)
@@ -240,7 +240,7 @@ The contents of a tutorial should be accessible, practical, and valuable to user
 crucial to ensure that it is easy to follow and understand.
 
 
-## 5.1 Define The Audience and Scope
+## 5.1 Define the Audience and Scope
 
 **Target Audience:** The target audience will be the main user-base who be reading and using this tutorial.
 - Typically, the tutorials' target audience will be those familiar with the Python Standard Library, popular packages,

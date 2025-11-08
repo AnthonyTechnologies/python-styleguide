@@ -4,14 +4,14 @@
 
 - [1 Overview](#1-overview)
 - [2 Pre-commit](#2-pre-commit)
-  - [2.1 What it does in a project](#21-what-it-does-in-a-project)
+  - [2.1 What It Does in a Project](#21-what-it-does-in-a-project)
   - [2.2 Installation](#22-installation)
-  - [2.3 Running hooks](#23-running-hooks)
-  - [2.4 Updating hooks](#24-updating-hooks)
+  - [2.3 Running Hooks](#23-running-hooks)
+  - [2.4 Updating Hooks](#24-updating-hooks)
 - [3 Nox](#3-nox)
-  - [3.1 What it does in a project](#31-what-it-does-in-a-project)
+  - [3.1 What It Does in a Project](#31-what-it-does-in-a-project)
   - [3.2 Installation](#32-installation)
-  - [3.3 Common sessions](#33-common-sessions)
+  - [3.3 Common Sessions](#33-common-sessions)
   - [3.4 Running sessions](#34-running-sessions)
 - [4 Other Tools and Where They Are Configured](#4-other-tools-and-where-they-are-configured)
 
@@ -35,7 +35,7 @@ and consistent by catching issues early.
 
 Configuration: .pre-commit-config.yaml (repository root)
 
-### 2.1 What it does in a project
+### 2.1 What It Does in a Project
 
 Current hooks configured in .pre-commit-config.yaml include:
 
@@ -60,7 +60,7 @@ per‑tool settings in pyproject.toml where applicable (e.g., [tool.ruff], [tool
 - Install the git hooks into the repository:
   - pre-commit install --install-hooks
 
-### 2.3 Running hooks
+### 2.3 Running Hooks
 
 - Automatically runs on git commit and, for some hooks, on push.
 - Run against all files manually:
@@ -68,7 +68,7 @@ per‑tool settings in pyproject.toml where applicable (e.g., [tool.ruff], [tool
 - Run a specific hook:
   - pre-commit run ruff-check --all-files
 
-### 2.4 Updating hooks
+### 2.4 Updating Hooks
 
 - Update hook revisions to the latest recommended versions:
   - pre-commit autoupdate
@@ -80,7 +80,7 @@ Nox provides reproducible automation by running tasks inside session‑scoped vi
 
 Configuration/entrypoint: noxfile.py (repository root)
 
-### 3.1 What it does in a project
+### 3.1 What It Does in a Project
 
 Nox orchestrates common dev tasks, including:
 
@@ -101,7 +101,7 @@ The default sessions list is set in noxfile.py (nox.options.sessions).
 - Install Nox and its Poetry integration:
   - pip install nox nox-poetry
 
-### 3.3 Common sessions
+### 3.3 Common Sessions
 
 From noxfile.py, notable sessions include:
 
@@ -115,7 +115,7 @@ From noxfile.py, notable sessions include:
 - nox -s docs-build — build docs into docs/_build.
 - nox -s docs — serve docs with live rebuilds.
 
-### 3.4 Running sessions
+### 3.4 Running Sessions
 
 - List available sessions:
   - nox -l

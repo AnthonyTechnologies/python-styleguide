@@ -9,7 +9,7 @@
     - [2.1.2 Naming Conventions](#212-naming-conventions)
     - [2.1.3 File Naming](#213-file-naming)
   - [2.2 Semicolons](#22-semicolons)
-  - [2.3 Line length](#23-line-length)
+  - [2.3 Line Length](#23-line-length)
   - [2.4 Statements](#24-statements)
   - [2.5 Parentheses](#25-parentheses)
   - [2.6 Indentation](#26-indentation)
@@ -26,9 +26,9 @@
     - [2.9.7 Ignoring Types](#297-ignoring-types)
     - [2.9.8 Typing Variables](#298-typing-variables)
     - [2.9.9 Tuples vs Lists](#299-tuples-vs-lists)
-    - [2.9.10 Type variables](#2910-type-variables)
-    - [2.9.11 String types](#2911-string-types)
-    - [2.9.12 Imports For Typing](#2912-imports-for-typing)
+    - [2.9.10 Type Variables](#2910-type-variables)
+    - [2.9.11 String Types](#2911-string-types)
+    - [2.9.12 Imports for Typing](#2912-imports-for-typing)
     - [2.9.13 Conditional Imports](#2913-conditional-imports)
     - [2.9.14 Circular Dependencies](#2914-circular-dependencies)
     - [2.9.15 Generics](#2915-generics)
@@ -68,7 +68,7 @@
     - [2.21.2 Pros](#2212-pros)
     - [2.21.3 Cons](#2213-cons)
     - [2.21.4 Decision](#2214-decision)
-  - [2.22 Files, Sockets, and similar Stateful Resources](#222-files-sockets-and-similar-stateful-resources)
+  - [2.22 Files, Sockets, and Similar Stateful Resources](#222-files-sockets-and-similar-stateful-resources)
   - [2.23 Function and Method Decorators](#223-function-and-method-decorators)
     - [2.23.1 Definition](#2231-definition)
     - [2.23.2 Pros](#2232-pros)
@@ -175,7 +175,7 @@ starting with test to separate logical components of the name. One possible patt
 ### 2.2 Semicolons
 Do not terminate lines with semicolons, and do not use semicolons to put two statements on the same line.
 
-### 2.3 Line length
+### 2.3 Line Length
 Maximum line length is 120 characters.
 
 Explicit exceptions to the 120 character limit:
@@ -849,7 +849,7 @@ c: tuple[int, str, float] = (1, "2", 3.5)
 ```
 
 
-#### 2.9.10 Type variables
+#### 2.9.10 Type Variables
 
 The Python type system has generics. A type variable, such as `TypeVar` and `ParamSpec`, is a common way to use them.
 
@@ -912,7 +912,7 @@ _F = TypeVar("_F", bound=Callable)
 ```
 
 
-#### 2.9.11 String types
+#### 2.9.11 String Types
 
 Do not use `typing.Text` in new code. It's only for Python 2/3 compatibility.
 
@@ -929,7 +929,7 @@ If all the string types of a function are always the same, for example if the re
 type in the code above, use `AnyStr`.
 
 
-#### 2.9.12 Imports For Typing
+#### 2.9.12 Imports for Typing
 
 For symbols (including types, functions, and constants) from the typing or collections.abc modules used to support
 static analysis and type checking, always import the symbol itself. This keeps common annotations more concise and
@@ -1888,7 +1888,7 @@ Note that Numpy arrays may raise an exception in an implicit boolean context. Pr
 emptiness of a np.array (e.g. `if not users.size`).
 
 
-### 3.11 Files, Sockets, and similar Stateful Resources
+### 3.11 Files, Sockets, and Similar Stateful Resources
 Explicitly close files and sockets when done with them. This rule naturally extends to closeable resources that
 internally use sockets, such as database connections, and also other resources that need to be closed down in a similar
 fashion. To name only a few examples, this also includes mmap mappings, h5py File objects, and matplotlib.pyplot figure
