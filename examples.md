@@ -537,7 +537,7 @@ Examples that encourage users to modify parameters and observe different outcome
 ```python # pseudocode
 # Base example - try modifying the parameters!
 def calculate_result(x, y, operation="add"):
-    """Calculate result based on operation.
+    """Calculates the result based on operation.
 
     Try changing:
     - x and y to different numbers

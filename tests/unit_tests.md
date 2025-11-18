@@ -146,7 +146,7 @@ Guidelines:
 Example:
 ```python # pseudocode
 def test_deepcopy(self, test_object: 'TestBaseObject.BaseTestObject') -> None:
-    """Test the deep copy behavior of BaseObject.
+    """Tests the deep copy behavior of BaseObject.
 
     This test verifies that deepcopy creates a new object with new mutable attributes
     but the same immutable attributes.
@@ -252,14 +252,14 @@ class BaseObjectTestSuite(BaseClassTestSuite):
     @abstractmethod
     @pytest.fixture
     def test_object(self) -> BaseObject:
-        """Create a test object."""
+        """Creates a test object."""
         # This is abstract because each subclass needs to create a specific instance
         # of the class being tested, which requires knowledge of that specific class.
 
     # Tests
     @abstractmethod
     def test_instance_creation(self, *args: Any, **kwargs: Any) -> None:
-        """Test that instances of the class can be created.
+        """Tests that instances of the class can be created.
 
         This is an abstract method that must be implemented by subclasses.
 
@@ -271,7 +271,7 @@ class BaseObjectTestSuite(BaseClassTestSuite):
         # signatures and initialization requirements.
 
     def test_copy(self, test_object: BaseObject) -> None:
-        """Test the copy behavior of the object.
+        """Tests the copy behavior of the object.
 
         This test verifies that copy creates a new object with the same attributes.
 
@@ -310,7 +310,7 @@ class BaseTestObject(BaseObject):
 
 # Test Suite #
 class TestBaseObject(BaseObjectTestSuite):
-    """Test the BaseObject class.
+    """A Testsuite for the BaseObject class.
 
     This class tests the functionality of the BaseObject class, which is the base class for all objects in the
     templatepackage package. It creates a test subclass of BaseObject to test with.
@@ -323,12 +323,12 @@ class TestBaseObject(BaseObjectTestSuite):
     # Fixtures
     @pytest.fixture
     def test_object(self) -> BaseObject:
-        """Create a test object."""
+        """Creates a test object."""
         return self.TestClass(10)
 
     # Tests
     def test_instance_creation(self, *args: Any, **kwargs: Any) -> None:
-        """Test that instances of the class can be created.
+        """Tests that instances of the class can be created.
 
         This is an abstract method that must be implemented by subclasses.
 
@@ -340,7 +340,7 @@ class TestBaseObject(BaseObjectTestSuite):
         assert isinstance(instance, self.TestClass)
 
     def test_copy(self, test_object: BaseObject) -> None:
-        """Test the copy behavior of the object.
+        """Tests the copy behavior of the object.
 
         This test verifies that copy creates a new object with the same attributes.
 
@@ -416,7 +416,7 @@ Example:
 # Fixtures
 @pytest.fixture
 def test_object(self) -> 'TestBaseObject.BaseTestObject':
-    """Create a test object instance for use in tests.
+    """Creates a test object instance for use in tests.
 
     Returns:
         BaseTestObject: An instance of the test class.
@@ -454,7 +454,7 @@ Guidelines:
 Example:
 ```python # pseudocode
 def test_with_mock(self, monkeypatch: pytest.MonkeyPatch) -> None:
-    """Test with a mock object.
+    """Tests with a mock object.
 
     This test uses a mock object to verify that the correct method is called.
 
@@ -504,5 +504,3 @@ pytest -v
 # Run tests with output capturing disabled
 pytest -s
 ```
-
-

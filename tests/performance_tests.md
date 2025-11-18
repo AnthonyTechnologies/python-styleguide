@@ -224,11 +224,11 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
             self.common = "example_one"
 
         def __eq__(self, other: Any) -> bool:
-            """Always return True for equality comparison."""
+            """Always returns True for equality comparison."""
             return True
 
         def method(self) -> str:
-            """Return a string identifying this class.
+            """Returns a string identifying this class.
 
             Returns:
                 A string identifying this class.
@@ -236,7 +236,7 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
             return "one"
 
         def __str__(self) -> str:
-            """Return a string representation of this class."""
+            """Returns a string representation of this class."""
             return "ExampleOne"
 
     class ExampleTwo:
@@ -245,13 +245,13 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
         This class has different attributes and methods than ExampleOne.
         """
         def __init__(self) -> None:
-            """Initialize with attributes."""
+            """Initializes with attributes."""
             self.one = "two"
             self.three = "two"
             self.common = "example_two"
 
         def function(self) -> str:
-            """Return a string identifying this class.
+            """Returns a string identifying this class.
 
             Returns:
                 A string identifying this class.
@@ -259,7 +259,7 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
             return "two"
 
         def __str__(self) -> str:
-            """Return a string representation of this class."""
+            """Returns a string representation of this class."""
             return "ExampleTwo"
 
     # Attributes #
@@ -272,7 +272,7 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
     @abstractmethod
     @pytest.fixture
     def test_object(self) -> Any:
-        """Create a test object.
+        """Creates a test object.
 
         Returns:
             A wrapper object with ExampleOne and ExampleTwo objects.
@@ -282,7 +282,7 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
 
     @pytest.fixture
     def test_example_one(self) -> ExampleOne:
-        """Create a test ExampleOne object.
+        """Creates a test ExampleOne object.
 
         Returns:
             An ExampleOne object.
@@ -293,7 +293,7 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
 
     @pytest.fixture
     def test_example_two(self) -> ExampleTwo:
-        """Create a test ExampleTwo object.
+        """Creates a test ExampleTwo object.
 
         Returns:
             An ExampleTwo object.
@@ -305,7 +305,7 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
     # Tests
     @abstractmethod
     def test_instance_creation(self, *args: Any, **kwargs: Any) -> None:
-        """Test that instances of the class can be created.
+        """Tests that instances of the class can be created.
 
         This is an abstract method that must be implemented by subclasses.
 
@@ -317,7 +317,7 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
         # signatures and initialization requirements.
 
     def test_attribute_access_speed(self, test_wrapper: Any, test_example_one: ExampleOne) -> None:
-        """Test the performance of attribute access through DynamicWrapper.
+        """Tests the performance of attribute access through DynamicWrapper.
 
         This test compares the speed of accessing attributes through DynamicWrapper with direct attribute access.
 
@@ -378,7 +378,7 @@ class DynamicWrapperTestObject(DynamicWrapper):
     _wrapped = ["_first", "_second"]
 
     def __init__(self, first: ExampleOne | None = None, second: ExampleTwo | None = None) -> None:
-        """Initialize with wrapped objects.
+        """Initializes with wrapped objects.
 
         Args:
             first: The first object to wrap.
@@ -390,7 +390,7 @@ class DynamicWrapperTestObject(DynamicWrapper):
         self.four = "wrapper"
 
     def wrap(self) -> str:
-        """Return a string identifying this class.
+        """Returns a string identifying this class.
 
         Returns:
             A string identifying this class.
@@ -421,7 +421,7 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
     # Fixtures
     @pytest.fixture
     def test_object(self) -> Any:
-        """Create a test object.
+        """Creates a test object.
 
         Returns:
             A wrapper object with ExampleOne and ExampleTwo objects.
@@ -436,7 +436,7 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
 
     # Tests
     def test_instance_creation(self, *args: Any, **kwargs: Any) -> None:
-        """Test that instances of the class can be created.
+        """Tests that instances of the class can be created.
 
         Args:
             *args: Positional arguments list to pass to the class constructor.
@@ -450,7 +450,7 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
         assert isinstance(instance, self.TestClass)
 
     def test_setattr_vs_normal_set_speed(self, test_wrapper: DynamicWrapperTestObject) -> None:
-        """Test the performance difference between _setattr and normal attribute setting.
+        """Tests the performance difference between _setattr and normal attribute setting.
 
         This test compares the speed of setting attributes using _setattr with normal attribute setting.
 
@@ -553,7 +553,7 @@ A common pattern is to compare the performance of custom implementations against
 
 ```python # pseudocode
 def test_copy_speed(self, test_object):
-    """Test the performance of the copy method of BaseObject."""
+    """Tests the performance of the copy method of BaseObject."""
     normal = self.NormalObject()
 
     def normal_copy():
@@ -571,7 +571,7 @@ Another pattern is to compare different implementation variants:
 
 ```python # pseudocode
 def test_copy_vs_dunder_copy(self, test_object):
-    """Test the performance difference between copy() and __copy__() methods."""
+    """Tests the performance difference between copy() and __copy__() methods."""
     # Compare two different implementations
     copy_time = timeit.timeit(test_object.copy, number=self.timeit_runs)
     dunder_time = timeit.timeit(test_object.__copy__, number=self.timeit_runs)
@@ -584,7 +584,7 @@ Performance tests can also measure the overhead of additional functionality:
 
 ```python # pseudocode
 def test_attribute_access_speed(self, test_object):
-    """Test the performance of attribute access in BaseObject."""
+    """Tests the performance of attribute access in BaseObject."""
     normal = self.NormalObject()
 
     def access_base_attr():
@@ -602,4 +602,3 @@ def test_attribute_access_speed(self, test_object):
 ```
 
 By following these guidelines, developers can create effective performance tests that help ensure the efficiency and reliability of the codebase.
-

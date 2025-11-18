@@ -1,46 +1,70 @@
-"""<Module Summary>
+"""module_template.py
+A one-line summary of the module or program, terminated by a period.
 
-This module provides <what it provides>.
-
-Usage:
-    from <package> import <module>
-
-Public API:
-    - <symbols exported via __all__>
-
+Leave one blank line. The rest of this docstring should contain an overall description of the module or program. The
+description can be broken up into multiple paragraphs to present the functionality into logical sections. Bullet-point
+and numerical lists may be used as well, but only add them if they are needed.
 """
 
-from __future__ import annotations
+# Header #
+__package_name__ = "package_name"
 
-# Standard library imports
+__author__ = "Author Name"
+__credits__ = ["Author Name"]
+__copyright__ = "Copyright 2021, Author Name"
+__license__ = "License"
+
+__version__ = "0.1.0"
+
+
+# Imports #
+# Standard Libraries #
 from dataclasses import dataclass
-from typing import Any
+from typing import ClassVar
 
-# Third‑party imports
+# Third-Party Libraries #
 # import requests
 
-# Local imports
+# Project Libraries #
 # from . import helpers
 
-__all__ = [
-    # "PublicClass",
-    # "public_function",
-]
+
+# Definitions #
+# Constants #
+EXAMPLE_CONSTANT: int = 42  # The canonical answer for demonstration purposes.
 
 
+# Functions #
 def _validate_inputs(x: int) -> None:
-    """Validate inputs for public API functions in this module.
+    """Validates inputs for public API functions in this module.
 
     Args:
-        x: A non‑negative integer.
+        x: A non-negative integer.
 
     Raises:
         ValueError: If the input is invalid.
     """
     if x < 0:
-        raise ValueError("x must be non‑negative")
+        raise ValueError("x must be non-negative")
 
 
+def public_function(x: int) -> str:
+    """Example public function.
+
+    Args:
+        x: A non-negative integer.
+
+    Returns:
+        A human‑readable message for the given input.
+
+    Raises:
+        ValueError: If ``x`` is negative.
+    """
+    _validate_inputs(x)
+    return f"value={x}"
+
+
+# Classes #
 @dataclass(slots=True)
 class PublicClass:
     """Example class.
@@ -54,7 +78,7 @@ class PublicClass:
     count: int = 0
 
     def increment(self, n: int = 1) -> int:
-        """Increase count by n.
+        """Increases count by n.
 
         Args:
             n: Amount to increment.
@@ -66,17 +90,13 @@ class PublicClass:
         return self.count
 
 
-def public_function(x: int) -> str:
-    """Example public function.
+# Additional Definitions #
+# Circular References #
+# Note: Use this section for forward references that cannot be resolved earlier.
+# Example:
+# OtherType = "PublicClass"  # type: ignore[assignment]
 
-    Args:
-        x: A non‑negative integer.
-
-    Returns:
-        A human‑readable message for the given input.
-
-    Raises:
-        ValueError: If ``x`` is negative.
-    """
-    _validate_inputs(x)
-    return f"value={x}"
+# Registration #
+# Note: Use this section to register classes/functions to external registries.
+# Example:
+# registry.register("public_class", PublicClass)

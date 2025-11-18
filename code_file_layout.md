@@ -477,7 +477,7 @@ Example:
 # Magic Methods #
 # Construction/Destruction
 def __init__(self, *args: Any, **kwargs: Any) -> None:
-    """Initialize the object.
+    """Initializes the object.
 
     Args:
         *args: Arguments for initialization.
@@ -535,30 +535,30 @@ Example:
 # Magic Methods #
 # Construction/Destruction
 def __init__(self, *args: Any, **kwargs: Any) -> None:
-    """Initialize the object."""
+    """Initializes the object."""
     pass
 
 def __copy__(self) -> "MyClass":
-    """Create a shallow copy of this object."""
+    """Creates a shallow copy of this object."""
     return MyClass(self.data)
 
 # Container Methods
 def __len__(self) -> int:
-    """Return the number of items in this container."""
+    """Returns the number of items in this container."""
     return len(self.data)
 
 def __getitem__(self, key: Any) -> Any:
-    """Get an item by key."""
+    """Gets an item by key."""
     return self.data[key]
 
 # Representation
 def __repr__(self) -> str:
-    """Return a string representation of this object."""
+    """Returns a string representation of this object."""
     return f"{self.__class__.__name__}({self.data!r})"
 
 # Comparison
 def __eq__(self, other: Any) -> bool:
-    """Check if this object is equal to another object."""
+    """Checks if this object is equal to another object."""
     if not isinstance(other, self.__class__):
         return NotImplemented
     return self.data == other.data
@@ -643,18 +643,18 @@ Example:
 # Instance Methods #
 # Constructors
 def construct(self, *args: Any, **kwargs: Any) -> None:
-    """Construct this object with the given arguments."""
+    """Constructs this object with the given arguments."""
     self.data = {}
     self.initialize(*args, **kwargs)
 
 def initialize(self, data: dict | None = None) -> None:
-    """Initialize this object with the given data."""
+    """Initializes this object with the given data."""
     if data:
         self.data.update(data)
 
 # Parameter Parsers
 def parse_input(self, input_data: Any) -> dict:
-    """Parse the input data into a dictionary format."""
+    """Parses the input data into a dictionary format."""
     if isinstance(input_data, dict):
         return input_data
     elif isinstance(input_data, str):
@@ -664,12 +664,12 @@ def parse_input(self, input_data: Any) -> dict:
 
 # Setters
 def set_option(self, name: str, value: Any) -> None:
-    """Set an option with the given name and value."""
+    """Sets an option with the given name and value."""
     self.data[name] = value
 
 # Method Dispatching
 def dispatch_call(self, method_name: str, *args: Any, **kwargs: Any) -> Any:
-    """Dispatch a call to the method with the given name."""
+    """Dispatchs a call to the method with the given name."""
     method = getattr(self, method_name, None)
     if method is None:
         raise AttributeError(f"No method named {method_name}")
@@ -760,6 +760,7 @@ Example:
 """__init__.py
 templatepackage provides several base classes and tools.
 """
+
 # Header #
 __package_name__ = "templatepackage"
 
