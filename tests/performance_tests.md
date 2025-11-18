@@ -1,21 +1,4 @@
-# Anthony's Python Style Guide: Performance Tests
-
-## Table of Contents
-
-- [1 Background](#1-background)
-- [2 Directory Hierarchy](#2-directory-hierarchy)
-- [3 Performance Test Structure](#3-performance-test-structure)
-  - [3.1 Base Performance Classes](#31-base-performance-classes)
-  - [3.2 Performance Test Classes](#32-performance-test-classes)
-  - [3.3 Test Methods](#33-test-methods)
-- [4 Performance Test Semantics and Syntax](#4-performance-test-semantics-and-syntax)
-- [5 Common Patterns](#5-common-patterns)
-  - [5.1 Comparing with Standard Library](#51-comparing-with-standard-library)
-  - [5.2 Comparing Implementation Variants](#52-comparing-implementation-variants)
-  - [5.3 Measuring Overhead](#53-measuring-overhead)
-
-
-## 1 Background
+﻿# Anthony's Python Style Guide: Performance Tests
 
 Performance testing is a critical aspect of software development that ensures code not only functions correctly but also
 executes efficiently. These tests help identify performance regressions, validate optimizations, and ensure that
@@ -36,13 +19,31 @@ significant performance impact.
 This document focuses on performance test-specific aspects. For general code organization, file structure, naming
 conventions, docstrings, and other standard practices, please refer to:
 
-- [Code File Layout](code_file_layout.md) - For file organization and structure
-- [Syntactic Guidelines](syntax.md) - For naming conventions, docstrings, and code formatting
-- [Semantics Guidelines](semantics.md) - For general code organization principles
+- [Code File Layout](../code_file_layout.md) - For file organization and structure
+- Syntax topics â€” [Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md), [Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md), [Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) â€” for naming conventions, docstrings, and code formatting
+- [Semantics Guidelines](../semantics.md) - For general code organization principles
 - [Unit Tests](unit_tests.md) - For general testing practices and patterns
 
+## Table of Contents
 
-### 2 Directory Hierarchy
+- [1 Directory Hierarchy](#1-directory-hierarchy)
+- [2 Performance Test Structure](#2-performance-test-structure)
+    - [2.1 Performance Test Classes](#21-performance-test-classes)
+    - [2.2 Performance Test Methods](#22-performance-test-methods)
+    - [2.3 Performance Test Suites](#23-performance-test-suites)
+        - [2.3.1 Base Performance Test Suites](#231-base-performance-test-suites)
+        - [2.3.2 Concrete Performance Test Suites](#232-concrete-performance-test-suites)
+- [3 Performance Test Semantics and Syntax](#3-performance-test-semantics-and-syntax)
+    - [3.1 Benchmarking](#31-benchmarking)
+    - [3.2 Comparison Methodology](#32-comparison-methodology)
+    - [3.3 Measurement and Reporting](#33-measurement-and-reporting)
+- [4 Common Patterns](#4-common-patterns)
+    - [4.1 Comparing with Standard Library](#41-comparing-with-standard-library)
+    - [4.2 Comparing Implementation Variants](#42-comparing-implementation-variants)
+    - [4.3 Measuring Overhead](#43-measuring-overhead)
+
+
+## 1 Directory Hierarchy
 
 Performance Tests mostly follow the Unit Test Directory Hierarchy with some differences.
 
@@ -90,14 +91,13 @@ tests/
 ```
 
 
-## 3 Performance Test Structure
+## 2 Performance Test Structure
 
 The purpose of performance tests is to not only measure the performance components of the code but also provide a set
 of tools for measuring the performance of extensions to the code. The structure of performance tests should follow the
 structure described in [Unit Tests](unit_tests.md).
 
-
-### 3.1 Performance Test Classes
+### 2.1 Performance Test Classes
 
 Performance test classes should be used to group related test methods and even create test suites as described in
 [Unit Tests](unit_tests.md), section 4.1, with the following additional requirements specific to performance testing:
@@ -105,8 +105,7 @@ Performance test classes should be used to group related test methods and even c
 - Test classes should define comparison objects that match the functionality of the test objects but use standard library or alternative implementations
 - Test classes should define performance-specific attributes like `timeit_runs` and `speed_tolerance`
 
-
-### 3.3 Performance Test Methods
+### 2.2 Performance Test Methods
 
 Performance test methods should follow the general test method guidelines in [Unit Tests](unit_tests.md), with the
 following additional requirements specific to performance testing:
@@ -118,7 +117,7 @@ following additional requirements specific to performance testing:
 - Use different thresholds for different types of operations if necessary
 
 Example:
-```python
+```python # pseudocode
 def test_copy_speed(self, test_object: "TestBaseObject.BaseTestObject") -> None:
     """Test the performance of the copy method of BaseObject.
 
@@ -142,12 +141,11 @@ def test_copy_speed(self, test_object: "TestBaseObject.BaseTestObject") -> None:
     percent = (mean_new / mean_old) * 100
 
     # Print the performance comparison
-    print(f"\nNew: {mean_new:.3f} μs ({percent:.3f}% of old function time)")
+    print(f"\nNew: {mean_new:.3f} Î¼s ({percent:.3f}% of old function time)")
     assert percent < self.speed_tolerance
 ```
 
-
-### 3.3 Performance Test Suites
+### 2.3 Performance Test Suites
 
 Performance Test Suites, in this style guide, are Test Classes designed to function as test suites: a collection of
 related tests that assay the performance of a specific component, feature, or functionality of the software. Performance
@@ -157,8 +155,7 @@ Test suites should be organized hierarchically, with more specific test suites i
 suites to build up complex testing functionality while maintaining consistent testing patterns. The base hierarchy in
 this style guide consists of Base Performance Test Suites and Concrete Test Suites.
 
-
-#### 3.3.1 Base Performance Test Suites
+#### 2.3.1 Base Performance Test Suites
 
 Base Performance Test Suites are test suites contain a collection of tests assaying the performance of a component,
 feature, or functionality of the software with a focus on testing general aspects of the component, feature, or
@@ -199,7 +196,7 @@ Additional Guidelines:
   `ObjectPerformanceTestSuite` where the component being tested is before PerformanceTestSuite
 
 Example:
-```python
+```python # pseudocode
 class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
     """A base test suite which assays the performance of wrapper classes.
 
@@ -352,13 +349,12 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
         percent = (mean_new / mean_old) * 100
 
         # Print the performance comparison
-        print(f"\n{self.TestClass.__name__} attribute access: {mean_new:.3f} μs ({percent:.3f}% of direct access time)")
+        print(f"\n{self.TestClass.__name__} attribute access: {mean_new:.3f} Î¼s ({percent:.3f}% of direct access time)")
         assert percent < self.speed_tolerance
 
 ```
 
-
-#### 3.3.2 Concrete Performance Classes
+#### 2.3.2 Concrete Performance Test Suites
 
 Concrete Performance Test Suites are subclasses of Base Performance Test Suites and focus on validating tests defined by
 the Base Performance Test Suite and creating tests which may pertain only to a specific test target. Concrete
@@ -369,7 +365,7 @@ Additional Guidelines:
 - Should be named with a `Performance` suffix
 
 Example:
-```python
+```python # pseudocode
 # Classes #
 ExampleOne = WrapperPerformanceTestSuite.ExampleOne
 ExampleTwo = WrapperPerformanceTestSuite.ExampleTwo
@@ -481,20 +477,21 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
         percent = (mean_new / mean_old) * 100
 
         # Print the performance comparison
-        print(f"\n_setattr method: {mean_new:.3f} μs ({percent:.3f}% of normal set time)")
+        print(f"\n_setattr method: {mean_new:.3f} Î¼s ({percent:.3f}% of normal set time)")
         # No assertion here, just measuring relative performance
 
 ```
 
 
-## 4 Performance Test Semantics and Syntax
+## 3 Performance Test Semantics and Syntax
 
-Performance Tests should conform to the semantics and syntax described in[Semantics Guidelines](semantics.md)
-and [Syntactic Guidelines](syntax.md), but in some cases it may be necessary to deviate from the general
+Performance Tests should conform to the semantics and syntax described in [Semantics Guidelines](../semantics.md) and the Syntax topics â€”
+[Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md),
+[Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md),
+[Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) â€” but in some cases it may be necessary to deviate from the general
 guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide.
 
-
-### 4.1 Benchmarking
+### 3.1 Benchmarking
 
 Performance tests should use the `timeit` module for benchmarking. The following guidelines should be followed:
 
@@ -503,8 +500,7 @@ Performance tests should use the `timeit` module for benchmarking. The following
 - Report times in microseconds for better readability
 - Calculate and report the percentage comparison between implementations
 
-
-### 4.2 Comparison Methodology
+### 3.2 Comparison Methodology
 
 Performance tests should compare the performance of custom implementations against standard library equivalents or other reference implementations:
 
@@ -514,7 +510,7 @@ Performance tests should compare the performance of custom implementations again
 - Isolate the specific operation being tested
 
 Example:
-```python
+```python # pseudocode
 def normal_copy() -> None:
     copy.copy(normal)
 
@@ -523,7 +519,7 @@ def normal_copy() -> None:
 test_object.copy()
 ```
 
-### 4.3 Measurement and Reporting
+### 3.3 Measurement and Reporting
 
 Performance measurements should be accurate, consistent, and informative:
 
@@ -534,7 +530,7 @@ Performance measurements should be accurate, consistent, and informative:
 - Print detailed performance information for debugging
 
 Example:
-```python
+```python # pseudocode
 # Calculate the mean time in microseconds for the new implementation
 new_time = timeit.timeit(test_object.copy, number=self.timeit_runs)
 mean_new = new_time / self.timeit_runs * 1000000
@@ -545,15 +541,17 @@ mean_old = old_time / self.timeit_runs * 1000000
 percent = (mean_new / mean_old) * 100
 
 # Print the performance comparison
-print(f"\nNew: {mean_new:.3f} μs ({percent:.3f}% of old function time)")
+print(f"\nNew: {mean_new:.3f} Î¼s ({percent:.3f}% of old function time)")
 ```
 
-## 5 Common Patterns
-### 5.1 Comparing with Standard Library
+
+## 4 Common Patterns
+
+### 4.1 Comparing with Standard Library
 
 A common pattern is to compare the performance of custom implementations against standard library equivalents:
 
-```python
+```python # pseudocode
 def test_copy_speed(self, test_object):
     """Test the performance of the copy method of BaseObject."""
     normal = self.NormalObject()
@@ -567,11 +565,11 @@ def test_copy_speed(self, test_object):
     # ...
 ```
 
-### 5.2 Comparing Implementation Variants
+### 4.2 Comparing Implementation Variants
 
 Another pattern is to compare different implementation variants:
 
-```python
+```python # pseudocode
 def test_copy_vs_dunder_copy(self, test_object):
     """Test the performance difference between copy() and __copy__() methods."""
     # Compare two different implementations
@@ -580,11 +578,11 @@ def test_copy_vs_dunder_copy(self, test_object):
     # ...
 ```
 
-### 5.3 Measuring Overhead
+### 4.3 Measuring Overhead
 
 Performance tests can also measure the overhead of additional functionality:
 
-```python
+```python # pseudocode
 def test_attribute_access_speed(self, test_object):
     """Test the performance of attribute access in BaseObject."""
     normal = self.NormalObject()
@@ -604,3 +602,4 @@ def test_attribute_access_speed(self, test_object):
 ```
 
 By following these guidelines, developers can create effective performance tests that help ensure the efficiency and reliability of the codebase.
+

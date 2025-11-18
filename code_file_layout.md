@@ -1,35 +1,4 @@
-# Anthony's Python Style Guide: Code and File Layout
-
-## Table of Contents
-
-- [1 Background](#1-background)
-- [2 General Python File Layout](#2-general-python-file-layout)
-  - [2.1 Shebang Line](#21-shebang-line)
-  - [2.2 Future Imports](#22-future-imports)
-  - [2.3 Module Docstring](#23-module-docstring)
-  - [2.4 Header Section](#24-header-section)
-  - [2.5 Imports](#25-imports)
-  - [2.6 Definitions Section](#26-definitions-section)
-    - [2.6.1 Constants](#261-constants)
-    - [2.6.2 Functions](#262-functions)
-    - [2.6.3 Classes](#263-classes)
-      - [2.6.3.1 Static Methods](#2631-static-methods)
-      - [2.6.3.2 Class Attributes](#2632-class-attributes)
-      - [2.6.3.3 Class Magic Methods](#2633-class-magic-methods)
-      - [2.6.3.4 Class Methods](#2634-class-methods)
-      - [2.6.3.5 Attributes](#2635-attributes)
-      - [2.6.3.6 Properties](#2636-properties)
-      - [2.6.3.7 Magic Methods](#2637-magic-methods)
-        - [2.6.3.7.1 Magic Method Subcategories](#2637-1-magic-method-subcategories)
-      - [2.6.3.8 Instance Methods](#2638-instance-methods)
-        - [2.6.3.8.1 Instance Method Subcategories](#2638-1-instance-method-subcategories)
-      - [2.6.3.9 Getters and Setters](#2639-getters-and-setters)
-      - [2.6.3.10 Additional Definitions](#26310-additional-definitions)
-  - [2.7 Main](#27-main)
-- [3 \_\_init__.py File Layout](#3-__init__py-file-layout)
-
-
-## 1 Background
+﻿# Anthony's Python Style Guide: Code and File Layout
 
 This document provides comprehensive guidelines for organizing Python code in a file. It details the standard structure
 and layout that all Python files should follow, including the ordering of sections like shebang lines, module
@@ -37,8 +6,36 @@ docstrings, imports, and definitions. The guidelines cover how to organize const
 special attention to class structure and the organization of methods within classes. Following these guidelines ensures
 consistency across the codebase, making it easier to navigate, understand, and maintain the project's source code.
 
+## Table of Contents
 
-## 2 General Python File Layout
+- [1 General Python File Layout](#1-general-python-file-layout)
+    - [1.1 Shebang Line](#11-shebang-line)
+    - [1.2 Future Imports](#12-future-imports)
+    - [1.3 Module Docstring](#13-module-docstring)
+    - [1.4 Header Section](#14-header-section)
+    - [1.5 Imports](#15-imports)
+    - [1.6 Definitions Section](#16-definitions-section)
+        - [1.6.1 Constants](#161-constants)
+        - [1.6.2 Functions](#162-functions)
+        - [1.6.3 Classes](#163-classes)
+            - [1.6.3.1 Static Methods](#1631-static-methods)
+            - [1.6.3.2 Class Attributes](#1632-class-attributes)
+            - [1.6.3.3 Class Magic Methods](#1633-class-magic-methods)
+            - [1.6.3.4 Class Methods](#1634-class-methods)
+            - [1.6.3.5 Attributes](#1635-attributes)
+            - [1.6.3.6 Properties](#1636-properties)
+            - [1.6.3.7 Magic Methods](#1637-magic-methods)
+                - [1.6.3.7.1 Magic Method Subcategories](#16371-magic-method-subcategories)
+            - [1.6.3.8 Instance Methods](#1638-instance-methods)
+                - [1.6.3.8.1 Instance Method Subcategories](#16381-instance-method-subcategories)
+            - [1.6.3.9 Getters and Setters](#1639-getters-and-setters)
+            - [1.6.3.10 Additional Definitions](#16310-additional-definitions)
+    - [1.7 Main](#17-main)
+- [2 \_\_init__.py File Layout](#2-__init__py-file-layout)
+
+
+## 1 General Python File Layout
+
 Each Python file, except for internal files, must follow this structure:
 
 1. Shebang Line (If applicable)
@@ -51,16 +48,16 @@ Each Python file, except for internal files, must follow this structure:
 
 Finally, there is always a blank line at the end of the file.
 
+### 1.1 Shebang Line
 
-### 2.1 Shebang Line
 Most .py files do not need to start with a `#!` line. Start the main file of a program with `#!/usr/bin/env python3` (to
 support virtualenvs) or `#!/usr/bin/python3` per PEP-394.
 
 This line is used by the kernel to find the Python interpreter, but is ignored by Python when importing modules. It is
 only necessary on a file intended to be executed directly.
 
+### 1.2 Future Imports
 
-### 2.2 Future Imports
 New language version semantic changes may be gated behind a special future import to enable them on a per-file basis
 within earlier runtimes.
 
@@ -70,7 +67,7 @@ Python syntax features today. Once it is no longer necessary to run on a version
 
 In code that may execute on versions as old as 3.5 rather than >= 3.7, import:
 
-```python
+```python # pseudocode
 # Futures #
 from __future__ import generator_stop
 from __future__ import annotations
@@ -87,11 +84,10 @@ Guidelines:
 - A Future Imports section may be put immediately after Shebang Line if and only if the imported modify either
   docstrings or header variable assignments
 
+### 1.3 Module Docstring
 
-### 2.3 Module Docstring
 The module docstring describes the contents of the file. The guidelines for docstrings can be found in
-[Syntactic Guidelines](syntax.md) under 2.10.1 Docstrings and modules specifically, under 2.10.1 Modules.
-The guidelines here are a reiteration of what is also in [Syntactic Guidelines](syntax.md).
+[Docstrings](syntax/docstrings.md). The guidelines here are a reiteration of what is also in the Syntax topics.
 
 Guidelines:
 - Files should start with a docstring describing the contents and usage of the module
@@ -100,7 +96,7 @@ Guidelines:
 - The third line should be blank
 - Starting from the fourth line, the rest of docstring should include a detailed description of the module or program
 
-```python
+```python # pseudocode
 """file_name.py
 A one-line summary of the module or program, terminated by a period.
 
@@ -110,7 +106,8 @@ and numerical lists may be used as well, but only add them if they are needed.
 """
 ```
 
-### 2.4 Header Section
+### 1.4 Header Section
+
 The header section contains metadata about the file and the package. This section must be included in all Python files.
 
 Guidelines:
@@ -124,7 +121,7 @@ Guidelines:
 - The Header section must include version information as `__version__`
 
 Example:
-```python
+```python # pseudocode
 # Header #
 __package_name__ = "templatepackage"
 
@@ -136,8 +133,8 @@ __license__ = "MIT"
 __version__ = "1.12.0"
 ```
 
+### 1.5 Imports
 
-### 2.5 Imports
 Python import statements are how python links code across multiple files. Imported items must be easily trackable. Also,
 with trackback tools, it is straightforward to find which definition is used.
 
@@ -178,7 +175,7 @@ Exemptions:
 Examples:
 
 Correct:
-```python
+```python # pseudocode
 # Imports #
 # Standard Libraries #
 from collections.abc import Mapping, Sequence
@@ -196,12 +193,12 @@ from .utils import helper_function
 ```
 
 Incorrect:
-```python
+```python # pseudocode
 import os, sys
 ```
 
+### 1.6 Definitions Section
 
-### 2.6 Definitions Section
 The definitions section is a section of code that defines constants, functions, classes, etc. If there are no
 definitions, the section may be omitted.
 
@@ -216,7 +213,8 @@ Definitions should be organized into the following subsections with the recommen
 However, the definition subsections may be organized in any order that makes sense for the code and may be omitted if
 there are no definitions in that section.
 
-#### 2.6.1 Constants
+#### 1.6.1 Constants
+
 Constants are values that must not be changed during program execution. They are typically defined at the module level.
 
 Guidelines:
@@ -227,12 +225,13 @@ Guidelines:
 - Complex constants must have a comment explaining their purpose or derivation
 
 Example:
-```python
+```python # pseudocode
 # Constants #
 EXCEL_INIT_DATE = datetime(1899, 12, 30)  # The initial date of Excel's date system
 ```
 
-#### 2.6.2 Functions
+#### 1.6.2 Functions
+
 Functions are reusable blocks of code that perform specific tasks. They must be defined at the module level.
 
 Guidelines:
@@ -247,7 +246,7 @@ Guidelines:
 - Decorator functions must be placed before the functions they decorate
 
 Example:
-```python
+```python # pseudocode
 # Functions #
 @singledispatch
 def excel_date_to_datetime(timestamp: int | float | str | bytes, tzinfo: tzinfo | None = timezone.utc) -> datetime:
@@ -263,7 +262,8 @@ def excel_date_to_datetime(timestamp: int | float | str | bytes, tzinfo: tzinfo 
     raise TypeError(f"{timestamp.__class__} cannot be converted to a datetime")
 ```
 
-#### 2.6.3 Classes
+#### 1.6.3 Classes
+
 Classes are blueprints for creating objects that encapsulate data and behavior. They must be defined at the module level.
 
 Guidelines:
@@ -276,7 +276,7 @@ Guidelines:
 - Base classes must be defined before derived classes
 
 Example:
-```python
+```python # pseudocode
 # Classes #
 class BaseObject(ABC):
     """An abstract class that implements some basic functions that all objects must have."""
@@ -299,7 +299,8 @@ However, the only required section is the docstring. All other sections may be o
 
 The docstring standards and best practices are described in the Syntactic Guidelines document.
 
-##### 2.6.3.1 Static Methods
+##### 1.6.3.1 Static Methods
+
 Static methods are methods that don't operate on instance data and don't require an instance of the class to be called.
 
 Guidelines:
@@ -311,7 +312,7 @@ Guidelines:
 - Must have type hints for parameters and return values
 
 Example:
-```python
+```python # pseudocode
 # Static Methods #
 @staticmethod
 def create_from_data(data: dict) -> "MyClass":
@@ -326,7 +327,8 @@ def create_from_data(data: dict) -> "MyClass":
     return MyClass(**data)
 ```
 
-##### 2.6.3.2 Class Attributes
+##### 1.6.3.2 Class Attributes
+
 Class attributes are variables that are shared by all instances of a class. They are defined at the class level.
 
 Guidelines:
@@ -339,7 +341,7 @@ Guidelines:
 - Must be organized by related functionality
 
 Example:
-```python
+```python # pseudocode
 # Class Attributes #
 method_type: ClassVar[type[DynamicMethod]] = singlekwargdispatchmethod
 _bind_method: ClassVar[str] = "bind_method_dispatcher"
@@ -348,7 +350,8 @@ _kwarg: ClassVar[str | None] = None
 _parse_method: ClassVar[str] = "parse_first"
 ```
 
-##### 2.6.3.3 Class Magic Methods
+##### 1.6.3.3 Class Magic Methods
+
 Class magic methods are special methods that are invoked by Python's syntax rather than by explicit method calls. They
 are defined at the class level and operate on the class itself rather than instances.
 
@@ -361,7 +364,7 @@ Guidelines:
 - Must be organized by functionality (e.g., Construction/Destruction)
 
 Example:
-```python
+```python # pseudocode
 # Class Magic Methods #
 def __new__(cls, *args: Any, **kwargs: Any) -> Any:
     """Creates a new instance of the class.
@@ -376,7 +379,8 @@ def __new__(cls, *args: Any, **kwargs: Any) -> Any:
     return super().__new__(cls)
 ```
 
-##### 2.6.3.4 Class Methods
+##### 1.6.3.4 Class Methods
+
 Class methods are methods that operate on the class itself rather than instances. They receive the class as their first argument (conventionally named `cls`).
 
 Guidelines:
@@ -389,7 +393,7 @@ Guidelines:
 - Must be organized by functionality
 
 Example:
-```python
+```python # pseudocode
 # Class Methods #
 @classmethod
 def from_dict(cls, data: dict) -> "MyClass":
@@ -404,7 +408,8 @@ def from_dict(cls, data: dict) -> "MyClass":
     return cls(**data)
 ```
 
-##### 2.6.3.5 Attributes
+##### 1.6.3.5 Attributes
+
 Instance attributes are variables that are specific to each instance of a class. They are typically defined in class
 scope and can be initialized in the `__init__` or `construct` methods.
 
@@ -421,7 +426,7 @@ Guidelines:
 - Can be initialized in the `__init__` method but not necessary
 
 Example:
-```python
+```python # pseudocode
 # Attributes #
 parse: MethodMultiplexer
 dispatcher: AnyCallable | None = None
@@ -436,7 +441,8 @@ def __init__(self, *args: Any, **kwargs: Any) -> None:
     super().__init__(*args, **kwargs)
 ```
 
-##### 2.6.3.6 Properties
+##### 1.6.3.6 Properties
+
 Properties may be used to control getting or setting attributes that require trivial computations or logic. Property
 implementations must match the general expectations of regular attribute access: that they are cheap, straightforward,
 and unsurprising.
@@ -454,7 +460,8 @@ a power feature.
 Inheritance with properties can be non-obvious. Do not use properties to implement computations a subclass may ever want
 to override and extend.
 
-##### 2.6.3.7 Magic Methods
+##### 1.6.3.7 Magic Methods
+
 Magic methods (also known as dunder methods) are special methods that are invoked by Python's syntax rather than by explicit method calls. They are defined at the instance level.
 
 Guidelines:
@@ -466,7 +473,7 @@ Guidelines:
 - Must be organized by functionality (e.g., Construction/Destruction, Comparison, etc.)
 
 Example:
-```python
+```python # pseudocode
 # Magic Methods #
 # Construction/Destruction
 def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -487,7 +494,8 @@ def __copy__(self) -> Any:
     return self.copy()
 ```
 
-###### 2.6.3.7.1 Magic Method Subcategories
+###### 1.6.3.7.1 Magic Method Subcategories
+
 Magic methods should be organized into subcategories based on their functionality. This helps improve code readability
 and organization. Each subcategory should be preceded by a comment indicating the subcategory name.
 
@@ -523,7 +531,7 @@ Common magic method subcategories include:
   - `__enter__`, `__exit__`
 
 Example:
-```python
+```python # pseudocode
 # Magic Methods #
 # Construction/Destruction
 def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -556,7 +564,8 @@ def __eq__(self, other: Any) -> bool:
     return self.data == other.data
 ```
 
-##### 2.6.3.8 Instance Methods
+##### 1.6.3.8 Instance Methods
+
 Instance methods are methods that operate on instance data and require an instance of the class to be called. They
 receive the instance as their first argument (conventionally named `self`).
 
@@ -570,7 +579,7 @@ Guidelines:
 - Related methods must be grouped together with subcategory comments
 
 Example:
-```python
+```python # pseudocode
 # Instance Methods #
 # Constructors
 def construct(self, *args: Any, **kwargs: Any) -> None:
@@ -592,7 +601,8 @@ def set_kwarg(self, kwarg: str | None) -> None:
     self._kwarg = kwarg
 ```
 
-###### 2.6.3.8.1 Instance Method Subcategories
+###### 1.6.3.8.1 Instance Method Subcategories
+
 Instance methods should be organized into subcategories based on their functionality. This helps improve code
 readability and organization. Each subcategory should be preceded by a comment indicating the subcategory name.
 
@@ -629,7 +639,7 @@ Common instance method subcategories include:
   - `calculate_*`, `compute_*`, `process_*`
 
 Example:
-```python
+```python # pseudocode
 # Instance Methods #
 # Constructors
 def construct(self, *args: Any, **kwargs: Any) -> None:
@@ -666,7 +676,8 @@ def dispatch_call(self, method_name: str, *args: Any, **kwargs: Any) -> Any:
     return method(*args, **kwargs)
 ```
 
-##### 2.6.3.9 Getters and Setters
+##### 1.6.3.9 Getters and Setters
+
 Getter and setter methods (also called accessors and mutators) are a type of method which must be used when they
 provide a meaningful role or behavior for getting or setting a variable's value.
 
@@ -684,7 +695,8 @@ If the past behavior allowed access through a property, do not bind the new gett
 code still attempting to access the variable by the old method must break visibly, so they are made aware of the
 change in complexity.
 
-##### 2.6.3.10 Additional Definitions
+##### 1.6.3.10 Additional Definitions
+
 In some cases, there is other code that is not part of the class, function, or module structure. Those can be defined
 at the end of the definitions section.
 
@@ -694,15 +706,15 @@ called: `# Circular References #`.
 Alternatively, a class or function may need to be registered to an object which is not defined in the same file. In
 that case, the registration may be defined in a definitions section called: `# Registration #`.
 
+### 1.7 Main
 
-### 2.7 Main
 In Python, pydoc as well as unit tests require modules to be importable. If a file is meant to be used as an executable,
 its main functionality must be in a `main()` function, and the code must always check if `__name__ == '__main__'`
 before executing the main program, so that it is not executed when the module is imported.
 
 When using absl, use app.run:
 
-```python
+```python # pseudocode
 from absl import app
 ...
 
@@ -716,7 +728,7 @@ if __name__ == '__main__':
 
 Otherwise, use:
 
-```python
+```python # pseudocode
 def main():
     ...
 
@@ -728,7 +740,8 @@ All code at the top level will be executed when the module is imported. Be caref
 objects, or perform other operations that must not be executed when the file is being pydoced.
 
 
-## 3 \_\_init__.py File Layout
+## 2 \_\_init__.py File Layout
+
 The `__init__.py` file is a special file in Python that marks a directory as a Python package. It can be empty or
 contain code to initialize the package.
 
@@ -743,7 +756,7 @@ Guidelines:
 - Can contain logic to handle package imports (i.e., try catch import block)
 
 Example:
-```python
+```python # pseudocode
 """__init__.py
 templatepackage provides several base classes and tools.
 """
@@ -765,3 +778,4 @@ from .functions import *
 from .composition import *
 
 ```
+

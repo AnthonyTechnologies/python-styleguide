@@ -1,35 +1,4 @@
-# Anthony's Python Style Guide: Package Tutorials
-
-## Table of Contents
-
-- [1 Background](#1-background)
-- [2 Jupyter Notebook](#2-jupyter-notebook)
-- [3 Directory Hierarchy](#3-directory-hierarchy)
-- [4 Package Tutorial Notebook Structure](#4-package-tutorial-notebook-structure)
-  - [4.1 Title and Introduction](#41-title-and-introduction)
-  - [4.2 Installation](#42-installation)
-  - [4.3 Importing the Package](#43-importing-the-package)
-  - [4.4 Core Concepts & Basic Usage](#44-core-concepts--basic-usage)
-  - [4.5 Advanced Features](#45-advanced-features)
-  - [4.6 Examples](#46-examples)
-  - [4.7 API Highlights](#47-api-highlights)
-  - [4.8 Troubleshooting / FAQs](#48-troubleshooting--faqs)
-  - [4.9 Conclusion and Next Steps](#49-conclusion-and-next-steps)
-- [5 Content Guidelines](#5-content-guidelines)
-  - [5.1 Define the Audience and Scope](#51-define-the-audience-and-scope)
-  - [5.2 Language](#52-language)
-  - [5.3 Logical Flow](#53-logical-flow)
-  - [5.4 Markdown Cells](#54-markdown-cells)
-- [6 Formatting and Style](#6-formatting-and-style)
-  - [6.1 Headings](#61-headings)
-  - [6.2 Code Blocks](#62-code-blocks)
-  - [6.3 Emphasis](#63-emphasis)
-  - [6.4 Lists](#64-lists)
-  - [6.5 Links](#65-links)
-- [7 Tips for Effectiveness](#7-tips-for-effectiveness)
-
-
-## 1 Background
+﻿# Anthony's Python Style Guide: Package Tutorials
 
 A tutorial is a step-by-step guide to a specific topic. It provides a clear and concise explanation of the topic,
 demonstrating the functionality and use cases. It is designed to be self-contained and easy to follow.
@@ -43,8 +12,38 @@ content, and leveraging Jupyter Notebook features. These guidelines help develop
 educational tutorials that enable users to quickly understand and effectively use the packages, enhancing the overall
 user experience and adoption of the project's components.
 
+## Table of Contents
 
-## 2 Jupyter Notebook
+- [1 Jupyter Notebook](#1-jupyter-notebook)
+- [2 Directory Hierarchy](#2-directory-hierarchy)
+- [3 Package Tutorial Notebook Structure](#3-package-tutorial-notebook-structure)
+    - [3.1 Title and Introduction](#31-title-and-introduction)
+    - [3.2 Installation](#32-installation)
+    - [3.3 Importing the Package](#33-importing-the-package)
+    - [3.4 Core Concepts & Basic Usage](#34-core-concepts--basic-usage)
+    - [3.5 Advanced Features](#35-advanced-features)
+    - [3.6 Examples](#36-examples)
+    - [3.7 API Highlights](#37-api-highlights)
+    - [3.8 Troubleshooting / FAQs](#38-troubleshooting--faqs)
+    - [3.9 Conclusion and Next Steps](#39-conclusion-and-next-steps)
+- [4 Content Guidelines](#4-content-guidelines)
+    - [4.1 Define the Audience and Scope](#41-define-the-audience-and-scope)
+    - [4.2 Language](#42-language)
+    - [4.3 Logical Flow](#43-logical-flow)
+    - [4.4 Markdown Cells](#44-markdown-cells)
+    - [4.5 Code Cells](#45-code-cells)
+    - [4.6 Self-Contained Examples](#46-self-contained-examples)
+    - [4.7 Error Handling Examples](#47-error-handling-examples)
+- [5 Formatting and Style](#5-formatting-and-style)
+    - [5.1 Headings](#51-headings)
+    - [5.2 Code Blocks](#52-code-blocks)
+    - [5.3 Emphasis](#53-emphasis)
+    - [5.4 Lists](#54-lists)
+    - [5.5 Links](#55-links)
+- [6 Tips for Effectiveness](#6-tips-for-effectiveness)
+
+
+## 1 Jupyter Notebook
 
 Jupyter Notebooks are a powerful tool for creating interactive tutorials. They allow users to combine text, code, and
 visualizations into a single document. They are ideal for educational purposes, as they provide a clear and concise
@@ -55,7 +54,7 @@ When creating a tutorial, it is important to consider an report the following:
 - **Magic Commands:** Explain any used.
 
 
-## 3 Directory Hierarchy
+## 2 Directory Hierarchy
 
 Tutorials should be organized in a directory structure that mirrors the package structure. This makes it easy for users
 to find tutorials relevant to the specific components they're interested in.
@@ -81,7 +80,7 @@ tutorials/
 ```
 
 
-## 4 Package Tutorial Notebook Structure
+## 3 Package Tutorial Notebook Structure
 
 A clear and logical flow is essential. These sections are recommended:
 
@@ -94,8 +93,7 @@ A clear and logical flow is essential. These sections are recommended:
 7. API Highlights
 8. Troubleshooting / FAQs
 
-
-### 4.1 Title and Introduction
+### 3.1 Title and Introduction
 
 The Title and Introduction section sets the stage for the package's tutorial. It should provide users with a clear
 understanding of what they will learn and how this package fits into the larger package ecosystem. This section serves as
@@ -110,8 +108,7 @@ the entry point to the tutorial and should be engaging while remaining informati
     - Briefly summarize the prerequisites.
 - Table of Contents (Optional but Recommended): Markdown links to major sections within this package tutorial.
 
-
-### 4.2 Installation
+### 3.2 Installation
 
 The Installation section provides clear instructions for setting up the package in the user's environment. This section
 should be straightforward and cover both standard and alternative installation methods, ensuring users can successfully
@@ -119,7 +116,7 @@ install the package regardless of their setup.
 
 - Formatting: Markdown and Code Cells
 - Instructions: Clear, step-by-step installation instructions using pip or conda.
-    ```python
+    ```python # pseudocode
     # !pip install example-package-name
     # or
     # !conda install -c example-channel example-package-name
@@ -129,8 +126,7 @@ install the package regardless of their setup.
 
 If the package tutorial is a subpackage, an Installation section is not required.
 
-
-### 4.3 Importing the Package
+### 3.3 Importing the Package
 
 The Importing the Package section demonstrates the proper way to import and access the package's functionality. This
 section should clearly show users the standard import patterns and any alternative import styles that might be useful for
@@ -140,7 +136,7 @@ different use cases. It's essential to explain any naming conventions or common 
 - Show the standard way to import the package or its key subpackages.
 
 Example:
-```python
+```python # pseudocode
 import package_name
 # or
 from package_name import specific_package
@@ -148,8 +144,7 @@ from package_name import specific_package
 import package_name as alias
 ```
 
-
-### 4.4 Core Concepts & Basic Usage
+### 3.4 Core Concepts & Basic Usage
 
 The Core Concepts & Basic Usage section introduces users to the fundamental building blocks and primary functionality of
 the package. This section forms the foundation of the tutorial, ensuring users understand the essential concepts before
@@ -167,8 +162,7 @@ core of working with the package.
     - Why it's done that way.
     - The expected output (and show it, by running the cell).
 
-
-### 4.5 Advanced Features
+### 3.5 Advanced Features
 
 The Advanced Features section introduces users to more advanced features of the package. This section provides users
 with a deeper understanding of the package's capabilities and provides a deeper understanding of the package's
@@ -180,8 +174,7 @@ capabilities, so they can make informed decisions when using the package.
 - Break down complex examples into smaller, understandable steps.
 - Clearly explain the parameters and their impact.
 
-
-### 4.6 Examples
+### 3.6 Examples
 
 The Examples section demonstrates how the package can be used to solve real-world problems. This section provides users
 with a concrete example of how the package can be used to solve a real-world problem. It's important to provide users
@@ -193,8 +186,7 @@ decisions when using the package.
 - This section helps users understand the package's value and applicability.
 - If possible, use a small, relatable dataset or scenario.
 
-
-### 4.7 API Highlights
+### 3.7 API Highlights
 
 The API Highlights section provides users with a quick overview of the package's API. This section provides users with
 a quick overview of the package's API and provides a quick reference for users to quickly access the package's
@@ -205,8 +197,7 @@ for users to quickly access the package's functionality, so they can make inform
 - Briefly mention key functions/classes and their purpose.
 - Provide a link to the full API documentation. Avoid replicating the entire API reference here.
 
-
-### 4.8 Troubleshooting / FAQs
+### 3.8 Troubleshooting / FAQs
 
 The Troubleshooting / FAQs section provides users with solutions to common issues they might encounter while using the
 package. This section provides users with solutions to common issues they might encounter while using the package. It's
@@ -218,8 +209,7 @@ make informed decisions when using the package.
 - Provide solutions or workarounds.
 - Link to issue trackers or support forums.
 
-
-### 4.9 Conclusion and Next Steps
+### 3.9 Conclusion and Next Steps
 
 The Conclusion and Next Steps section wraps up the tutorial and provides guidance for further learning. This section
 helps users solidify their understanding and shows them paths for continued exploration of the package.
@@ -233,14 +223,12 @@ helps users solidify their understanding and shows them paths for continued expl
     - Consulting the full documentation.
     - Contributing to the package.
 
-
-## 5 Content Guidelines
+## 4 Content Guidelines
 
 The contents of a tutorial should be accessible, practical, and valuable to users. How the information is presented is
 crucial to ensure that it is easy to follow and understand.
 
-
-## 5.1 Define the Audience and Scope
+### 4.1 Define the Audience and Scope
 
 **Target Audience:** The target audience will be the main user-base who be reading and using this tutorial.
 - Typically, the tutorials' target audience will be those familiar with the Python Standard Library, popular packages,
@@ -259,8 +247,7 @@ crucial to ensure that it is easy to follow and understand.
 - The concepts of the dependencies which are used in the package.
 - Any resources the user needs to import.
 
-
-### 5.2 Language
+### 4.2 Language
 
 The language used in package tutorials should be clear, accessible, and professional. Effective communication is crucial
 for ensuring users can understand and implement the package's functionality. Follow these guidelines to maintain consistent
@@ -271,8 +258,7 @@ and user-friendly language throughout the tutorial:
 - Keep sentences and paragraphs short.
 - Use active voice.
 
-
-### 5.3 Logical Flow
+### 4.3 Logical Flow
 
 The logical flow of content is crucial for effective learning. A well-structured tutorial should progress naturally,
 building upon previous concepts and maintaining a clear connection between topics.
@@ -281,8 +267,7 @@ building upon previous concepts and maintaining a clear connection between topic
 - Ensure a smooth transition between sections.
 - Each section should build upon the previous ones.
 
-
-### 5.4 Markdown Cells
+### 4.4 Markdown Cells
 
 Markdown cells are essential for providing context, explanations, and documentation within the tutorial. They help break
 up code sections, explain concepts, and guide users through the learning process. These cells should be well-formatted
@@ -292,8 +277,7 @@ and informative, making the tutorial easy to follow and understand.
 - Explain the purpose of the code, not just a line-by-line translation.
 - Use Markdown formatting (headings, lists, bold, italics, code highlighting) to improve readability.
 
-
-### 5.5 Code Cells
+### 4.5 Code Cells
 
 Code cells are essential for demonstrating the functionality of the package. They provide a clear and concise way to
 demonstrate the package's functionality and provide examples of how to use it.
@@ -304,8 +288,7 @@ demonstrate the package's functionality and provide examples of how to use it.
 - Display Outputs: Ensure cell outputs are visible and illustrative.
 - For plots, make sure they render correctly in the notebook.
 
-
-### 5.6 Self-Contained Examples
+### 4.6 Self-Contained Examples
 
 Self-contained examples are crucial for ensuring that users can run and understand the tutorial without external
 dependencies or setup requirements. These examples should be complete, runnable units of code that demonstrate specific
@@ -319,8 +302,7 @@ reduces potential points of failure.
   educate the user on how to use key aspects of the package and how they can use it to create new programs, not just
   test it.
 
-
-### 5.7 Error Handling Examples
+### 4.7 Error Handling Examples
 
 The Error Handling Examples section demonstrates how to handle common errors and exceptions that users might encounter
 while working with the package. This section helps users understand potential pitfalls and how to gracefully handle
@@ -329,50 +311,45 @@ error conditions, making their code more robust and maintainable. It is optional
 - Show how to handle common exceptions or invalid inputs if relevant to the package's usage.
 
 
-## 6 Formatting and Style
+## 5 Formatting and Style
 
 This section provides specific formatting and style guidelines to ensure consistency and readability. These conventions
 help create a professional and easily navigable document.
 
-
-### 6.1 Headings
+### 5.1 Headings
 
 - Use `#` for the main title (H1).
 - Use `##` for major sections (H2).
 - Use `###` for sub-sections (H3), and so on.
 - Be consistent with heading levels.
 
-
-### 6.2 Code Blocks
+### 5.2 Code Blocks
 
 - In Markdown cells, use backticks for inline code: `my_function()`.
 - Use triple backticks for code blocks:
-    ```python
+    ```python # pseudocode
     # Python code goes here
     ```
-- Specify the language for syntax highlighting in Markdown code blocks (e.g., ` ```python`).
+- Specify the language for syntax highlighting in Markdown code blocks (e.g., ` ```python # pseudocode`).
 
-
-### 6.3 Emphasis
+### 5.3 Emphasis
 
 - Use `**bold**` for strong emphasis (e.g., key terms, warnings).
 - Use `*italics*` for mild emphasis or for terms being defined.
 
-
-### 6.4 Lists
+### 5.4 Lists
 
 - Use numbered lists for sequential steps.
 - Use bulleted lists for non-sequential items or features.
 
-
-### 6.5 Links
+### 5.5 Links
 
 - Use descriptive text for hyperlinks:
     - Good: `[Read the full API documentation](link-to-docs)`
     - Avoid: `Click [here](link-to-docs)`
 
 
-## 7 Tips for Effectiveness
+## 6 Tips for Effectiveness
 
 This section provides practical recommendations for creating impactful and successful package tutorials. These tips help
 ensure the tutorial achieves its educational goals while maintaining user engagement.
@@ -388,3 +365,4 @@ ensure the tutorial achieves its educational goals while maintaining user engage
 - **Clear Outputs Before Distribution (Usually):** Unless the outputs are essential for understanding without running (e.g., a complex plot that takes time to generate), it's often best to "Clear All Outputs" before distributing the `.ipynb` file. This reduces file size and allows users to generate outputs themselves. Alternatively, ensure all outputs are clean and directly relevant.
 
 By following this style guide, developers can create high-quality Jupyter Notebook tutorials that significantly enhance the user experience for Python packages.
+

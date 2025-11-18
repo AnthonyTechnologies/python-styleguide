@@ -1,0 +1,24 @@
+# Machine‑readable Guide Index
+# This file mirrors key rules from the prose guide in a compact form that tools/agents can ingest.
+
+[formatting]
+line_length = 120
+continuation_backslashes = "forbidden"  # prefer parentheses for implicit continuation
+
+[imports]
+order = ["stdlib", "third_party", "local"]
+
+[logging]
+message_style = "percent_format"  # e.g., logger.info("value: %s", value)
+
+[docstring]
+style = "google"
+
+[exceptions]
+assert_usage = "forbid_in_library_code"  # allow in tests only
+
+[typing]
+required = "public_api"  # public functions/classes should be annotated
+
+[strings]
+allowed_string_quote = "single_or_double"  # prefer consistency within a file

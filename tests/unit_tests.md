@@ -1,25 +1,4 @@
-# Anthony's Python Style Guide: Unit Tests
-
-## Table of Contents
-
-- [1 Background](#1-background)
-- [2 pytest](#2-pytest)
-- [3 Directory Hierarchy](#3-directory-hierarchy)
-- [4 Test Structure](#4-test-structure)
-  - [4.1 Test Classes](#41-test-classes)
-  - [4.2 Test Methods](#42-test-methods)
-  - [4.3 Test Suites](#43-test-suites)
-    - [4.3.1 Base Test Suites](#431-base-test-suites)
-    - [4.3.2 Concrete Test Suites](#432-concrete-test-suites)
-  - [4.4 Main](#44-main)
-- [5 Test Semantics and Syntax](#5-test-semantics-and-syntax)
-  - [5.1 Assertions](#51-assertions)
-  - [5.2 Fixtures](#52-fixtures)
-  - [5.3 Test Doubles](#53-test-doubles)
-- [6 Test Execution](#6-test-execution)
-
-
-## 1 Background
+﻿# Anthony's Python Style Guide: Unit Tests
 
 Unit tests are used to verify the correctness of the code being tested to ensure that it is working as expected.
 Typically, unit tests are written to verify individual components of the code.
@@ -31,15 +10,32 @@ suites can inherit from base test suites to provide consistent testing patterns 
 Unit tests and test suites should follow the guidelines set forth by the general styleguide such as the code
 organization, file structure, naming conventions, docstrings, and other standard practices in:
 
-- [Code File Layout](code_file_layout.md) - For file organization and structure
-- [Syntactic Guidelines](syntax.md) - For naming conventions, docstrings, and code formatting
-- [Semantics Guidelines](semantics.md) - For general code organization principles
+- [Code File Layout](../code_file_layout.md) - For file organization and structure
+- Syntax topics â€” [Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md), [Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md), [Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) â€” for naming conventions, docstrings, and code formatting
+- [Semantics Guidelines](../semantics.md) - For general code organization principles
 
 The guidelines in this document are supplemental to the general guidelines and focus on test-specific code to ensure
 consistency, maintainability, and effectiveness of the test suite across the project.
 
+## Table of Contents
 
-## 2 pytest
+- [1 pytest](#1-pytest)
+- [2 Directory Hierarchy](#2-directory-hierarchy)
+- [3 Test Structure](#3-test-structure)
+    - [3.1 Test Classes](#31-test-classes)
+    - [3.2 Test Methods](#32-test-methods)
+    - [3.3 Test Suites](#33-test-suites)
+        - [3.3.1 Base Test Suites](#331-base-test-suites)
+        - [3.3.2 Concrete Test Suites](#332-concrete-test-suites)
+    - [3.4 Main](#34-main)
+- [4 Test Semantics and Syntax](#4-test-semantics-and-syntax)
+    - [4.1 Assertions](#41-assertions)
+    - [4.2 Fixtures](#42-fixtures)
+    - [4.3 Test Doubles](#43-test-doubles)
+- [5 Test Execution](#5-test-execution)
+
+
+## 1 pytest
 
 **pytest** testing framework is the preferred framework for Python projects, as it provides more features and
 flexibility than python's unittest library.
@@ -52,7 +48,7 @@ information on pytest, see the [pytest documentation](https://docs.pytest.org/en
 The pytest package has many features, and this styleguide will offer guidance on how to use them.
 
 
-## 3 Directory Hierarchy
+## 2 Directory Hierarchy
 
 Base Test Suites or test suites which cover general implements should be located in the package source codes under
 `testsuite`. Under normal circumstances, test suites should not be placed in the project source as only developers need
@@ -77,7 +73,7 @@ src/
 Concrete Test Suites and unit tests for individual or specific components should be organized in a directory structure
 outside the source code that mirrors the package structure. This makes it easy for users to find tests relevant to the
 specific components they're interested in. It also allows pytest to automatically discover tests when running the tests
-using the `pytest` command.
+using the `python # pseudocodetest` command.
 
 - Each major package should have its own directory under the `tests/` directory
 - Subpackages should have their own subdirectories when they contain multiple components
@@ -102,7 +98,7 @@ tests/
 ```
 
 
-## 4 Test Structure
+## 3 Test Structure
 
 The purpose of test code is to not only verify that the code is working as expected, but also provide a set of tools for
 testing extensions of the code. For example, a class may outline functionality that is not implemented yet or may be
@@ -111,11 +107,10 @@ changed in the future, but the test code should still verify that the class is w
 In pytests, tests themselves can be organized into classes and sub-classed which can be used to parameterize tests or
 create test suites to verify different implementations of the code.
 
-For creating documentation, follow the general docstring guidelines in [Syntactic Guidelines](syntax.md),
-section 2.10, with special attention to section 2.10.1.1 for test modules.
+For creating documentation, follow the general docstring guidelines in [Docstrings](../syntax/docstrings.md),
+particularly the module and test module subsections.
 
-
-### 4.1 Test Classes
+### 3.1 Test Classes
 
 Test classes should be used to group related test methods and even create test suites. Base test classes should be
 created to provide consistent testing patterns across the project.
@@ -129,11 +124,11 @@ Guidelines:
   - Test involving defining classes should either be defined as inner classes or defined elsewhere and assigned to a class attribute.
   - Test involving defining functions should either be defined as inner functions or defined elsewhere and assigned to a class attribute.
 
-For test method naming and organization, follow the general method guidelines in [Syntactic Guidelines](syntax.md)
-and [Code File Layout](code_file_layout.md).
+For test method naming and organization, follow the general method guidelines in the Syntax topics â€”
+[Formatting](../syntax/formatting.md), [Docstrings](../syntax/docstrings.md), and [Comments](../syntax/comments.md) â€”
+and [Code File Layout](../code_file_layout.md).
 
-
-### 4.2 Test Methods
+### 3.2 Test Methods
 
 Test methods should be designed to test a specific aspect of the class or function being tested. Each test method should
 be focused, independent, and provide clear feedback when it fails.
@@ -149,7 +144,7 @@ Guidelines:
 - Test methods can use attributes provided by the test class (allows more options as a test suite)
 
 Example:
-```python
+```python # pseudocode
 def test_deepcopy(self, test_object: 'TestBaseObject.BaseTestObject') -> None:
     """Test the deep copy behavior of BaseObject.
 
@@ -172,8 +167,7 @@ def test_deepcopy(self, test_object: 'TestBaseObject.BaseTestObject') -> None:
 When creating test methods that test similar functionality across different implementations, consider using parameterized tests
 to reduce code duplication and ensure consistent testing.
 
-
-### 4.3 Test Suites
+### 3.3 Test Suites
 
 Test suites, in this style guide, are Test Classes designed to function as test suites: a collection of related tests
 that validate a specific component, feature, or functionality of the software.
@@ -197,8 +191,7 @@ Test suites should be organized hierarchically, with more specific test suites i
 suites to build up complex testing functionality while maintaining consistent testing patterns. The base hierarchy in
 this style guide consists of Base Test Suites and Concrete Test Suites.
 
-
-#### 4.3.1 Base Test Suites
+#### 3.3.1 Base Test Suites
 
 Base Test Suites are test suites contain a collection of tests for validating a component, feature, or functionality of
 the software with a focus on testing general aspects of the component, feature, or functionality.
@@ -239,7 +232,7 @@ Guidelines:
   the component being tested is before TestSuite
 
 Example:
-```python
+```python # pseudocode
 # Classes #
 class BaseObjectTestSuite(BaseClassTestSuite):
     """Base test suite for children of BaseObject.
@@ -293,8 +286,7 @@ class BaseObjectTestSuite(BaseClassTestSuite):
         # Additional assertions specific to the BaseObject copy behavior
 ```
 
-
-#### 4.3.2 Concrete Test Suites
+#### 3.3.2 Concrete Test Suites
 
 Concrete Test Suites are subclasses of Base Test Suites and focus on validating tests defined by the Base Test Suite and
 creating tests which may pertain only to a specific test target.
@@ -309,7 +301,7 @@ Guidelines:
   can interchanged with other similar classes which will be tested using the same test suite.
 
 Example:
-```python
+```python # pseudocode
 # Classes #
 class BaseTestObject(BaseObject):
     """A subclass of BaseObject for testing purposes."""
@@ -359,28 +351,27 @@ class TestBaseObject(BaseObjectTestSuite):
         assert obj_copy.x == 10
 ```
 
-
-### 4.4 Main
+### 3.4 Main
 
 Test files should include a `__main__` block for running the tests directly. Mainly it sets the run options for pytest
 for the tests in the file.
 
 Example:
-```python
+```python # pseudocode
 # Main #
 if __name__ == "__main__":
     pytest.main(["-v", "-s"])
 ```
 
+## 4 Test Semantics and Syntax
 
-## 5 Test Semantics and Syntax
-
-Tests should conform to the semantics and syntax described in[Semantics Guidelines](semantics.md) and
-[Syntactic Guidelines](syntax.md), but in some cases it may be necessary to deviate from the general
+Tests should conform to the semantics and syntax described in [Semantics Guidelines](../semantics.md) and the Syntax topics â€”
+[Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md),
+[Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md),
+[Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) â€” but in some cases it may be necessary to deviate from the general
 guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide.
 
-
-### 5.1 Assertions
+### 4.1 Assertions
 
 Assertions are a base Python feature that allows for checking the state of a program at runtime and are used by pytest
 as the primary means of verifying test conditions. Assertions are discouraged in source code because they do not conform
@@ -395,7 +386,7 @@ Guidelines:
 - Include descriptive error messages in assertions to make test failures more informative
 
 Example:
-```python
+```python # pseudocode
 # Simple assertions
 assert result == expected
 assert instance is not None
@@ -408,8 +399,7 @@ assert unpickled.mutable == test_object.mutable
 assert unpickled is not test_object
 ```
 
-
-### 5.2 Fixtures
+### 4.2 Fixtures
 
 Fixtures are a powerful feature of pytest that allow for setup and teardown of test environments.
 
@@ -422,7 +412,7 @@ Guidelines:
 - Fixtures should be organized under a `# Fixtures` comment
 
 Example:
-```python
+```python # pseudocode
 # Fixtures
 @pytest.fixture
 def test_object(self) -> 'TestBaseObject.BaseTestObject':
@@ -446,7 +436,7 @@ def tmp_dir(tmpdir: Any) -> Path:
     return Path(tmpdir)
 ```
 
-### 5.3 Test Doubles
+### 4.3 Test Doubles
 
 Test doubles (mocks, stubs, fakes, etc.) are used to isolate the code being tested from its dependencies.
 
@@ -462,7 +452,7 @@ Guidelines:
 - Reset or tear down test doubles after use
 
 Example:
-```python
+```python # pseudocode
 def test_with_mock(self, monkeypatch: pytest.MonkeyPatch) -> None:
     """Test with a mock object.
 
@@ -486,7 +476,7 @@ def test_with_mock(self, monkeypatch: pytest.MonkeyPatch) -> None:
 ```
 
 
-## 6 Test Execution
+## 5 Test Execution
 
 Tests should be easy to run and provide clear feedback on failures.
 
@@ -514,3 +504,5 @@ pytest -v
 # Run tests with output capturing disabled
 pytest -s
 ```
+
+

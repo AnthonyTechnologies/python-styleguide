@@ -1,38 +1,4 @@
-# Anthony's Python Style Guide: Examples
-
-## Table of Contents
-
-- [1 Background](#1-background)
-- [2 Directory Hierarchy](#2-directory-hierarchy)
-- [3 Example-Specific File Structure Guidelines](#3-example-specific-file-structure-guidelines)
-  - [3.1 Example-Specific File Header](#31-example-specific-file-header)
-  - [3.2 Main Section for Examples](#32-main-section-for-examples)
-  - [3.3 Example Category Functions](#33-example-category-functions)
-- [4 Example Semantics and Syntax](#4-example-semantics-and-syntax)
-  - [4.1 Example Documentation](#41-example-documentation)
-    - [4.1.1 Print Statements](#411-print-statements)
-    - [4.1.2 Error Handling](#412-error-handling)
-  - [4.2 Assertions](#42-assertions)
-- [5 Example Content Guidelines](#5-example-content-guidelines)
-  - [5.1 Self-Contained Examples](#51-self-contained-examples)
-  - [5.2 Progressive Complexity](#52-progressive-complexity)
-  - [5.3 Real-World Scenarios](#53-real-world-scenarios)
-  - [5.4 Edge Cases](#54-edge-cases)
-- [6 Example Styles](#6-example-styles)
-  - [6.1 Cookbook Style](#61-cookbook-style)
-  - [6.2 Compare and Contrast](#62-compare-and-contrast)
-  - [6.3 Step-by-Step Transformation](#63-step-by-step-transformation)
-  - [6.4 Annotated Examples](#64-annotated-examples)
-  - [6.5 Interactive Examples](#65-interactive-examples)
-  - [6.6 Error-Driven Learning](#66-error-driven-learning)
-  - [6.7 Incremental Complexity](#67-incremental-complexity)
-  - [6.8 Visual Learning](#68-visual-learning)
-  - [6.9 Example Styles Conclusions](#69-example-styles-conclusions)
-- [7 Example-Specific Best Practices](#7-example-specific-best-practices)
-- [8 Testing Examples](#8-testing-examples)
-
-
-## 1 Background
+﻿# Anthony's Python Style Guide: Examples
 
 Examples are crucial for helping users understand how to use a library or framework. They provide practical
 demonstrations of the library's functionality and serve as reference implementations for common use cases. Well-crafted
@@ -46,15 +12,46 @@ Python files rather than Jupyter notebooks, so it is easier to implement their c
 This document provides guidelines specific to creating effective examples for Python packages. It focuses on
 example-specific considerations while referencing other style guides for general Python coding practices:
 
-- For general Python code style and syntax, refer to [Syntactic Guidelines](syntax.md)
+- For general Python code style and syntax, refer to the Syntax topics: [Formatting](syntax/formatting.md), [Naming](syntax/naming.md), [Typing](syntax/typing.md), [Docstrings](syntax/docstrings.md), [Comments](syntax/comments.md), [Strings](syntax/strings.md), [Exceptions & Error Messages](syntax/exceptions_error_messages.md), [Logging](syntax/logging.md), and [Resources](syntax/resources.md)
 - For file structure and organization, refer to [Code and File Layout](code_file_layout.md)
 - For semantic aspects of code, refer to [Semantics Guidelines](semantics.md)
 
-The Examples Guidelines is built upon these foundational documents, adding specific guidance for creating educational
+The Examples Guidelines are built upon these foundational documents, adding specific guidance for creating educational
 and demonstrative code examples.
 
+## Table of Contents
 
-## 2 Directory Hierarchy
+- [1 Directory Hierarchy](#1-directory-hierarchy)
+- [2 Example Structure](#2-example-structure)
+    - [2.1 Example File Header](#21-example-file-header)
+    - [2.2 Main Section for Examples](#22-main-section-for-examples)
+    - [2.3 Example Category Functions](#23-example-category-functions)
+- [3 Example Semantics and Syntax](#3-example-semantics-and-syntax)
+    - [3.1 Example Documentation](#31-example-documentation)
+        - [3.1.1 Print Statements](#311-print-statements)
+        - [3.1.2 Error Handling](#312-error-handling)
+    - [3.2 Assertions](#32-assertions)
+- [4 Example Content Guidelines](#4-example-content-guidelines)
+    - [4.1 Self-Contained Examples](#41-self-contained-examples)
+    - [4.2 Progressive Complexity](#42-progressive-complexity)
+    - [4.3 Real-World Scenarios](#43-real-world-scenarios)
+    - [4.4 Edge Cases](#44-edge-cases)
+    - [4.5 Implement Base Classes](#45-implement-base-classes)
+- [5 Example Styles](#5-example-styles)
+    - [5.1 Cookbook Style](#51-cookbook-style)
+    - [5.2 Compare and Contrast](#52-compare-and-contrast)
+    - [5.3 Step-by-Step Transformation](#53-step-by-step-transformation)
+    - [5.4 Annotated Examples](#54-annotated-examples)
+    - [5.5 Interactive Examples](#55-interactive-examples)
+    - [5.6 Error-Driven Learning](#56-error-driven-learning)
+    - [5.7 Incremental Complexity](#57-incremental-complexity)
+    - [5.8 Visual Learning](#58-visual-learning)
+    - [5.9 Example Styles Conclusions](#59-example-styles-conclusions)
+- [6 Example-Specific Best Practices](#6-example-specific-best-practices)
+- [7 Testing Examples](#7-testing-examples)
+
+
+## 1 Directory Hierarchy
 
 Examples should be organized in a directory structure that mirrors the package structure. This makes it easy for users
 to find examples relevant to the specific components they're interested in.
@@ -82,14 +79,12 @@ examples/
       ...
 ```
 
-
-## 3 Example Structure
+## 2 Example Structure
 
 Example files should follow the general Python file layout guidelines as described in [Code and File Layout](code_file_layout.md),
 with some additional example-specific considerations outlined below.
 
-
-### 3.1 Example File Header
+### 2.1 Example File Header
 
 In addition to the standard file header requirements, example files should include a docstring that clearly explains:
 
@@ -99,7 +94,7 @@ In addition to the standard file header requirements, example files should inclu
    Local Packages section
 
 Example:
-```python
+```python # pseudocode
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """sentinelobject_example.py
@@ -124,8 +119,7 @@ from baseobjects.bases import SentinelObject
 
 For general file header guidelines, imports organization, and definitions structure, refer to the [Code and File Layout](code_file_layout.md) document.
 
-
-### 3.2 Main Section for Examples
+### 2.2 Main Section for Examples
 
 The main section in example files is particularly important as it demonstrates the usage of the defined classes and functions:
 
@@ -137,7 +131,7 @@ The main section in example files is particularly important as it demonstrates t
 6. If the main is excessive, it can broken down into supporting functions which categorize sections of the example
 
 Examples:
-```python
+```python # pseudocode
 # Main #
 if __name__ == "__main__":
     # Create a data processor with some sample data
@@ -158,7 +152,7 @@ if __name__ == "__main__":
     # More demonstrations...
 ```
 
-```python
+```python # pseudocode
 # Functions #
 # Example Sections #
 def method_execution_overview():
@@ -186,8 +180,7 @@ if __name__ == "__main__":
   arbitrate_state_overview()
 ```
 
-
-### 3.3 Example Category Functions
+### 2.3 Example Category Functions
 
 Example Category Functions break down the main section into example categories which focus on one aspect of the
 examples. These functions follow the same guidelines as the main section:
@@ -198,7 +191,7 @@ examples. These functions follow the same guidelines as the main section:
 4. Include comments to show the executed outcome and the expected outcome
 
 Examples:
-```python
+```python # pseudocode
 # Functions #
 # Example Sections #
 def arbitrate_state_overview():
@@ -268,21 +261,21 @@ if __name__ == "__main__":
 ```
 
 
-## 4 Example Semantics and Syntax
+## 3 Example Semantics and Syntax
 
-Examples should conform to the semantics and syntax described in[Semantics Guidelines](semantics.md) and
-[Syntactic Guidelines](syntax.md), but in some cases it may be necessary to deviate from the general
+Examples should conform to the semantics and syntax described in [Semantics Guidelines](semantics.md) and the Syntax topics â€”
+[Formatting](syntax/formatting.md), [Naming](syntax/naming.md), [Typing](syntax/typing.md), [Docstrings](syntax/docstrings.md),
+[Comments](syntax/comments.md), [Strings](syntax/strings.md), [Exceptions & Error Messages](syntax/exceptions_error_messages.md),
+[Logging](syntax/logging.md), and [Resources](syntax/resources.md) â€” but in some cases it may be necessary to deviate from the general
 guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide.
 
+### 3.1 Example Documentation
 
-### 4.1 Example Documentation
-
-For general code style, docstrings, and comments guidelines, refer to the [Syntactic Guidelines](syntax.md)
-document, particularly sections 2.10 (Docstrings) and 2.11 (Comments). The following sections cover documentation
+For general code style, docstrings, and comments guidelines, refer to the Syntax topics, particularly
+[Docstrings](syntax/docstrings.md) and [Comments](syntax/comments.md). The following sections cover documentation
 aspects specific to example files.
 
-
-#### 4.1.1 Print Statements
+#### 3.1.1 Print Statements
 
 Print statements in examples serve as a narrative to guide the user through the demonstration:
 
@@ -293,14 +286,14 @@ Print statements in examples serve as a narrative to guide the user through the 
 
 Example:
 
-```python
+```python # pseudocode
 print("\nDemonstrating LRU cache with maxsize=2...")
 print("Processing item1:")
 advanced1 = processor.advanced_process("item1", 2)
 print(f"Result: {advanced1} == 'item1item1'")
 ```
 
-#### 4.1.1 Error Handling
+#### 3.1.2 Error Handling
 
 Examples should demonstrate proper error handling:
 
@@ -310,7 +303,7 @@ Examples should demonstrate proper error handling:
 
 Example:
 
-```python
+```python # pseudocode
 try:
     result = processor.process_data(user_input)
     print(f"Result: {result}")
@@ -320,8 +313,7 @@ except Exception as e:
     print(f"Unexpected error: {e}")
 ```
 
-
-### 4.2 Assertions
+### 3.2 Assertions
 
 Assertions are a base Python feature that allows for checking the state of a program at runtime. Assertions are
 discouraged in source code because they do not conform to Python's error handling principles. However, assertions are
@@ -335,7 +327,7 @@ Guidelines:
 - Include descriptive error messages in assertions to make test failures more informative
 
 Example:
-```python
+```python # pseudocode
 # Simple assertions
 assert result == expected
 assert instance is not None
@@ -349,8 +341,9 @@ assert unpickled is not test_object
 ```
 
 
-## 5 Example Content Guidelines
-### 5.1 Self-Contained Examples
+## 4 Example Content Guidelines
+
+### 4.1 Self-Contained Examples
 
 Examples should be self-contained and runnable without external dependencies:
 
@@ -361,7 +354,7 @@ Examples should be self-contained and runnable without external dependencies:
 
 Example:
 
-```python
+```python # pseudocode
 # Generate sample data
 data = {
     "item1": 10,
@@ -373,7 +366,7 @@ data = {
 processor = DataProcessor(data)
 ```
 
-### 5.2 Progressive Complexity
+### 4.2 Progressive Complexity
 
 Structure examples to progress from simple to complex:
 
@@ -384,7 +377,7 @@ Structure examples to progress from simple to complex:
 
 Example:
 
-```python
+```python # pseudocode
 # Basic usage
 print("Basic usage:")
 result = processor.process_data("item1")
@@ -398,7 +391,7 @@ print("\nComplex scenario:")
 # Demonstrate multiple components working together
 ```
 
-### 5.3 Real-World Scenarios
+### 4.3 Real-World Scenarios
 
 Include examples that demonstrate real-world use cases:
 
@@ -409,7 +402,7 @@ Include examples that demonstrate real-world use cases:
 
 Example:
 
-```python
+```python # pseudocode
 # Real-world scenario: Caching expensive API calls
 print("\nScenario: Caching expensive API calls")
 api_client = APIClient()
@@ -424,7 +417,7 @@ print("\nSecond call (cached):")
 result2 = cached_api.get_data("endpoint1")
 ```
 
-### 5.4 Edge Cases
+### 4.4 Edge Cases
 
 Include examples that demonstrate how to handle edge cases:
 
@@ -433,28 +426,27 @@ Include examples that demonstrate how to handle edge cases:
 3. Include examples of boundary conditions
 4. Show how to handle resource constraints or performance issues
 
-
-### 5.5 Implement Base Classes
+### 4.5 Implement Base Classes
 
 Examples should demonstrate how to implement base classes. Base classes are useful for creating reusable components
 that can be used in multiple scenarios. The examples should demonstrate how to use base classes to implement common
 functionality.
 
 
-## 6 Example Styles
+## 5 Example Styles
 
 Different example styles can be used to enhance the learning experience for users. Each style has its own strengths and
 is suitable for different learning objectives. The following sections provide an overview of the different styles and
 examples that demonstrate them.
 
-### 6.1 Cookbook Style
+### 5.1 Cookbook Style
 
 Provides practical, ready-to-use code snippets for common tasks.
    - Format as problem-solution pairs
    - Include brief explanations of why the solution works
    - Focus on practical utility over theoretical understanding
 
-```python
+```python # pseudocode
 # Problem: How to efficiently filter a dictionary by value
 # Solution:
 data = {"a": 1, "b": 2, "c": 3, "d": 4}
@@ -463,14 +455,14 @@ expected = {'c': 3, 'd': 4}
 print(f"Filtered dictionary: {filtered} == {expected}")  # Output: Filtered dictionary: {'c': 3, 'd': 4}
 ```
 
-### 6.2 Compare and Contrast
+### 5.2 Compare and Contrast
 
 Shows multiple approaches to solving the same problem, highlighting trade-offs.
    - Present at least two different implementations
    - Explain the advantages and disadvantages of each approach
    - Include performance considerations when relevant
 
-```python
+```python # pseudocode
 # Approach 1: Using a for loop (more readable)
 print("Approach 1: Using a for loop")
 result1 = []
@@ -485,14 +477,14 @@ result2 = [transform(item) for item in data if process_condition(item)]
 print(f"Result: {result2} == {expected_result2}")
 ```
 
-### 6.3 Step-by-Step Transformation
+### 5.3 Step-by-Step Transformation
 
 Shows the evolution of data through a series of operations.
    - Start with initial data
    - Apply transformations one at a time
    - Show intermediate results after each step
 
-```python
+```python # pseudocode
 # Initial data
 data = [1, 2, 3, 4, 5]
 print(f"Initial data: {data}")
@@ -510,14 +502,14 @@ total = sum(filtered)
 print(f"Final result (sum): {total} == {expected_total}")
 ```
 
-### 6.4 Annotated Examples
+### 5.4 Annotated Examples
 
 Code examples with detailed comments explaining each line or block.
    - Add comments that explain not just what the code does, but why
    - Highlight important concepts or patterns
    - Use consistent comment style throughout
 
-```python
+```python # pseudocode
 # Create a processor with caching capabilities
 processor = DataProcessor(
     cache_enabled=True,  # Enable caching for better performance
@@ -535,14 +527,14 @@ result2 = processor.process("example_key")
 print(f"Second call result: {result2}  == {expected_result2}")
 ```
 
-### 6.5 Interactive Examples
+### 5.5 Interactive Examples
 
 Examples that encourage users to modify parameters and observe different outcomes.
    - Provide a base example that works
    - Suggest modifications for users to try
    - Explain expected outcomes for different modifications
 
-```python
+```python # pseudocode
 # Base example - try modifying the parameters!
 def calculate_result(x, y, operation="add"):
     """Calculate result based on operation.
@@ -567,14 +559,14 @@ result = calculate_result(x, y, operation)
 print(f"{x} {operation} {y} = {result}")
 ```
 
-### 6.6 Error-Driven Learning
+### 5.6 Error-Driven Learning
 
 Examples that intentionally show common errors and how to fix them.
    - Show incorrect code first
    - Explain why it's wrong and what error it produces
    - Provide the corrected version
 
-```python
+```python # pseudocode
 # INCORRECT: This will raise a KeyError
 print("Incorrect approach:")
 try:
@@ -591,14 +583,14 @@ value = data.get("c", 0)  # Returns 0 if key doesn't exist
 print(f"Value: {value}  == {expected_value1}")
 ```
 
-### 6.7 Incremental Complexity
+### 5.7 Incremental Complexity
 
 Start with a minimal example and gradually add features.
    - Begin with the simplest possible implementation
    - Add complexity one feature at a time
    - Explain each addition and its purpose
 
-```python
+```python # pseudocode
 # Stage 1: Basic implementation
 print("Stage 1: Basic implementation")
 cache = {}
@@ -629,14 +621,14 @@ if result2 is None:
 print(f"Result: {result2} == {expected_result2}")
 ```
 
-### 6.8 Visual Learning
+### 5.8 Visual Learning
 
 Use ASCII art, tables, or other visual representations to illustrate concepts.
    - Use visual elements to clarify complex relationships or structures
    - Ensure visuals are readable in monospace font
    - Include explanatory text alongside visuals
 
-```python
+```python # pseudocode
 # Example of a binary tree structure
 """
 Binary Tree:
@@ -669,7 +661,8 @@ root.right.left = Node("F")
 root.right.right = Node("G")
 ```
 
-### 6.9 Example Styles Conclusions
+### 5.9 Example Styles Conclusions
+
 When creating examples, consider which style or combination of styles will best help users understand the concept being
 demonstrated. Different styles are more effective for different types of learning objectives:
 
@@ -686,15 +679,17 @@ For this style guide, primarily a mixture of Step-by-Step Transformation, Annota
 Incremental Complexity are suggested because other sections of the project should cover the goals of the other styles.
 
 
-## 7 Example-Specific Best Practices
+## 6 Example-Specific Best Practices
 
-For general code readability, performance, and maintainability guidelines, refer to the
-[Syntactic Guidelines](syntax.md) and [Semantics Guidelines](semantics.md) documents. The
+For general code readability, performance, and maintainability guidelines, refer to the Syntax topics â€”
+[Formatting](syntax/formatting.md), [Naming](syntax/naming.md), [Typing](syntax/typing.md), [Docstrings](syntax/docstrings.md),
+[Comments](syntax/comments.md), [Strings](syntax/strings.md), [Exceptions & Error Messages](syntax/exceptions_error_messages.md),
+[Logging](syntax/logging.md), and [Resources](syntax/resources.md) â€” and [Semantics Guidelines](semantics.md). The
 following are best practices specific to example files:
 
 - **Educational Focus**: Examples should prioritize clarity and educational value over code optimization. Sometimes a slightly less efficient approach may be more instructive.
 - **Comparative Approaches**: When relevant, show both basic/simple approaches and more advanced/efficient approaches to demonstrate the benefits of different techniques:
-```python
+```python # pseudocode
 # Basic approach (for clarity)
 print("\nBasic approach:")
 for key in data:
@@ -709,7 +704,7 @@ for key, result in zip(keys, results):
     print(f"{key}: {result}")
 ```
 - **Explicit Constants**: Use named constants for values that might be referenced multiple times or that have special meaning:
-```python
+```python # pseudocode
 # Constants
 CACHE_LIFETIME = 5  # seconds
 MAX_CACHE_SIZE = 100  # items
@@ -725,7 +720,8 @@ processor.set_maxsize(MAX_CACHE_SIZE)
   educate the user on how to use key aspects of the module and how they can use it to create new programs, not just
   test it.
 
-## 8 Testing Examples
+
+## 7 Testing Examples
 
 Examples should be tested to ensure they work as expected:
 
@@ -736,7 +732,7 @@ Examples should be tested to ensure they work as expected:
 
 Example:
 
-```python
+```python # pseudocode
 # This should print:
 # Result: Processed: 10
 result = processor.process_data("item1")
@@ -744,3 +740,4 @@ print(f"Result: {result}")
 ```
 
 By following these guidelines, developers can create examples that effectively demonstrate library functionality and help users understand how to apply it in their own projects.
+

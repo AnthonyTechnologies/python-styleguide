@@ -1,25 +1,5 @@
 # Anthony's Python Style Guide: Project Structure
 
-## Table of Contents
-
-- [1 Background](#1-background)
-- [2 Project Overview](#2-project-overview)
-- [3 Project Root Structure](#3-project-root-structure)
-  - [3.1 Configurations](#31-configurations)
-    - [3.1.1 Python Project Config](#311-python-project-config)
-    - [3.1.2 Development Tools](#312-development-tools)
-  - [3.2 Source Code](#32-source-code)
-  - [3.3 Tests](#33-tests)
-  - [3.4 Documentation](#34-documentation)
-  - [3.5 Examples](#35-examples)
-  - [3.6 Tutorials](#36-tutorials)
-- [4 Implementation Guidelines](#4-implementation-guidelines)
-  - [4.1 Applying Generically](#41-applying-generically)
-  - [4.2 Best Practices](#42-best-practices)
-
-
-## 1 Background
-
 This document describes an opinionated, practical structure for Python projects used in this repository and intended to
 be reusable for most Python packages. The structure is a fork of ["Hypermodern Python"](https://cjolowicz.github.io/posts/hypermodern-python-01-setup/) by [Claudio Jolowicz](https://github.com/cjolowicz).
 
@@ -28,8 +8,24 @@ A consistent structure improves:
 - Maintainability: changes affect a single, well‑defined place.
 - Tooling integration: common tools (pytest, nox, pre-commit, type checkers, doc builders) work with little or no extra configuration.
 
+## Table of Contents
 
-## 2 Project Overview
+- [1 Project Overview](#1-project-overview)
+- [2 Project Root Structure](#2-project-root-structure)
+    - [2.1 Configurations](#21-configurations)
+        - [2.1.1 Python Project Config](#211-python-project-config)
+        - [2.1.2 Development Tools](#212-development-tools)
+    - [2.2 Source Code](#22-source-code)
+    - [2.3 Tests](#23-tests)
+    - [2.4 Documentation](#24-documentation)
+    - [2.5 Examples](#25-examples)
+    - [2.6 Tutorials](#26-tutorials)
+- [3 Implementation Guidelines](#3-implementation-guidelines)
+    - [3.1 Applying Generically](#31-applying-generically)
+    - [3.2 Best Practices](#32-best-practices)
+
+
+## 1 Project Overview
 
 At a high level, a Python project is split into:
 - Configurations that define behavior of the project and its tools.
@@ -42,7 +38,7 @@ At a high level, a Python project is split into:
 This separation keeps responsibilities clear and enables parallel development across these areas.
 
 
-## 3 Project Root Structure
+## 2 Project Root Structure
 
 A typical repository root resembles the following:
 
@@ -67,7 +63,7 @@ project_root/
 └── README.rst              # Project overview (reStructuredText)
 ```
 
-### 3.1 Configurations
+### 2.1 Configurations
 
 Configuration files define how the project is built, tested, documented, formatted, and released. Keep these files at
 the repository root so tools can auto-discover them.
@@ -75,7 +71,7 @@ the repository root so tools can auto-discover them.
 Related guidelines:
 - Project Tooling — see [project_tools.md](project_tools.md) for how pre-commit, nox, and other tools are configured and used in this repository.
 
-#### 3.1.1 Python Project Config
+#### 2.1.1 Python Project Config
 
 Primary, language- and build-related configuration:
 - pyproject.toml — Canonical project configuration per PEP 517/518 (build-system, metadata, tool configs).
@@ -88,7 +84,7 @@ Recommended conventions:
 - Keep versioning unified (prefer single-source versioning via package __init__ or Poetry’s version field).
 - When using Poetry, it’s acceptable to expose metadata via the PEP 621 [project] table and set dynamic fields (e.g., version, readme) that are sourced from [tool.poetry]. Document this clearly in the README/CONTRIBUTING to avoid confusion.
 
-#### 3.1.2 Development Tools
+#### 2.1.2 Development Tools
 
 Operational/configuration files for development workflows:
 - .pre-commit-config.yaml — Pre-commit hooks for formatting, linting, and sanity checks.
@@ -102,13 +98,13 @@ Good practices:
 - Ensure CI runs nox sessions to keep local and CI workflows aligned.
 - Make pre-commit mandatory in contributor docs.
 
-### 3.2 Source Code
+### 2.2 Source Code
 
 The src/ layout prevents accidental imports from the project root and mirrors how the package will be installed from a wheel/SDist.
 
 Related guidelines:
 - Code and File Layout — see [code_file_layout.md](code_file_layout.md) for file structure, headers, imports, and definitions layout.
-- Syntactic Guidelines — see [syntax.md](syntax.md) for naming, docstrings, comments, and formatting rules.
+- Syntax topics — [Formatting](syntax/formatting.md), [Naming](syntax/naming.md), [Typing](syntax/typing.md), [Docstrings](syntax/docstrings.md), [Comments](syntax/comments.md), [Strings](syntax/strings.md), [Exceptions & Error Messages](syntax/exceptions_error_messages.md), [Logging](syntax/logging.md), and [Resources](syntax/resources.md) — for naming, docstrings, comments, and formatting rules.
 - Semantics Guidelines — see [semantics.md](semantics.md) for code organization principles and design guidance.
 
 Structure:
@@ -127,13 +123,13 @@ Guidelines:
 - Keep public API explicit via __all__ or documented imports in __init__.py.
 - Consider private implementation modules prefixed with _ when appropriate.
 
-### 3.3 Tests
+### 2.3 Tests
 
 Tests should mirror the source structure to make navigation intuitive.
 
 Related guidelines:
-- Unit Tests — see [unit_tests.md](unit_tests.md) for conventions on structure, naming, fixtures, and assertions.
-- Performance Tests — see [performance_tests.md](performance_tests.md) for organizing and executing performance-focused tests.
+- Unit Tests — see [unit_tests.md](tests/unit_tests.md) for conventions on structure, naming, fixtures, and assertions.
+- Performance Tests — see [performance_tests.md](tests/performance_tests.md) for organizing and executing performance-focused tests.
 
 Structure:
 ```
@@ -160,7 +156,7 @@ Linting:
 - This directory uses a local Ruff configuration at tests/.ruff_tests.toml to tailor linting rules for tests. It
 extends/overrides root pyproject [tool.ruff] settings for files under tests/.
 
-### 3.4 Documentation
+### 2.4 Documentation
 
 Documentation consolidates user and developer knowledge.
 
@@ -183,7 +179,7 @@ Guidelines:
 - Keep API docs generated from code docstrings where possible.
 - Cross-link examples and tutorials to relevant guides.
 
-### 3.5 Examples
+### 2.5 Examples
 
 Examples demonstrate common usage scenarios and should mirror the src/ structure:
 
@@ -205,13 +201,13 @@ Guidelines:
 Linting:
 - This directory uses a local Ruff configuration at examples/.ruff_examples.toml to tailor linting rules for example code. It extends/overrides root pyproject [tool.ruff] settings for files under examples/.
 
-### 3.6 Tutorials
+### 2.6 Tutorials
 
 Tutorials provide step-by-step learning paths and deeper explorations.
 
 Related guidelines:
-- Module Tutorials — see [module_tutorials.md](module_tutorials.md) for how to design, structure, and validate tutorials focused on a single module.
-- Package Tutorials — see [package_tutorials.md](package_tutorials.md) for end-to-end package tutorials, including structure, scope, and documentation tips.
+- Module Tutorials — see [module_tutorials.md](tutorials/module_tutorials.md) for how to design, structure, and validate tutorials focused on a single module.
+- Package Tutorials — see [package_tutorials.md](tutorials/package_tutorials.md) for end-to-end package tutorials, including structure, scope, and documentation tips.
 
 Suggested layout:
 ```
@@ -229,14 +225,15 @@ Guidelines:
 Linting:
 - This directory uses a local Ruff configuration at tutorials/.ruff_tutorials.toml to tailor linting rules for tutorial content. It extends/overrides root pyproject [tool.ruff] settings for files under tutorials/.
 
-## 4 Implementation Guidelines
 
-### 4.1 Applying Generically
+## 3 Implementation Guidelines
+
+### 3.1 Applying Generically
 
 To apply this structure to a new or existing project:
 
 Related guidelines:
-- Syntactic Guidelines — see [syntax.md](syntax.md) for code-level conventions to apply when creating modules and packages.
+- Syntax topics — [Formatting](syntax/formatting.md), [Naming](syntax/naming.md), [Typing](syntax/typing.md), [Docstrings](syntax/docstrings.md), [Comments](syntax/comments.md), [Strings](syntax/strings.md), [Exceptions & Error Messages](syntax/exceptions_error_messages.md), [Logging](syntax/logging.md), and [Resources](syntax/resources.md) — for code-level conventions to apply when creating modules and packages.
 - Semantics Guidelines — see [semantics.md](semantics.md) for organizing code by responsibility and maintaining cohesion.
 - Project Tooling — see [project_tools.md](project_tools.md) for automating checks and workflows via pre-commit and nox.
 
@@ -255,7 +252,7 @@ Related guidelines:
    - Provide README, contribution guide, and usage docs.
    - Maintain a changelog and API docs for public packages.
 
-### 4.2 Best Practices
+### 3.2 Best Practices
 
 1. Keep modules focused and cohesive.
 2. Maintain parallel structure for code, tests, and examples.
