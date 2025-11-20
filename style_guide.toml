@@ -1,6 +1,23 @@
 # Machine‑Readable Style Guide Index #
 # This file mirrors key rules from the prose guide in a compact form that tools/agents can ingest.
 
+# Style Guide #
+[style_guide]
+tenets = [
+    "Readability",
+    "Consistency",
+    "Modularity",
+    "Flexibility",
+    "Automation",
+]
+implmentation = [
+    "Review this index",
+    "Review temaplates",
+    "Defer to project tooling configurations",
+    "Look in style guide source files for clarifications",
+]
+
+
 # Project Structure #
 [project_structure]
 source_file = "project_structure.md"
