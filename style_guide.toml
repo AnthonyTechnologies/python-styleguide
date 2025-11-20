@@ -1,24 +1,283 @@
-# Machine‑readable Guide Index
+# Machine‑Readable Style Guide Index #
 # This file mirrors key rules from the prose guide in a compact form that tools/agents can ingest.
 
+# Project Structure #
+[project_structure]
+source_file = "project_structure.md"
+python_version = ">=3.10"
+layout = "src"
+mirror_tests_to_src = true
+docs_dir = "docs"
+examples_dir = "examples"
+tutorials_dir = "tutorials"
+configs_at_repo_root = true
+
+# Formatting #
 [formatting]
+source_file = "syntax/formatting.md"
 line_length = 120
-continuation_backslashes = "forbidden"  # prefer parentheses for implicit continuation
+continuation_backslashes = "forbidden"
+implicit_joining = "preferred"
+multi_line_collection_trailing_comma = "encouraged"
+whitespace_rules = "pep8_like"
+indent_spaces = 4
+semicolons = "forbidden"
 
+# Module Layout #
+[module_layout]
+source_files = ["code_file_layout.md", "templates/*"]
+docstring_first_line = "filename"
+docstring_second_line = "one_line_summary_terminated_by_punctuation"
+docstring_third_line = "blank"
+docstring_rest = "detailed_description"
+header_metadata_vars = [
+    "__package_name__",
+    "__author__",
+    "__credits__",
+    "__copyright__",
+    "__license__",
+    "__version__",
+]
+section_markers = ["Header", "Imports", "Definitions"]
+section_marker_style = "# Name #"
+
+# Code and File Layout #
+[file_layout]
+source_file = "code_file_layout.md"
+order = [
+    "shebang_optional",
+    "module_docstring",
+    "future_imports",
+    "header",
+    "imports",
+    "definitions",
+    "main_optional",
+]
+shebang_required = false
+shebang_recommended_for_cli = true
+shebang_value = "#!/usr/bin/env python3"
+main_guard_required_for_runnable_modules = true
+main_function_name = "main"
+trailing_blank_line_at_eof = true
+
+# Imports #
 [imports]
+source_file = "code_file_layout.md"
 order = ["stdlib", "third_party", "local"]
+separate_groups_with_blank_line = true
+absolute_imports_preferred = true
 
-[logging]
-message_style = "percent_format"  # e.g., logger.info("value: %s", value)
+# Class Internal Layout #
+[class_layout]
+source_file = "code_file_layout.md"
+order = [
+    "Static Methods",
+    "Class Attributes",
+    "Class Magic Methods",
+    "Class Methods",
+    "Attributes",
+    "Properties",
+    "Magic Methods",
+    "Instance Methods",
+    "Method Overrides",
+]
+magic_methods_subsections = [
+    { name = "Construction/Destruction", methods = ["__new__", "__init__", "__del__", "__copy__", "__deepcopy__"] },
+    { name = "Container Methods", methods = ["__len__", "__getitem__", "__setitem__", "__delitem__", "__iter__", "__contains__"] },
+    { name = "Representation", methods = ["__repr__", "__str__", "__format__"] },
+    { name = "Type Conversion", methods = ["__bool__", "__int__", "__float__", "__complex__", "__bytes__"] },
+    { name = "Comparison", methods = ["__lt__", "__le__", "__eq__", "__ne__", "__gt__", "__ge__"] },
+    { name = "Arithmetic", methods = ["__add__", "__sub__", "__mul__", "__matmul__", "__truediv__", "__floordiv__", "__mod__", "__pow__", "__radd__", "__rsub__", "__rmul__", "__rmatmul__", "__rtruediv__", "__rfloordiv__", "__rmod__", "__rpow__", "__iadd__", "__isub__", "__imul__", "__imatmul__", "__itruediv__", "__ifloordiv__", "__imod__", "__ipow__"] },
+    { name = "Attribute Access", methods = ["__getattr__", "__getattribute__", "__setattr__", "__delattr__", "__dir__"] },
+    { name = "Descriptor Protocol", methods = ["__get__", "__set__", "__delete__"] },
+    { name = "Context Management", methods = ["__enter__", "__exit__"] },
+]
+common_instance_methods_subsections = [
+    "Constructors/Destructors",
+    "Getters/Setters",
+]
+enforce_template_style = true
 
-[docstring]
-style = "google"
+# Naming #
+[naming]
+source_file = "syntax/naming.md"
+packages = "lowercase_no_underscores"
+modules = "lower_with_under"
+classes = "CapWords"
+exceptions = "CapWords"
+functions = "lower_with_under"
+methods = "lower_with_under"
+constants = "ALL_CAPS"
+variables = "lower_with_under"
+private_prefix = "_"
+avoid = ["dashes_in_module_names", "ambiguous_abbreviations", "unnecessary_type_in_name"]
+single_letter_allowed_cases = ["loop_indices", "exception_var_e", "file_handle_f", "private_typevars"]
+forbid_dashes_in_filenames = true
 
-[exceptions]
-assert_usage = "forbid_in_library_code"  # allow in tests only
-
-[typing]
-required = "public_api"  # public functions/classes should be annotated
-
+# Strings #
 [strings]
-allowed_string_quote = "single_or_double"  # prefer consistency within a file
+source_file = "syntax/strings.md"
+multi_character_string_quote = "double"  # prefer consistency within a file
+single_character_string_quote = "single"  # prefer consistency within a file
+primary_formatting_method = "fstring"
+forbid_plus_for_formatting = true
+accumulate_in_loop = "avoid"
+prefer_join_or_stringio = true
+consistent_quotes_within_file = true
+multiline_triple_quote = "\"\"\""
+
+# Resources #
+[resources]
+source_file = "syntax/resources.md"
+use_context_managers = true
+avoid_finalizers_for_cleanup = true
+
+# Typing #
+[typing]
+source_file = "syntax/typing.md"
+use_builtins_generics = true  # prefer list[str], dict[str, int] over typing.List, typing.Dict
+union_syntax = "|"
+prefer_type_alias_for_complex_types = true
+annotate_self_cls = "only_when_needed"
+support_Self = true
+forward_references = "future_annotations_or_quotes"
+line_breaking = "one_parameter_per_line_when_wrapped"
+closing_paren_alignment = "align_with_def"
+typing_imports_minimize = true
+type_checking_guards = true
+
+# Docstrings #
+[docstring]
+source_file = "syntax/docstrings.md"
+style = "google"
+voice = "declarative"
+required_for = ["modules", "classes", "functions"]
+
+# Comments #
+[comments]
+source_file = "syntax/comments.md"
+hash_space_after = true
+inline_comment_min_spaces_before = 2
+section_title_comments = "encouraged"
+avoid_line_by_line_explanations = true
+
+# TODOs #
+[todos]
+source_file = "syntax/comments.md"
+style = "TODO: <link or issue> - <explanatory text>"
+require_actionable_context = true
+avoid_personal_handles = true
+
+# Logging #
+[logging]
+source_file = "syntax/logging.md"
+message_style = "percent_format"
+first_argument_literal = true
+
+# Exceptions #
+[exceptions]
+source_file = "syntax/exceptions_error_messages.md"
+assert_usage_forbidden = "src"  # allow in tests, examples, and tutorials only
+builtins_preferred = true
+custom_exception_suffix = "Error"
+catch_all = "forbidden_except_reraise_or_isolation"
+minimize_try_block = true
+use_finally_for_cleanup = true
+
+# Error Messages #
+# Source: syntax/
+[error_messages]
+error_message_definition = "separate_variable"
+precise_match_condition = true
+interpolations_identifiable = true
+greppable = true
+
+# Semantics #
+[semantics]
+source_file = "semantics.md"
+mutable_globals = "avoid"
+function_length_soft_limit_lines = 40  # consider refactor beyond this
+allow_nested_functions_for_closure_only = true
+lambda_usage = "short_simple_only"
+comprehensions_preferred_when_simple = true
+avoid_overly_complex_comprehensions = true
+prefer_default_iterators = true
+conditional_expressions_use_sparingly = true
+truthy_falsy_pythonic = true
+
+# Tests #
+[tests]
+source_file = "tests/unit_tests.md"
+framework = "pytest"
+file_name_patterns = ["test_*.py", "*_test.py"]
+class_name_pattern = "Test*"
+use_assert_statements = true
+organize_fixtures_by_scope = true
+
+# Performance Tests #
+[performance_tests]
+source_file = "tests/performance_tests.md"
+directory_per_module = "tests/<module>/performance"
+file_name_suffix = "_performance.py"
+require_baseline_comparison = true
+default_timeit_runs = 5
+default_tolerance_speed_ratio = 1.10
+measurements = ["time"]
+
+# Documentation #
+[documentation]
+source_file = "documentation.md"
+sphinx_enabled = true
+extensions_enabled = [
+    "autodoc",
+    "autosummary",
+    "napoleon",
+    "viewcode",
+    "intersphinx",
+    "todo",
+    "sphinx_click",
+]
+html_theme = "sphinx_rtd_theme"
+autodoc_typehints = "description"
+napoleon_google_docstring = true
+napoleon_numpy_docstring = true
+todo_include_todos = true
+cli_docs_tool = "sphinx-click"
+
+# Examples #
+[examples]
+source_file = "examples.md"
+dir = "examples"
+file_name_suffix = "_example.py"
+mirror_package_structure = true
+runnable_with_main_guard = true
+minimize_external_dependencies = true
+allow_print_for_demonstration = true
+docstring_numbered_key_points = true
+package_imports_treated_as_third_party = true
+
+# Tutorials #
+[tutorials]
+source_file = "tutorials/*.md"
+dir = "tutorials"
+style = "step_by_step"
+prefer_small_runnable_snippets = true
+notebooks_allowed = true
+ensure_code_blocks_run = true
+link_to_related_examples = true
+
+# Project Tools #
+[project_tools]
+source_file = "project_tools.md"
+configuration_resources = "project"
+conflict_deference = "project_configuation_files"
+pre_commit_required = true
+nox_used = true
+preferred_linters = ["ruff"]
+import_sorter = "isort"
+type_checker = ["mypy"]
+coverage_tool = "coverage"
+test_runner = "pytest"
+doctest_tool = "xdoctest"
+runtime_type_checker = "typeguard"
+security_scanner = "safety"

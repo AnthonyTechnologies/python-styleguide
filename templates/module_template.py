@@ -20,13 +20,12 @@ __version__ = "0.1.0"
 # Imports #
 # Standard Libraries #
 from dataclasses import dataclass
-from typing import ClassVar
 
 # Third-Party Libraries #
 # import requests
 
-# Project Libraries #
-# from . import helpers
+# Local Packages #
+# from .local_file import helpers
 
 
 # Definitions #
@@ -74,9 +73,11 @@ class PublicClass:
         count: Number of items managed by this instance.
     """
 
+    # Attributes #
     name: str
     count: int = 0
 
+    # Instance Methods #
     def increment(self, n: int = 1) -> int:
         """Increases count by n.
 

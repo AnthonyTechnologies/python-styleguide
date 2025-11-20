@@ -1,13 +1,14 @@
 # Anthony's Python Style Guide: Project Tooling
 
-This document describes the core development tools used across projects and how they fit into day‑to‑day workflows.
-Two orchestration tools are central:
+This document describes the core development tools that may be used across projects and how they fit into day‑to‑day 
+workflows. Of these tools, two tools are central for managing the other tools:
 
 - pre-commit — automates formatting and quick static checks on each commit/push.
 - nox — automates repeatable development tasks in isolated virtual environments (tests, type checks, docs, etc.).
 
-Configuration files for these tools also reference and configure other utilities (linters, formatters, type checkers,
-documentation builders). Use this page as a map to quickly locate configurations and expected usage.
+Configurations for all these tools are not explicitly listed here to allow for flexibility in specification designation. 
+Configurations should be contained in their respective projects. However, examples of the configuration files can be
+found in the Python Package Project Template repository https://github.com/AnthonyTechnologies/python-packagetemplate.
 
 ## Table of Contents
 

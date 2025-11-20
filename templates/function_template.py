@@ -21,7 +21,7 @@ __version__ = "0.1.0"
 # Standard Libraries #
 from typing import Callable, Iterable
 
-# Project Libraries #
+# Local Packages #
 # from package_name.module import helper
 
 
@@ -45,6 +45,17 @@ def require_iterable_of_str(func: Callable[[Iterable[str]], list[str]]) -> Calla
     """
 
     def wrapper(names: Iterable[str]) -> list[str]:
+        """Runtime type guard that enforces an iterable of str before calling func.
+
+        Args:
+            names: The incoming iterable to validate.
+
+        Returns:
+            The result of calling the wrapped function with a validated list[str].
+
+        Raises:
+            TypeError: If any element is not a str.
+        """
         out: list[str] = []
         for n in names:
             if not isinstance(n, str):

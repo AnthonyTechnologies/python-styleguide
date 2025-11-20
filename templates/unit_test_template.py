@@ -28,11 +28,11 @@ import copy
 from baseobjects.testsuite import BaseObjectTestSuite
 import pytest
 
-# Source Packages #
+# Local Packages #
 # Import from the project under test. Keep imports local to tests where reasonable.
 # Example (replace with your targets):
-# from src.baseobjects.bases import BaseObject
-# from src.baseobjects.testsuite import BaseObjectTestSuite
+# from src.package.bases import PackageObject
+# from src.package.testsuite import PackageObjectTestSuite
 
 
 # Definitions #
@@ -49,13 +49,21 @@ class _Sample:
     value: int = 0
 
     def bump(self, n: int = 1) -> int:
+        """Increase value by n and return the new value."""
         self.value += n
         return self.value
 
 
 class _SupportsCopy(Protocol):  # Example Protocol for typing in tests
-    def __copy__(self) -> Any: ...
-    def __deepcopy__(self, memo: dict[int, Any]) -> Any: ...
+    """Protocol specifying shallow and deep copy support for types used in tests."""
+
+    def __copy__(self) -> Any:
+        """Return a shallow copy of the object."""
+        ...
+
+    def __deepcopy__(self, memo: dict[int, Any]) -> Any:
+        """Return a deep copy of the object, using memo to avoid recursion."""
+        ...
 
 
 # Fixtures #
@@ -114,12 +122,14 @@ class TestMyType(BaseObjectTestSuite):
 
     # Optionally override or extend specific tests defined by the base suite
     def test_copy(self, test_object: BaseObject) -> None:  # noqa: F821
+        """Ensures that copy.copy creates a distinct instance of the correct type."""
         obj_copy = copy.copy(test_object)
         assert obj_copy is not test_object
         assert isinstance(obj_copy, self.TestClass)
 
     # Add new tests specific to this implementation
     def test_special_case(self, test_object: BaseObject) -> None:  # noqa: F821
+        """Validates an implementation-specific edge case behavior."""
         # Implement validation for an implementation-specific edge case
         assert True
 

@@ -11,7 +11,7 @@ Unit tests and test suites should follow the guidelines set forth by the general
 organization, file structure, naming conventions, docstrings, and other standard practices in:
 
 - [Code File Layout](../code_file_layout.md) - For file organization and structure
-- Syntax topics â€” [Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md), [Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md), [Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) â€” for naming conventions, docstrings, and code formatting
+- Syntax topics — [Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md), [Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md), [Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) — for naming conventions, docstrings, and code formatting
 - [Semantics Guidelines](../semantics.md) - For general code organization principles
 
 The guidelines in this document are supplemental to the general guidelines and focus on test-specific code to ensure
@@ -124,8 +124,8 @@ Guidelines:
   - Test involving defining classes should either be defined as inner classes or defined elsewhere and assigned to a class attribute.
   - Test involving defining functions should either be defined as inner functions or defined elsewhere and assigned to a class attribute.
 
-For test method naming and organization, follow the general method guidelines in the Syntax topics â€”
-[Formatting](../syntax/formatting.md), [Docstrings](../syntax/docstrings.md), and [Comments](../syntax/comments.md) â€”
+For test method naming and organization, follow the general method guidelines in the Syntax topics —
+[Formatting](../syntax/formatting.md), [Docstrings](../syntax/docstrings.md), and [Comments](../syntax/comments.md) —
 and [Code File Layout](../code_file_layout.md).
 
 ### 3.2 Test Methods
@@ -365,10 +365,10 @@ if __name__ == "__main__":
 
 ## 4 Test Semantics and Syntax
 
-Tests should conform to the semantics and syntax described in [Semantics Guidelines](../semantics.md) and the Syntax topics â€”
+Tests should conform to the semantics and syntax described in [Semantics Guidelines](../semantics.md) and the Syntax topics —
 [Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md),
 [Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md),
-[Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) â€” but in some cases it may be necessary to deviate from the general
+[Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) — but in some cases it may be necessary to deviate from the general
 guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide.
 
 ### 4.1 Assertions

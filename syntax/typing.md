@@ -155,8 +155,8 @@ def my_function(
 
 ## 3 Forward Declarations
 
-If it is necessary to use a class name (from the same module) that is not yet defined â€“ for example, if the class name is needed
-inside the declaration of that class, or when using a class that is defined later in the code â€“ either use `from
+If it is necessary to use a class name (from the same module) that is not yet defined — for example, if the class name is needed
+inside the declaration of that class, or when using a class that is defined later in the code — either use `from
 __future__ import annotations` or use a string for the class name.
 
 Correct:

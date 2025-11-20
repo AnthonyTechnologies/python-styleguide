@@ -27,7 +27,7 @@ from typing import Final
 # Third‑Party Packages #
 # (Examples import project packages as "Source Packages" below; usually no third‑party here.)
 
-# Source Packages #
+# Local Packages #
 # Import from the project under demonstration here (treat as third‑party for examples)
 # from baseobjects.<area> import <Thing>
 
@@ -46,14 +46,14 @@ def _print_heading(title: str) -> None:
 class DemoItem:
     """Tiny domain object used by the example code.
 
-    In real examples, this class would be replaced with objects from the
-    package under demonstration.
+    In real examples, this class would be replaced with objects from the package under demonstration.
     """
 
     name: str
     value: int = 0
 
     def bump(self, n: int = 1) -> int:
+        """Increments value by n and returns the new value."""
         self.value += n
         return self.value
 

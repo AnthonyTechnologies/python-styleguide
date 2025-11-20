@@ -20,7 +20,7 @@ This document focuses on performance test-specific aspects. For general code org
 conventions, docstrings, and other standard practices, please refer to:
 
 - [Code File Layout](../code_file_layout.md) - For file organization and structure
-- Syntax topics â€” [Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md), [Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md), [Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) â€” for naming conventions, docstrings, and code formatting
+- Syntax topics — [Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md), [Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md), [Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) — for naming conventions, docstrings, and code formatting
 - [Semantics Guidelines](../semantics.md) - For general code organization principles
 - [Unit Tests](unit_tests.md) - For general testing practices and patterns
 
@@ -477,7 +477,7 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
         percent = (mean_new / mean_old) * 100
 
         # Print the performance comparison
-        print(f"\n_setattr method: {mean_new:.3f} Î¼s ({percent:.3f}% of normal set time)")
+        print(f"\n_setattr method: {mean_new:.3f} µs ({percent:.3f}% of normal set time)")
         # No assertion here, just measuring relative performance
 
 ```
@@ -485,10 +485,10 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
 
 ## 3 Performance Test Semantics and Syntax
 
-Performance Tests should conform to the semantics and syntax described in [Semantics Guidelines](../semantics.md) and the Syntax topics â€”
+Performance Tests should conform to the semantics and syntax described in [Semantics Guidelines](../semantics.md) and the Syntax topics —
 [Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md),
 [Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md),
-[Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) â€” but in some cases it may be necessary to deviate from the general
+[Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) — but in some cases it may be necessary to deviate from the general
 guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide.
 
 ### 3.1 Benchmarking
@@ -541,7 +541,7 @@ mean_old = old_time / self.timeit_runs * 1000000
 percent = (mean_new / mean_old) * 100
 
 # Print the performance comparison
-print(f"\nNew: {mean_new:.3f} Î¼s ({percent:.3f}% of old function time)")
+print(f"\nNew: {mean_new:.3f} µs ({percent:.3f}% of old function time)")
 ```
 
 

@@ -26,10 +26,10 @@ import timeit
 from baseobjects.testsuite import BasePerformanceTestSuite
 import pytest
 
-# Source Packages #
+# Local Packages #
 # Import from the project under test. Keep imports local to tests where reasonable.
 # Example targets (replace with your actual targets):
-# from src.baseobjects.bases import BaseObject
+# from src.package.bases import PackageObject
 
 
 # Definitions #
@@ -69,10 +69,12 @@ class TestMyFeaturePerformance(BasePerformanceTestSuite):
 
         # Define benchmarked callables (replace with real work)
         def new_impl() -> int:
+            """Simulates the new or target implementation under test."""
             # Simulate the new or target implementation
             return (sample_input + 1) * 2
 
         def baseline_impl() -> int:
+            """Simulates a simple baseline used for comparison."""
             # Simulate a baseline (e.g., stdlib or simpler approach)
             return (sample_input << 1) + 2
 

@@ -117,6 +117,7 @@ class User:
 
     # Representation
     def __str__(self) -> str:  # keep lightweight for logging/debugging
+        """Returns a concise, human-readable string representation."""
         return f"User(id={self.user_id!r}, name={self.name!r}, active={self.active})"
 
     def __repr__(self) -> str:
@@ -150,6 +151,11 @@ class User:
 
     # Validation
     def _ensure_active(self) -> None:
+        """Ensures the user is active before allowing state changes.
+
+        Raises:
+            RuntimeError: If the user is inactive.
+        """
         if not self.active:
             raise RuntimeError("User is not active")
 

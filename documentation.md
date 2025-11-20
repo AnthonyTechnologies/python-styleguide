@@ -21,7 +21,7 @@ Command-line interface documentation is generated using sphinx-click for any Cli
     - [2.5 Todos](#25-todos)
     - [2.6 Read the Docs Build Configuration](#26-read-the-docs-build-configuration)
 - [3 Building the Docs](#3-building-the-docs)
-    - [3.1 Oneâ€‘Off Build](#31-one-off-build)
+    - [3.1 One-Off Build](#31-one-off-build)
     - [3.2 Live Rebuilds During Authoring](#32-live-rebuilds-during-authoring)
     - [3.3 Cleaning Builds](#33-cleaning-builds)
 - [4 Authoring Guidelines](#4-authoring-guidelines)
@@ -69,13 +69,13 @@ html_theme = "sphinx_rtd_theme"
 
 ### 2.1 Enabled Extensions and Rationale
 
-- sphinx.ext.autodoc â€” imports modules and pulls in docstrings to build API pages.
-- sphinx.ext.autosummary â€” auto-generates summary tables and stub pages for modules/classes/functions. autosummary_generate = True.
-- sphinx.ext.napoleon â€” supports Google/NumPy docstring styles. Both napoleon_google_docstring and napoleon_numpy_docstring are enabled. Attribute annotations are included (napoleon_attr_annotations = True).
-- sphinx.ext.viewcode â€” adds â€œView Sourceâ€ links for documented objects, aiding traceability.
-- sphinx.ext.intersphinx â€” cross-links to external documentation. The Python stdlib mapping is enabled.
-- sphinx.ext.todo â€” allows .. todo:: directives. todo_include_todos = True during development.
-- sphinx_click â€” renders documentation for Click-based CLIs declaratively.
+- sphinx.ext.autodoc — imports modules and pulls in docstrings to build API pages.
+- sphinx.ext.autosummary — auto-generates summary tables and stub pages for modules/classes/functions. autosummary_generate = True.
+- sphinx.ext.napoleon — supports Google/NumPy docstring styles. Both napoleon_google_docstring and napoleon_numpy_docstring are enabled. Attribute annotations are included (napoleon_attr_annotations = True).
+- sphinx.ext.viewcode — adds “View Source” links for documented objects, aiding traceability.
+- sphinx.ext.intersphinx — cross-links to external documentation. The Python stdlib mapping is enabled.
+- sphinx.ext.todo — allows .. todo:: directives. todo_include_todos = True during development.
+- sphinx_click — renders documentation for Click-based CLIs declaratively.
 
 ### 2.2 HTML Theme
 
@@ -86,12 +86,12 @@ html_theme = "sphinx_rtd_theme"
 ### 2.3 Intersphinx
 
 - Configured mapping:
-  - python â†’ https://docs.python.org/3
+  - python → https://docs.python.org/3
 - Add additional mappings in conf.py if cross-referencing external libraries becomes useful.
 
 ### 2.4 Type Hints and Docstring Styles
 
-- autodoc_typehints = "description" â€” Sphinx/Napoleon shows type hints in the parameter/returns sections instead of inline signatures to improve readability for long types.
+- autodoc_typehints = "description" — Sphinx/Napoleon shows type hints in the parameter/returns sections instead of inline signatures to improve readability for long types.
 - Google and NumPy docstring styles are both supported; prefer Google style for new content unless aligning with an established convention in a specific module.
 
 ### 2.5 Todos
@@ -102,20 +102,20 @@ html_theme = "sphinx_rtd_theme"
 
 Read the Docs (RTD) builds are configured via a YAML file located at docs/.readthedocs.yaml. Typical key settings:
 
-- version: 2 â€” RTDâ€™s v2 configuration schema.
+- version: 2 — RTD’s v2 configuration schema.
 - build:
-  - os: ubuntu-20.04 â€” Linux image used for builds.
-  - tools.python: "3.12" â€” Python version used on RTD.
+  - os: ubuntu-20.04 — Linux image used for builds.
+  - tools.python: "3.12" — Python version used on RTD.
 - sphinx:
-  - configuration: docs/conf.py â€” RTD invokes Sphinx with this config file.
-- formats: all â€” Build all supported formats (HTML, PDF via LaTeX, and EPUB).
+  - configuration: docs/conf.py — RTD invokes Sphinx with this config file.
+- formats: all — Build all supported formats (HTML, PDF via LaTeX, and EPUB).
 - python.install:
-  - requirements: docs/requirements.txt â€” Additional doc-specific dependencies are installed from this pinned file.
-  - path: . â€” Installs the project itself into the RTD environment so autodoc can import modules.
+  - requirements: docs/requirements.txt — Additional doc-specific dependencies are installed from this pinned file.
+  - path: . — Installs the project itself into the RTD environment so autodoc can import modules.
 
 Notes and recommendations:
 - Keep docs/requirements.txt aligned with extensions and themes configured in docs/conf.py (e.g., sphinx, sphinx-rtd-theme, sphinx-click; optional furo, myst-parser). Pin versions to ensure reproducible RTD builds.
-- Local builds via nox -s docs-build / nox -s docs do not use .readthedocs.yaml; they rely on noxfile.pyâ€™s session dependencies. When changing Sphinx extensions or themes, update both the nox sessions and docs/requirements.txt to keep parity with RTD.
+- Local builds via nox -s docs-build / nox -s docs do not use .readthedocs.yaml; they rely on noxfile.py’s session dependencies. When changing Sphinx extensions or themes, update both the nox sessions and docs/requirements.txt to keep parity with RTD.
 - If the location of conf.py or the Python version changes, reflect those changes in docs/.readthedocs.yaml to avoid RTD build failures.
 
 
@@ -123,7 +123,7 @@ Notes and recommendations:
 
 All commands are executed via Nox to ensure reproducibility.
 
-### 3.1 Oneâ€‘Off Build
+### 3.1 One-Off Build
 
 - Build static HTML into docs/_build:
   - nox -s docs-build
@@ -146,7 +146,7 @@ All commands are executed via Nox to ensure reproducibility.
 ### 4.1 reStructuredText vs. Markdown
 
 - The canonical format is reStructuredText (.rst). The docs use index.rst and standard Sphinx/ReST directives.
-- Although the docs sessions install myst-parser, it is not currently enabled in conf.py. If enabling Markdown is desired in the future, add "myst_parser" to extensions and follow MySTâ€™s syntax rules. Until then, prefer .rst.
+- Although the docs sessions install myst-parser, it is not currently enabled in conf.py. If enabling Markdown is desired in the future, add "myst_parser" to extensions and follow MyST’s syntax rules. Until then, prefer .rst.
 
 ### 4.2 API Docs via Autodoc + Autosummary
 
@@ -178,15 +178,15 @@ All commands are executed via Nox to ensure reproducibility.
 
 ### 4.5 Source Links and Readability
 
-- viewcode adds â€œView Sourceâ€ links to documented objects. Ensure source files remain readable and follow the code style guide so rendered source is approachable.
+- viewcode adds “View Source” links to documented objects. Ensure source files remain readable and follow the code style guide so rendered source is approachable.
 
 
 ## 5 Where Things Are Configured
 
-- docs/conf.py â€” Sphinx configuration (extensions, theme, intersphinx, napoleon, todo, autodoc/autosummary options).
-- docs/.readthedocs.yaml â€” Read the Docs build configuration (Python version, OS image, Sphinx entry point, output formats, and install steps).
-- noxfile.py â€” Sessions for building and serving the docs; installs Sphinx and selected extensions.
-- pyproject.toml â€” Project metadata and tooling configs (ruff, mypy, coverage) that indirectly affect example code in docs.
+- docs/conf.py — Sphinx configuration (extensions, theme, intersphinx, napoleon, todo, autodoc/autosummary options).
+- docs/.readthedocs.yaml — Read the Docs build configuration (Python version, OS image, Sphinx entry point, output formats, and install steps).
+- noxfile.py — Sessions for building and serving the docs; installs Sphinx and selected extensions.
+- pyproject.toml — Project metadata and tooling configs (ruff, mypy, coverage) that indirectly affect example code in docs.
 
 
 ## 6 Style Guide

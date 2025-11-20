@@ -120,6 +120,8 @@ assignment. If a global declaration occurs, the name is treated as a global vari
 
 Example:
 ```python # pseudocode
+from collections.abc import Callable
+
 def get_adder(summand1: float) -> Callable[[float], float]:
     """Returns a function that adds numbers to a given number."""
     def adder(summand2: float) -> float:
@@ -129,11 +131,12 @@ def get_adder(summand1: float) -> Callable[[float], float]:
 ```
 ### 4.2 Pros
 Often results in clearer, more elegant code. Especially comforting to experienced Lisp and Scheme (and Haskell and ML
-and â€¦) programmers.
+and …) programmers.
 
 ### 4.3 Cons
 Can lead to confusing bugs, such as this example based on PEP-0227:
 ```python # pseudocode
+from collections.abc import Iterable
 i = 4
 def foo(x: Iterable[int]):
     def bar():

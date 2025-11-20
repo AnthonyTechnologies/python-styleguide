@@ -263,10 +263,10 @@ if __name__ == "__main__":
 
 ## 3 Example Semantics and Syntax
 
-Examples should conform to the semantics and syntax described in [Semantics Guidelines](semantics.md) and the Syntax topics â€”
+Examples should conform to the semantics and syntax described in [Semantics Guidelines](semantics.md) and the Syntax topics —
 [Formatting](syntax/formatting.md), [Naming](syntax/naming.md), [Typing](syntax/typing.md), [Docstrings](syntax/docstrings.md),
 [Comments](syntax/comments.md), [Strings](syntax/strings.md), [Exceptions & Error Messages](syntax/exceptions_error_messages.md),
-[Logging](syntax/logging.md), and [Resources](syntax/resources.md) â€” but in some cases it may be necessary to deviate from the general
+[Logging](syntax/logging.md), and [Resources](syntax/resources.md) — but in some cases it may be necessary to deviate from the general
 guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide.
 
 ### 3.1 Example Documentation
@@ -681,10 +681,10 @@ Incremental Complexity are suggested because other sections of the project shoul
 
 ## 6 Example-Specific Best Practices
 
-For general code readability, performance, and maintainability guidelines, refer to the Syntax topics â€”
+For general code readability, performance, and maintainability guidelines, refer to the Syntax topics —
 [Formatting](syntax/formatting.md), [Naming](syntax/naming.md), [Typing](syntax/typing.md), [Docstrings](syntax/docstrings.md),
 [Comments](syntax/comments.md), [Strings](syntax/strings.md), [Exceptions & Error Messages](syntax/exceptions_error_messages.md),
-[Logging](syntax/logging.md), and [Resources](syntax/resources.md) â€” and [Semantics Guidelines](semantics.md). The
+[Logging](syntax/logging.md), and [Resources](syntax/resources.md) — and [Semantics Guidelines](semantics.md). The
 following are best practices specific to example files:
 
 - **Educational Focus**: Examples should prioritize clarity and educational value over code optimization. Sometimes a slightly less efficient approach may be more instructive.

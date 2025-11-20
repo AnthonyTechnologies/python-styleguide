@@ -1,6 +1,12 @@
 ﻿# Anthony's Python Style Guide: Exceptions and Error Messages
 
-## Exceptions
+## Table of Contents
+
+- [1 Exceptions](#1-exceptions)
+- [2 Error Messages](#2-error-messages)
+
+
+## 1 Exceptions
 
 Exceptions must follow certain conditions:
 
@@ -16,6 +22,11 @@ Examples:
 
 Correct:
 ```python # pseudocode
+# Setup minimal context so this snippet runs
+import logging
+import os
+logging.basicConfig(level=logging.INFO)
+
 def connect_to_next_port(self, minimum: int) -> int:
     """Connects to the next available port.
 
@@ -44,6 +55,10 @@ def connect_to_next_port(self, minimum: int) -> int:
 
 Incorrect:
 ```python # pseudocode
+# Setup minimal context so this snippet runs
+import logging
+import os
+
 def connect_to_next_port(self, minimum: int) -> int:
     """Connects to the next available port.
 
@@ -78,7 +93,7 @@ hides a real error.
 Use the `finally` clause to execute code whether or not an exception is raised in the try block. This is often useful
 for cleanup, i.e., closing a file.
 
-## Error Messages
+## 2 Error Messages
 Error messages (such as: message strings on exceptions like ValueError, or messages shown to the user) should follow
 three guidelines:
 
@@ -88,6 +103,13 @@ three guidelines:
 
 Correct:
 ```python # pseudocode
+# Minimal context
+import os
+import logging
+logging.basicConfig(level=logging.INFO)
+p = 0.5
+workdir = "."
+
 if not 0 <= p <= 1:
     raise ValueError(f'Not a probability: {p}')
 
@@ -99,6 +121,11 @@ except OSError as error:
 
 Incorrect:
 ```python # pseudocode
+import os
+import logging
+p = 0.5
+workdir = "."
+
 if p < 0 or p > 1:  # PROBLEM: also false for float('nan')!
     raise ValueError(f'Not a probability: {p}')
 

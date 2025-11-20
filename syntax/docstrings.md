@@ -9,7 +9,8 @@ followed by a blank line, followed by the rest of the docstring starting at the 
 of the first line. There are more formatting guidelines for docstrings below. Be sure to use the right style for module,
 function, method docstrings, and inline comments.
 
-All docstrings should be written in the descriptive style, not imperative.
+All docstrings should be written in the declarative voice, not imperative and use the Google style docstrings throughout
+the project.
 
 ## Table of Contents
 
@@ -48,6 +49,8 @@ properties, should be documented here in an Attributes section and follow the sa
 section.
 
 ```python # pseudocode
+from typing import ClassVar
+
 class ExampleClass:
     """An example class.
 
@@ -61,7 +64,7 @@ class ExampleClass:
         floating_point: A floating point number to track.
     """
     # Class Attributes #
-    class_attribute = ClassVar[int] = 10
+    class_attribute: ClassVar[int] = 10
 
     # Class Methods #
     @classmethod
@@ -160,7 +163,7 @@ the function only returns None, this section is not required. It may also be omi
 "Return", "Returns", "Yield", or "Yields" (e.g. `"""Returns row from Bigtable as a tuple of strings."""`) and the
 opening sentence is sufficient to describe the return value. Do not imitate older 'NumPy style' (example), which
 frequently documented a tuple return value as if it were multiple return values with individual names (never mentioning
-the tuple). Instead, describe such a return value as: "Returns: A tuple (mat_a, mat_b), where mat_a is â€¦, and â€¦". The
+the tuple). Instead, describe such a return value as: "Returns: A tuple (mat_a, mat_b), where mat_a is …, and …". The
 auxiliary names in the docstring need not necessarily correspond to any internal names used in the function body (as
 those are not part of the API). If the function uses yield (is a generator), the Yields: section should document the
 object returned by next(), instead of the generator object itself that the call evaluates to.
@@ -172,8 +175,30 @@ the API specified in the docstring is violated (because this would paradoxically
 API part of the API).
 
 ```python # pseudocode
-def fetch_smalltable_rows(
-    table_handle: smalltable.Table,
+from typing import Mapping, Sequence
+
+
+class Table:
+    """A table data structure for storing and retrieving rows of data.
+
+    Attributes:
+        name: The name of the table.
+        rows: Dictionary storing the table data.
+    """
+
+    # Class Attributes #
+    name: str
+    rows: Mapping[bytes, tuple[str, ...]]
+    
+    # Magic Methods #
+    # Construction/Destruction #
+    def __init__(self, name: str):
+        self.name = name
+        self.rows = {}
+
+
+def fetch_table_rows(
+    table_handle: Table,
     keys: Sequence[bytes | str],
     require_all_keys: bool = False,
 ) -> Mapping[bytes, tuple[str, ...]]:
@@ -183,7 +208,7 @@ def fetch_smalltable_rows(
     UTF-8 encoded.
 
     Args:
-        table_handle: An open smalltable.Table instance.
+        table_handle: An open Table instance.
         keys: A sequence of strings representing the key of each table row to fetch. String keys will be UTF-8 encoded.
         require_all_keys: If True only rows with values set for all keys will be returned.
 
@@ -201,13 +226,35 @@ def fetch_smalltable_rows(
     Raises:
         IOError: An error occurred accessing the smalltable.
     """
+    result = {}
+    for key in keys:
+        if isinstance(key, str):
+            key = key.encode('utf-8')
+        try:
+            row = table_handle.rows.get(key)
+            if row is not None:
+                result[key] = row
+            elif require_all_keys:
+                raise IOError(f"Required key {key} not found")
+        except Exception as e:
+            raise IOError(f"Error accessing table: {e}")
+    return result
 ```
 
 Similarly, this variation on Args: with a line break is also allowed:
 
 ```python # pseudocode
+from typing import Mapping, Sequence
+
+
+class SmallTable:
+    def __init__(self) -> None:
+        """Initializes a SmallTable instance."""
+        self.rows: dict[bytes, tuple[str, ...]] = {}
+
+
 def fetch_smalltable_rows(
-    table_handle: smalltable.Table,
+    table_handle: SmallTable,
     keys: Sequence[bytes | str],
     require_all_keys: bool = False,
 ) -> Mapping[bytes, tuple[str, ...]]:
@@ -217,27 +264,37 @@ def fetch_smalltable_rows(
     UTF-8 encoded.
 
     Args:
-      table_handle:
-        An open smalltable.Table instance.
-      keys:
+        table_handle:
+        An open SmallTable instance.
+        keys:
         A sequence of strings representing the key of each table row to fetch. String keys will be UTF-8 encoded.
-      require_all_keys:
+        require_all_keys:
         If True only rows with values set for all keys will be returned.
-
+        
     Returns:
-      A dict mapping keys to the corresponding table row data fetched. Each row is represented as a tuple of strings.
-      For example:
-
-      {b'Serak': ('Rigel VII', 'Preparer'),
-       b'Zim': ('Irk', 'Invader'),
-       b'Lrrr': ('Omicron Persei 8', 'Emperor')}
-
-      Returned keys are always bytes.  If a key from the keys argument is missing from the dictionary, then that row was
-      not found in the table (and require_all_keys must have been False).
+        A dict mapping keys to the corresponding table row data fetched. Each row is represented as a tuple of strings.
+        For example:
+        
+        {b'Serak': ('Rigel VII', 'Preparer'),
+            b'Zim': ('Irk', 'Invader'),
+            b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+        
+        Returned keys are always bytes.  If a key from the keys argument is missing from the dictionary, then that row was
+        not found in the table (and require_all_keys must have been False).
 
     Raises:
-      IOError: An error occurred accessing the smalltable.
+        IOError: An error occurred accessing the smalltable.
     """
+
+    result: dict[bytes, tuple[str, ...]] = {}
+    for key in keys:
+        k = key.encode("utf-8") if isinstance(key, str) else key
+        row = table_handle.rows.get(k)
+        if row is not None:
+            result[k] = row
+        elif require_all_keys:
+            raise IOError(f"Required key {k!r} not found")
+    return result
 ```
 
 ### 3.1 Overridden Methods
@@ -247,27 +304,36 @@ base method's contract, or details need to be provided (e.g., documenting additi
 docstring with at least those differences is required on the overriding method.
 
 ```python # pseudocode
-from typing_extensions import override
+# Portable no-op `override` decorator so this snippet runs without third‑party deps.
+def override(func):
+    return func
 
 class Parent:
     def do_something(self):
         """Parent method, includes docstring."""
+        print("Parent doing something")
+
 
 # Child class, method annotated with override.
-class Child(Parent):
+class Child1(Parent):
     @override
     def do_something(self):
-        pass
+        print("Child1 doing something")
+
 
 # Child class, but without @override decorator, a docstring is required.
-class Child(Parent):
+class Child2(Parent):
     def do_something(self):
-        pass
+        """Overrides parent's do_something with modified behavior."""
+        print("Child2 doing something differently")
+
 
 # Docstring is trivial, @override is sufficient to indicate that docs can be found in the base class.
-class Child(Parent):
+class Child3(Parent):
     @override
     def do_something(self):
         """See base class."""
+        super().do_something()
+        print("Child3 doing additional things")
 ```
 

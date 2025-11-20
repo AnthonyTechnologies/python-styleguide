@@ -1,5 +1,15 @@
 ﻿# Anthony's Python Style Guide: Files, Sockets, and Similar Stateful Resources
 
+## Table of Contents
+
+- [1 Rationale](#1-rationale)
+- [2 Preferred Pattern](#2-preferred-pattern)
+- [3 Alternatives](#3-alternatives)
+- [4 Documentation Requirement](#4-documentation-requirement)
+
+
+## 1 Rationale
+
 Explicitly close files and sockets when done with them. This rule naturally extends to closeable resources that
 internally use sockets, such as database connections, and also other resources that need to be closed down in a similar
 fashion. To name only a few examples, this also includes mmap mappings, h5py File objects, and matplotlib.pyplot figure
@@ -18,6 +28,8 @@ destructed, coupling the lifetime of the object to the state of the resource is 
 - Unexpected references to the file, e.g. in globals or exception tracebacks, may keep it around longer than intended.
 - Relying on finalizers to do automatic cleanup that has observable side effects has been rediscovered over and over again to lead to major problems, across many decades and multiple languages (see e.g. this article for Java).
 
+## 2 Preferred Pattern
+
 The preferred way to manage files and similar resources is using the `with` statement:
 
 ```python # pseudocode
@@ -26,15 +38,20 @@ with open("hello.txt") as hello_file:
         print(line)
 ```
 
+## 3 Alternatives
+
 For file-like objects that do not support the `with` statement, use `contextlib.closing()`:
 
 ```python # pseudocode
 import contextlib
+import urllib.request
 
-with contextlib.closing(urllib.urlopen("http://www.python.org/")) as front_page:
+with contextlib.closing(urllib.request.urlopen("https://www.python.org/")) as front_page:
     for line in front_page:
         print(line)
 ```
+
+## 4 Documentation Requirement
 
 In rare cases where context-based resource management is infeasible, code documentation must explain clearly how
 resource lifetime is managed.
