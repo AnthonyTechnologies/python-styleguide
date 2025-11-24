@@ -1,10 +1,10 @@
 # Anthony's Python Style Guide
 
 This repository contains a practical, opinionated Python style guide that remixes the official Google Python Style Guide
-and augments it with additional guidance for modern Python projects which use Python version greater than or equal to 
+and augments it with additional guidance for modern Python projects which use Python version greater than or equal to
 3.10. It is intended to be copy‑pasted or referenced directly in projects to keep code consistent, readable, and
-maintainable. The structure is a fork of the [Google Style Guide](https://google.github.io/styleguide/pyguide.html) and 
-[Hypermodern Python](https://cjolowicz.github.io/posts/hypermodern-python-01-setup/) by 
+maintainable. The structure is a fork of the [Google Style Guide](https://google.github.io/styleguide/pyguide.html) and
+[Hypermodern Python](https://cjolowicz.github.io/posts/hypermodern-python-01-setup/) by
 [Claudio Jolowicz](https://github.com/cjolowicz).
 
 ## Features
@@ -15,12 +15,12 @@ maintainable. The structure is a fork of the [Google Style Guide](https://google
 - Automation
 
 ## Machine‑Readable Style Guide Index
-For automation and easier adoption, this repo includes a machine‑readable style guide index in 
+For automation and easier adoption, this repo includes a machine‑readable style guide index in
 [`style_guide.toml`](style_guide.toml). Tools and agents can ingest this file to configure linters/formatters
 consistently across projects and should be their entry point to using this style guide. If tools and agents need further
-clarification, they can review the corresponding files. 
+clarification, they can review the corresponding files.
 
-Specific projects tool guidelines can be found in [`project_tools.md`](project_tools.md), for which their configurations 
+Specific projects tool guidelines can be found in [`project_tools.md`](project_tools.md), for which their configurations
 are set in their respective configuration files, not in `style_guide.toml`.
 
 ## Contents
@@ -89,12 +89,12 @@ The guide is split into focused documents and templates that can be read indepen
   - [`unit_test_template.py`](templates/tests/unit_test_template.py): template for pytest unit tests.
   - [`performance_test_template.py`](templates/tests/performance_test_template.py): template for performance tests.
   - [`example_template.py`](templates/examples/example_template.py): minimal example file showing the conventions.
-  - [`tutorial_example.ipynb`](templates/tutorials/tutorial_example.ipynb): notebook‑style tutorial example.
+  - [`tutorial_template.ipynb`](templates/tutorials/tutorial_template.ipynb): notebook‑style tutorial template.
 
 ## Style Guide Implementation
 
 This style guide is modular and can be adopted incrementally. The following outline is the recommended way to implement
-this style guide. However, adaptation can be implemented in any way: in a different order, skip some topics entirely, 
+this style guide. However, adaptation can be implemented in any way: in a different order, skip some topics entirely,
 etc.
 
 1. Review key aspects of the style guide:
@@ -103,7 +103,7 @@ etc.
     - Structure repositories following [`project_structure.md`](project_structure.md)
 
 2. For a new project, consider using the project template:
-    - The [Project Template](#project-template) section describes the project template project and links to the 
+    - The [Project Template](#project-template) section describes the project template project and links to the
       repositories
 
 3. Set up tooling and automation:
@@ -139,7 +139,7 @@ etc.
 
 A python package template project is available at https://github.com/AnthonyTechnologies/python-templatepackage. It is a
 cookiecutter template that can be used to generate a new python package with this style guide applied. It also includes
-configurations for the tools in [`project_tools.md`](project_tools.md). 
+configurations for the tools in [`project_tools.md`](project_tools.md).
 
 ## License
 Distributed under the terms of the [MIT license](https://opensource.org/licenses/MIT), python-styleguide is free and open source software.
