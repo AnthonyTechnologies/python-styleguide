@@ -10,18 +10,18 @@ tenets = [
     "Flexibility",
     "Automation",
 ]
-implmentation = [
+implementation = [
     "Review this index",
-    "Review temaplates",
+    "Review templates",
     "Defer to project tooling configurations",
     "Look in style guide source files for clarifications",
 ]
 review_all_templates = true
 review_task_topic_source = true
-allways_review_sources = [
+always_review_sources = [
     "project_structure.md",
     "code_file_layout.md",
-    "sytanx/formatting.md",
+    "syntax/formatting.md",
     "syntax/docstrings.md",
     "syntax/comments.md",
     "semantics.md",

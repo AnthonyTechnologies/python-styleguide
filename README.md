@@ -85,6 +85,7 @@ The guide is split into focused documents and templates that can be read indepen
   - [`module_template.py`](templates/src/package_template/module_template.py): template for a new module with recommended layout.
   - [`class_template.py`](templates/src/package_template/class_template.py): template for class design and docstrings.
   - [`function_template.py`](templates/src/package_template/function_template.py): template for well‑documented functions.
+  - [`test_suite_template.py`](templates/src/package_template/testsuite/test_suite_template.py): template for test suites using base classes.
   - [`unit_test_template.py`](templates/tests/unit_test_template.py): template for pytest unit tests.
   - [`performance_test_template.py`](templates/tests/performance_test_template.py): template for performance tests.
   - [`example_template.py`](templates/examples/example_template.py): minimal example file showing the conventions.

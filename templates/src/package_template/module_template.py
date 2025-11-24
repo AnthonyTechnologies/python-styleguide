@@ -22,7 +22,7 @@ __version__ = "0.1.0"
 # Standard Libraries #
 from dataclasses import dataclass
 
-# Third-Party Libraries #
+# Third-Party Packages #
 # import requests
 
 # Local Packages #

@@ -145,8 +145,8 @@ Guidelines:
 - Import must be grouped, in order, by future, standard library, third party, and project modules
   - The future import group must have the header comment: `# Futures #`
   - The standard library import group must have the header comment: `# Standard Libraries #`
-  - The third party import group must have the header comment: `# Third Party Libraries #`
-  - The project import group must have the header comment: `# Project Libraries #`
+  - The third party import group must have the header comment: `# Third-Party Packages #`
+  - The project import group must have the header comment: `# Local Packages #`
 - The future import group should be omitted if there are no future imports
 - There must be one blank line between each import group
 - Within each grouping, imports must be sorted lexicographically, ignoring case, according to each module's full package path
