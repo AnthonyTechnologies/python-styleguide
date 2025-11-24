@@ -218,7 +218,7 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
         This class has attributes and methods that can be wrapped by wrapper classes.
         """
         def __init__(self) -> None:
-            """Initialize with attributes."""
+            """Initializes with attributes."""
             self.one = "one"
             self.two = "one"
             self.common = "example_one"

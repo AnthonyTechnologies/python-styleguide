@@ -16,6 +16,16 @@ implmentation = [
     "Defer to project tooling configurations",
     "Look in style guide source files for clarifications",
 ]
+review_all_templates = true
+review_task_topic_source = true
+allways_review_sources = [
+    "project_structure.md",
+    "code_file_layout.md",
+    "sytanx/formatting.md",
+    "syntax/docstrings.md",
+    "syntax/comments.md",
+    "semantics.md",
+]
 
 
 # Project Structure #
@@ -83,6 +93,9 @@ source_file = "code_file_layout.md"
 order = ["stdlib", "third_party", "local"]
 separate_groups_with_blank_line = true
 absolute_imports_preferred = true
+import_heading_stdlib = "Standard Libraries #"
+import_heading_thirdparty = "Third-Party Packages #"
+import_heading_localfolder = "Local Packages #"
 
 # Class Internal Layout #
 [class_layout]
@@ -202,8 +215,8 @@ minimize_try_block = true
 use_finally_for_cleanup = true
 
 # Error Messages #
-# Source: syntax/
 [error_messages]
+source_file = "syntax/exceptions_error_messages.md"
 error_message_definition = "separate_variable"
 precise_match_condition = true
 interpolations_identifiable = true

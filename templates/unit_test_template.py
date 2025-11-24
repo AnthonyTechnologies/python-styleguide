@@ -94,8 +94,11 @@ class TestModuleLevelBehaviors:
     """
 
     def test_basic_assertions(self, fresh_sample: _Sample) -> None:
-        """Demonstrates a simple, focused test."""
+        """Demonstrates a simple, focused test.
 
+        Args:
+            fresh_sample: Fixture providing a fresh _Sample instance.
+        """
         before = fresh_sample.value
         after = fresh_sample.bump()
 
@@ -103,18 +106,25 @@ class TestModuleLevelBehaviors:
 
     @pytest.mark.parametrize("delta", [0, 1, 2])
     def test_parametrized_behavior(self, delta: int, fresh_sample: _Sample) -> None:
-        """Shows pytest parametrization for concise coverage."""
+        """Shows pytest parametrization for concise coverage.
 
+        Args:
+            delta: Value to increment the sample by.
+            fresh_sample: Fixture providing a fresh _Sample instance.
+        """
         result = fresh_sample.bump(delta)
         assert result == delta
 
 
-# Example of a Test Suite derived from a base testsuite
+# Test Suites #
 class TestMyType(BaseObjectTestSuite):
     """Concrete Test Suite for <MyType>, extending a Base Test Suite.
 
     In practice, BaseObjectTestSuite is replaced with the domain‑appropriate base suite from src/.../testsuite, and
     TestClass is set to the class under test.
+
+    Attributes:
+        TestClass: The class that the test suite is testing.
     """
 
     # Target type under test
@@ -122,14 +132,22 @@ class TestMyType(BaseObjectTestSuite):
 
     # Optionally override or extend specific tests defined by the base suite
     def test_copy(self, test_object: BaseObject) -> None:  # noqa: F821
-        """Ensures that copy.copy creates a distinct instance of the correct type."""
+        """Ensures that copy.copy creates a distinct instance of the correct type.
+
+        Args:
+            test_object: Fixture providing an instance of the target class.
+        """
         obj_copy = copy.copy(test_object)
         assert obj_copy is not test_object
         assert isinstance(obj_copy, self.TestClass)
 
     # Add new tests specific to this implementation
     def test_special_case(self, test_object: BaseObject) -> None:  # noqa: F821
-        """Validates an implementation-specific edge case behavior."""
+        """Validates an implementation-specific edge case behavior.
+
+        Args:
+            test_object: Fixture providing an instance of the target class.
+        """
         # Implement validation for an implementation-specific edge case
         assert True
 

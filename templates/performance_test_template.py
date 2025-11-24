@@ -43,9 +43,9 @@ class TestMyFeaturePerformance(BasePerformanceTestSuite):
 
     The placeholder <MyFeature> represents the object/module intended for benchmarking.
 
-    Common attributes used in repository performance tests:
-    - timeit_runs: number of iterations per timing sample
-    - speed_tolerance: acceptable percent-of-baseline overhead (lower is faster)
+    Attributes:
+        timeit_runs: number of iterations per timing sample
+        speed_tolerance: acceptable percent-of-baseline overhead (lower is faster)
     """
 
     # Attributes #
@@ -56,17 +56,18 @@ class TestMyFeaturePerformance(BasePerformanceTestSuite):
     @pytest.fixture()
     def sample_input(self) -> int:
         """Provides a small, deterministic input for micro-benchmarks."""
-
         return 42
 
-    # Example benchmark comparing new vs baseline approaches
+    # Tests #
     def test_operation_performance(self, sample_input: int) -> None:
         """Benchmarks <operation> against a simple baseline.
 
         The inner functions below act as stand-ins for the concrete operations being measured. They remain minimal and
         self-contained so that timeit can invoke them directly.
-        """
 
+        Args:
+            sample_input: Input value for the operation.
+        """
         # Define benchmarked callables (replace with real work)
         def new_impl() -> int:
             """Simulates the new or target implementation under test."""

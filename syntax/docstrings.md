@@ -1,6 +1,6 @@
 ﻿# Anthony's Python Style Guide: Docstrings
 
-Python uses docstrings to document code. A docstring is a string that is the first statement in a package, module, 
+Python uses docstrings to document code. A docstring is a string that is the first statement in a package, module,
 class, or function. These strings can be extracted automatically through the `__doc__` member of the object and are used
 by pydoc. (For example, run pydoc on a module to preview the output.) Always use the three-double-quote `"""` format for
 docstrings (per PEP 257). A docstring should be organized as a summary line (one physical line not exceeding 120
@@ -26,7 +26,6 @@ Every file should contain license boilerplate. Choose the appropriate boilerplat
 (for example, Apache 2.0, BSD, LGPL, GPL).
 
 Guidelines:
-- Files should start with a docstring describing the contents and usage of the module
 - The first line of the module should be file name exactly as it is in the file system (typically lowercase)
 - The second line should be a one-line summary of the module or program, terminated by a period
 - The third line should be blank
@@ -189,7 +188,7 @@ class Table:
     # Class Attributes #
     name: str
     rows: Mapping[bytes, tuple[str, ...]]
-    
+
     # Magic Methods #
     # Construction/Destruction #
     def __init__(self, name: str):
@@ -270,15 +269,15 @@ def fetch_smalltable_rows(
         A sequence of strings representing the key of each table row to fetch. String keys will be UTF-8 encoded.
         require_all_keys:
         If True only rows with values set for all keys will be returned.
-        
+
     Returns:
         A dict mapping keys to the corresponding table row data fetched. Each row is represented as a tuple of strings.
         For example:
-        
+
         {b'Serak': ('Rigel VII', 'Preparer'),
             b'Zim': ('Irk', 'Invader'),
             b'Lrrr': ('Omicron Persei 8', 'Emperor')}
-        
+
         Returned keys are always bytes.  If a key from the keys argument is missing from the dictionary, then that row was
         not found in the table (and require_all_keys must have been False).
 
@@ -336,4 +335,3 @@ class Child3(Parent):
         super().do_something()
         print("Child3 doing additional things")
 ```
-
