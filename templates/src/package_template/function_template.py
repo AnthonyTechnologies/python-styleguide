@@ -1,13 +1,14 @@
 """function_template.py
-A one-line summary of the module or program, terminated by a period.
+Template module demonstrating the structure and style of function definitions.
 
-Leave one blank line. The rest of this docstring should contain an overall description of the module or program. The
-description can be broken up into multiple paragraphs to present the functionality into logical sections. Bullet-point
-and numerical lists may be used as well, but only add them if they are needed.
+This module provides a template for defining functions, including standalone functions, decorators, and functions that
+operate on iterables. It demonstrates the organization of functions and the use of docstrings following the project's
+conventions. Normally, the name of this module should match the name of the function it contains, but it is named 
+function_template to make it easier to find when browsing the templates directory.
 """
 
 # Header #
-__package_name__ = "package_name"
+__package_name__ = "package_template"
 
 __author__ = "Author Name"
 __credits__ = ["Author Name"]
@@ -21,9 +22,6 @@ __version__ = "0.1.0"
 # Standard Libraries #
 from typing import Callable, Iterable
 
-# Local Packages #
-# from package_name.module import helper
-
 
 # Definitions #
 # Constants #
@@ -33,7 +31,7 @@ DEFAULT_NORMALIZE_STRIP: str = ""  # Characters to strip in normalization (empty
 # Functions #
 # Decorators #
 def require_iterable_of_str(func: Callable[[Iterable[str]], list[str]]) -> Callable[[Iterable[str]], list[str]]:
-    """A decorator that validates the input is an iterable of strings.
+    """Validates that the input is an iterable of strings.
 
     This decorator is intended to be placed before the functions it decorates, per the style guide.
 
@@ -45,7 +43,7 @@ def require_iterable_of_str(func: Callable[[Iterable[str]], list[str]]) -> Calla
     """
 
     def wrapper(names: Iterable[str]) -> list[str]:
-        """Runtime type guard that enforces an iterable of str before calling func.
+        """Enforces an iterable of str at runtime before calling func.
 
         Args:
             names: The incoming iterable to validate.
@@ -72,8 +70,8 @@ def require_iterable_of_str(func: Callable[[Iterable[str]], list[str]]) -> Calla
 def normalize_names(names: Iterable[str]) -> list[str]:
     """Normalizes a sequence of names.
 
-    Normalization currently consists of stripping leading/trailing whitespace (and optionally
-    characters configured by DEFAULT_NORMALIZE_STRIP) and lower-casing each string. Order is preserved.
+    Normalization currently consists of stripping leading/trailing whitespace (and optionally characters configured by
+    DEFAULT_NORMALIZE_STRIP) and lower-casing each string. Order is preserved.
 
     Args:
         names: An iterable of raw names.

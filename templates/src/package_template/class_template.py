@@ -1,13 +1,14 @@
 """class_template.py
-A one-line summary of the module or program, terminated by a period.
+Template module demonstrating the structure and style of a class definition.
 
-Leave one blank line. The rest of this docstring should contain an overall description of the module or program. The
-description can be broken up into multiple paragraphs to present the functionality into logical sections. Bullet-point
-and numerical lists may be used as well, but only add them if they are needed.
+This module provides a template for defining classes, including attributes, methods, properties, and magic methods.
+It demonstrates the organization of class members and the use of type hints in accordance with the project's style guide.
+Normally, the name of this module should match the name of the class it contains, but it is named after class_template
+to make it easier to find when browsing the templates directory.
 """
 
 # Header #
-__package_name__ = "package_name"
+__package_name__ = "package_template"
 
 __author__ = "Author Name"
 __credits__ = ["Author Name"]
@@ -68,7 +69,7 @@ class User:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "User":
-        """Alternate constructor from a dictionary.
+        """Constructs a User from a dictionary.
 
         Args:
             data: Dictionary with keys 'user_id', 'name', and optional 'active'.
@@ -97,9 +98,6 @@ class User:
     # Construction/Destruction
     def __init__(self, user_id: str, name: str, active: bool = True) -> None:
         """Initializes a User instance.
-
-        Note: In real code, when using @dataclass, an auto-generated __init__ is typical. It is
-        implemented explicitly here to fully demonstrate the Magic Methods section.
 
         Args:
             user_id: Stable identifier.
@@ -141,7 +139,7 @@ class User:
     # Instance Methods #
     # Constructors/Destructors
     def construct(self, *, activate: bool | None = None) -> None:
-        """Optional post-construction hook to adjust state.
+        """Adjusts state optionally after construction.
 
         Args:
             activate: If provided, overrides the active state after construction.
@@ -164,6 +162,9 @@ class User:
         """Parses an arbitrary value into an activation boolean.
 
         This helper demonstrates the Parameter Parsers subcategory.
+        
+        Args:
+            value: The value to parse.
         """
         if isinstance(value, str):
             return value.strip().lower() in {"1", "true", "yes", "on"}
@@ -188,6 +189,9 @@ class User:
         """Sets the display name with minimal validation.
 
         Prefer using setters only when non-trivial logic is required; shown here for template completeness.
+        
+        Args:
+            name: The new display name.
         """
         self._ensure_active()
         self.name = name.strip() if name else self.name

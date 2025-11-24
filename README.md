@@ -80,14 +80,15 @@ The guide is split into focused documents and templates that can be read indepen
 
 
 - Templates: paste‑ready skeletons under `templates/`:
-  - [`__init__template.py`](templates/__init__template.py): template for package initialization modules.
-  - [`module_template.py`](templates/module_template.py): template for a new module with recommended layout.
-  - [`class_template.py`](templates/class_template.py): template for class design and docstrings.
-  - [`function_template.py`](templates/function_template.py): template for well‑documented functions.
-  - [`unit_test_template.py`](templates/unit_test_template.py): template for pytest unit tests.
-  - [`performance_test_template.py`](templates/performance_test_template.py): template for performance tests.
-  - [`example_template.py`](templates/example_template.py): minimal example file showing the conventions.
-  - [`tutorial_example.ipynb`](templates/tutorial_example.ipynb): notebook‑style tutorial example.
+  - [`__init__.py`](templates/src/package_template/__init__.py): template for package initialization modules.
+  - [`header.py`](templates/src/package_template/header.py): template for package metadata.
+  - [`module_template.py`](templates/src/package_template/module_template.py): template for a new module with recommended layout.
+  - [`class_template.py`](templates/src/package_template/class_template.py): template for class design and docstrings.
+  - [`function_template.py`](templates/src/package_template/function_template.py): template for well‑documented functions.
+  - [`unit_test_template.py`](templates/tests/unit_test_template.py): template for pytest unit tests.
+  - [`performance_test_template.py`](templates/tests/performance_test_template.py): template for performance tests.
+  - [`example_template.py`](templates/examples/example_template.py): minimal example file showing the conventions.
+  - [`tutorial_example.ipynb`](templates/tutorials/tutorial_example.ipynb): notebook‑style tutorial example.
 
 ## Style Guide Implementation
 
