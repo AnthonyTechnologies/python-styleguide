@@ -21,24 +21,35 @@ __version__ = "0.1.0"
 
 # Imports #
 # Standard Libraries #
-from typing import Final
+from typing import Final, Any
 import copy
 
 # Third-Party Packages #
 import pytest
+from baseobjects.testsuite import BaseClassTestSuite
 
 # Local Packages #
-from templates.src.package_template.class_template import User
-from templates.src.package_template.module_template import UserRegistry
+from ..src.package_template import User
+from ..src.package_template import UserRegistry
+from ..src.package_template.testsuite import UserTestSuite
 
 
 # Definitions #
 # Constants and Test Data #
 _SECTION_LINE: Final[str] = "-" * 72
 
+
 # Tests #
-class TestRegistryBehaviors:
+class TestUser(UserTestSuite):
+    """Tests User using UserTestSuite."""
+    pass
+
+
+class TestUserRegistry(BaseClassTestSuite):
     """Tests UserRegistry."""
+
+    # Attributes #
+    TestClass = UserRegistry
 
     # Fixtures #
     @pytest.fixture(scope="module")
@@ -46,33 +57,45 @@ class TestRegistryBehaviors:
         """Provides reusable test data."""
         return [User(user_id="1", name="Alice"), User(user_id="2", name="Bob")]
 
-    @pytest.fixture()
-    def registry(self, sample_users: list[User]) -> UserRegistry:
+    @pytest.fixture
+    def test_object(self, sample_users: list[User]) -> UserRegistry:
         """Yields a fresh registry."""
         # Create a fresh registry with copies of users to avoid side effects
         users_copy = [copy.copy(u) for u in sample_users]
         return UserRegistry(users=users_copy)
 
     # Tests #
-    def test_initial_state(self, registry: UserRegistry) -> None:
+    def test_instance_creation(self, *args: Any, **kwargs: Any) -> None:
+        """Tests that instances of the class can be created.
+
+        Args:
+            *args: Positional arguments list to pass to the class constructor.
+            **kwargs: Keyword arguments to pass to the class constructor.
+        """
+        users = [User(user_id="1", name="Alice")]
+        obj = self.TestClass(users=users, *args, **kwargs)
+        assert isinstance(obj, self.TestClass)
+        assert len(obj.users) == 1
+
+    def test_initial_state(self, test_object: UserRegistry) -> None:
         """Verifies initial state of the registry.
 
         Args:
-            registry: The registry to test.
+            test_object: The registry to test.
         """
-        assert len(registry.users) == 2
-        assert "alice" in registry.get_all_names()
+        assert len(test_object.users) == 2
+        assert "alice" in test_object.get_all_names()
 
-    def test_add_user(self, registry: UserRegistry) -> None:
+    def test_add_user(self, test_object: UserRegistry) -> None:
         """Tests adding a user.
 
         Args:
-            registry: The registry to test.
+            test_object: The registry to test.
         """
         u = User(user_id="3", name="Charlie")
-        registry.add_user(u)
-        assert len(registry.users) == 3
-        assert "charlie" in registry.get_all_names()
+        test_object.add_user(u)
+        assert len(test_object.users) == 3
+        assert "charlie" in test_object.get_all_names()
 
     @pytest.mark.parametrize("name, expected", [
         ("Alice", "alice"),
