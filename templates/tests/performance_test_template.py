@@ -18,15 +18,16 @@ __license__ = "License"
 
 __version__ = "0.1.0"
 
+
 # Imports #
 # Standard Libraries #
-from typing import Final
 import timeit
+from typing import Final
 
 # Third-Party Packages #
 import pytest
 
-# Local Packages #
+# Source Packages #
 from templates.src.package_template.module_template import create_registry
 
 
@@ -60,6 +61,7 @@ class TestRegistryPerformance:
         def baseline_impl() -> None:
             """Just creates User objects in a list."""
             # Simulating overhead of just creating User objects without Registry wrapper
+            # Third-Party Packages #
             from templates.src.package_template.class_template import User
             [User(user_id=n, name=n) for n in names]
 

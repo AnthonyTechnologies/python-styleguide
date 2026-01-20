@@ -21,16 +21,17 @@ __version__ = "0.1.0"
 
 # Imports #
 # Standard Libraries #
-from typing import Final, Any
 import copy
+from typing import Any, Final
 
 # Third-Party Packages #
 import pytest
+
+# Source Packages #
 from baseobjects.testsuite import BaseClassTestSuite
 
 # Local Packages #
-from ..src.package_template import User
-from ..src.package_template import UserRegistry
+from ..src.package_template import User, UserRegistry
 from ..src.package_template.testsuite import UserTestSuite
 
 
@@ -49,7 +50,7 @@ class TestUserRegistry(BaseClassTestSuite):
     """Tests UserRegistry."""
 
     # Attributes #
-    TestClass = UserRegistry
+    UnitTestClass = UserRegistry
 
     # Fixtures #
     @pytest.fixture(scope="module")
@@ -73,8 +74,8 @@ class TestUserRegistry(BaseClassTestSuite):
             **kwargs: Keyword arguments to pass to the class constructor.
         """
         users = [User(user_id="1", name="Alice")]
-        obj = self.TestClass(users=users, *args, **kwargs)
-        assert isinstance(obj, self.TestClass)
+        obj = self.UnitTestClass(users=users, *args, **kwargs)
+        assert isinstance(obj, self.UnitTestClass)
         assert len(obj.users) == 1
 
     def test_initial_state(self, test_object: UserRegistry) -> None:

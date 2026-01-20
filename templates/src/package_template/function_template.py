@@ -3,7 +3,7 @@ Template module demonstrating the structure and style of function definitions.
 
 This module provides a template for defining functions, including standalone functions, decorators, and functions that
 operate on iterables. It demonstrates the organization of functions and the use of docstrings following the project's
-conventions. Normally, the name of this module should match the name of the function it contains, but it is named 
+conventions. Normally, the name of this module should match the name of the function it contains, but it is named
 function_template to make it easier to find when browsing the templates directory.
 """
 

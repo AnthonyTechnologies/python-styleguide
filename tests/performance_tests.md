@@ -161,7 +161,7 @@ Base Performance Test Suites are test suites contain a collection of tests assay
 feature, or functionality of the software with a focus on testing general aspects of the component, feature, or
 functionality. Generally, Base Performance Test Suites follow the guidelines in [Unit Tests](unit_tests.md).
 
-As in [Unit Test](unit_tests.md), a Base Performance Test Suites have a target to test such as `TestClass` or
+As in [Unit Test](unit_tests.md), a Base Performance Test Suites have a target to test such as `UnitTestClass` or
 `test_target` and will be composed of abstract and concrete methods which test the target against various unit tests
 which the target must pass. Establishing a test target allows subclassed test suites to interchange test targets to
 assay performance.
@@ -203,13 +203,13 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
     This is a base test suite that concrete subclasses should implement abstract methods and assign attributes.
 
     Attributes:
-        ExampleOne: A class which the wrapper class will wrap.
-        ExampleTwo: A another class which the wrapper class will wrap.
+        ConcreteOne: A class which the wrapper class will wrap.
+        ConcreteTwo: A another class which the wrapper class will wrap.
         _base_time: The time it takes to run a simple function call for a baseline of 100 million iterations.
         call_speed: The baseline speed of a simple function call in microseconds.
         timeit_runs: The number of runs to use for timeit measurements.
         speed_tolerance: The maximum percentage of time a new implementation can take compared to the old one.
-        TestClass: The main wrapper class to be assayed.
+        UnitTestClass: The main wrapper class to be assayed.
     """
      # Class Definitions #
     class ExampleOne:
@@ -237,12 +237,12 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
 
         def __str__(self) -> str:
             """Returns a string representation of this class."""
-            return "ExampleOne"
+            return "ConcreteOne"
 
     class ExampleTwo:
         """Another example class for testing wrappers.
 
-        This class has different attributes and methods than ExampleOne.
+        This class has different attributes and methods than ConcreteOne.
         """
         def __init__(self) -> None:
             """Initializes with attributes."""
@@ -260,12 +260,12 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
 
         def __str__(self) -> str:
             """Returns a string representation of this class."""
-            return "ExampleTwo"
+            return "ConcreteTwo"
 
     # Attributes #
     speed_tolerance: int = 150
 
-    TestClass: Any = None
+    UnitTestClass: Any = None
 
     # Instance Methods #
     # Fixtures
@@ -275,31 +275,31 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
         """Creates a test object.
 
         Returns:
-            A wrapper object with ExampleOne and ExampleTwo objects.
+            A wrapper object with ConcreteOne and ConcreteTwo objects.
         """
         # This is abstract because each subclass needs to create a specific instance
         # of the wrapper class being tested, which requires knowledge of that specific class.
 
     @pytest.fixture
     def test_example_one(self) -> ExampleOne:
-        """Creates a test ExampleOne object.
+        """Creates a test ConcreteOne object.
 
         Returns:
-            An ExampleOne object.
+            An ConcreteOne object.
         """
         # This is concrete because it can be implemented in a general way that works
-        # for all subclasses. The ExampleOne class is defined in this test suite.
+        # for all subclasses. The ConcreteOne class is defined in this test suite.
         return self.ExampleOne()
 
     @pytest.fixture
     def test_example_two(self) -> ExampleTwo:
-        """Creates a test ExampleTwo object.
+        """Creates a test ConcreteTwo object.
 
         Returns:
-            An ExampleTwo object.
+            An ConcreteTwo object.
         """
         # This is concrete because it can be implemented in a general way that works
-        # for all subclasses. The ExampleTwo class is defined in this test suite.
+        # for all subclasses. The ConcreteTwo class is defined in this test suite.
         return self.ExampleTwo()
 
     # Tests
@@ -323,7 +323,7 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
 
         Args:
             test_wrapper: A fixture providing a DynamicWrapperTestObject.
-            test_example_one: A fixture providing an ExampleOne object.
+            test_example_one: A fixture providing an ConcreteOne object.
         """
         # This is concrete because the attribute access performance test can be implemented
         # in a general way that works for all wrapper classes. The test measures the overhead
@@ -349,7 +349,7 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
         percent = (mean_new / mean_old) * 100
 
         # Print the performance comparison
-        print(f"\n{self.TestClass.__name__} attribute access: {mean_new:.3f} Î¼s ({percent:.3f}% of direct access time)")
+        print(f"\n{self.UnitTestClass.__name__} attribute access: {mean_new:.3f} Î¼s ({percent:.3f}% of direct access time)")
         assert percent < self.speed_tolerance
 
 ```
@@ -365,15 +365,17 @@ Additional Guidelines:
 - Should be named with a `Performance` suffix
 
 Example:
+
 ```python # pseudocode
 # Classes #
-ExampleOne = WrapperPerformanceTestSuite.ExampleOne
-ExampleTwo = WrapperPerformanceTestSuite.ExampleTwo
+ExampleOne = WrapperPerformanceTestSuite.ConcreteOne
+ExampleTwo = WrapperPerformanceTestSuite.ConcreteTwo
+
 
 class DynamicWrapperTestObject(DynamicWrapper):
     """A test class that inherits from DynamicWrapper.
 
-    This class uses DynamicWrapper to wrap ExampleOne and ExampleTwo objects.
+    This class uses DynamicWrapper to wrap ConcreteOne and ConcreteTwo objects.
     """
     _wrapped = ["_first", "_second"]
 
@@ -404,18 +406,18 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
     This is a base test suite that concrete subclasses should implement abstract methods and assign attributes.
 
     Attributes:
-        ExampleOne: A class which the wrapper class will wrap.
-        ExampleTwo: A another class which the wrapper class will wrap.
+        ConcreteOne: A class which the wrapper class will wrap.
+        ConcreteTwo: A another class which the wrapper class will wrap.
         _base_time: The time it takes to run a simple function call for a baseline of 100 million iterations.
         call_speed: The baseline speed of a simple function call in microseconds.
         timeit_runs: The number of runs to use for timeit measurements.
         speed_tolerance: The maximum percentage of time a new implementation can take compared to the old one.
-        TestClass: The main wrapper class to be assayed.
+        UnitTestClass: The main wrapper class to be assayed.
     """
 
     # Attributes #
     speed_tolerance: int = 150
-    TestClass: Any = DynamicWrapperTestObject
+    UnitTestClass: Any = DynamicWrapperTestObject
 
     # Instance Methods #
     # Fixtures
@@ -424,7 +426,7 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
         """Creates a test object.
 
         Returns:
-            A wrapper object with ExampleOne and ExampleTwo objects.
+            A wrapper object with ConcreteOne and ConcreteTwo objects.
         """
         # This concrete implementation satisfies the abstract fixture requirement from the parent class.
         # It provides a specific implementation for creating a DynamicWrapperTestObject instance.
@@ -446,8 +448,8 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
         # It provides a specific implementation for testing DynamicWrapperTestObject instance creation.
         # The implementation is specific to this test suite because it knows the constructor signature
         # and initialization requirements of the DynamicWrapperTestObject class.
-        instance = self.TestClass()
-        assert isinstance(instance, self.TestClass)
+        instance = self.UnitTestClass()
+        assert isinstance(instance, self.UnitTestClass)
 
     def test_setattr_vs_normal_set_speed(self, test_wrapper: DynamicWrapperTestObject) -> None:
         """Tests the performance difference between _setattr and normal attribute setting.
@@ -457,6 +459,7 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
         Args:
             test_wrapper: A fixture providing a DynamicWrapperTestObject.
         """
+
         # This is a concrete method that is specific to this test suite and not required by the parent class.
         # It tests a specific feature of the DynamicWrapperTestObject class (_setattr method) that may not
         # be present in all wrapper classes. This shows how concrete test suites can add additional tests

@@ -18,6 +18,11 @@ the project.
 - [2 Classes](#2-classes)
 - [3 Functions and Methods](#3-functions-and-methods)
     - [3.1 Overridden Methods](#31-overridden-methods)
+- [4 Standard Templates](#4-standard-templates)
+    - [4.1 Module Level](#41-module-level)
+    - [4.2 Class Level](#42-class-level)
+    - [4.3 Method Templates](#43-method-templates)
+    - [4.4 Common Argument Descriptions](#44-common-argument-descriptions)
 
 
 ## 1 Modules
@@ -335,3 +340,138 @@ class Child3(Parent):
         super().do_something()
         print("Child3 doing additional things")
 ```
+
+## 4 Standard Templates
+
+To ensure consistency across the codebase, the following templates should be used for common methods and structures.
+
+### 4.1 Module Level
+
+#### Module File Header
+```python
+"""[filename.py]
+[Short Module Summary]
+
+[Extended Description of module contents and purpose]
+"""
+```
+
+### 4.2 Class Level
+
+#### Standard Class
+```python
+class [ClassName]:
+    """[Short Class Summary]
+
+    [Extended Description]
+
+    Attributes:
+        [attribute_name]: [Description]
+    """
+```
+
+### 4.3 Method Templates
+
+#### Constructor (`__init__`)
+```python
+    def __init__(self, *args, **kwargs) -> None:
+        """Initializes a new [ClassName] instance.
+        
+        Args:
+            *args: [Description of positional arguments]
+            **kwargs: [Description of keyword arguments]
+        """
+```
+
+#### Constructor (`construct`)
+```python
+    def construct(self, *args, **kwargs) -> None:
+        """Constructs this object with the given arguments.
+        
+        Args:
+            *args: [Description of positional arguments]
+            **kwargs: [Description of keyword arguments]
+        """
+```
+
+#### Shallow Copy (`copy` or `__copy__`)
+```python
+    def copy(self) -> Any:
+        """Creates a shallow copy of this object.
+
+        Returns:
+            A shallow copy of this object.
+        """
+```
+
+#### Deep Copy (`deepcopy` or `__deepcopy__`)
+```python
+    def deepcopy(self, memo: dict | None = None) -> Any:
+        """Creates a deep copy of this object.
+
+        Args:
+            memo: A dictionary that maps object IDs to their copies.
+
+        Returns:
+            A deep copy of this object.
+        """
+```
+
+#### Pickle State Getter (`__getstate__`)
+```python
+    def __getstate__(self) -> dict[str, Any]:
+        """Gets the object's state for pickling.
+
+        Returns:
+            The state of the object.
+        """
+```
+
+#### Pickle State Setter (`__setstate__`)
+```python
+    def __setstate__(self, state: Any) -> None:
+        """Sets the object's state from a pickled state.
+
+        Args:
+            state: An object which can be used to set the state of this object.
+        """
+```
+
+#### Property Getter
+```python
+    @property
+    def [property_name](self) -> [Type]:
+        """The [noun phrase description of the property]."""
+```
+
+#### Property Setter
+```python
+    @[property_name].setter
+    def [property_name](self, value: [Type]) -> None:
+        self._[property_name] = value
+```
+*(Note: Setters often do not have docstrings in this codebase if the getter is documented, or they simply implement the logic. If one is needed, usage of "Sets the [property name]..." is appropriate.)*
+
+#### Clear Method
+```python
+    def clear(self) -> None:
+        """Clears the contents of the [object type]."""
+```
+
+#### Representation (`__repr__`)
+```python
+    def __repr__(self) -> str:
+        """Returns the string representation of this object.
+        
+        Returns:
+            The string representation of this object.
+        """
+```
+
+### 4.4 Common Argument Descriptions
+
+*   `*args`: "Arguments for inheritance." (common in mixins/bases)
+*   `**kwargs`: "Keyword arguments for inheritance." (common in mixins/bases)
+*   `func`: "The function to wrap." (for decorators)
+*   `instance`: "The object to bind to." (for descriptors)
+*   `owner`: "The class of the object." (for descriptors)

@@ -16,5 +16,14 @@ __version__ = "0.1.0"
 # Imports #
 # Local Packages #
 from .class_template import User
-from .function_template import require_iterable_of_str, normalize_names, unique_normalized
+from .function_template import normalize_names, require_iterable_of_str, unique_normalized
 from .module_template import UserRegistry
+
+__all__ = [
+    "User",
+    "normalize_names",
+    "require_iterable_of_str",
+    "unique_normalized",
+    "UserRegistry"
+]
+

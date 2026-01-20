@@ -23,7 +23,7 @@ __version__ = "0.1.0"
 # Standard Libraries #
 from typing import Final
 
-# Local Packages #
+# Third-Party Packages #
 from templates.src.package_template.class_template import User
 from templates.src.package_template.module_template import UserRegistry, create_registry
 

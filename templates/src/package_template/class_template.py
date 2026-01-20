@@ -2,9 +2,9 @@
 Template module demonstrating the structure and style of a class definition.
 
 This module provides a template for defining classes, including attributes, methods, properties, and magic methods.
-It demonstrates the organization of class members and the use of type hints in accordance with the project's style guide.
-Normally, the name of this module should match the name of the class it contains, but it is named after class_template
-to make it easier to find when browsing the templates directory.
+It demonstrates the organization of class members and the use of type hints in accordance with the project's style
+guide. Normally, the name of this module should match the name of the class it contains, but it is named after
+class_template to make it easier to find when browsing the templates directory.
 """
 
 # Header #
@@ -20,7 +20,7 @@ __version__ = "0.1.0"
 
 # Imports #
 # Standard Libraries #
-from typing import ClassVar, Any
+from typing import Any, ClassVar
 
 
 # Definitions #
@@ -56,7 +56,7 @@ class User:
     _default_active: ClassVar[bool] = True
 
     # Class Magic Methods #
-    def __new__(cls, *args: Any, **kwargs: Any):
+    def __new__(cls, *args: Any, **kwargs: Any) -> "User":
         """Allocates a new User instance (rarely overridden; shown for template completeness)."""
         return super().__new__(cls)
 
@@ -162,7 +162,7 @@ class User:
         """Parses an arbitrary value into an activation boolean.
 
         This helper demonstrates the Parameter Parsers subcategory.
-        
+
         Args:
             value: The value to parse.
         """
@@ -189,7 +189,7 @@ class User:
         """Sets the display name with minimal validation.
 
         Prefer using setters only when non-trivial logic is required; shown here for template completeness.
-        
+
         Args:
             name: The new display name.
         """

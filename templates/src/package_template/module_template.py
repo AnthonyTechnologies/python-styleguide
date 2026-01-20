@@ -22,9 +22,6 @@ __version__ = "0.1.0"
 # Standard Libraries #
 from dataclasses import dataclass
 
-# Third-Party Packages #
-# import requests
-
 # Local Packages #
 from .class_template import User
 from .function_template import normalize_names

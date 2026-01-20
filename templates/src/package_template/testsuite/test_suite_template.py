@@ -1,9 +1,9 @@
 """test_suite_template.py
 Template module demonstrating the structure of a test suite using the project's base test suites.
 
-This module provides a template for creating a test suite that inherits from a base test suite (e.g., BaseClassTestSuite,
-BaseObjectTestSuite). It demonstrates how to set the TestClass, define fixtures, and implement tests. Normally, the name
-of this script should match the name of the class or module it tests, appended with _test.
+This module provides a template for creating a test suite that inherits from a base test suite (e.g.,
+BaseClassTestSuite, BaseObjectTestSuite). It demonstrates how to set the UnitTestClass, define fixtures, and implement
+tests. Normally, the name of this script should match the name of the class or module it tests, appended with testsuite.
 """
 
 # Header #
@@ -39,7 +39,7 @@ class UserTestSuite(BaseClassTestSuite):
     """
 
     # Attributes #
-    TestClass = User
+    UnitTestClass = User
 
     # Fixtures #
     @pytest.fixture
@@ -59,8 +59,8 @@ class UserTestSuite(BaseClassTestSuite):
             *args: Positional arguments list to pass to the class constructor.
             **kwargs: Keyword arguments to pass to the class constructor.
         """
-        obj = self.TestClass(user_id="1", name="Name", *args, **kwargs)
-        assert isinstance(obj, self.TestClass)
+        obj = self.UnitTestClass(user_id="1", name="Name", *args, **kwargs)
+        assert isinstance(obj, self.UnitTestClass)
         assert obj.user_id == "1"
 
     def test_get_display_name(self, test_object: User) -> None:

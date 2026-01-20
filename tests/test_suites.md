@@ -34,7 +34,7 @@ Using `pytest` allows test suites to benefit from features such as fixtures, par
 Base Test Suites are test suites contain a collection of tests for validating a component, feature, or functionality of
 the software with a focus on testing general aspects of the component, feature, or functionality.
 
-Typically, a Base Test Suites have a target to test such as `TestClass` or `test_target` and will be composed of
+Typically, a Base Test Suites have a target to test such as `UnitTestClass` or `test_target` and will be composed of
 abstract and concrete methods which test the target against various unit tests which the target must pass. Establishing
 a test target allows subclassed test suites to interchange test targets to validate. The concrete tests defined in a
 Base Test Suite ensure that test targets are tested similarly, while the abstract tests enforce that certain test must
@@ -83,14 +83,14 @@ class BaseObjectTestSuite(BaseClassTestSuite):
     """Base test suite for children of BaseObject.
 
     This class provides common test functionality for child class of BaseObject, including tests for copying and
-    pickling. Subclasses should set the TestClass attribute and may override or extend the test methods.
+    pickling. Subclasses should set the UnitTestClass attribute and may override or extend the test methods.
 
     Attributes:
-        TestClass: The class that the test suite is testing.
+        UnitTestClass: The class that the test suite is testing.
     """
 
     # Attributes #
-    TestClass: Type[BaseObject] | None = None
+    UnitTestClass: Type[BaseObject] | None = None
 
     # Instance Methods #
     # Fixtures
@@ -176,14 +176,14 @@ class TestBaseObject(BaseObjectTestSuite):
     """
 
     # Attributes #
-    TestClass: Type[BaseObject] | None = TestBaseObject
+    UnitTestClass: Type[BaseObject] | None = TestBaseObject
 
     # Instance Methods #
     # Fixtures
     @pytest.fixture
     def test_object(self) -> BaseObject:
         """Creates a test object."""
-        return self.TestClass(10)
+        return self.UnitTestClass(10)
 
     # Tests
     def test_instance_creation(self, *args: Any, **kwargs: Any) -> None:
@@ -195,8 +195,8 @@ class TestBaseObject(BaseObjectTestSuite):
             *args: Positional arguments list to pass to the class constructor.
             **kwargs: Keyword arguments to pass to the class constructor.
         """
-        instance = self.TestClass()
-        assert isinstance(instance, self.TestClass)
+        instance = self.UnitTestClass()
+        assert isinstance(instance, self.UnitTestClass)
 
     def test_copy(self, test_object: BaseObject) -> None:
         """Tests the copy behavior of the object.
@@ -219,7 +219,7 @@ To create a new test suite, follow these steps:
     - `BaseClassTestSuite`: For testing generic classes.
     - `BaseObjectTestSuite`: For testing subclasses of `BaseObject`.
 
-2.  **Define the `TestClass` Attribute**: Set the `TestClass` class attribute to the class you intend to test. This tells the test suite which class to instantiate for fixtures.
+2.  **Define the `UnitTestClass` Attribute**: Set the `UnitTestClass` class attribute to the class you intend to test. This tells the test suite which class to instantiate for fixtures.
 
 3.  **Implement or Override Tests**: Add methods starting with `test_` to define new tests or override existing ones from the base class.
 
@@ -239,7 +239,7 @@ class MyObject(BaseObject):
 
 # The test suite
 class TestMyObject(BaseObjectTestSuite):
-    TestClass = MyObject
+    UnitTestClass = MyObject
 
     def test_do_something(self, test_object):
         """Test the do_something method."""
@@ -250,7 +250,7 @@ class TestMyObject(BaseObjectTestSuite):
 
 Base test suites often provide Pytest fixtures to simplify test methods.
 
-- **`test_object`**: Provided by `BaseObjectTestSuite` (and others). It creates and returns an instance of `TestClass`. You can pass constructor arguments by overriding the `test_object` fixture or by using indirect parametrization if supported.
+- **`test_object`**: Provided by `BaseObjectTestSuite` (and others). It creates and returns an instance of `UnitTestClass`. You can pass constructor arguments by overriding the `test_object` fixture or by using indirect parametrization if supported.
 
 ## 6 Directory Structure
 

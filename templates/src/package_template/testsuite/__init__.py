@@ -20,3 +20,5 @@ __version__ = "0.1.0"
 # Imports #
 # Local Packages #
 from .test_suite_template import UserTestSuite
+
+__all__ = ["UserTestSuite"]
