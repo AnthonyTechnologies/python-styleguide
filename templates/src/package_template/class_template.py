@@ -36,7 +36,7 @@ class User:
 
     # Static Methods #
     @staticmethod
-    def create_from_data(data: dict[str, Any]) -> "User":
+    def create_from_data(data: dict[str, Any]) -> User:
         """Creates a User from a simple data dictionary.
 
         Args:
@@ -56,19 +56,23 @@ class User:
     _default_active: ClassVar[bool] = True
 
     # Class Magic Methods #
-    def __new__(cls, *args: Any, **kwargs: Any) -> "User":
+    def __new__(cls, *args: Any, **kwargs: Any) -> User:
         """Allocates a new User instance (rarely overridden; shown for template completeness)."""
         return super().__new__(cls)
 
     # Class Methods #
     # Constructors
     @classmethod
-    def anonymous(cls) -> "User":
-        """Creates an anonymous user instance."""
+    def anonymous(cls) -> User:
+        """Creates an anonymous user instance.
+
+        Returns:
+            An anonymous User instance.
+        """
         return cls(user_id=cls.anonymous_id, name="Anonymous", active=False)
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "User":
+    def from_dict(cls, data: dict[str, Any]) -> User:
         """Constructs a User from a dictionary.
 
         Args:
@@ -109,7 +113,7 @@ class User:
         self.name = name
         self.active = active
 
-    def __copy__(self) -> "User":
+    def __copy__(self) -> User:
         """Returns a shallow copy of this user."""
         return User(user_id=self.user_id, name=self.name, active=self.active)
 
@@ -126,14 +130,22 @@ class User:
 
     # Comparison
     def __eq__(self, other: Any) -> bool:
-        """Compares users by stable identifier."""
+        """Compares users by stable identifier.
+
+        Returns:
+            True if users have the same user_id, False otherwise.
+        """
         if not isinstance(other, User):
             return NotImplemented
         return self.user_id == other.user_id
 
     # Type Conversion
     def __bool__(self) -> bool:
-        """A user is truthy when active."""
+        """A user is truthy when active.
+
+        Returns:
+            True if the user is active, False otherwise.
+        """
         return self.active
 
     # Instance Methods #
@@ -155,7 +167,8 @@ class User:
             RuntimeError: If the user is inactive.
         """
         if not self.active:
-            raise RuntimeError("User is not active")
+            msg = "User is not active"
+            raise RuntimeError(msg)
 
     # Parameter Parsers
     def _parse_activation(self, value: Any) -> bool:
@@ -165,6 +178,9 @@ class User:
 
         Args:
             value: The value to parse.
+
+        Returns:
+            The parsed boolean value.
         """
         if isinstance(value, str):
             return value.strip().lower() in {"1", "true", "yes", "on"}
@@ -177,7 +193,11 @@ class User:
 
     # Conversion
     def to_dict(self) -> dict[str, Any]:
-        """Converts this user to a simple dictionary."""
+        """Converts this user to a simple dictionary.
+
+        Returns:
+            A dictionary representation of the user.
+        """
         return {"user_id": self.user_id, "name": self.name, "active": self.active}
 
     # Getters and Setters #

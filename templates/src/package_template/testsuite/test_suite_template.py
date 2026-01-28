@@ -59,7 +59,9 @@ class UserTestSuite(BaseClassTestSuite):
             *args: Positional arguments list to pass to the class constructor.
             **kwargs: Keyword arguments to pass to the class constructor.
         """
-        obj = self.UnitTestClass(user_id="1", name="Name", *args, **kwargs)
+        kwargs.setdefault("user_id", "1")
+        kwargs.setdefault("name", "Name")
+        obj = self.UnitTestClass(*args, **kwargs)
         assert isinstance(obj, self.UnitTestClass)
         assert obj.user_id == "1"
 

@@ -28,7 +28,7 @@ from typing import Final
 import pytest
 
 # Source Packages #
-from templates.src.package_template.module_template import create_registry
+from package_template.module_template import create_registry
 
 
 # Definitions #
@@ -62,7 +62,7 @@ class TestRegistryPerformance:
             """Just creates User objects in a list."""
             # Simulating overhead of just creating User objects without Registry wrapper
             # Third-Party Packages #
-            from templates.src.package_template.class_template import User
+            from package_template.class_template import User
             [User(user_id=n, name=n) for n in names]
 
         # Measure mean time in microseconds

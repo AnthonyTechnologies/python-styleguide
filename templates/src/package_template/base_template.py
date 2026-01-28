@@ -44,7 +44,6 @@ class BaseUser(ABC):
         Returns:
             The user ID as a string.
         """
-        pass
 
     @abstractmethod
     def is_active(self) -> bool:
@@ -53,7 +52,6 @@ class BaseUser(ABC):
         Returns:
             True if active, False otherwise.
         """
-        pass
 
     # Utility
     def display_info(self) -> str:

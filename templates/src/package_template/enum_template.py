@@ -36,7 +36,7 @@ class UserRole(Enum):
     VIEWER = auto()
 
 
-class Color(str, Enum):
+class Color(str, Enum):  # noqa: UP042
     """Enumeration of supported colors (String implementation).
 
     Attributes:
