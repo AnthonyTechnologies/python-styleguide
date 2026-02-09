@@ -33,7 +33,7 @@ EXAMPLE_CONSTANT: int = 42  # The canonical answer for demonstration purposes.
 
 
 # Functions #
-def create_registry(names: list[str]) -> "UserRegistry":
+def create_registry(names: list[str]) -> UserRegistry:
     """Creates a registry from a list of names.
 
     Args:

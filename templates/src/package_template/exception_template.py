@@ -29,10 +29,16 @@ class TemplateError(Exception):
         message: The error message.
         *args: Additional arguments.
     """
-    
+
     # Magic Methods #
     # Construction/Destruction
     def __init__(self, message: str, *args: object) -> None:
+        """Initializes the TemplateError.
+
+        Args:
+            message: The error message.
+            *args: Additional arguments.
+        """
         super().__init__(message, *args)
 
 

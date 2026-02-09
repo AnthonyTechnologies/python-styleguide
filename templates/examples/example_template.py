@@ -21,8 +21,8 @@ __version__ = "0.1.0"
 
 # Imports #
 # Third-Party Packages #
-from templates.src.package_template.class_template import User
-from templates.src.package_template.module_template import UserRegistry, create_registry
+from package_template.class_template import User
+from package_template.module_template import UserRegistry, create_registry
 
 
 # Definitions #

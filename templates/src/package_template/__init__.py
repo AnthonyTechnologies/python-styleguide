@@ -21,9 +21,8 @@ from .module_template import UserRegistry
 
 __all__ = [
     "User",
+    "UserRegistry",
     "normalize_names",
     "require_iterable_of_str",
-    "unique_normalized",
-    "UserRegistry"
+    "unique_normalized"
 ]
-

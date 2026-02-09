@@ -20,7 +20,7 @@ __version__ = "0.1.0"
 
 # Imports #
 # Standard Libraries #
-from typing import Callable, Iterable
+from collections.abc import Callable, Iterable
 
 
 # Definitions #
@@ -57,7 +57,8 @@ def require_iterable_of_str(func: Callable[[Iterable[str]], list[str]]) -> Calla
         out: list[str] = []
         for n in names:
             if not isinstance(n, str):
-                raise TypeError("all names must be str")
+                msg = "all names must be str"
+                raise TypeError(msg)
             out.append(n)
         # Pass a validated iterable (list[str]) to the function
         return func(out)
@@ -84,8 +85,7 @@ def normalize_names(names: Iterable[str]) -> list[str]:
 
 
 def unique_normalized(names: Iterable[str]) -> list[str]:
-    """Returns unique normalized names, preserving first‑occurrence order.
-
+    """Returns unique normalized names, preserving first-occurrence order.
     This function demonstrates grouping of related functions by functionality.
 
     Args:

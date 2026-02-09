@@ -31,8 +31,8 @@ import pytest
 from baseobjects.testsuite import BaseClassTestSuite
 
 # Local Packages #
-from ..src.package_template import User, UserRegistry
-from ..src.package_template.testsuite import UserTestSuite
+from package_template import User, UserRegistry
+from package_template.testsuite import UserTestSuite
 
 
 # Definitions #
@@ -73,8 +73,8 @@ class TestUserRegistry(BaseClassTestSuite):
             *args: Positional arguments list to pass to the class constructor.
             **kwargs: Keyword arguments to pass to the class constructor.
         """
-        users = [User(user_id="1", name="Alice")]
-        obj = self.UnitTestClass(users=users, *args, **kwargs)
+        kwargs.setdefault("users", [User(user_id="1", name="Alice")])
+        obj = self.UnitTestClass(*args, **kwargs)
         assert isinstance(obj, self.UnitTestClass)
         assert len(obj.users) == 1
 
