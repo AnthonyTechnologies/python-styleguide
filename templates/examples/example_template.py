@@ -20,27 +20,16 @@ __version__ = "0.1.0"
 
 
 # Imports #
-# Standard Libraries #
-from typing import Final
-
 # Third-Party Packages #
 from templates.src.package_template.class_template import User
 from templates.src.package_template.module_template import UserRegistry, create_registry
 
 
-# Utilities #
-_SECTION_LINE: Final[str] = "-" * 72
-
-
-def _print_heading(title: str) -> None:
-    """Pretty prints a section heading for example output."""
-    print(f"\n{title}\n{_SECTION_LINE}")
-
-
+# Definitions #
 # Example Sections #
 def basic_usage_example() -> None:
     """Demonstrates the most common, happy‑path usage in a few lines."""
-    _print_heading("Basic Usage")
+    print(f"\nBasic Usage\n{'-' * 72}")
 
     # Setup
     registry = create_registry(["Alice", "Bob"])
@@ -57,7 +46,7 @@ def basic_usage_example() -> None:
 
 def advanced_usage_example() -> None:
     """Demonstrates a slightly more advanced or less common pattern."""
-    _print_heading("Advanced Usage")
+    print(f"\nAdvanced Usage\n{'-' * 72}")
 
     # Manually creating and adding users
     registry = UserRegistry(users=[])
@@ -73,7 +62,7 @@ def advanced_usage_example() -> None:
 
 def edge_cases_example() -> None:
     """Highlights noteworthy edge cases succinctly."""
-    _print_heading("Edge Cases")
+    print(f"\nEdge Usage\n{'-' * 72}")
 
     # Empty registry
     registry = create_registry([])
