@@ -1,4 +1,4 @@
-﻿# Anthony's Python Style Guide: Semantics
+# Anthony's Python Style Guide: Semantics
 
 This document provides guidelines for the semantic aspects of Python code based on Google's Python Style Guide with
 customizations [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html). It is mostly copy-pasted
@@ -45,7 +45,7 @@ to more robust, maintainable, and bug-free applications.
     - [10.4 Decision](#104-decision)
 - [11 True/False Evaluations](#11-truefalse-evaluations)
 
-    
+
 ## 1 Mutable Global State
 Avoid mutable global state.
 
@@ -66,27 +66,19 @@ module is first imported.
 ### 1.4 Decision
 Avoid mutable global state.
 
-In those rare cases where using global state is warranted, mutable global entities should be declared at the module
-level or as a class attribute and made internal by prepending an `_` to the name. If necessary, external access to
-mutable global state must be done through public functions or class methods. See Naming below. Please explain the design
-reasons why mutable global state is being used in a comment or a doc linked to from a comment.
+In those rare cases where using global state is warranted, declare mutable global entities at the module level or as a class attribute and make them internal by prepending an `_` to the name. If necessary, ensure external access to mutable global state is done through public functions or class methods. See Naming below. Explain the design reasons why mutable global state is being used in a comment or a doc linked from a comment.
 
-Module-level constants are permitted and encouraged. For example: `_MAX_HOLY_HANDGRENADE_COUNT = 3` for an internal use
-constant or `SIR_LANCELOTS_FAVORITE_COLOR = "blue"` for a public API constant. Constants must be named using all caps
-with underscores. See Naming below.
+Module-level constants are permitted and encouraged. For example: `_MAX_HOLY_HANDGRENADE_COUNT = 3` for an internal use constant or `SIR_LANCELOTS_FAVORITE_COLOR = "blue"` for a public API constant. Name constants using all caps with underscores. See Naming below.
 
 
 ## 2 Function Length
-Prefer small and focused functions.
+Use small and focused functions.
 
-We recognize that long functions are sometimes appropriate, so no hard limit is placed on function length. If a function
-exceeds about 40 lines, think about whether it can be broken up without harming the structure of the program.
+Long functions are sometimes appropriate, so no hard limit is placed on function length. If a function exceeds about 40 lines, determine whether it can be broken up without harming the structure of the program.
 
-Even if a long function works perfectly now, someone modifying it in a few months may add new behavior. This could
-result in bugs that are hard to find. Keeping functions short and simple makes it easier for other people to read
-and modify the code.
+Even if a long function works perfectly now, someone modifying it in a few months may add new behavior. This could result in bugs that are hard to find. Keep functions short and simple to make it easier for other people to read and modify the code.
 
-Long and complicated functions may be encountered when working with existing code. Do not be intimidated by modifying such code: if working with a function proves to be difficult, if errors are hard to debug, or if a piece of it is needed in several different contexts, consider breaking up the function into smaller and more manageable pieces.
+Expect long and complicated functions when working with existing code. Do not be intimidated by modifying such code: if working with a function proves difficult, if errors are hard to debug, or if a piece of it is needed in several different contexts, break up the function into smaller and more manageable pieces.
 
 
 ## 3 Nested/Local/Inner Classes and Functions
@@ -104,9 +96,7 @@ implementing decorators.
 Nested functions and classes cannot be directly tested. Nesting can make the outer function longer and less readable.
 
 ### 3.4 Decision
-They are fine with some caveats. Avoid nested functions or classes except when closing over a local value other than
-`self` or `cls`. Do not nest a function just to hide it from users of a module. Instead, prefix its name with an `_` at
-the module level so that it can still be accessed by tests.
+They are fine with some caveats. Avoid nested functions or classes except when closing over a local value other than `self` or `cls`. Do not nest a function just to hide it from users of a module. Instead, prefix its name with an `_` at the module level so that it can still be accessed by tests.
 
 
 ## 4 Lexical Scoping
@@ -131,7 +121,7 @@ def get_adder(summand1: float) -> Callable[[float], float]:
 ```
 ### 4.2 Pros
 Often results in clearer, more elegant code. Especially comforting to experienced Lisp and Scheme (and Haskell and ML
-and …) programmers.
+and �) programmers.
 
 ### 4.3 Cons
 Can lead to confusing bugs, such as this example based on PEP-0227:
@@ -151,11 +141,11 @@ def foo(x: Iterable[int]):
 So `foo([1, 2, 3])` will print `1 2 3 3`, not `1 2 3 4`.
 
 ### 4.4 Decision
-Okay to use, but try to avoid.
+Use them when necessary, but try to avoid them.
 
 
 ## 5 Lambda Functions
-Okay for one-liners. Prefer generator expressions over map() or filter() with a lambda.
+Use lambdas for one-liners. Prefer generator expressions over `map()` or `filter()` with a lambda.
 
 ### 5.1 Definition
 Lambdas define anonymous functions in an expression, as opposed to a statement.
@@ -168,27 +158,21 @@ Harder to read and debug than local functions. The lack of names means stack tra
 Expressiveness is limited because the function may only contain an expression.
 
 ### 5.5 Decision
-Lambdas are allowed. If the code inside the lambda function spans multiple lines or is longer than 120 chars, it might
-be better to define it as a regular nested function.
+Lambdas are allowed. If the code inside the lambda function spans multiple lines or is longer than 120 chars, define it as a regular nested function.
 
-For common operations like multiplication, use the functions from the operator module instead of lambda functions. For
-example, prefer `operator.mul` to `lambda x, y: x * y`.
+For common operations like multiplication, use the functions from the `operator` module instead of lambda functions. For example, prefer `operator.mul` to `lambda x, y: x * y`.
 
 ## 6 Threading
 
 Do not rely on the atomicity of built-in types.
 
-While Python's built-in data types such as dictionaries appear to have atomic operations, there are corner cases where
-they aren't atomic (e.g. if `__hash__` or `__eq__` are implemented as Python methods) and their atomicity should not be
-relied upon. Avoid relying on atomic variable assignment (since this in turn depends on dictionaries).
+While Python's built-in data types such as dictionaries appear to have atomic operations, there are corner cases where they are not atomic (e.g., if `__hash__` or `__eq__` are implemented as Python methods); do not rely on their atomicity. Avoid relying on atomic variable assignment (since this in turn depends on dictionaries).
 
-Use the queue module's Queue data type as the preferred way to communicate data between threads. Otherwise, use the
-threading module and its locking primitives. Prefer condition variables and `threading.Condition` instead of using
-lower-level locks.
+Use the `queue` module's `Queue` data type as the preferred way to communicate data between threads. Otherwise, use the `threading` module and its locking primitives. Prefer condition variables and `threading.Condition` instead of using lower-level locks.
 
 
 ## 7 Comprehensions & Generator Expressions
-Okay to use for simple cases.
+Use them for simple cases.
 
 ### 7.1 Definition
 List, Dict, and Set comprehensions as well as generator expressions provide a concise and efficient way to create
@@ -202,8 +186,7 @@ expressions can be very efficient, since they avoid the creation of a list entir
 Complicated comprehensions or generator expressions can be hard to read.
 
 ### 7.4 Decision
-Comprehensions are allowed, however multiple for clauses or filter expressions are not permitted. Optimize for
-readability, not conciseness.
+Comprehensions are allowed; however, do not use multiple `for` clauses or filter expressions. Optimize for readability, not conciseness.
 
 Examples:
 
@@ -288,13 +271,13 @@ for line in afile.readlines(): ...
 
 Use "Yields:" rather than "Returns:" in the docstring for generator functions.
 
-If the generator manages an expensive resource, make sure to force the clean up.
+If the generator manages an expensive resource, force the clean up.
 
-A good way to do the clean up is by wrapping the generator with a context manager PEP-0533.
+Wrap the generator with a context manager (PEP-0533) to handle the clean up.
 
 
 ## 10 Conditional Expressions
-Okay for simple cases.
+Use them for simple cases.
 
 ### 10.1 Definition
 Conditional expressions (sometimes called a "ternary operator") are mechanisms that provide a shorter syntax for if
@@ -307,8 +290,7 @@ Shorter and more convenient than an if statement.
 May be harder to read than an if statement. The condition may be difficult to locate if the expression is long.
 
 ### 10.4 Decision
-Okay to use for simple cases. Each portion must fit on one line: true-expression, if-expression, else-expression. Use a
-complete if statement when things get more complicated.
+Use them for simple cases. Each portion must fit on one line: true-expression, if-expression, and else-expression. Use a complete `if` statement when things become more complicated.
 
 Examples:
 
@@ -343,22 +325,17 @@ portion_too_long = ('yes'
 
 
 ## 11 True/False Evaluations
-Use the "implicit" false if at all possible (with a few caveats).
+Use the "implicit" false if possible (with a few caveats).
 
-Use the "implicit" false if possible, e.g., `if foo:` rather than `if foo != []:`. There are a few caveats to keep in mind:
+Use the "implicit" false if possible, e.g., `if foo:` rather than `if foo != []:`. Keep a few caveats in mind:
 
-Always use `if foo is None:` (or `is not None`) to check for a None value. E.g., when testing whether a variable or
-argument that defaults to None was set to some other value. The other value might be a value that's false in a boolean
-context!
+Always use `if foo is None:` (or `is not None`) to check for a `None` value. For example, use this when testing whether a variable or argument that defaults to `None` was set to some other value. The other value might be false in a boolean context!
 
-Never compare a boolean variable to False using `==`. Use `if not x:` instead. If distinguishing False from
-None is necessary, then chain the expressions, such as `if not x and x is not None:`.
+Never compare a boolean variable to `False` using `==`. Use `if not x:` instead. If distinguishing `False` from `None` is necessary, then chain the expressions, such as `if not x and x is not None:`.
 
-For sequences (strings, lists, tuples), use the fact that empty sequences are false, so `if seq:` and `if not seq:` are
-preferable to `if len(seq):` and `if not len(seq):` respectively.
+For sequences (strings, lists, tuples), use the fact that empty sequences are false; `if seq:` and `if not seq:` are preferable to `if len(seq):` and `if not len(seq):` respectively.
 
-When handling integers, implicit false may involve more risk than benefit (i.e., accidentally handling None as 0). A
-value that is known to be an integer (and is not the result of len()) may be compared against the integer 0.
+When handling integers, implicit false may involve more risk than benefit (i.e., accidentally handling `None` as 0). Compare a value that is known to be an integer (and is not the result of `len()`) against the integer 0.
 
 Examples:
 

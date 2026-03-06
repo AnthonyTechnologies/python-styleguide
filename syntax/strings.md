@@ -1,8 +1,6 @@
-﻿# Anthony's Python Style Guide: Strings
+# Anthony's Python Style Guide: Strings
 
-Use an f-string, the % operator, or the format method for formatting strings, even when the parameters are all strings.
-Use sound judgment to decide between string formatting options. A single join with + is okay but do not format with
-+.
+Use an f-string, the `%` operator, or the `format` method for formatting strings, even when the parameters are all strings. Use sound judgment to decide between string formatting options. A single join with `+` is acceptable, but do not format with `+`.
 
 ## Table of Contents
 
@@ -41,12 +39,7 @@ x = "name: " + name + '; score: ' + str(n)
 
 ## 2 Accumulating Strings in Loops
 
-Avoid using the `+` and `+=` operators to accumulate a string within a loop. In some conditions, accumulating a string
-with addition can lead to quadratic rather than linear running time. Although common accumulations of this sort may be
-optimized on CPython, that is an implementation detail. The conditions under which an optimization applies are not easy
-to predict and may change. Instead, add each substring to a list and `''.join` the list after the loop terminates, or
-write each substring to an `io.StringIO` buffer. These techniques consistently have amortized-linear run-time
-complexity.
+Avoid using the `+` and `+=` operators to accumulate a string within a loop. In some conditions, accumulating a string with addition can lead to quadratic rather than linear running time. Although common accumulations of this sort may be optimized on CPython, treat that as an implementation detail. The conditions under which an optimization applies are difficult to predict and may change. Instead, add each substring to a list and `''.join` the list after the loop terminates, or write each substring to an `io.StringIO` buffer. These techniques consistently have amortized-linear run-time complexity.
 
 Correct:
 ```python # pseudocode
@@ -69,9 +62,7 @@ employee_table += '</table>'
 
 ## 3 Quote Characters
 
-Be consistent with the choice of string quote character within a file. Pick `'` or `"` and stick with it. It is okay to
-use the other quote character on a string to avoid the need to backslash-escape quote characters within the string.
-Typically, double quotes `"` should be used for strings and `'` should be used for single characters.
+Maintain consistency with the choice of string quote character within a file. Pick `'` or `"` and stick with it. Use the other quote character on a string to avoid backslash-escaping quote characters within the string. Typically, use double quotes `"` for strings and `'` for single characters.
 
 Correct:
 ```python # pseudocode
@@ -100,12 +91,9 @@ Character("I")
 
 ## 4 Multi-line Strings
 
-Prefer `"""` for multi-line strings rather than `'''`. Projects may choose to use `'''` for all non-docstring multi-line
-strings if and only if they also use `'` for regular strings. Docstrings must use `"""` regardless.
+Prefer `"""` for multi-line strings rather than `'''`. Use `'''` for all non-docstring multi-line strings if and only if `'` is also used for regular strings. Use `"""` for docstrings regardless.
 
-Multi-line strings do not flow with the indentation of the rest of the program. If it is necessary to avoid embedding extra
-space in the string, use either concatenated single-line strings or a multi-line string with `textwrap.dedent()` to
-remove the initial space on each line:
+Multi-line strings do not flow with the indentation of the rest of the program. To avoid embedding extra space in the string, use either concatenated single-line strings or a multi-line string with `textwrap.dedent()` to remove the initial space on each line:
 
 Correct:
 ```python # pseudocode

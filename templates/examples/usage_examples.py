@@ -1,15 +1,13 @@
 #!/usr/bin/env python
-"""example_template.py
+"""usage_examples.py
 Template module demonstrating how to write example scripts.
 
 This module provides a template for creating example scripts that demonstrate the usage of the package. It includes
-basic, advanced, and edge-case usage examples to guide users on how to effectively use the library. Normally, the name
-of this script should match the name of the function it contains, but it is named example_template to make it easier to
-find when browsing the templates directory.
+basic, advanced, and edge-case usage examples to guide users on how to effectively use the library.
 """
 
 # Header #
-__package_name__ = "package_template"
+__package_name__ = "templatepackage"
 
 __author__ = "Author Name"
 __credits__ = ["Author Name"]
@@ -21,14 +19,14 @@ __version__ = "0.1.0"
 
 # Imports #
 # Third-Party Packages #
-from package_template.class_template import User
-from package_template.module_template import UserRegistry, create_registry
+from templatepackage.user import User
+from templatepackage.user_registry import UserRegistry, create_registry
 
 
 # Definitions #
 # Example Sections #
 def basic_usage_example() -> None:
-    """Demonstrates the most common, happy‑path usage in a few lines."""
+    """Demonstrates the most common, happy-path usage in a few lines."""
     print(f"\nBasic Usage\n{'-' * 72}")
 
     # Setup
@@ -75,7 +73,7 @@ def edge_cases_example() -> None:
 
 
 # Main #
-if __name__ == "__main__":  # pragma: no cover - examples are user‑run
+if __name__ == "__main__":  # pragma: no cover - examples are user-run
     basic_usage_example()
     advanced_usage_example()
     edge_cases_example()

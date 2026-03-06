@@ -1,6 +1,11 @@
 ﻿# Anthony's Python Style Guide: Comments
 
-Comments should be used to outline sections of code and explain tricky parts of the code.
+Comments should be used to outline sections of code and explain tricky parts of the code. All comments should be written
+in the third-person. When explaining features and how things work, use the third-person descriptive voice (e.g.,
+"Calculates the sum."). When instructing users on how to use things or providing requirements, use the third-person
+imperative voice. The voice should be active and be issued as commands (e.g., "The user must call this function
+first."). This ensures a professional and objective tone throughout the code. Avoid using first-person ("we") or
+second-person ("you") perspectives.
 
 ## Table of Contents
 
@@ -9,17 +14,16 @@ Comments should be used to outline sections of code and explain tricky parts of 
 
 
 ## 1 Block and Inline
-In general, operations can be grouped together into sections based on their purpose. Comments can be used to outline
-these sections and explain the purpose of the code.
+In general, group operations into sections based on their purpose. Use comments to outline these sections and explain the purpose of the code.
 
 Comments guidelines:
-- Comments start with the `#` character and are followed by a space before the text of the comment.
-- The start of code sections should have a title comment defining the purpose of that section.
-- Complicated sections should get a few lines of comments before the operations.
+- Start comments with the `#` character, followed by a space before the text.
+- Include a title comment at the start of code sections defining the purpose of that section.
+- Provide a few lines of comments before complicated sections.
 - Describe what the section is trying to accomplish and how it achieves that.
-- Try not to describe what each line of code is doing.
-- Non-obvious ones get comments at the end of the line.
-- In-line comments should start at least 2 spaces away from the code they are commenting on.
+- Avoid describing what each line of code is doing.
+- Add comments at the end of the line for non-obvious operations.
+- Start inline comments at least 2 spaces away from the code they are commenting on.
 
 Correct:
 ```python # pseudocode
@@ -40,10 +44,7 @@ for i, v in enum(b):
 ## 2 TODO Comments
 Use TODO comments for code that is temporary, a short-term solution, or good-enough but not perfect.
 
-A TODO comment begins with the word TODO in all caps, a following colon, and a link to a resource that contains the
-context, ideally a bug reference. A bug reference is preferable because bugs are tracked and have follow-up comments.
-Follow this piece of context with an explanatory string introduced with a hyphen `-`. The purpose is to have a
-consistent TODO format that can be searched to find out how to get more details.
+A TODO comment begins with the word `TODO` in all caps, followed by a colon and a link to a resource that contains the context, ideally a bug reference. Use a bug reference when possible because bugs are tracked and have follow-up comments. Follow this piece of context with an explanatory string introduced with a hyphen `-`. The purpose is to maintain a consistent `TODO` format that can be searched to find more details.
 
 ```python # pseudocode
 # TODO: crbug.com/192795 - Investigate cpufreq optimizations.

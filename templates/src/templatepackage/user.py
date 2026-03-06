@@ -1,14 +1,13 @@
-"""class_template.py
+"""user.py
 Template module demonstrating the structure and style of a class definition.
 
 This module provides a template for defining classes, including attributes, methods, properties, and magic methods.
 It demonstrates the organization of class members and the use of type hints in accordance with the project's style
-guide. Normally, the name of this module should match the name of the class it contains, but it is named after
-class_template to make it easier to find when browsing the templates directory.
+guide.
 """
 
 # Header #
-__package_name__ = "package_template"
+__package_name__ = "templatepackage"
 
 __author__ = "Author Name"
 __credits__ = ["Author Name"]
@@ -40,7 +39,7 @@ class User:
         """Creates a User from a simple data dictionary.
 
         Args:
-            data: Dictionary containing keys like 'user_id', 'name', and optional 'active'.
+            data: Dictionary containing keys like `user_id`, `name`, and optional `active`.
 
         Returns:
             A new User instance.
@@ -76,7 +75,7 @@ class User:
         """Constructs a User from a dictionary.
 
         Args:
-            data: Dictionary with keys 'user_id', 'name', and optional 'active'.
+            data: Dictionary with keys `user_id`, `name`, and optional `active`.
 
         Returns:
             A new User instance.
@@ -95,8 +94,36 @@ class User:
     # Properties #
     @property
     def is_anonymous(self) -> bool:
-        """Whether this user is anonymous."""
+        """The anonymity status of this user."""
         return self.user_id == self.anonymous_id
+
+    @property
+    def full_display_name(self) -> str:
+        """The full display name, including a prefix if needed.
+
+        Returns:
+            The full display name.
+        """
+        return f"User: {self.name}"
+
+    @full_display_name.setter
+    def full_display_name(self, value: str) -> None:
+        """Sets the display name from a full name string.
+
+        Args:
+            value: The full name string (e.g., 'User: Name').
+        """
+        self._ensure_active()
+        if value.startswith("User: "):
+            self.name = value[6:]
+        else:
+            self.name = value
+
+    @full_display_name.deleter
+    def full_display_name(self) -> None:
+        """Resets the name to 'Anonymous'."""
+        self._ensure_active()
+        self.name = "Anonymous"
 
     # Magic Methods #
     # Construction/Destruction
@@ -117,6 +144,11 @@ class User:
         """Returns a shallow copy of this user."""
         return User(user_id=self.user_id, name=self.name, active=self.active)
 
+    # Container Methods
+    # def __len__(self) -> int:
+    #     """Example of a container method."""
+    #     return 0
+
     # Representation
     def __str__(self) -> str:  # keep lightweight for logging/debugging
         """Returns a concise, human-readable string representation."""
@@ -127,6 +159,15 @@ class User:
         return (
             f"{self.__class__.__name__}(user_id={self.user_id!r}, name={self.name!r}, active={self.active!r})"
         )
+
+    # Type Conversion
+    def __bool__(self) -> bool:
+        """A user is truthy when active.
+
+        Returns:
+            True if the user is active, False otherwise.
+        """
+        return self.active
 
     # Comparison
     def __eq__(self, other: Any) -> bool:
@@ -139,14 +180,38 @@ class User:
             return NotImplemented
         return self.user_id == other.user_id
 
-    # Type Conversion
-    def __bool__(self) -> bool:
-        """A user is truthy when active.
+    # Arithmetic
+    # def __add__(self, other: Any) -> User:
+    #     """Example of an arithmetic method."""
+    #     return self
+
+    # Attribute Access
+    # def __getattr__(self, name: str) -> Any:
+    #     """Example of an attribute access method."""
+    #     raise AttributeError(name)
+
+    # Descriptor Protocol
+    # def __get__(self, instance: Any, owner: Any) -> Any:
+    #     """Example of a descriptor protocol method."""
+    #     return self
+
+    # Context Management
+    def __enter__(self) -> User:
+        """Enters the context; could start a session or log activity.
 
         Returns:
-            True if the user is active, False otherwise.
+            This user instance.
         """
-        return self.active
+        return self
+
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        """Exits the context; could end a session or clean up.
+
+        Args:
+            exc_type: The type of exception raised (if any).
+            exc_val: The exception instance.
+            exc_tb: The traceback.
+        """
 
     # Instance Methods #
     # Constructors/Destructors
@@ -159,16 +224,22 @@ class User:
         if activate is not None:
             self.active = bool(activate)
 
-    # Validation
-    def _ensure_active(self) -> None:
-        """Ensures the user is active before allowing state changes.
+    # Setters
+    def set_display_name(self, name: str) -> None:
+        """Sets the display name with minimal validation.
 
-        Raises:
-            RuntimeError: If the user is inactive.
+        The user should prefer using setters only when non-trivial logic is required; shown here for template completeness.
+
+        Args:
+            name: The new display name.
         """
-        if not self.active:
-            msg = "User is not active"
-            raise RuntimeError(msg)
+        self._ensure_active()
+        self.name = name.strip() if name else self.name
+
+    # Getters
+    def get_display_name(self) -> str:
+        """Returns the current display name, applying any formatting rules if needed."""
+        return self.name
 
     # Parameter Parsers
     def _parse_activation(self, value: Any) -> bool:
@@ -200,18 +271,21 @@ class User:
         """
         return {"user_id": self.user_id, "name": self.name, "active": self.active}
 
-    # Getters and Setters #
-    def get_display_name(self) -> str:
-        """Returns the current display name, applying any formatting rules if needed."""
-        return self.name
+    # Binding
+    # def bind_event(self, event: Any) -> None:
+    #     """Example of a binding method."""
 
-    def set_display_name(self, name: str) -> None:
-        """Sets the display name with minimal validation.
+    # Method Dispatching
+    # def dispatch_action(self, action: str) -> None:
+    #     """Example of a method dispatching method."""
 
-        Prefer using setters only when non-trivial logic is required; shown here for template completeness.
+    # Helper Methods
+    def _ensure_active(self) -> None:
+        """Ensures the user is active before allowing state changes.
 
-        Args:
-            name: The new display name.
+        Raises:
+            RuntimeError: If the user is inactive.
         """
-        self._ensure_active()
-        self.name = name.strip() if name else self.name
+        if not self.active:
+            msg = "User is not active"
+            raise RuntimeError(msg)

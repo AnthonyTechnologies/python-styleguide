@@ -1,16 +1,16 @@
 ﻿# Anthony's Python Style Guide: Module Tutorials
 
-A tutorial is a step-by-step guide to a specific topic. It provides a clear and concise explanation of the topic, 
+A tutorial is a step-by-step guide to a specific topic. It provides a clear and concise explanation of the topic,
 demonstrating the functionality and use cases. It is designed to be self-contained and easy to follow.
-However, the purpose of a tutorial is to not only educate users on functionality but also provide inspiration for new 
+However, the purpose of a tutorial is to not only educate users on functionality but also provide inspiration for new
 approaches to solving problems.
 
 This document provides specific guidelines for creating Jupyter Notebook tutorials focused on individual modules.
 
-Unlike package-level tutorials, these module tutorials offer a more targeted approach, helping users understand the 
-functionality, features, and use cases of specific modules. The guidelines cover how to define the audience and scope, 
-structure the tutorial content, demonstrate module-specific functionality, show interactions with other modules, and 
-present practical examples. By following these guidelines, developers can create focused, effective tutorials that help 
+Unlike package-level tutorials, these module tutorials offer a more targeted approach, helping users understand the
+functionality, features, and use cases of specific modules. The guidelines cover how to define the audience and scope,
+structure the tutorial content, demonstrate module-specific functionality, show interactions with other modules, and
+present practical examples. By following these guidelines, developers can create focused, effective tutorials that help
 users leverage the full potential of individual modules within the larger package ecosystem.
 
 ## Table of Contents
@@ -45,53 +45,50 @@ users leverage the full potential of individual modules within the larger packag
 
 ## 1 Jupyter Notebook
 
-Jupyter Notebooks are a powerful tool for creating interactive tutorials. They allow users to combine text, code, and 
-visualizations into a single document. They are ideal for educational purposes, as they provide a clear and concise 
+Jupyter Notebooks are a powerful tool for creating interactive tutorials. They allow users to combine text, code, and
+visualizations into a single document. They are ideal for educational purposes, as they provide a clear and concise
 explanation of a topic, demonstrating the functionality and use cases.
 
-When creating a tutorial, it is important to consider an report the following:
+Consider and report the following when creating a tutorial:
 - **Kernel Choice:** Specify if needed.
 - **Magic Commands:** Explain any used.
 
 
 ## 2 Directory Hierarchy
 
-Tutorials should be organized in a directory structure that mirrors the package structure. This makes it easy for users 
-to find tutorials relevant to the specific components they're interested in.
+Organize tutorials in a directory structure that mirrors the package structure. This makes it easy for users to find tutorials relevant to specific components.
 
-- Each major package should have its own directory under the `tutorials/` directory
-- Subpackages should have their own subdirectories when they contain multiple components
-- Related tutorials should be grouped together in the same directory
-- Filenames should start with descriptive name followed by `_tutorial` (e.g., `name_tutorial.py`).
-- Use the format `<component_name>_tutorial.py` for individual component tutorials
-- For tutorials that demonstrate multiple components working together, use a descriptive name that indicates the functionality being demonstrated, e.g., `caching_with_sentinel_tutorial.py`
-- Use lowercase with underscores for file names (snake_case)
+- Create a directory for each major package under the `tutorials/` directory.
+- Give subpackages their own subdirectories when they contain multiple components.
+- Group related tutorials together in the same directory.
+- Start filenames with a descriptive name followed by `_tutorial` (e.g., `name_tutorial.py`).
+- Use the format `<component_name>_tutorial.py` for individual component tutorials.
+- For tutorials that demonstrate multiple components working together, use a descriptive name that indicates the functionality being demonstrated, e.g., `caching_with_sentinel_tutorial.py`.
+- Use lowercase with underscores for file names (snake_case).
 
 Example:
 ```
 tutorials/
-  bases/                          # Tutorials for the bases package
-    collections/                  # Tutorials for the bases.collections subpackage
-      basedict_tutorial.py
-    basecallable_tutorial.py
-    sentinelobject_tutorial.py
-  ...
-  cachingtools/                 # Tutorials for the cachingtools package
-    caches/                     # Tutorials for the cachingtools.caches subpackage
-    cachingobject_tutorial.py
-    ...
+├── bases/                          # Tutorials for the bases package
+│   ├── collections/                # Tutorials for the bases.collections subpackage
+│   │   └── basedict_tutorial.ipynb
+│   ├── basecallable_tutorial.ipynb
+│   └── sentinelobject_tutorial.ipynb
+└── cachingtools/                   # Tutorials for the cachingtools package
+    ├── caches/                     # Tutorials for the cachingtools.caches subpackage
+    └── cachingobject_tutorial.ipynb
 ```
 
 
 ## 3 Module Tutorial Notebook Structure
 
-Tutorial files should follow a consistent naming convention to make them easily identifiable:
+Ensure tutorial files follow a consistent naming convention to make them easily identifiable:
 
 - Use the format `<component_name>_tutorial.py` for individual module tutorials.
-- Use lowercase with underscores for file names (snake_case)
-- Avoid generic names like `tutorial.py` or `demo.py`
+- Use lowercase with underscores for file names (snake_case).
+- Avoid generic names like `tutorial.py` or `demo.py`.
 
-In a tutorial, a clear and logical flow is essential. These sections are recommended:
+A clear and logical flow is essential in a tutorial. Use these recommended sections:
 
 1. Title and Introduction
 2. Core Functionality
@@ -104,13 +101,11 @@ In a tutorial, a clear and logical flow is essential. These sections are recomme
 
 ### 3.1 Title and Introduction
 
-The Title and Introduction section sets the stage for the module's tutorial. It should provide users with a clear
-understanding of what they will learn and how this module fits into the larger package ecosystem. This section serves as 
-the entry point to the tutorial and should be engaging while remaining informative and concise.
+Use the Title and Introduction section to set the stage for the module's tutorial. Provide users with a clear understanding of what they will learn and how this module fits into the larger package ecosystem. Ensure this section serves as an engaging entry point while remaining informative and concise.
 
 - Formatting: Markdown Cell
 - Clear Title: "Using the [ModuleName] Module in [PackageName]", "[ModuleName] for [Specific Task]", etc.
-- Brief Overview: 
+- Brief Overview:
     - Explain the module's primary responsibilities and features.
     - Explain how this module relates to the parent package.
     - Explain what will be covered in this tutorial.
@@ -119,14 +114,12 @@ the entry point to the tutorial and should be engaging while remaining informati
 
 ### 3.2 Core Functionality
 
-The Core Functionality section introduces users to the fundamental features and capabilities of the module. This
-section serves as the foundation for understanding how to use the module effectively by demonstrating its primary
-functions and basic usage patterns.
+Use the Core Functionality section to introduce users to the fundamental features and capabilities of the module. Ensure this section serves as the foundation for understanding how to use the module effectively by demonstrating its primary functions and basic usage patterns.
 
 - Formatting: Markdown and Code Cells
 - Introduce the key functions, classes, and concepts specific to this module.
 - Explain the key concepts of the module and how to use them.
-- Explain the concepts behind complex functions, methods, and data structure interactions.  
+- Explain the concepts behind complex functions, methods, and data structure interactions.
 - Provide simple, executable examples for each primary feature of the module.
 - Explain each code cell:
     - What the code (from this module) does.
@@ -136,8 +129,7 @@ functions and basic usage patterns.
 
 ### 3.3 Module Interaction
 
-This section explores how the module interfaces with other components of the package ecosystem. It demonstrates the
-module's role in larger workflows and how it can be integrated with other modules to achieve more complex functionality.
+Use this section to explore how the module interfaces with other components of the package ecosystem. Demonstrate the module's role in larger workflows and how it can be integrated with other modules to achieve more complex functionality.
 
 - Formatting: Markdown and Code Cells
 - If this module is designed to work closely with other modules in the same package, demonstrate these interactions.
@@ -145,9 +137,7 @@ module's role in larger workflows and how it can be integrated with other module
 
 ### 3.4 Advanced Features
 
-The Advanced Features section delves into more sophisticated aspects of the module, presenting complex functionalities
-and specialized use cases. This section is designed for users who have mastered the basics and are ready to explore the
-module's full capabilities.
+Use the Advanced Features section to delve into more sophisticated aspects of the module, presenting complex functionalities and specialized use cases. Design this section for users who have mastered the basics and are ready to explore the module's full capabilities.
 
 - Formatting: Markdown and Code Cells
 - Cover more complex functionalities, configurations, or less common use cases specific to this module.
@@ -156,9 +146,7 @@ module's full capabilities.
 
 ### 3.5 Examples
 
-This section bridges the gap between theory and practice by presenting real-world applications of the module. Through
-concrete examples and scenarios, users can better understand how to apply the module's features to solve actual
-problems.
+Use this section to bridge the gap between theory and practice by presenting real-world applications of the module. Through concrete examples and scenarios, help users better understand how to apply the module's features to solve actual problems.
 
 - Formatting: Markdown and Code Cells
 - Showcase how this specific module solves particular problems or aids in specific tasks.
@@ -168,8 +156,7 @@ problems.
 
 ### 3.6 API Highlights
 
-The API Highlights section provides a curated overview of the module's most important API components. It serves as a
-quick reference guide to the essential functions, classes, and methods that form the core of the module's interface.
+Use the API Highlights section to provide a curated overview of the module's most important API components. Ensure this section serves as a quick reference guide to the essential functions, classes, and methods that form the core of the module's interface.
 
 - Formatting: Markdown Cell
 - Briefly list key functions/classes within this module and their purpose.
@@ -178,9 +165,7 @@ quick reference guide to the essential functions, classes, and methods that form
 
 ### 3.7 Troubleshooting / FAQs
 
-This section addresses common challenges and questions that users might encounter while working with the module. It
-provides solutions, workarounds, and best practices to help users overcome typical obstacles and optimize their use of
-the module.
+Use this section to address common challenges and questions users might encounter while working with the module. Provide solutions, workarounds, and best practices to help users overcome typical obstacles and optimize their use of the module.
 
 - Formatting: Markdown Cell
 - Address common issues or questions specifically related to this module.
@@ -188,8 +173,7 @@ the module.
 
 ### 3.8 Conclusion and Next Steps
 
-The Conclusion and Next Steps section wraps up the tutorial and provides guidance for further learning. This section
-helps users solidify their understanding and shows them paths for continued exploration of the module and package.
+Use the Conclusion and Next Steps section to wrap up the tutorial and provide guidance for further learning. Help users solidify their understanding and show them paths for continued exploration of the module and package.
 
 - Formatting: Markdown Cell
 - Summarize what was covered about the module.
@@ -203,96 +187,82 @@ helps users solidify their understanding and shows them paths for continued expl
 
 ## 4 Content Guidelines
 
-The contents of a tutorial should be accessible, practical, and valuable to users. How the information is presented is 
-crucial to ensure that it is easy to follow and understand.
+Ensure the contents of a tutorial are accessible, practical, and valuable to users. Presentation is crucial to ensure that it is easy to follow and understand.
 
 ### 4.1 Define the Audience and Scope
 
-**Target Audience:** The target audience will be the main user-base who be reading and using this tutorial.
-- Typically, the tutorials' target audience will be those familiar with the Python Standard Library, popular packages,
-  and possibly some of the dependencies.
-- For modules, it should be assumed that the audience is familiar with the modules in the package and their
-  dependencies.
-- Depending on the goal of the tutorial, the target audience may be different.
-- Tailor the language, complexity of examples, and depth of explanation to the intended audience.
+**Target Audience:** The target audience will be the main user-base reading and using this tutorial.
+- Typically, assume the target audience is familiar with the Python Standard Library, popular packages, and possibly some dependencies.
+- For modules, assume the audience is familiar with the package's modules and their dependencies.
+- Adjust the target audience depending on the goal of the tutorial.
+- Tailor language, complexity of examples, and depth of explanation to the intended audience.
 
-**Module Scope:** The scope clearly defines what this module does and what it *doesn't* do. 
-- Consider how does this tutorial fits into the understanding of the broader package.
+**Module Scope:** Clearly define what this module does and what it *does not* do.
+- Consider how this tutorial fits into the understanding of the broader package.
 
-**Prerequisites:** The requirements in knowledge and resources required to complete the tutorial.
-- The concepts of the broader package that are used in the module.
-- Any advanced or obscure concepts of the Python Standard Library used in the module.
-- The concepts of the dependencies which are used in the module.
-- Any resources the user needs to import.
+**Prerequisites:** List knowledge and resource requirements needed to complete the tutorial.
+- List concepts of the broader package used in the module.
+- List any advanced or obscure Python Standard Library concepts used.
+- List dependency concepts used in the module.
+- List any resources the user must import.
 
 ### 4.2 Language
 
-The language used in module tutorials should be clear, accessible, and professional. Effective communication is crucial
-for ensuring users can understand and implement the module's functionality. Follow these guidelines to maintain consistent
-and user-friendly language throughout the tutorial:
+Ensure the language used in module tutorials is clear, accessible, and professional. Effective communication is crucial for ensuring users can understand and implement the module's functionality. Follow these guidelines to maintain consistent and user-friendly language throughout the tutorial:
 
-- Polite, friendly, and approachable while still being clear, concise, and certain.
+- Be polite, friendly, and approachable while remaining clear, concise, and certain.
 - Use simple, direct language. Avoid jargon where possible, or explain it if necessary.
 - Keep sentences and paragraphs short.
-- Use active voice.
+- When explaining features and how things work, use the third-person descriptive voice (e.g., "The module provides...").
+- When instructing users on how to use things, use the third-person imperative voice. The voice should be active
+  and be issued as commands (e.g., "The user should..."). Start with the Verb; avoid "The user should now try to
+  click..." and use "Click..." instead.
 
 ### 4.3 Logical Flow
 
-The logical flow of content is crucial for effective learning. A well-structured tutorial should progress naturally,
-building upon previous concepts and maintaining a clear connection between topics.
+Logical flow of content is crucial for effective learning. Ensure the tutorial progresses naturally, building upon previous concepts and maintaining a clear connection between topics.
 
 - Organize topics from simple to complex.
-- Ensure a smooth transition between sections.
-- Ensure top-to-bottom cell execution
-- Each section should build upon the previous ones.
+- Maintain smooth transitions between sections.
+- Ensure top-to-bottom cell execution.
+- Build each section upon the previous ones.
 
 ### 4.4 Markdown Cells
 
-Markdown cells are essential for providing context, explanations, and documentation within the tutorial. They help break
-up code sections, explain concepts, and guide users through the learning process. These cells should be well-formatted
-and informative, making the tutorial easy to follow and understand.
+Use Markdown cells to provide context, explanations, and documentation. Use them to break up code sections, explain concepts, and guide users through the learning process. Ensure these cells are well-formatted and informative to make the tutorial easy to follow.
 
 - Introduce each code cell or group of related code cells with a Markdown cell.
-- Explain the purpose of the code, not just a line-by-line translation.
+- Explain the purpose of the code, rather than providing a line-by-line translation.
 - Use Markdown formatting (headings, lists, bold, italics, code highlighting) to improve readability.
 
 ### 4.5 Code Cells
 
-Code cells are essential for demonstrating the functionality of the module. They provide a clear and concise way to
-demonstrate the module's functionality and provide examples of how to use it.
+Use code cells to demonstrate the functionality of the module. Provide a clear and concise way to demonstrate the module's functionality and provide examples of how to use it.
 
-- Every code cell must be runnable independently or in sequence.
-- Ensure imports and variable initializations are correctly placed.
+- Ensure every code cell is runnable independently or in sequence.
+- Place imports and variable initializations correctly.
 - Test all code cells thoroughly.
-- Display Outputs: Ensure cell outputs are visible and illustrative. 
-- For plots, make sure they render correctly in the notebook.
+- Display Outputs: ensure cell outputs are visible and illustrative.
+- Ensure plots render correctly in the notebook.
 
 ### 4.6 Self-Contained Examples
 
-Self-contained examples are crucial for ensuring that users can run and understand the tutorial without external
-dependencies or setup requirements. These examples should be complete, runnable units of code that demonstrate specific
-functionality while being independent of external resources. This approach makes the tutorial more accessible and
-reduces potential points of failure.
+Use self-contained examples to ensure that users can run and understand the tutorial without external dependencies or setup requirements. Provide complete, runnable units of code that demonstrate specific functionality while being independent of external resources. This approach makes the tutorial more accessible and reduces potential points of failure.
 
-- Avoid reliance on external files or services if possible. If necessary, provide clear instructions on how to 
-  obtain/set them up, or include mock data/objects directly in the notebook.
+- Avoid reliance on external files or services if possible. If necessary, provide clear instructions on how to obtain/set them up, or include mock data/objects directly in the notebook.
 - For data, consider including a small CSV or generating data programmatically.
-- If there are unit tests, use them as a reference but do not copy them exactly. The tutorial and examples should 
-  educate the user on how to use key aspects of the module and how they can use it to create new programs, not just 
-  test it.  
+- If there are unit tests, use them as a reference but do not copy them exactly. Use the tutorial and examples to educate the user on how to use key aspects of the module and how to create new programs, not just test it.
 
 ### 4.7 Error Handling Examples
 
-The Error Handling Examples section demonstrates how to handle common errors and exceptions that users might encounter
-while working with the module. This section helps users understand potential pitfalls and how to gracefully handle
-error conditions, making their code more robust and maintainable. It is optional, but recommended.
+Use the Error Handling Examples section to demonstrate how to handle common errors and exceptions that users might encounter. Help users understand potential pitfalls and how to gracefully handle error conditions to make their code more robust and maintainable. This section is optional, but recommended.
 
 - Show how to handle common exceptions or invalid inputs if relevant to the package's usage.
 
 
 ## 5 Formatting and Style
 
-This section provides specific formatting and style guidelines to ensure consistency and readability. These conventions 
+This section provides specific formatting and style guidelines to ensure consistency and readability. These conventions
 help create a professional and easily navigable document.
 
 ### 5.1 Headings
@@ -339,6 +309,5 @@ ensure the tutorial achieves its educational goals while maintaining user engage
 - **Keep Updated:** Module APIs can change. Ensure the tutorial reflects the current version of the module.
 
 
-By adhering to this style guide, developers can create clear, focused, and highly effective Jupyter Notebook tutorials for the 
-individual modules within Python packages, enabling users to leverage their full potential.
+Adhere to this style guide to create clear, focused, and highly effective Jupyter Notebook tutorials for individual modules within Python packages, enabling users to leverage their full potential.
 

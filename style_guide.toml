@@ -93,9 +93,9 @@ source_file = "code_file_layout.md"
 order = ["stdlib", "third_party", "local"]
 separate_groups_with_blank_line = true
 absolute_imports_preferred = true
-import_heading_stdlib = "Standard Libraries #"
-import_heading_thirdparty = "Third-Party Packages #"
-import_heading_localfolder = "Local Packages #"
+import_heading_stdlib = "Standard Libraries"
+import_heading_thirdparty = "Third-Party Packages"
+import_heading_localfolder = "Local Packages"
 
 # Class Internal Layout #
 [class_layout]
@@ -131,12 +131,13 @@ enforce_template_style = true
 # Naming #
 [naming]
 source_file = "syntax/naming.md"
-packages = "lowercase_no_underscores"
+packages = "lowercasenounderscores"
 modules = "lower_with_under"
 classes = "CapWords"
 exceptions = "CapWords"
 functions = "lower_with_under"
 methods = "lower_with_under"
+decorators = "lowercase_optional_underscores"
 constants = "ALL_CAPS"
 variables = "lower_with_under"
 private_prefix = "_"
@@ -180,7 +181,7 @@ type_checking_guards = true
 [docstring]
 source_file = "syntax/docstrings.md"
 style = "google"
-voice = "declarative"
+voice = "third_person"
 required_for = ["modules", "classes", "functions"]
 
 # Comments #
@@ -190,6 +191,7 @@ hash_space_after = true
 inline_comment_min_spaces_before = 2
 section_title_comments = "encouraged"
 avoid_line_by_line_explanations = true
+voice = "third_person"
 
 # TODOs #
 [todos]

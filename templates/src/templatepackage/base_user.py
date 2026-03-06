@@ -1,4 +1,4 @@
-"""base_template.py
+"""base_user.py
 Template module demonstrating the structure and style of an abstract base class.
 
 This module provides a template for defining abstract base classes (ABCs) using the `abc` module. It demonstrates the
@@ -6,7 +6,7 @@ use of `@abstractmethod` to enforce implementation in subclasses and organizatio
 """
 
 # Header #
-__package_name__ = "package_template"
+__package_name__ = "templatepackage"
 
 __author__ = "Author Name"
 __credits__ = ["Author Name"]

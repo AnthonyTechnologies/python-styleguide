@@ -1,13 +1,13 @@
 """header.py
 Information about this package.
 
-This module contains metadata about the package_template package, including version information, author details, and
+This module contains metadata about the templatepackage package, including version information, author details, and
 licensing information. It serves as a central location for package metadata that can be imported and used by other
 modules in the package.
 """
 
 # Header #
-__package_name__ = "package_template"
+__package_name__ = "templatepackage"
 
 __author__ = "Author Name"
 __credits__ = ["Author Name"]

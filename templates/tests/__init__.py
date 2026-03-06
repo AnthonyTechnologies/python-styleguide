@@ -1,13 +1,13 @@
 """__init__.py
-The concrete test suite for the package_template package.
+The concrete test suite for the templatepackage package.
 
-Contains unit tests for the package_template package. It provides a structured testing framework to ensure the
-functionality and reliability of the package_template components. The tests are organized into subpackages that mirror 
+Contains unit tests for the templatepackage package. It provides a structured testing framework to ensure the
+functionality and reliability of the templatepackage components. The tests are organized into subpackages that mirror
 the structure of the main package.
 """
 
 # Header #
-__package_name__ = "package_template"
+__package_name__ = "templatepackage"
 
 __author__ = "Author Name"
 __credits__ = ["Author Name"]

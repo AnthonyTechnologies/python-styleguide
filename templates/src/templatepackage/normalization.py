@@ -1,14 +1,13 @@
-"""function_template.py
+"""normalization.py
 Template module demonstrating the structure and style of function definitions.
 
 This module provides a template for defining functions, including standalone functions, decorators, and functions that
 operate on iterables. It demonstrates the organization of functions and the use of docstrings following the project's
-conventions. Normally, the name of this module should match the name of the function it contains, but it is named
-function_template to make it easier to find when browsing the templates directory.
+conventions.
 """
 
 # Header #
-__package_name__ = "package_template"
+__package_name__ = "templatepackage"
 
 __author__ = "Author Name"
 __credits__ = ["Author Name"]
@@ -25,7 +24,7 @@ from collections.abc import Callable, Iterable
 
 # Definitions #
 # Constants #
-DEFAULT_NORMALIZE_STRIP: str = ""  # Characters to strip in normalization (empty means whitespace only)
+DEFAULT_NORMALIZE_STRIP: str = ""  # Characters to strip in normalization (empty means whitespace only).
 
 
 # Functions #
@@ -72,7 +71,7 @@ def normalize_names(names: Iterable[str]) -> list[str]:
     """Normalizes a sequence of names.
 
     Normalization currently consists of stripping leading/trailing whitespace (and optionally characters configured by
-    DEFAULT_NORMALIZE_STRIP) and lower-casing each string. Order is preserved.
+    `DEFAULT_NORMALIZE_STRIP`) and lower-casing each string. Order is preserved.
 
     Args:
         names: An iterable of raw names.
@@ -86,6 +85,7 @@ def normalize_names(names: Iterable[str]) -> list[str]:
 
 def unique_normalized(names: Iterable[str]) -> list[str]:
     """Returns unique normalized names, preserving first-occurrence order.
+
     This function demonstrates grouping of related functions by functionality.
 
     Args:

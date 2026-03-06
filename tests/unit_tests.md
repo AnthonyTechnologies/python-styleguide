@@ -1,4 +1,4 @@
-﻿# Anthony's Python Style Guide: Unit Tests
+# Anthony's Python Style Guide: Unit Tests
 
 Unit tests are used to verify the correctness of the code being tested to ensure that it is working as expected.
 Typically, unit tests are written to verify individual components of the code.
@@ -7,11 +7,11 @@ Test suites are collections of related tests that validate a specific component,
 software. They help organize tests logically and provide a structured way to verify multiple aspects of the code. Test
 suites can inherit from base test suites to provide consistent testing patterns across similar components.
 
-Unit tests and test suites should follow the guidelines set forth by the general styleguide such as the code
+Ensure unit tests and test suites follow the guidelines set forth by the general styleguide such as the code
 organization, file structure, naming conventions, docstrings, and other standard practices in:
 
 - [Code File Layout](../code_file_layout.md) - For file organization and structure
-- Syntax topics — [Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md), [Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md), [Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) — for naming conventions, docstrings, and code formatting
+- Syntax topics � [Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md), [Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md), [Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) � for naming conventions, docstrings, and code formatting
 - [Semantics Guidelines](../semantics.md) - For general code organization principles
 
 The guidelines in this document are supplemental to the general guidelines and focus on test-specific code to ensure
@@ -30,7 +30,11 @@ consistency, maintainability, and effectiveness of the test suite across the pro
     - [4.1 Assertions](#41-assertions)
     - [4.2 Fixtures](#42-fixtures)
     - [4.3 Test Doubles](#43-test-doubles)
-- [5 Test Execution](#5-test-execution)
+    - [4.4 Parameterization](#44-parameterization)
+    - [4.5 Async Testing](#45-async-testing)
+    - [4.6 Skipping Tests](#46-skipping-tests)
+    - [4.7 Testing Exceptions](#47-testing-exceptions)
+    - [5 Test Execution](#5-test-execution)
 
 
 ## 1 pytest
@@ -48,109 +52,100 @@ The pytest package has many features, and this styleguide will offer guidance on
 
 ## 2 Directory Hierarchy
 
-Base Test Suites or test suites which cover general implements should be located in the package source codes under
-`testsuite`. Under normal circumstances, test suites should not be placed in the project source as only developers need
-test suites; not package users. However, given that PYPI currently does not support alternate package installations.
-These test suites should be included in the source to allow developers using PYPI to expand or create their own test
-suites.
+Place Base Test Suites or test suites that cover general implementations in the package source code under `testsuite`. Under normal circumstances, do not place test suites in the project source as only developers need them. However, given that PyPI currently does not support alternate package installations, include these test suites in the source to allow developers using PyPI to expand or create their own.
 
 Example:
 ```
 src/
-  templatepackage/                  # The main source package
-    testsuite/
-      bases/
-        __init__.py
-        basetestsuite.py
-        ...
-      __init__.py
-      objecttestsuite.py
-      ...
++-- baseobjects/                # The main source package
+    +-- bases/
+    +-- testsuite/
+    �   +-- bases/
+    �   �   +-- __init__.py
+    �   �   +-- basetestsuite.py
+    �   �   +-- ...
+    �   +-- __init__.py
+    �   +-- objecttestsuite.py
+    �   +-- ...
+    +-- ...
 ```
 
-Concrete Test Suites and unit tests for individual or specific components should be organized in a directory structure
-outside the source code that mirrors the package structure. This makes it easy for users to find tests relevant to the
-specific components they're interested in. It also allows pytest to automatically discover tests when running the tests
-using the `python # pseudocodetest` command.
+Organize Concrete Test Suites and unit tests for individual or specific components in a directory structure outside the source code that mirrors the package structure. This makes it easy to find tests relevant to specific components and allows `pytest` to automatically discover tests when running with the `pytest` command.
 
-- Each major package should have its own directory under the `tests/` directory
-- Subpackages should have their own subdirectories when they contain multiple components
-- Additional subdirectories can be used to group tests by functionality.
-- Related tests should be grouped together in the same directory
-- Filenames should start with descriptive name followed by `_test` (e.g., `name_test.py`).
-- Additional files can be used to contain fixtures, test doubles, test base classes, or other test-specific code.
+Guidelines:
+- Create a directory for each major package under the `tests/` directory.
+- Use subdirectories for subpackages when they contain multiple components.
+- Use additional subdirectories to group tests by functionality.
+- Group related tests together in the same directory.
+- Start filenames with a descriptive name followed by `_test` (e.g., `name_test.py`).
+- Use additional files to contain fixtures, test doubles, test base classes, or other test-specific code.
 
 Example:
 ```
 tests/
-  bases/                        # Tests for the bases package
-    collections/                # Tests for the bases.collections subpackage
-      baseobject_test.py
-    basecallable_test.py
-    sentinelobject_test.py
-    ...
-  cachingtools/                 # Tests for the cachingtools package
-    caches/                     # Tests for the cachingtools.caches subpackage
-    cachingobject_test.py
-    ...
++-- bases/                      # Tests for the bases package
+�   +-- collections/            # Tests for the bases.collections subpackage
+�   �   +-- baseobject_test.py
+�   +-- basecallable_test.py
+�   +-- sentinelobject_test.py
+�   +-- ...
++-- cachingtools/               # Tests for the cachingtools package
+    +-- caches/                 # Tests for the cachingtools.caches subpackage
+    +-- cachingobject_test.py
+    +-- ...
 ```
 
 
 ## 3 Test Structure
 
-The purpose of test code is to not only verify that the code is working as expected, but also provide a set of tools for
-testing extensions of the code. For example, a class may outline functionality that is not implemented yet or may be
-changed in the future, but the test code should still verify that the class is working as expected.
+Use test code to not only verify that the code works as expected but also to provide a set of tools for testing extensions. For example, even if a class outlines functionality not yet implemented, the test code must verify that the class works as expected.
 
-In pytests, tests themselves can be organized into classes and sub-classed which can be used to parameterize tests or
-create test suites to verify different implementations of the code.
+In `pytest`, organize tests into classes and subclasses to parameterize tests or create test suites to verify different implementations.
 
-For creating documentation, follow the general docstring guidelines in [Docstrings](../syntax/docstrings.md),
-particularly the module and test module subsections.
+Follow the general docstring guidelines in [Docstrings](../syntax/docstrings.md), particularly the module and test module subsections, for creating documentation.
 
 ### 3.1 Test Classes
 
-Test classes should be used to group related test methods and even create test suites. Base test classes should be
-created to provide consistent testing patterns across the project.
+Use test classes to group related test methods and create test suites. Create base test classes to provide consistent testing patterns across the project.
 
-Test classes should inherit from appropriate base test classes to ensure consistent testing patterns across the project.
+Ensure test classes inherit from appropriate base test classes/suites to maintain consistency.
 
 Guidelines:
-- Test classes should inherit from an appropriate base test class/suite
-- Test classes should include a descriptive docstring explaining what is being tested
-- Test classes should contain most of their resources within their scope so the resource may be changed to suit different test variations.
-  - Test involving defining classes should either be defined as inner classes or defined elsewhere and assigned to a class attribute.
-  - Test involving defining functions should either be defined as inner functions or defined elsewhere and assigned to a class attribute.
+- Inherit test classes from an appropriate base test class/suite.
+- Include a descriptive docstring in test classes explaining what is being tested.
+- Define a `UnitTestClass` class attribute to specify the class or function being tested. This allows generic test suites to interchange test targets.
+- Ensure test classes contain most of their resources within their scope so the resource may be changed to suit different test variations.
+  - Define classes involved in tests either as inner classes or define them elsewhere and assign them to a class attribute.
+  - Define functions involved in tests either as inner functions or define them elsewhere and assign them to a class attribute.
 
-For test method naming and organization, follow the general method guidelines in the Syntax topics —
-[Formatting](../syntax/formatting.md), [Docstrings](../syntax/docstrings.md), and [Comments](../syntax/comments.md) —
+For test method naming and organization, follow the general method guidelines in the Syntax topics �
+[Formatting](../syntax/formatting.md), [Docstrings](../syntax/docstrings.md), and [Comments](../syntax/comments.md) �
 and [Code File Layout](../code_file_layout.md).
 
 ### 3.2 Test Methods
 
-Test methods should be designed to test a specific aspect of the class or function being tested. Each test method should
-be focused, independent, and provide clear feedback when it fails.
+Design test methods to test a specific aspect of the class or function. Ensure each test method is focused, independent, and provides clear feedback upon failure.
 
 Guidelines:
-- Test methods should be named with a `test_` prefix followed by a descriptive name of what is being tested
-- Test methods should include a descriptive docstring explaining what is being tested
-- Test methods should use type hints for parameters and return values
-- Test methods should be independent and not rely on the state from other tests
-- Test methods should be focused on testing a single aspect of behavior
-- Test methods should include assertions to verify the expected behavior
-- Test methods should handle both normal and edge cases
-- Test methods can use attributes provided by the test class (allows more options as a test suite)
+- Name test methods with a `test_` prefix followed by a descriptive name.
+- Include a descriptive docstring in test methods explaining what is being tested.
+- Use type hints for test method parameters and return values.
+- Ensure test methods are independent and do not rely on state from other tests.
+- Focus test methods on testing a single aspect of behavior.
+- Include assertions in test methods to verify expected behavior.
+- Handle both normal and edge cases in test methods.
+- Use attributes provided by the test class (this allows more options when used as a test suite).
 
 Example:
 ```python # pseudocode
-def test_deepcopy(self, test_object: 'TestBaseObject.BaseTestObject') -> None:
+def test_deepcopy(self, test_object: BaseObject) -> None:
     """Tests the deep copy behavior of BaseObject.
 
     This test verifies that deepcopy creates a new object with new mutable attributes
     but the same immutable attributes.
 
     Args:
-        test_object: A fixture providing a BaseTestObject instance.
+        test_object: A fixture providing a BaseObject instance.
     """
     # Perform the operation being tested
     new = copy.deepcopy(test_object)
@@ -162,8 +157,8 @@ def test_deepcopy(self, test_object: 'TestBaseObject.BaseTestObject') -> None:
     assert new.mutable == test_object.mutable
 ```
 
-When creating test methods that test similar functionality across different implementations, consider using parameterized tests
-to reduce code duplication and ensure consistent testing.
+When creating test methods that test similar functionality across different implementations, consider using
+[parameterized tests](#44-parameterization) to reduce code duplication and ensure consistent testing.
 
 ### 3.3 Test Suites
 
@@ -172,7 +167,7 @@ software. For detailed guidelines on creating and using test suites, see [Test S
 
 ### 3.4 Main
 
-Test files should include a `__main__` block for running the tests directly. Mainly it sets the run options for pytest
+Include a `__main__` block in test files for running the tests directly. Mainly it sets the run options for pytest
 for the tests in the file.
 
 Example:
@@ -184,10 +179,10 @@ if __name__ == "__main__":
 
 ## 4 Test Semantics and Syntax
 
-Tests should conform to the semantics and syntax described in [Semantics Guidelines](../semantics.md) and the Syntax topics —
+Ensure tests conform to the semantics and syntax described in [Semantics Guidelines](../semantics.md) and the Syntax topics:
 [Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md),
 [Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md),
-[Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) — but in some cases it may be necessary to deviate from the general
+[Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) � but in some cases it may be necessary to deviate from the general
 guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide.
 
 ### 4.1 Assertions
@@ -199,8 +194,8 @@ because assertions are good for explaining the behavior of a program, and in the
 is managed by the user rather than the program.
 
 Guidelines:
-- Each test should include at least one assertion
-- Assertions should be specific and verify a single aspect of behavior
+- Include at least one assertion in each test
+- Ensure assertions are specific and verify a single aspect of behavior
 - Use appropriate assertion methods for the type of comparison being made
 - Include descriptive error messages in assertions to make test failures more informative
 
@@ -220,27 +215,31 @@ assert unpickled is not test_object
 
 ### 4.2 Fixtures
 
-Fixtures are a powerful feature of pytest that allow for setup and teardown of test environments.
+Use `pytest` fixtures to provide a setup and teardown of test environments and create test objects.
 
 Guidelines:
-- Fixtures should be used for setting up test environments and creating test objects
-- Fixtures should be defined at the appropriate scope (function, class, module, or session)
-- Fixtures should include a descriptive docstring explaining their purpose and return value
-- Fixtures should use type hints for parameters and return values
-- Common fixtures should be defined in base test modules
-- Fixtures should be organized under a `# Fixtures` comment
+- Use fixtures for setting up test environments and creating test objects.
+- Define fixtures at the appropriate scope (function, class, module, or session).
+- Include a descriptive docstring in fixtures explaining their purpose and return value.
+- Use type hints for fixture parameters and return values.
+- Define common fixtures in base test modules.
+- Organize fixtures under a `# Fixtures` comment.
 
 Example:
 ```python # pseudocode
 # Fixtures
 @pytest.fixture
-def test_object(self) -> 'TestBaseObject.BaseTestObject':
+def test_object(self, *args: Any, **kwargs: Any) -> BaseObject:
     """Creates a test object instance for use in tests.
 
+    Args:
+        *args: Positional arguments to pass to the class constructor.
+        **kwargs: Keyword arguments to pass to the class constructor.
+
     Returns:
-        BaseTestObject: An instance of the test class.
+        BaseObject: An instance of the test class.
     """
-    return self.class_()
+    return self.UnitTestClass(*args, **kwargs)
 
 @pytest.fixture
 def tmp_dir(tmpdir: Any) -> Path:
@@ -257,18 +256,18 @@ def tmp_dir(tmpdir: Any) -> Path:
 
 ### 4.3 Test Doubles
 
-Test doubles (mocks, stubs, fakes, etc.) are used to isolate the code being tested from its dependencies.
+Use test doubles (mocks, stubs, fakes, etc.) to isolate the code being tested from its dependencies.
 
 Guidelines:
-- Use test doubles to isolate the code being tested from its dependencies
+- Use test doubles to isolate the code being tested from its dependencies.
 - Use the appropriate type of test double for the situation:
-  - Stubs: Return predefined values
-  - Mocks: Verify interactions
-  - Fakes: Simplified implementations
-  - Spies: Record interactions
-- Use pytest's monkeypatch fixture for patching functions and methods
-- Use unittest.mock for creating mock objects
-- Reset or tear down test doubles after use
+  - Stubs: return predefined values.
+  - Mocks: verify interactions.
+  - Fakes: simplified implementations.
+  - Spies: record interactions.
+- Use `pytest`'s `monkeypatch` fixture for patching functions and methods.
+- Use `unittest.mock` for creating mock objects.
+- Reset or tear down test doubles after use.
 
 Example:
 ```python # pseudocode
@@ -286,7 +285,7 @@ def test_with_mock(self, monkeypatch: pytest.MonkeyPatch) -> None:
     # Patch a method to use the mock
     monkeypatch.setattr(self.class_, "some_method", mock)
 
-    # Call the method that should use the patched method
+    # Call the method that uses the patched method
     instance = self.class_()
     instance.method_under_test()
 
@@ -294,17 +293,133 @@ def test_with_mock(self, monkeypatch: pytest.MonkeyPatch) -> None:
     mock.assert_called_once_with(expected_args)
 ```
 
+### 4.4 Parameterization
+
+Use `pytest` parameterization to run a test function or method multiple times with different sets of arguments. This
+reduces code duplication and ensures consistent testing across multiple scenarios.
+
+Guidelines:
+- Use `@pytest.mark.parametrize` for function-level parameterization.
+- Use the `ids` parameter to provide descriptive names for each test case, which helps in identifying failures.
+- When testing similar functionality across different implementations, consider using parameterized tests to reduce
+  code duplication and ensure consistent testing.
+
+#### When to Use Parameterization
+
+- **Data-Driven Tests**: When the same test logic is applied to multiple inputs and expected results.
+- **Edge Case Validation**: When testing multiple boundary conditions or edge cases for a single function or method.
+- **Equivalent Operations**: When verifying that different ways of performing an operation (e.g., a function call vs. a
+  method call) yield the same results.
+- **Cross-Implementation Testing**: When testing that different subclasses or implementations of an interface behave
+  identically under the same conditions.
+
+#### When Not to Use Parameterization
+
+- **Complex Test Logic**: If different parameters require significantly different test logic, leading to complex
+  conditional branching (`if/else`) within the test method. In such cases, separate test methods are clearer.
+- **Unrelated Scenarios**: Avoid grouping unrelated test cases just because they share a similar signature. Each test
+  method represents a distinct logical scenario.
+- **Obscure Failures**: If parameterization makes it difficult to understand which specific case failed or why, use
+  individual test methods instead.
+- **Too Many Parameters**: If a test requires a large number of parameters (e.g., more than 4 or 5), it can become
+  difficult to read and maintain. Consider using a different testing strategy or breaking down the test.
+
+Example:
+```python # pseudocode
+# Parameterized test method
+@pytest.mark.parametrize(
+    "input_val, expected_output",
+    [
+        (1, 2),
+        (5, 10),
+        (0, 0),
+        (-1, -2),
+    ],
+    ids=["small_positive", "large_positive", "zero", "negative"]
+)
+def test_multiply_by_two(self, input_val: int, expected_output: int) -> None:
+    """Tests the multiplication of an integer by two.
+
+    Args:
+        input_val: The input value to multiply.
+        expected_output: The expected result of the multiplication.
+    """
+    assert input_val * 2 == expected_output
+```
+
+### 4.5 Async Testing
+
+Use `@pytest.mark.asyncio` for asynchronous test methods. If a method might not be implemented in a specific test target, handle the `NotImplementedError` and skip the test using `pytest.skip`.
+
+Guidelines:
+- Use `@pytest.mark.asyncio` to decorate asynchronous test methods.
+- Handle `NotImplementedError` or `AttributeError` by skipping the test with `pytest.skip` when the functionality is not implemented or not applicable for the current test target.
+
+Example:
+```python # pseudocode
+@pytest.mark.asyncio
+async def test_async_method(self, test_object: BaseObject) -> None:
+    """Tests an asynchronous method.
+
+    Args:
+        test_object: A fixture providing a test object instance.
+    """
+    try:
+        result = await test_object.some_async_method()
+        assert result is True
+    except NotImplementedError:
+        pytest.skip("Async method not implemented for this object.")
+```
+
+### 4.6 Skipping Tests
+
+Use `pytest.skip` to skip tests that are not applicable to the current test target or environment. Provide a clear reason for skipping to help with maintenance.
+
+Guidelines:
+- Call `pytest.skip` within a test method or fixture when the test cannot be executed.
+- Provide a descriptive message explaining why the test is being skipped.
+
+Example:
+```python # pseudocode
+def test_conditional_feature(self, test_object: BaseObject) -> None:
+    """Tests a feature that may not be present."""
+    if not hasattr(test_object, "special_feature"):
+        pytest.skip("Test object does not have the special feature.")
+
+    assert test_object.special_feature() == "success"
+```
+
+### 4.7 Testing Exceptions
+
+Use `pytest.raises` to verify that the code raises the expected exception under specific conditions.
+
+Guidelines:
+- Use `pytest.raises` as a context manager.
+- Specify the expected exception type.
+- Use the `match` parameter to verify the error message when appropriate.
+
+Example:
+```python # pseudocode
+def test_invalid_input(self, test_object: BaseObject) -> None:
+    """Tests that an invalid input raises a ValueError.
+
+    Args:
+        test_object: A fixture providing a test object instance.
+    """
+    with pytest.raises(ValueError, match="Invalid input value"):
+        test_object.method_requiring_valid_input(invalid_value)
+```
 
 ## 5 Test Execution
 
-Tests should be easy to run and provide clear feedback on failures.
+Ensure tests are easy to run and provide clear feedback on failures.
 
 Guidelines:
-- Tests should be runnable using pytest
-- Tests should be runnable individually or as part of a test suite
-- Tests should provide clear error messages on failure
-- Tests should clean up after themselves
-- Tests should not depend on the order of execution
+- Ensure tests are runnable using `pytest`.
+- Ensure tests are runnable individually or as part of a test suite.
+- Ensure tests provide clear error messages on failure.
+- Ensure tests clean up after themselves.
+- Ensure tests do not depend on the order of execution.
 
 Running tests:
 ```bash

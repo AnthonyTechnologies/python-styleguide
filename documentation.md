@@ -1,4 +1,4 @@
-﻿# Anthony's Python Style Guide: Documentation
+# Anthony's Python Style Guide: Documentation
 
 Projects use Sphinx to build documentation from reStructuredText source files and Python docstrings. Extensions are configured to:
 
@@ -30,6 +30,9 @@ Command-line interface documentation is generated using sphinx-click for any Cli
     - [4.3 Click CLIs](#43-click-clis)
     - [4.4 Cross-Referencing and Intersphinx](#44-cross-referencing-and-intersphinx)
     - [4.5 Source Links and Readability](#45-source-links-and-readability)
+    - [4.6 Writing Style](#46-writing-style)
+        - [4.6.1 Third-Person Descriptive Voice](#461-third-person-descriptive-voice)
+        - [4.6.2 Third-Person Imperative Voice](#462-third-person-imperative-voice)
 - [5 Where Things Are Configured](#5-where-things-are-configured)
 - [6 Style Guide](#6-style-guide)
     - [6.1 Git Submodule](#61-git-submodule)
@@ -46,7 +49,7 @@ Command-line interface documentation is generated using sphinx-click for any Cli
   - Build output: docs/_build/
 - Top-level README used on the repository home page: README.rst
 
-Docs are built and served through Nox sessions defined in noxfile.py.
+Build and serve docs through Nox sessions defined in noxfile.py.
 
 
 ## 2 Sphinx Configuration
@@ -69,13 +72,13 @@ html_theme = "sphinx_rtd_theme"
 
 ### 2.1 Enabled Extensions and Rationale
 
-- sphinx.ext.autodoc — imports modules and pulls in docstrings to build API pages.
-- sphinx.ext.autosummary — auto-generates summary tables and stub pages for modules/classes/functions. autosummary_generate = True.
-- sphinx.ext.napoleon — supports Google/NumPy docstring styles. Both napoleon_google_docstring and napoleon_numpy_docstring are enabled. Attribute annotations are included (napoleon_attr_annotations = True).
-- sphinx.ext.viewcode — adds “View Source” links for documented objects, aiding traceability.
-- sphinx.ext.intersphinx — cross-links to external documentation. The Python stdlib mapping is enabled.
-- sphinx.ext.todo — allows .. todo:: directives. todo_include_todos = True during development.
-- sphinx_click — renders documentation for Click-based CLIs declaratively.
+- sphinx.ext.autodoc � imports modules and pulls in docstrings to build API pages.
+- sphinx.ext.autosummary � auto-generates summary tables and stub pages for modules/classes/functions. autosummary_generate = True.
+- sphinx.ext.napoleon � supports Google/NumPy docstring styles. Both napoleon_google_docstring and napoleon_numpy_docstring are enabled. Attribute annotations are included (napoleon_attr_annotations = True).
+- sphinx.ext.viewcode � adds �View Source� links for documented objects, aiding traceability.
+- sphinx.ext.intersphinx � cross-links to external documentation. The Python stdlib mapping is enabled.
+- sphinx.ext.todo � allows .. todo:: directives. todo_include_todos = True during development.
+- sphinx_click � renders documentation for Click-based CLIs declaratively.
 
 ### 2.2 HTML Theme
 
@@ -86,12 +89,12 @@ html_theme = "sphinx_rtd_theme"
 ### 2.3 Intersphinx
 
 - Configured mapping:
-  - python → https://docs.python.org/3
+  - python ? https://docs.python.org/3
 - Add additional mappings in conf.py if cross-referencing external libraries becomes useful.
 
 ### 2.4 Type Hints and Docstring Styles
 
-- autodoc_typehints = "description" — Sphinx/Napoleon shows type hints in the parameter/returns sections instead of inline signatures to improve readability for long types.
+- autodoc_typehints = "description" � Sphinx/Napoleon shows type hints in the parameter/returns sections instead of inline signatures to improve readability for long types.
 - Google and NumPy docstring styles are both supported; prefer Google style for new content unless aligning with an established convention in a specific module.
 
 ### 2.5 Todos
@@ -100,28 +103,28 @@ html_theme = "sphinx_rtd_theme"
 
 ### 2.6 Read the Docs Build Configuration
 
-Read the Docs (RTD) builds are configured via a YAML file located at docs/.readthedocs.yaml. Typical key settings:
+Configure RTD builds via a YAML file located at docs/.readthedocs.yaml. Typical key settings:
 
-- version: 2 — RTD’s v2 configuration schema.
+- version: 2 � RTD�s v2 configuration schema.
 - build:
-  - os: ubuntu-20.04 — Linux image used for builds.
-  - tools.python: "3.12" — Python version used on RTD.
+  - os: ubuntu-20.04 � Linux image used for builds.
+  - tools.python: "3.12" � Python version used on RTD.
 - sphinx:
-  - configuration: docs/conf.py — RTD invokes Sphinx with this config file.
-- formats: all — Build all supported formats (HTML, PDF via LaTeX, and EPUB).
+  - configuration: docs/conf.py � RTD invokes Sphinx with this config file.
+- formats: all � Build all supported formats (HTML, PDF via LaTeX, and EPUB).
 - python.install:
-  - requirements: docs/requirements.txt — Additional doc-specific dependencies are installed from this pinned file.
-  - path: . — Installs the project itself into the RTD environment so autodoc can import modules.
+  - requirements: docs/requirements.txt � Additional doc-specific dependencies are installed from this pinned file.
+  - path: . � Installs the project itself into the RTD environment so autodoc can import modules.
 
 Notes and recommendations:
 - Keep docs/requirements.txt aligned with extensions and themes configured in docs/conf.py (e.g., sphinx, sphinx-rtd-theme, sphinx-click; optional furo, myst-parser). Pin versions to ensure reproducible RTD builds.
-- Local builds via nox -s docs-build / nox -s docs do not use .readthedocs.yaml; they rely on noxfile.py’s session dependencies. When changing Sphinx extensions or themes, update both the nox sessions and docs/requirements.txt to keep parity with RTD.
+- Local builds via nox -s docs-build / nox -s docs do not use .readthedocs.yaml; they rely on noxfile.py�s session dependencies. When changing Sphinx extensions or themes, update both the nox sessions and docs/requirements.txt to keep parity with RTD.
 - If the location of conf.py or the Python version changes, reflect those changes in docs/.readthedocs.yaml to avoid RTD build failures.
 
 
 ## 3 Building the Docs
 
-All commands are executed via Nox to ensure reproducibility.
+Execute all commands via Nox to ensure reproducibility.
 
 ### 3.1 One-Off Build
 
@@ -134,23 +137,23 @@ All commands are executed via Nox to ensure reproducibility.
 
 - Serve docs with live reload on changes:
   - nox -s docs
-- A browser window opens by default; this behavior can be disabled by removing --open-browser in noxfile.py or by overriding with positional arguments.
+- A browser window opens by default; disable this behavior by removing `--open-browser` in `noxfile.py` or by overriding with positional arguments.
 
 ### 3.3 Cleaning Builds
 
-- The docs-build and docs sessions remove docs/_build before each run. If a fully clean environment is needed, also delete any cached auto-generated API stubs that may have been created locally.
+- The `docs-build` and `docs` sessions remove `docs/_build` before each run. Delete any cached auto-generated API stubs locally if a fully clean environment is needed.
 
 
 ## 4 Authoring Guidelines
 
 ### 4.1 reStructuredText vs. Markdown
 
-- The canonical format is reStructuredText (.rst). The docs use index.rst and standard Sphinx/ReST directives.
-- Although the docs sessions install myst-parser, it is not currently enabled in conf.py. If enabling Markdown is desired in the future, add "myst_parser" to extensions and follow MyST’s syntax rules. Until then, prefer .rst.
+- Use reStructuredText (.rst) as the canonical format. Use `index.rst` and standard Sphinx/ReST directives.
+- Although the docs sessions install myst-parser, it is not currently enabled in conf.py. If enabling Markdown is desired in the future, add "myst_parser" to extensions and follow MyST�s syntax rules. Until then, prefer .rst.
 
 ### 4.2 API Docs via Autodoc + Autosummary
 
-- Keep public APIs well-documented with complete docstrings. autosummary_generate is enabled, which can generate index pages and per-object stubs when you include autosummary tables in .rst files.
+- Keep public APIs well-documented with complete docstrings. autosummary_generate is enabled, which can generate index pages and per-object stubs when autosummary tables are included in .rst files.
 - Provide clear type hints; they will be rendered in the description sections.
 - For module organization and public/private boundaries, follow the guidance in semantics.md and project_structure.md. Only public objects should be included in user-facing API pages.
 
@@ -168,7 +171,7 @@ All commands are executed via Nox to ensure reproducibility.
         :prog: tool-name
         :show-nested:
 
-- The token package.module:cli should be replaced with the import path and callable for the project's Click entry point.
+- Replace the token `package.module:cli` with the import path and callable for the project's Click entry point.
 
 ### 4.4 Cross-Referencing and Intersphinx
 
@@ -178,22 +181,43 @@ All commands are executed via Nox to ensure reproducibility.
 
 ### 4.5 Source Links and Readability
 
-- viewcode adds “View Source” links to documented objects. Ensure source files remain readable and follow the code style guide so rendered source is approachable.
+- viewcode adds "View Source" links to documented objects. Ensure source files remain readable and follow the code style guide so rendered source is approachable.
+
+### 4.6 Writing Style
+
+The writing style for Sphinx documentation should be in the third-person. When explaining features and how things work,
+use the third-person descriptive voice. When instructing users on how to use things, use the third-person imperative
+voice that is active and issued as commands.
+
+#### 4.6.1 Third-Person Descriptive Voice
+
+Use the third-person descriptive voice to explain the behavior of features and systems. This typically involves using
+the third-person singular present tense.
+
+Example:
+"The `BaseObject` class provides a common interface for all objects in the package."
+
+#### 4.6.2 Third-Person Imperative Voice
+
+Use the third-person imperative voice when providing instructions or requirements to the user. The voice should be
+active and be issued as commands. This typically involves using words like "must," "should," or "shall" with a
+third-person subject.
+
+Example:
+"The user must install the package before running the examples."
 
 
 ## 5 Where Things Are Configured
 
-- docs/conf.py — Sphinx configuration (extensions, theme, intersphinx, napoleon, todo, autodoc/autosummary options).
-- docs/.readthedocs.yaml — Read the Docs build configuration (Python version, OS image, Sphinx entry point, output formats, and install steps).
-- noxfile.py — Sessions for building and serving the docs; installs Sphinx and selected extensions.
-- pyproject.toml — Project metadata and tooling configs (ruff, mypy, coverage) that indirectly affect example code in docs.
+- docs/conf.py � Sphinx configuration (extensions, theme, intersphinx, napoleon, todo, autodoc/autosummary options).
+- docs/.readthedocs.yaml � Read the Docs build configuration (Python version, OS image, Sphinx entry point, output formats, and install steps).
+- noxfile.py � Sessions for building and serving the docs; installs Sphinx and selected extensions.
+- pyproject.toml � Project metadata and tooling configs (ruff, mypy, coverage) that indirectly affect example code in docs.
 
 
 ## 6 Style Guide
 
-Projects may also include this style guide as a Git submodule repository in docs/python-styleguide. This keeps the style
-guide close to the project documentation to allow pinning known-good revision and pull updates. It is especially useful
-for projects with a large number of contributors and AI Agents helping with writing code.
+It is suggested to include this style guide as a Git submodule repository in `docs/python-styleguide`. This keeps the style guide close to the project documentation to allow pinning a known-good revision and pulling updates. It is especially useful for projects with a large number of contributors and AI Agents helping with writing code.
 
 ### 6.1 Git Submodule
 
@@ -211,7 +235,7 @@ git submodule update --init --recursive
 ```
 
 Notes:
-- Submodules are pinned to a specific commit; they do not auto-track the remote branch. This is desirable for reproducible docs builds.
+- Pin submodules to a specific commit; they do not auto-track the remote branch. This is desirable for reproducible docs builds.
 - If submodules are not preferred, git subtree is an alternative; however, submodules are simpler to keep read-only and clearly versioned.
 
 ### 6.2 Keep It Up to Date

@@ -1,15 +1,15 @@
 #!/usr/bin/env python
-"""unit_test_template.py
+"""user_test.py
 Template module demonstrating the structure of a unit test file using pytest.
 
 This module provides a template for writing unit tests, including test fixtures, test classes, and parameterized tests.
-It demonstrates how to test the functionality of the package_template modules ensuring code correctness. Normally, the
-name of this script should match the name of the module it contains, but it is named unit_test_template to make it
+It demonstrates how to test the functionality of the templatepackage modules ensuring code correctness. Normally, the
+name of this script should match the name of the module it contains, but it is named user_test to make it
 easier to find when browsing the templates directory.
 """
 
 # Header #
-__package_name__ = "package_template"
+__package_name__ = "templatepackage"
 
 __author__ = "Author Name"
 __credits__ = ["Author Name"]
@@ -27,12 +27,10 @@ from typing import Any, Final
 # Third-Party Packages #
 import pytest
 
-# Source Packages #
-from baseobjects.testsuite import BaseClassTestSuite
-
 # Local Packages #
-from package_template import User, UserRegistry
-from package_template.testsuite import UserTestSuite
+from baseobjects.testsuite import BaseClassTestSuite
+from templatepackage import User, UserRegistry
+from templatepackage.testsuite import UserTestSuite
 
 
 # Definitions #
@@ -43,29 +41,46 @@ _SECTION_LINE: Final[str] = "-" * 72
 # Tests #
 class TestUser(UserTestSuite):
     """Tests User using UserTestSuite."""
-    pass
+
+    # Attributes #
+    UnitTestClass: type[User] = User
 
 
 class TestUserRegistry(BaseClassTestSuite):
     """Tests UserRegistry."""
 
     # Attributes #
-    UnitTestClass = UserRegistry
+    UnitTestClass: type[UserRegistry] = UserRegistry
 
-    # Fixtures #
+    # Instance Methods #
+    # Fixtures
     @pytest.fixture(scope="module")
     def sample_users(self) -> list[User]:
-        """Provides reusable test data."""
+        """Provides reusable test data.
+
+        Returns:
+            list[User]: A list of User instances.
+        """
         return [User(user_id="1", name="Alice"), User(user_id="2", name="Bob")]
 
     @pytest.fixture
-    def test_object(self, sample_users: list[User]) -> UserRegistry:
-        """Yields a fresh registry."""
+    def test_object(self, sample_users: list[User], *args: Any, **kwargs: Any) -> UserRegistry:
+        """Creates a fresh registry.
+
+        Args:
+            sample_users: A fixture providing sample users.
+            *args: Positional arguments to pass to the class constructor.
+            **kwargs: Keyword arguments to pass to the class constructor.
+
+        Returns:
+            UserRegistry: A fresh registry instance.
+        """
         # Create a fresh registry with copies of users to avoid side effects
         users_copy = [copy.copy(u) for u in sample_users]
-        return UserRegistry(users=users_copy)
+        kwargs.setdefault("users", users_copy)
+        return self.UnitTestClass(*args, **kwargs)
 
-    # Tests #
+    # Tests
     def test_instance_creation(self, *args: Any, **kwargs: Any) -> None:
         """Tests that instances of the class can be created.
 

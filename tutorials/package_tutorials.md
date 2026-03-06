@@ -1,4 +1,4 @@
-﻿# Anthony's Python Style Guide: Package Tutorials
+# Anthony's Python Style Guide: Package Tutorials
 
 A tutorial is a step-by-step guide to a specific topic. It provides a clear and concise explanation of the topic,
 demonstrating the functionality and use cases. It is designed to be self-contained and easy to follow.
@@ -49,40 +49,39 @@ Jupyter Notebooks are a powerful tool for creating interactive tutorials. They a
 visualizations into a single document. They are ideal for educational purposes, as they provide a clear and concise
 explanation of a topic, demonstrating the functionality and use cases.
 
-When creating a tutorial, it is important to consider an report the following:
+Consider and report the following when creating a tutorial:
 - **Kernel Choice:** Specify if needed.
 - **Magic Commands:** Explain any used.
 
 
 ## 2 Directory Hierarchy
 
-Tutorials should be organized in a directory structure that mirrors the package structure. This makes it easy for users
-to find tutorials relevant to the specific components they're interested in.
+Organize tutorials in a directory structure that mirrors the package structure. This makes it easy for users to find tutorials relevant to specific components.
 
-- Each major package should have its own directory under the `tutorials/` directory
-- Subpackages should have their own subdirectories when they contain multiple components
-- Typically, there should be a single tutorial for each major package and subpackage, but there may be exceptions
-- Filenames should start with descriptive name followed by `_package_tutorial` (e.g., `name_package_tutorial.py`)
-- Use the format `<component_name>_package_tutorial.py` for individual component tutorials
-- For tutorials that demonstrate multiple components working together, use a descriptive name that indicates the functionality being demonstrated, e.g., `caching_with_sentinel_tutorial.py`
-- Use lowercase with underscores for file names (snake_case)
+- Create a directory for each major package under the `tutorials/` directory.
+- Use subdirectories for subpackages when they contain multiple components.
+- Typically, provide a single tutorial for each major package and subpackage, though exceptions may occur.
+- Start filenames with a descriptive name followed by `_package_tutorial` (e.g., `name_package_tutorial.py`).
+- Use the format `<component_name>_package_tutorial.py` for individual component tutorials.
+- For tutorials that demonstrate multiple components working together, use a descriptive name that indicates the functionality being demonstrated, e.g., `caching_with_sentinel_tutorial.py`.
+- Use lowercase with underscores for file names (snake_case).
 
 Example:
 ```
 tutorials/
-  bases/                          # Tutorials for the bases package
-    collections/                  # Tutorials for the bases.collections subpackage
-      collections_package_tutorial.py
-    bases_package_tutorial.py
-  cachingtools/                 # Tutorials for the cachingtools package
-    cachingtools_package_tutorial.py
-  baseobjects_package_tutorial.py
++-- bases/                          # Tutorials for the bases package
+�   +-- collections/                # Tutorials for the bases.collections subpackage
+�   �   +-- collections_package_tutorial.py
+�   +-- bases_package_tutorial.py
++-- cachingtools/                   # Tutorials for the cachingtools package
+�   +-- cachingtools_package_tutorial.py
++-- baseobjects_package_tutorial.py
 ```
 
 
 ## 3 Package Tutorial Notebook Structure
 
-A clear and logical flow is essential. These sections are recommended:
+Ensure a clear and logical flow is essential. Use these recommended sections:
 
 1. Title and Introduction
 2. Installation
@@ -95,9 +94,7 @@ A clear and logical flow is essential. These sections are recommended:
 
 ### 3.1 Title and Introduction
 
-The Title and Introduction section sets the stage for the package's tutorial. It should provide users with a clear
-understanding of what they will learn and how this package fits into the larger package ecosystem. This section serves as
-the entry point to the tutorial and should be engaging while remaining informative and concise.
+Use the Title and Introduction section to set the stage for the package's tutorial. Provide users with a clear understanding of what they will learn and how this package fits into the larger package ecosystem. Ensure this section serves as an engaging entry point while remaining informative and concise.
 
 - Formatting: Markdown Cell
 - Clear Title: "Using [PackageName]", "[PackageName] for [Specific Task]", etc.
@@ -110,9 +107,7 @@ the entry point to the tutorial and should be engaging while remaining informati
 
 ### 3.2 Installation
 
-The Installation section provides clear instructions for setting up the package in the user's environment. This section
-should be straightforward and cover both standard and alternative installation methods, ensuring users can successfully
-install the package regardless of their setup.
+Use the Installation section to provide clear instructions for setting up the package. Ensure this section is straightforward and covers both standard and alternative installation methods, allowing users to successfully install the package regardless of their setup.
 
 - Formatting: Markdown and Code Cells
 - Instructions: Clear, step-by-step installation instructions using pip or conda.
@@ -128,9 +123,7 @@ If the package tutorial is a subpackage, an Installation section is not required
 
 ### 3.3 Importing the Package
 
-The Importing the Package section demonstrates the proper way to import and access the package's functionality. This
-section should clearly show users the standard import patterns and any alternative import styles that might be useful for
-different use cases. It's essential to explain any naming conventions or common aliases used in the package's ecosystem.
+Use the Importing the Package section to demonstrate how to import and access package functionality. Clearly show standard import patterns and useful alternatives. Explain any naming conventions or common aliases.
 
 - Formatting: Markdown and Code Cells
 - Show the standard way to import the package or its key subpackages.
@@ -146,10 +139,7 @@ import package_name as alias
 
 ### 3.4 Core Concepts & Basic Usage
 
-The Core Concepts & Basic Usage section introduces users to the fundamental building blocks and primary functionality of
-the package. This section forms the foundation of the tutorial, ensuring users understand the essential concepts before
-moving on to more advanced features. Here, users learn the basic operations and typical usage patterns that form the
-core of working with the package.
+Use the Core Concepts & Basic Usage section to introduce the fundamental building blocks and primary functionality of the package. Ensure this section forms the foundation of the tutorial, helping users understand essential concepts before moving to advanced features. Demonstrate basic operations and typical usage patterns.
 
 - Formatting: Markdown and Code Cells
 - Introduce the fundamental concepts and objects of the package.
@@ -164,10 +154,7 @@ core of working with the package.
 
 ### 3.5 Advanced Features
 
-The Advanced Features section introduces users to more advanced features of the package. This section provides users
-with a deeper understanding of the package's capabilities and provides a deeper understanding of the package's
-functionality. It's important to provide users with a deeper understanding of the package's functionality and
-capabilities, so they can make informed decisions when using the package.
+Use the Advanced Features section to introduce more advanced features of the package. Provide users with a deeper understanding of capabilities and functionality so they can make informed decisions when using the package.
 
 - Formatting: Markdown and Code Cells
 - Introduce more complex functionalities, options, or configurations.
@@ -176,10 +163,7 @@ capabilities, so they can make informed decisions when using the package.
 
 ### 3.6 Examples
 
-The Examples section demonstrates how the package can be used to solve real-world problems. This section provides users
-with a concrete example of how the package can be used to solve a real-world problem. It's important to provide users
-with a concrete example of how the package can be used to solve a real-world problem, so they can make informed
-decisions when using the package.
+Use the Examples section to demonstrate how to solve real-world problems with the package. Provide concrete examples to help users understand applicability and value. Use small, relatable datasets or scenarios when possible.
 
 - Formatting: Markdown and Code Cells
 - Showcase how the package can be used to solve real-world problems.
@@ -188,10 +172,7 @@ decisions when using the package.
 
 ### 3.7 API Highlights
 
-The API Highlights section provides users with a quick overview of the package's API. This section provides users with
-a quick overview of the package's API and provides a quick reference for users to quickly access the package's
-functionality. It's important to provide users with a quick overview of the package's API and provide a quick reference
-for users to quickly access the package's functionality, so they can make informed decisions when using the package.
+Use the API Highlights section to provide a quick overview of the package's API. Provide a quick reference for users to access package functionality and make informed decisions.
 
 - Formatting: Markdown Cell
 - Briefly mention key functions/classes and their purpose.
@@ -199,10 +180,7 @@ for users to quickly access the package's functionality, so they can make inform
 
 ### 3.8 Troubleshooting / FAQs
 
-The Troubleshooting / FAQs section provides users with solutions to common issues they might encounter while using the
-package. This section provides users with solutions to common issues they might encounter while using the package. It's
-important to provide users with solutions to common issues they might encounter while using the package, so they can
-make informed decisions when using the package.
+Use this section to provide solutions to common issues users might encounter. Offer workarounds and best practices to help users make informed decisions.
 
 - Formatting: Markdown Cell
 - Address common issues users might encounter.
@@ -211,8 +189,7 @@ make informed decisions when using the package.
 
 ### 3.9 Conclusion and Next Steps
 
-The Conclusion and Next Steps section wraps up the tutorial and provides guidance for further learning. This section
-helps users solidify their understanding and shows them paths for continued exploration of the package.
+Use the Conclusion and Next Steps section to wrap up the tutorial and provide guidance for further learning. Help users solidify their understanding and show paths for continued exploration.
 
 - Formatting: Markdown Cell
 - Summarize what was covered.
@@ -223,90 +200,74 @@ helps users solidify their understanding and shows them paths for continued expl
     - Consulting the full documentation.
     - Contributing to the package.
 
-## 4 Content Guidelines
-
-The contents of a tutorial should be accessible, practical, and valuable to users. How the information is presented is
-crucial to ensure that it is easy to follow and understand.
+Ensure the contents of a tutorial are accessible, practical, and valuable to users. Presentation is crucial to ensure that it is easy to follow and understand.
 
 ### 4.1 Define the Audience and Scope
 
-**Target Audience:** The target audience will be the main user-base who be reading and using this tutorial.
-- Typically, the tutorials' target audience will be those familiar with the Python Standard Library, popular packages,
-  and possibly some of the dependencies.
-- For packages, it should be assumed that the audience is familiar with the packages in the package and their
-  dependencies.
-- Depending on the goal of the tutorial, the target audience may be different.
-- Tailor the language, complexity of examples, and depth of explanation to the intended audience.
+**Target Audience:** The target audience will be the main user-base reading and using this tutorial.
+- Typically, assume the target audience is familiar with the Python Standard Library, popular packages, and possibly some dependencies.
+- For packages, assume the audience is familiar with the package's modules and their dependencies.
+- Adjust the target audience depending on the goal of the tutorial.
+- Tailor language, complexity of examples, and depth of explanation to the intended audience.
 
-**package Scope:** The scope clearly defines what this package does and what it *doesn't* do.
-- Consider how does this tutorial fits into the understanding of the broader package.
+**package Scope:** Clearly define what this package does and what it *does not* do.
+- Consider how this tutorial fits into the understanding of the broader package.
 
-**Prerequisites:** The requirements in knowledge and resources required to complete the tutorial.
-- The concepts of the broader package that are used in the package.
-- Any advanced or obscure concepts of the Python Standard Library used in the package.
-- The concepts of the dependencies which are used in the package.
-- Any resources the user needs to import.
+**Prerequisites:** List knowledge and resource requirements needed to complete the tutorial.
+- List concepts of the broader package used in the package.
+- List any advanced or obscure Python Standard Library concepts used.
+- List dependency concepts used in the package.
+- List any resources the user must import.
 
 ### 4.2 Language
 
-The language used in package tutorials should be clear, accessible, and professional. Effective communication is crucial
-for ensuring users can understand and implement the package's functionality. Follow these guidelines to maintain consistent
-and user-friendly language throughout the tutorial:
+Ensure the language used in package tutorials is clear, accessible, and professional. Effective communication is crucial for ensuring users can understand and implement the package's functionality. Follow these guidelines to maintain consistent and user-friendly language throughout the tutorial:
 
-- Polite, friendly, and approachable while still being clear, concise, and certain.
+- Be polite, friendly, and approachable while remaining clear, concise, and certain.
 - Use simple, direct language. Avoid jargon where possible, or explain it if necessary.
 - Keep sentences and paragraphs short.
-- Use active voice.
+- When explaining features and how things work, use the third-person descriptive voice (e.g., "The module provides...").
+- When instructing users on how to use things, use the third-person imperative voice. The voice should be active
+  and be issued as commands (e.g., "The user should..."). Start with the Verb; avoid "The user should now try to
+  click..." and use "Click..." instead.
 
 ### 4.3 Logical Flow
 
-The logical flow of content is crucial for effective learning. A well-structured tutorial should progress naturally,
-building upon previous concepts and maintaining a clear connection between topics.
+Logical flow of content is crucial for effective learning. Ensure the tutorial progresses naturally, building upon previous concepts and maintaining a clear connection between topics.
 
 - Organize topics from simple to complex.
-- Ensure a smooth transition between sections.
-- Each section should build upon the previous ones.
+- Maintain smooth transitions between sections.
+- Build each section upon the previous ones.
 
 ### 4.4 Markdown Cells
 
-Markdown cells are essential for providing context, explanations, and documentation within the tutorial. They help break
-up code sections, explain concepts, and guide users through the learning process. These cells should be well-formatted
-and informative, making the tutorial easy to follow and understand.
+Use Markdown cells to provide context, explanations, and documentation. Use them to break up code sections, explain concepts, and guide users through the learning process. Ensure these cells are well-formatted and informative to make the tutorial easy to follow.
 
 - Introduce each code cell or group of related code cells with a Markdown cell.
-- Explain the purpose of the code, not just a line-by-line translation.
+- Explain the purpose of the code, rather than providing a line-by-line translation.
 - Use Markdown formatting (headings, lists, bold, italics, code highlighting) to improve readability.
 
 ### 4.5 Code Cells
 
-Code cells are essential for demonstrating the functionality of the package. They provide a clear and concise way to
-demonstrate the package's functionality and provide examples of how to use it.
+Use code cells to demonstrate the functionality of the package. Provide a clear and concise way to demonstrate the package's functionality and provide examples of how to use it.
 
-- Every code cell must be runnable independently or in sequence.
-- Ensure imports and variable initializations are correctly placed.
+- Ensure every code cell is runnable independently or in sequence.
+- Place imports and variable initializations correctly.
 - Test all code cells thoroughly.
-- Display Outputs: Ensure cell outputs are visible and illustrative.
-- For plots, make sure they render correctly in the notebook.
+- Display Outputs: ensure cell outputs are visible and illustrative.
+- Ensure plots render correctly in the notebook.
 
 ### 4.6 Self-Contained Examples
 
-Self-contained examples are crucial for ensuring that users can run and understand the tutorial without external
-dependencies or setup requirements. These examples should be complete, runnable units of code that demonstrate specific
-functionality while being independent of external resources. This approach makes the tutorial more accessible and
-reduces potential points of failure.
+Use self-contained examples to ensure that users can run and understand the tutorial without external dependencies or setup requirements. Provide complete, runnable units of code that demonstrate specific functionality while being independent of external resources. This approach makes the tutorial more accessible and reduces potential points of failure.
 
-- Avoid reliance on external files or services if possible. If necessary, provide clear instructions on how to
-  obtain/set them up, or include mock data/objects directly in the notebook.
+- Avoid reliance on external files or services if possible. If necessary, provide clear instructions on how to obtain/set them up, or include mock data/objects directly in the notebook.
 - For data, consider including a small CSV or generating data programmatically.
-- If there are unit tests, use them as a reference but do not copy them exactly. The tutorial and examples should
-  educate the user on how to use key aspects of the package and how they can use it to create new programs, not just
-  test it.
+- If there are unit tests, use them as a reference but do not copy them exactly. Use the tutorial and examples to educate the user on how to use key aspects of the package and how to create new programs, not just test it.
 
 ### 4.7 Error Handling Examples
 
-The Error Handling Examples section demonstrates how to handle common errors and exceptions that users might encounter
-while working with the package. This section helps users understand potential pitfalls and how to gracefully handle
-error conditions, making their code more robust and maintainable. It is optional, but recommended.
+Use the Error Handling Examples section to demonstrate how to handle common errors and exceptions that users might encounter. Help users understand potential pitfalls and how to gracefully handle error conditions to make their code more robust and maintainable. This section is optional, but recommended.
 
 - Show how to handle common exceptions or invalid inputs if relevant to the package's usage.
 
@@ -364,5 +325,5 @@ ensure the tutorial achieves its educational goals while maintaining user engage
 - **Keep it Updated:** As the package evolves, update the tutorial to reflect changes.
 - **Clear Outputs Before Distribution (Usually):** Unless the outputs are essential for understanding without running (e.g., a complex plot that takes time to generate), it's often best to "Clear All Outputs" before distributing the `.ipynb` file. This reduces file size and allows users to generate outputs themselves. Alternatively, ensure all outputs are clean and directly relevant.
 
-By following this style guide, developers can create high-quality Jupyter Notebook tutorials that significantly enhance the user experience for Python packages.
+Adhere to this style guide to create high-quality Jupyter Notebook tutorials that significantly enhance the user experience for Python packages.
 

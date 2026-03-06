@@ -1,6 +1,6 @@
 ﻿# Anthony's Python Style Guide: Typing
 
-Typing or type annotations provide hints for static type checking. Type-check the code at build time with a tool like 
+Typing or type annotations provide hints for static type checking. Type-check the code at build time with a tool like
 pytype. In  most cases, when feasible, type annotations are in source files. For third-party or extension modules,
 annotations can be in stub .pyi files.
 
@@ -39,10 +39,9 @@ a: SomeType = some_func()
 
 ## 1 General Rules
 
-Annotating `self` or `cls` is generally not necessary. `Self` can be used if it is necessary for proper type
-information, e.g.
+Avoid annotating `self` or `cls` as it is generally not necessary. Use `Self` if it is necessary for proper type information.
 
-If any other variable or a returned type should not be expressed, use `Any`.
+Use `Any` if any other variable or returned type is not expressed.
 
 ```python # pseudocode
 from typing import Self
@@ -59,10 +58,9 @@ class BaseClass:
 
 ## 2 Line Breaking
 
-Try to follow the existing indentation rules.
+Follow existing indentation rules.
 
-After annotating, many function signatures will become "one parameter per line". To ensure the return type is also given
-its own line, a comma can be placed after the last parameter.
+After annotating, many function signatures will become "one parameter per line". To ensure the return type also has its own line, place a comma after the last parameter.
 
 ```python # pseudocode
 def my_method(
@@ -74,17 +72,14 @@ def my_method(
   ...
 ```
 
-Always prefer breaking between variables, and not, for example, between variable names and type annotations. However, if
-everything fits on the same line, go for it.
+Always prefer breaking between variables, rather than between variable names and type annotations. If everything fits on the same line, use a single line.
 
 ```python # pseudocode
 def my_method(self, first_var: int) -> int:
   ...
 ```
 
-If the combination of the function name, the last parameter, and the return type is too long, indent by 4 in a new line.
-When using line breaks, prefer putting each parameter and the return type on their own lines and aligning the closing
-parenthesis with the def:
+If the combination of the function name, the last parameter, and the return type is too long, indent by 4 on a new line. When using line breaks, prefer putting each parameter and the return type on their own lines and aligning the closing parenthesis with the `def`:
 
 Correct:
 ```python # pseudocode
@@ -117,8 +112,7 @@ def my_method(self,
   ...
 ```
 
-As in the examples above, prefer not to break types. However, sometimes they are too long to be on a single line (try to
-keep sub-types unbroken).
+Prefer not to break types. However, if they are too long to be on a single line, try to keep sub-types unbroken.
 
 ```python # pseudocode
 def my_method(
@@ -131,8 +125,7 @@ def my_method(
   ...
 ```
 
-If a single name and type is too long, consider using an alias for the type. The last resort is to break after the colon
-and indent by 4.
+If a single name and type is too long, consider using an alias for the type. As a last resort, break after the colon and indent by 4.
 
 Correct:
 ```python # pseudocode
@@ -155,9 +148,7 @@ def my_function(
 
 ## 3 Forward Declarations
 
-If it is necessary to use a class name (from the same module) that is not yet defined — for example, if the class name is needed
-inside the declaration of that class, or when using a class that is defined later in the code — either use `from
-__future__ import annotations` or use a string for the class name.
+If a class name (from the same module) must be used that is not yet defined�for example, if the class name is needed inside its own declaration or when using a class defined later in the code�either use `from __future__ import annotations` or use a string for the class name.
 
 Correct:
 ```python # pseudocode
@@ -199,12 +190,9 @@ def func(a:int=0) -> int:
 
 ## 5 NoneType
 
-In the Python type system, `NoneType` is a "first class" type, and for typing purposes, `None` is an alias for
-`NoneType`. If an argument can be `None`, it has to be declared. Use `|` union type expressions (recommended in
-new Python 3.11+ code), or the older `Optional` and `Union` syntaxes.
+In the Python type system, `NoneType` is a "first class" type, and for typing purposes, `None` is an alias for `NoneType`. If an argument can be `None`, declare it. Use `|` union type expressions (recommended in new Python 3.11+ code), or the older `Optional` and `Union` syntaxes.
 
-Use explicit `X | None` instead of implicit. Earlier versions of type checkers allowed `a: str = None` to be interpreted
-as `a: str | None = None`, but that is no longer the preferred behavior.
+Use explicit `X | None` instead of implicit. Earlier versions of type checkers allowed `a: str = None` to be interpreted as `a: str | None = None`, but this is no longer the preferred behavior.
 
 Correct:
 ```python # pseudocode
@@ -225,8 +213,7 @@ def implicit_optional(a: str = None) -> str:
 
 ## 6 Type Aliases
 
-It is possible to declare aliases of complex types. The name of an alias should be CapWorded. If the alias is used only in this
-module, it should be _Private.
+Declare aliases of complex types. Name aliases using CapWords. If an alias is used only in its module, prepend it with an underscore (e.g., `_Private`).
 
 Note that the `: TypeAlias` annotation is only supported in versions 3.11+.
 
@@ -240,9 +227,9 @@ ComplexTFMap: TypeAlias = Mapping[str, _LossAndGradient]
 
 ## 7 Ignoring Types
 
-Type checking can be disabled on a line with the special comment `# type: ignore`.
+Disable type checking on a line with the special comment `# type: ignore`.
 
-pytype has a disable option for specific errors (similar to lint):
+Also, disable specific errors in `pytype` (similar to lint):
 
 ```python # pseudocode
 # pytype: disable=attribute-error
@@ -253,9 +240,7 @@ pytype has a disable option for specific errors (similar to lint):
 
 ### 8.1 Annotated Assignments
 
-If an internal variable has a type that is hard or impossible to infer, specify its type with an annotated assignment -
-use a colon and type between the variable name and value (the same as is done with function arguments that have a
-default value):
+If an internal variable has a type that is hard or impossible to infer, specify its type with an annotated assignment. Use a colon and type between the variable name and value (the same as is done with function arguments that have a default value):
 
 ```python # pseudocode
 a: Foo = SomeUndecoratedFunction()
@@ -313,8 +298,7 @@ def add(a: AddableType, b: AddableType) -> AddableType:
   return a + b
 ```
 
-A common predefined type variable in the typing module is `AnyStr`. Use it for multiple annotations that can be `bytes`
-or `str` and must all be the same type.
+Use `AnyStr` for multiple annotations that can be `bytes` or `str` and must all be the same type. It is a common predefined type variable in the `typing` module.
 
 ```python # pseudocode
 from typing import AnyStr
@@ -324,7 +308,7 @@ def check_length(x: AnyStr) -> AnyStr:
   raise ValueError()
 ```
 
-A type variable must have a descriptive name, unless it meets all of the following criteria:
+Ensure type variables have descriptive names unless they meet all of the following criteria:
 
 - not externally visible
 - not constrained
@@ -348,7 +332,7 @@ _F = TypeVar("_F", bound=Callable)
 
 ## 11 String Types
 
-Do not use `typing.Text` in new code. It's only for Python 2/3 compatibility.
+Do not use `typing.Text` in new code; it is only for Python 2/3 compatibility.
 
 Use `str` for string/text data. For code that deals with binary data, use `bytes`.
 
@@ -365,27 +349,20 @@ type in the code above, use `AnyStr`.
 
 ## 12 Imports for Typing
 
-For symbols (including types, functions, and constants) from the typing or collections.abc modules used to support
-static analysis and type checking, always import the symbol itself. This keeps common annotations more concise and
-matches typing practices used around the world. It is acceptable to import multiple specific symbols on one
-line from the typing and collections.abc modules. For example:
+Always import the symbol itself for symbols (including types, functions, and constants) from the `typing` or `collections.abc` modules used to support static analysis and type checking. This keeps common annotations more concise and matches global typing practices. Import multiple specific symbols on one line from these modules. For example:
 
 ```python # pseudocode
 from collections.abc import Mapping, Sequence
 from typing import Any, Generic, cast, TYPE_CHECKING
 ```
 
-Given that this way of importing adds items to the local namespace, names in typing or collections.abc should be treated
-similarly to keywords, and not be defined in the Python code, typed or not. If there is a collision between a type and
-an existing name in a module, import it using `import x as y`.
+Given that this way of importing adds items to the local namespace, treat names in `typing` or `collections.abc` similarly to keywords; do not define them in the Python code, whether typed or not. If there is a collision between a type and an existing name in a module, import it using `import x as y`.
 
 ```python # pseudocode
 from typing import Any as AnyType
 ```
 
-When annotating function signatures, prefer abstract container types like `collections.abc.Sequence` over concrete types
-like `list`. If a concrete type is needed (for example, a tuple of typed elements), prefer built-in types like
-`tuple` over the parametric type aliases from the typing module (e.g., `typing.Tuple`).
+When annotating function signatures, prefer abstract container types like `collections.abc.Sequence` over concrete types like `list`. If a concrete type is needed (for example, a tuple of typed elements), prefer built-in types like `tuple` over the parametric type aliases from the `typing` module (e.g., `typing.Tuple`).
 
 ```python # pseudocode
 from typing import List, Tuple
@@ -406,23 +383,19 @@ def transform_coordinates(original: Sequence[tuple[float, float]]) ->
 
 ## 13 Conditional Imports
 
-Use conditional imports only in exceptional cases where the additional imports needed for type checking must be avoided
-at runtime. This pattern is discouraged; alternatives such as refactoring the code to allow top-level imports should be
-preferred.
+Use conditional imports only in exceptional cases where additional imports for type checking at runtime must be avoided. Avoid this pattern when possible; prefer alternatives such as refactoring the code to allow top-level imports.
 
-Imports that are needed only for type annotations can be placed within an `if TYPE_CHECKING:` block.
+Place imports needed only for type annotations within an `if TYPE_CHECKING:` block.
 
-Conditionally imported types need to be referenced as strings, to be forward compatible with Python 3.6 where the
-annotation expressions are actually evaluated.
+Reference conditionally imported types as strings to maintain forward compatibility with Python versions where annotation expressions are evaluated.
 
-Only entities that are used solely for typing should be defined here; this includes aliases. Otherwise it will be a
-runtime error, as the module will not be imported at runtime.
+Define only entities used solely for typing here, including aliases. Avoid defining other entities, as it will cause a runtime error since the module will not be imported at runtime.
 
-The block should be right after all the normal imports.
+Place the block immediately after normal imports.
 
-There should be no empty lines in the typing imports list.
+Do not use empty lines in the typing imports list.
 
-Sort this list as if it were a regular imports list.
+Sort this list as a regular imports list.
 
 ```python # pseudocode
 import typing
@@ -434,13 +407,9 @@ def f(x: "sketch.Sketch"): ...
 
 ## 14 Circular Dependencies
 
-Circular dependencies that are caused by typing are code smells. Such code is a good candidate for refactoring. Although
-technically it is possible to keep circular dependencies, various build systems do not permit this because each
-module must depend on the other.
+Circular dependencies caused by typing are code smells; refactor such code. Although technically possible to keep circular dependencies, avoid them as various build systems do not permit them.
 
-Replace modules that create circular dependency imports with `Any`. Set an alias with a meaningful name, and use the
-real type name from this module (any attribute of `Any` is `Any`). Alias definitions should be separated from the last
-import by one line.
+Replace modules that create circular dependency imports with `Any`. Set an alias with a meaningful name, and use the real type name from this module (any attribute of `Any` is `Any`). Separate alias definitions from the last import by one line.
 
 ```python # pseudocode
 from typing import Any
@@ -455,8 +424,7 @@ def my_method(self, var: "some_mod.SomeType") -> None:
 
 ## 15 Generics
 
-When annotating, prefer to specify type parameters for generic types in a parameter list; otherwise, the generics'
-parameters will be assumed to be `Any`.
+When annotating, prefer specifying type parameters for generic types in a parameter list; otherwise, the generics' parameters are assumed to be `Any`.
 
 Correct:
 ```python # pseudocode

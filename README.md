@@ -17,7 +17,7 @@ maintainable. The structure is a fork of the [Google Style Guide](https://google
 ## Machine‑Readable Style Guide Index
 For automation and easier adoption, this repo includes a machine‑readable style guide index in
 [`style_guide.toml`](style_guide.toml). Tools and agents can ingest this file to configure linters/formatters
-consistently across projects and should be their entry point to using this style guide. If tools and agents need further
+consistently across projects and is the entry point to using this style guide. If tools and agents need further
 clarification, they can review the corresponding files.
 
 Specific projects tool guidelines can be found in [`project_tools.md`](project_tools.md), for which their configurations
@@ -80,16 +80,21 @@ The guide is split into focused documents and templates that can be read indepen
 
 
 - Templates: paste‑ready skeletons under `templates/`:
-  - [`__init__.py`](templates/src/package_template/__init__.py): template for package initialization modules.
-  - [`header.py`](templates/src/package_template/header.py): template for package metadata.
-  - [`module_template.py`](templates/src/package_template/module_template.py): template for a new module with recommended layout.
-  - [`class_template.py`](templates/src/package_template/class_template.py): template for class design and docstrings.
-  - [`function_template.py`](templates/src/package_template/function_template.py): template for well‑documented functions.
-  - [`test_suite_template.py`](templates/src/package_template/testsuite/test_suite_template.py): template for test suites using base classes.
-  - [`unit_test_template.py`](templates/tests/unit_test_template.py): template for pytest unit tests.
-  - [`performance_test_template.py`](templates/tests/performance_test_template.py): template for performance tests.
-  - [`example_template.py`](templates/examples/example_template.py): minimal example file showing the conventions.
-  - [`tutorial_template.ipynb`](templates/tutorials/tutorial_template.ipynb): notebook‑style tutorial template.
+  - [`__init__.py`](templates/src/templatepackage/__init__.py): template for package initialization modules.
+  - [`header.py`](templates/src/templatepackage/header.py): template for package metadata.
+  - [`user_registry.py`](templates/src/templatepackage/user_registry.py): template for a new module with recommended layout.
+  - [`user.py`](templates/src/templatepackage/user.py): template for class design and docstrings.
+  - [`normalization.py`](templates/src/templatepackage/normalization.py): template for well‑documented functions.
+  - [`usertestsuite.py`](templates/src/templatepackage/testsuite/usertestsuite.py): template for test suites using base classes.
+  - [`basehierarchytestsuite.py`](templates/src/templatepackage/testsuite/hierarchy/basehierarchytestsuite.py): template for a base class test suite in a hierarchy.
+  - [`concretehierarchytestsuite.py`](templates/src/templatepackage/testsuite/hierarchy/concretehierarchytestsuite.py): template for a concrete class test suite in a hierarchy.
+  - [`user_test.py`](templates/tests/user_test.py): template for pytest unit tests.
+  - [`base_hierarchy_test.py`](templates/tests/hierarchy/base_hierarchy_test.py): template for unit tests of a base class in a hierarchy.
+  - [`concrete_hierarchy_test.py`](templates/tests/hierarchy/concrete_hierarchy_test.py): template for unit tests of a concrete class in a hierarchy.
+  - [`user_registry_performance.py`](templates/tests/performance/user_registry_performance.py): template for performance tests.
+  - [`hierarchy_performance.py`](templates/tests/hierarchy/performance/hierarchy_performance.py): template for performance tests of a hierarchy.
+  - [`usage_examples.py`](templates/examples/usage_examples.py): minimal example file showing the conventions.
+  - [`tutorial.ipynb`](templates/tutorials/tutorial.ipynb): notebook‑style tutorial template.
 
 ## Style Guide Implementation
 
@@ -109,14 +114,14 @@ etc.
 3. Set up tooling and automation:
     - Configure tools following [`project_tools.md`](project_tools.md) and [`documentation.md`](documentation.md)
       guidance
-    - Point your automation to [`style_guide.toml`](style_guide.toml)
+    - Point automation to [`style_guide.toml`](style_guide.toml)
     - Align tool settings using instructions in [`project_tools.md`](project_tools.md)
     - Add pre-commit hooks and CI checks to catch style violations early
 
 4. Copy or vend the guide:
-    - Copy relevant files into your repo (commonly into docs/python-styleguide/), or
-    - Reference this repo directly from your docs/CONTRIBUTING.md
-    - You can vend this style guide into your project under `docs/python-styleguide/` as described
+    - Copy relevant files into the repo (commonly into docs/python-styleguide/), or
+    - Reference this repo directly from `docs/CONTRIBUTING.md`
+    - Vend this style guide into the project under `docs/python-styleguide/` as described
       in [`project_structure.md`](project_structure.md)
 
 5. Review or use templates:
@@ -124,20 +129,20 @@ etc.
     - Copy or use templates from `templates/` to get started quickly
 
 6. Start with fundamentals:
-    - Apply syntax/formatting.md and syntax/naming.md first for fast wins
-    - Adopt code_file_layout.md to keep modules consistent
+    - Apply `syntax/formatting.md` and `syntax/naming.md` first for fast wins.
+    - Adopt `code_file_layout.md` to keep modules consistent.
 
 7. Implement testing strategy:
-    - Keep tests close to the code
-    - Mirror your package structure in tests; see [`unit_tests.md`](tests/unit_tests.md)
+    - Keep tests close to the code.
+    - Mirror the package structure in tests; see [`unit_tests.md`](tests/unit_tests.md).
 
 8. Expand coverage gradually:
-    - Introduce typing, docstrings, logging, and error design guidelines as the codebase matures
-    - Consider the other documents' guidelines in addition to the fundamentals
+    - Introduce typing, docstrings, logging, and error design guidelines as the codebase matures.
+    - Consider the other documents' guidelines in addition to the fundamentals.
 
 ## Project Template
 
-A python package template project is available at https://github.com/AnthonyTechnologies/python-templatepackage. It is a
+A Python package template project is available at https://github.com/AnthonyTechnologies/python-templatepackage. It is a
 cookiecutter template that can be used to generate a new python package with this style guide applied. It also includes
 configurations for the tools in [`project_tools.md`](project_tools.md).
 
@@ -145,7 +150,7 @@ configurations for the tools in [`project_tools.md`](project_tools.md).
 Distributed under the terms of the [MIT license](https://opensource.org/licenses/MIT), python-styleguide is free and open source software.
 
 ## Contributing
-- Proposals for clarifications or updates should reference the section being changed and provide a brief rationale.
+- Reference the section being changed in proposals for clarifications or updates and provide a brief rationale.
 
 ## Credits and Related Resources
 - Google Python Style Guide: https://google.github.io/styleguide/pyguide.html

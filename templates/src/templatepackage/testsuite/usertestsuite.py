@@ -1,4 +1,4 @@
-"""test_suite_template.py
+"""usertestsuite.py
 Template module demonstrating the structure of a test suite using the project's base test suites.
 
 This module provides a template for creating a test suite that inherits from a base test suite (e.g.,
@@ -7,7 +7,7 @@ tests. Normally, the name of this script should match the name of the class or m
 """
 
 # Header #
-__package_name__ = "package_template"
+__package_name__ = "templatepackage"
 
 __author__ = "Author Name"
 __credits__ = ["Author Name"]
@@ -23,10 +23,11 @@ from typing import Any
 
 # Third-Party Packages #
 import pytest
+import asyncio
 from baseobjects.testsuite import BaseClassTestSuite
 
 # Local Packages #
-from ..class_template import User
+from ..user import User
 
 
 # Definitions #
@@ -39,19 +40,26 @@ class UserTestSuite(BaseClassTestSuite):
     """
 
     # Attributes #
-    UnitTestClass = User
+    UnitTestClass: type[User] = User
 
-    # Fixtures #
+    # Instance Methods #
+    # Fixtures
     @pytest.fixture
-    def test_object(self) -> User:
+    def test_object(self, *args: Any, **kwargs: Any) -> User:
         """Creates a test object.
+
+        Args:
+            *args: Positional arguments to pass to the class constructor.
+            **kwargs: Keyword arguments to pass to the class constructor.
 
         Returns:
             User: A User instance for testing.
         """
-        return User(user_id="test_id", name="Test User")
+        kwargs.setdefault("user_id", "test_id")
+        kwargs.setdefault("name", "Test User")
+        return self.UnitTestClass(*args, **kwargs)
 
-    # Tests #
+    # Tests
     def test_instance_creation(self, *args: Any, **kwargs: Any) -> None:
         """Tests that instances of the class can be created.
 
@@ -72,6 +80,20 @@ class UserTestSuite(BaseClassTestSuite):
             test_object: A fixture providing a test object instance.
         """
         assert test_object.get_display_name() == "Test User"
+
+    @pytest.mark.asyncio
+    async def test_async_operation(self, test_object: User) -> None:
+        """Tests an asynchronous operation.
+
+        Args:
+            test_object: A fixture providing a test object instance.
+        """
+        try:
+            # result = await test_object.async_method()
+            # assert result is True
+            pass
+        except (NotImplementedError, AttributeError):
+            pytest.skip("Async operation not implemented for this object.")
 
 
 # Main #

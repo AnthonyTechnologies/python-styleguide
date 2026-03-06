@@ -1,14 +1,13 @@
-"""module_template.py
+"""user_registry.py
 Template module demonstrating the overall structure of a general Python module file.
 
 This module provides a template for a general-purpose Python module, including imports, constants, function
 definitions, and class definitions. It serves as a guide for organizing code within a module to ensure consistency
-and readability. Typically, in a project a module file will either be a class definition or a function definition,
-but this template can be used for any type of module or a complex module containing multiple components.
+and readability.
 """
 
 # Header #
-__package_name__ = "package_template"
+__package_name__ = "templatepackage"
 
 __author__ = "Author Name"
 __credits__ = ["Author Name"]
@@ -23,8 +22,8 @@ __version__ = "0.1.0"
 from dataclasses import dataclass
 
 # Local Packages #
-from .class_template import User
-from .function_template import normalize_names
+from .user import User
+from .normalization import normalize_names
 
 
 # Definitions #
@@ -86,3 +85,9 @@ class UserRegistry:
 # Note: Use this section to register classes/functions to external registries.
 # Example:
 # registry.register("public_class", PublicClass)
+
+
+# Main #
+if __name__ == "__main__":
+    # Optional: Logic to run when the module is executed directly.
+    pass

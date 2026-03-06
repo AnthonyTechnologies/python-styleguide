@@ -1,4 +1,4 @@
-﻿# Anthony's Python Style Guide: Exceptions and Error Messages
+# Anthony's Python Style Guide: Exceptions and Error Messages
 
 ## Table of Contents
 
@@ -8,15 +8,11 @@
 
 ## 1 Exceptions
 
-Exceptions must follow certain conditions:
+Ensure exceptions follow these conditions:
 
-Make use of built-in exception classes when it makes sense. For example, raise a ValueError to indicate a programming
-mistake like a violated precondition, such as may happen when validating function arguments.
+Use built-in exception classes when appropriate. For example, raise a `ValueError` to indicate a programming mistake like a violated precondition, such as when validating function arguments.
 
-Do not use assert statements in place of conditionals or validating preconditions. They must not be critical to the
-application logic. A litmus test would be that the assert could be removed without breaking the code. assert
-conditionals are not guaranteed to be evaluated. For pytest based tests, assert is okay and expected to verify
-expectations.
+Do not use `assert` statements in place of conditionals or for validating preconditions. Ensure they are not critical to the application logic. A litmus test is that the `assert` can be removed without breaking the code. Remember that `assert` conditionals are not guaranteed to be evaluated. For `pytest` based tests, `assert` is permitted and expected to verify expectations.
 
 Examples:
 
@@ -76,30 +72,24 @@ def connect_to_next_port(self, minimum: int) -> int:
     return port
 ```
 
-Libraries or packages may define their own exceptions. When doing so they must inherit from an existing exception class.
-Exception names should end in Error and should not introduce repetition (foo.FooError).
+Libraries or packages may define their own exceptions. When doing so, inherit from an existing exception class. End exception names in `Error` and avoid introducing repetition (e.g., use `FooError` not `foo.FooError` if the package name is already `foo`).
 
-Never use catch-all `except:` statements, or catch `Exception` or `StandardError`, unless any of the following apply:
-- re-raising the exception, or
-- creating an isolation point in the program where exceptions are not propagated but are recorded and suppressed instead, such as protecting a thread from crashing by guarding its outermost block.
+Never use catch-all `except:` statements, and avoid catching `Exception` or `StandardError` except in the following cases:
+- Re-raising the exception.
+- Creating an isolation point in the program where exceptions are recorded and suppressed rather than propagated, such as protecting a thread from crashing by guarding its outermost block.
 
-Python is very tolerant in this regard and `except:` will really catch everything including misspelled names, sys.exit()
-calls, Ctrl+C interrupts, unittest failures and all kinds of other exceptions that should not be caught.
+Python's tolerance means `except:` catches everything, including misspelled names, `sys.exit()` calls, Ctrl+C interrupts, and `unittest` failures; avoid catching these unexpectedly.
 
-Minimize the amount of code in a try/except block. The larger the body of the try, the more likely that an exception
-will be raised by a line of code that was not expected to raise an exception. In those cases, the try/except block
-hides a real error.
+Minimize the amount of code in a `try`/`except` block. The larger the body of the `try`, the more likely an exception will be raised by a line of code that was not expected to raise one, potentially hiding a real error.
 
-Use the `finally` clause to execute code whether or not an exception is raised in the try block. This is often useful
-for cleanup, i.e., closing a file.
+Use the `finally` clause to execute code whether or not an exception is raised in the `try` block. This is useful for cleanup, such as closing a file.
 
 ## 2 Error Messages
-Error messages (such as: message strings on exceptions like ValueError, or messages shown to the user) should follow
-three guidelines:
+Follow these guidelines for error messages (such as message strings on exceptions like `ValueError` or messages shown to the user):
 
-1. The message needs to precisely match the actual error condition.
-2. Interpolated pieces need to always be clearly identifiable as such.
-3. They should allow simple automated processing (e.g. grepping).
+1. Match the message precisely to the actual error condition.
+2. Ensure interpolated pieces are always clearly identifiable.
+3. Ensure they allow simple automated processing (e.g., grepping).
 
 Correct:
 ```python # pseudocode

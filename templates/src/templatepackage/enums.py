@@ -1,4 +1,4 @@
-"""enum_template.py
+"""enums.py
 Template module demonstrating the structure and style of enumerations.
 
 This module provides a template for defining enumerations using the `enum` module. It demonstrates standard `Enum` usage
@@ -6,7 +6,7 @@ as well as `IntEnum` or `StrEnum` (Python 3.11+) where appropriate.
 """
 
 # Header #
-__package_name__ = "package_template"
+__package_name__ = "templatepackage"
 
 __author__ = "Author Name"
 __credits__ = ["Author Name"]
@@ -18,7 +18,15 @@ __version__ = "0.1.0"
 
 # Imports #
 # Standard Libraries #
+import sys
 from enum import Enum, auto
+
+if sys.version_info >= (3, 11):
+    from enum import StrEnum
+else:
+    # Fallback for Python < 3.11
+    class StrEnum(str, Enum):
+        """A string enumeration fallback for Python < 3.11."""
 
 
 # Definitions #
@@ -36,8 +44,8 @@ class UserRole(Enum):
     VIEWER = auto()
 
 
-class Color(str, Enum):  # noqa: UP042
-    """Enumeration of supported colors (String implementation).
+class Color(StrEnum):
+    """Enumeration of supported colors.
 
     Attributes:
         RED: 'red'

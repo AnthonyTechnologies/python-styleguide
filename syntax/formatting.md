@@ -1,6 +1,6 @@
 ﻿# Anthony's Python Style Guide: Formatting
 
-The code formatting should establish the visual and syntactic conventions that make Python source readable, consistent, 
+The code formatting should establish the visual and syntactic conventions that make Python source readable, consistent,
 and easy to maintain across a codebase. While there can be sensible exceptions, the aim is uniformity, predictability,
 and readability.
 
@@ -22,26 +22,24 @@ and readability.
 
 Pay attention to punctuation, spelling, and grammar; it is easier to read well-written code.
 
-Comments and docstrings should be as readable as narrative text, with proper capitalization and punctuation. In many 
-cases, complete sentences are more readable than sentence fragments. Shorter comments, such as comments at the end of 
-a line of code, can sometimes be less formal, but the style should remain consistent.
+Ensure comments and docstrings are as readable as narrative text, with proper capitalization and punctuation. Use complete sentences when they are more readable than sentence fragments. Use a less formal style for shorter comments, such as comments at the end of a line of code, but maintain a consistent style.
 
 
 ## 2 Line Length
 
-Maximum line length is 120 characters.
+Ensure the maximum line length is 120 characters.
 
-Explicit exceptions to the 120 character limit:
+Explicit exceptions to the 120-character limit:
 - Long import statements.
 - URLs, pathnames, or long flags in comments.
-- Long string module-level constants not containing whitespace that would be inconvenient to split across lines such as URLs or pathnames.
-- Pylint disable comments. (e.g.: `# pylint: disable=invalid-name`)
+- Long string module-level constants not containing whitespace that would be inconvenient to split across lines, such as URLs or pathnames.
+- Pylint disable comments (e.g., `# pylint: disable=invalid-name`).
 
 Do not use a backslash for explicit line continuation.
 
-Instead, make use of Python's implicit line joining inside parentheses, brackets, and braces. If necessary, an extra pair of parentheses can be added around an expression.
+Instead, use Python's implicit line joining inside parentheses, brackets, and braces. If necessary, add an extra pair of parentheses around an expression.
 
-Note that this rule doesn't prohibit backslash-escaped newlines within strings (see below).
+Note that this rule does not prohibit backslash-escaped newlines within strings (see below).
 
 Examples:
 
@@ -154,11 +152,9 @@ Correct:
 Make note of the indentation of the elements in the line continuation examples above; see the indentation section for
 explanation.
 
-Docstring summary lines must remain within the 120 character limit.
+Ensure docstring summary lines remain within the 120-character limit.
 
-In all other cases where a line exceeds 120 characters, and the Black or Pyink auto-formatter does not help bring the
-line below the limit, the line is allowed to exceed this maximum. Authors are encouraged to manually break the line up
-per the notes above when it is sensible.
+In cases where a line exceeds 120 characters and the auto-formatter does not bring it below the limit, the line may exceed this maximum. Manually break the line up per the notes above when sensible.
 
 
 ## 3 Semicolons
@@ -168,11 +164,11 @@ Do not terminate lines with semicolons, and do not use semicolons to put two sta
 
 ## 4 Statements
 
-Generally only one statement per line.
+Generally, use only one statement per line.
 
-However, placing the result of a test on the same line as the test is acceptable only if the entire statement fits on one line. In
-particular, this must never be done with try/except since the try and except cannot both fit on the same line, and it is
-acceptable with an if only when there is no else.
+However, place the result of a test on the same line as the test only if the entire statement fits on one line. Never do this with `try`/`except` since the `try` and `except` cannot both fit on the same line. This is acceptable with an `if` only when there is no `else`.
+
+When defining an empty class, method, or function, use a docstring and omit the `pass` statement. See [Docstrings](docstrings.md#5-empty-classes-methods-and-functions) for more information.
 
 Examples:
 
@@ -198,8 +194,7 @@ except ValueError: baz(foo)
 
 Use parentheses sparingly.
 
-It is fine, though not required, to use parentheses around tuples. Do not use them in return statements or conditional
-statements unless using parentheses for implied line continuation or to indicate a tuple.
+Use parentheses around tuples if preferred, though it is not required. Do not use them in `return` statements or conditional statements unless using them for implied line continuation or to indicate a tuple.
 
 Examples:
 
@@ -238,9 +233,7 @@ Never use the tab character.
 
 Some editors automatically insert spaces when the Tab key is pressed. Ensure the editor is configured to use 4 spaces for indentation.
 
-Implied line continuation should align wrapped elements vertically (see line length examples), or use a hanging 4-space
-indent. Closing (round, square, or curly) brackets can be placed at the end of the expression, or on separate lines, but
-then should be indented the same as the line with the corresponding opening bracket.
+Ensure implied line continuation aligns wrapped elements vertically (see line length examples) or uses a hanging 4-space indent. Place closing (round, square, or curly) brackets at the end of the expression or on separate lines; if on separate lines, indent them the same as the line with the corresponding opening bracket.
 
 Examples:
 
@@ -261,7 +254,7 @@ foo = {
 }
 ```
 ```python # pseudocode
-# 2-space hanging indent; nothing on first line.
+# 4-space hanging indent; nothing on first line.
 foo = long_function_name(
     var_one, var_two, var_three,
     var_four)
@@ -270,7 +263,7 @@ meal = (
     beans)
 ```
 ```python # pseudocode
-# 2-space hanging indent; nothing on first line,
+# 4-space hanging indent; nothing on first line,
 # closing parenthesis on a new line.
 foo = long_function_name(
     var_one, var_two, var_three,
@@ -282,7 +275,7 @@ meal = (
 )
 ```
 ```python # pseudocode
-# 2-space hanging indent in a dictionary.
+# 4-space hanging indent in a dictionary.
 foo = {
     'long_dictionary_key':
         long_dictionary_value,
@@ -299,7 +292,7 @@ meal = (spam,
     beans)
 ```
 ```python # pseudocode
-# 2-space hanging indent forbidden.
+# 4-space hanging indent forbidden.
 foo = long_function_name(
   var_one, var_two, var_three,
   var_four)
@@ -316,10 +309,7 @@ foo = {
 
 ## 7 Trailing Commas in Sequences of Items
 
-Trailing commas in sequences of items are required if and only if the closing container token `]`, `)`, or `}` does not
-appear on the same line as the final element, as well as for tuples with a single element. The presence of a trailing
-comma is also used as a hint to the Python code auto-formatter Black or Pyink to direct it to auto-format the container
-of items to one item per line when the `,` after the final element is present.
+Trailing commas in sequences of items are required if and only if the closing container token `]`, `)`, or `}` does not appear on the same line as the final element, as well as for tuples with a single element. Use a trailing comma as a hint to the Python code auto-formatter Black or Pyink to format the container items to one per line.
 
 Correct:
 ```python # pseudocode
@@ -344,12 +334,9 @@ golomb4 = [
 
 ## 8 Blank Lines
 
-Two blank lines between top-level definitions, be they function or class definitions. One blank line between method
-definitions and between the docstring of a class and the first method. No blank line following a def line. Use single
-blank lines as judged appropriate within functions or methods.
+Use two blank lines between top-level definitions, whether function or class definitions. Use one blank line between method definitions and between the docstring of a class and the first method. Do not use a blank line following a `def` line. Use single blank lines as appropriate within functions or methods.
 
-Blank lines need not be anchored to the definition. For example, related comments immediately preceding function, class,
-and method definitions can make sense. Consider whether the comment might be more useful as part of the docstring.
+Blank lines do not need to be anchored to the definition. For example, use related comments immediately preceding function, class, and method definitions. Consider whether the comment might be more useful as part of the docstring.
 
 
 ## 9 Whitespace
@@ -368,8 +355,7 @@ Incorrect:
 spam( ham[ 1 ], { 'eggs': 2 }, [ ] )
 ```
 
-No whitespace before a comma, semicolon, or colon. Do use whitespace after a comma, semicolon, or colon, except at the
-end of the line.
+Do not use whitespace before a comma, semicolon, or colon. Use whitespace after a comma, semicolon, or colon, except at the end of the line.
 
 Correct:
 ```python # pseudocode
@@ -385,7 +371,7 @@ if x == 4 :
  x , y = y , x
 ```
 
-No whitespace before the open paren/bracket that starts an argument list, indexing, or slicing.
+Use no whitespace before the open paren/bracket that starts an argument list, indexing, or slicing.
 
 Correct:
 ```python # pseudocode
@@ -407,11 +393,9 @@ Incorrect:
 dict ['key'] = list [index]
 ```
 
-No trailing whitespace.
+Do not use trailing whitespace.
 
-Surround binary operators with a single space on either side for assignment (`=`), comparisons (`==`, `<`, `>`, `!=`,
-`<>`, `<=`, `>=`, `in`, `not in`, `is`, `is not`), and Booleans (`and`, `or`, `not`). Use best judgment for the
-insertion of spaces around arithmetic operators (`+`, `-`, `*`, `/`, `//`, `%`, `**`, `@`).
+Use a single space on either side of binary operators for assignment (`=`), comparisons (`==`, `<`, `>`, `!=`, `<>`, `<=`, `>=`, `in`, `not in`, `is`, `is not`), and Booleans (`and`, `or`, `not`). Use best judgment for the insertion of spaces around arithmetic operators (`+`, `-`, `*`, `/`, `//`, `%`, `**`, `@`).
 
 Correct:
 ```python # pseudocode
@@ -438,8 +422,7 @@ def complex(real, imag = 0.0): return Magic(r = real, i = imag)
 def complex(real, imag: float=0.0): return Magic(r = real, i = imag)
 ```
 
-Don't use spaces to vertically align tokens on consecutive lines, since it becomes a maintenance burden (applies to `:`,
-`#`, `=`, etc.):
+Avoid using spaces to vertically align tokens on consecutive lines, as it becomes a maintenance burden (applies to `:`, `#`, `=`, etc.).
 
 Correct:
 ```python # pseudocode

@@ -1,5 +1,5 @@
 """__init__.py
-Examples for the template package.
+Performance tests for the hierarchy package.
 """
 
 # Header #

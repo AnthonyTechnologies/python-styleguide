@@ -1,15 +1,13 @@
 #!/usr/bin/env python
-"""performance_test_template.py
-Starter template for creating runnable performance tests under the examples/ directory.
+"""registry_performance.py
+Starter template for creating runnable performance tests.
 
 This module provides a template for creating performance tests that can be run using pytest. It includes a basic test
-case that measures the performance of creating a registry against a baseline (e.g., list comprehension).Normally, the
-name of this script should match the name of the item which the performance test is for, but it is named
-performance_test_template to make it easier to find when browsing the templates directory.
+case that measures the performance of creating a registry against a baseline (e.g., list comprehension).
 """
 
 # Header #
-__package_name__ = "package_template"
+__package_name__ = "templatepackage"
 
 __author__ = "Author Name"
 __credits__ = ["Author Name"]
@@ -27,8 +25,9 @@ from typing import Final
 # Third-Party Packages #
 import pytest
 
-# Source Packages #
-from package_template.module_template import create_registry
+# Local Packages #
+from baseobjects.testsuite import BasePerformanceTestSuite
+from templatepackage.user_registry import create_registry
 
 
 # Definitions #
@@ -37,19 +36,20 @@ _SECTION_LINE: Final[str] = "-" * 72
 
 
 # Tests #
-class TestRegistryPerformance:
+class TestRegistryPerformance(BasePerformanceTestSuite):
     """Benchmarks UserRegistry.
 
     Attributes:
-        timeit_runs: number of iterations per timing sample
-        speed_tolerance: acceptable percent-of-baseline overhead
+        timeit_runs: Number of iterations per timing sample.
+        speed_tolerance: Acceptable percent-of-baseline overhead.
     """
 
     # Attributes #
-    timeit_runs: int = 100  # Adjust based on the cost of the operation
+    timeit_runs: int = 100  # Adjust based on the cost of the operation.
     speed_tolerance: float = 200.0
 
-    # Tests #
+    # Instance Methods #
+    # Tests
     def test_registry_creation_performance(self) -> None:
         """Benchmarks registry creation against a baseline (e.g., list comprehension)."""
         names = [f"user_{i}" for i in range(1000)]
@@ -61,8 +61,8 @@ class TestRegistryPerformance:
         def baseline_impl() -> None:
             """Just creates User objects in a list."""
             # Simulating overhead of just creating User objects without Registry wrapper
-            # Third-Party Packages #
-            from package_template.class_template import User
+            # Local Packages #
+            from templatepackage.user import User
             [User(user_id=n, name=n) for n in names]
 
         # Measure mean time in microseconds

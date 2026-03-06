@@ -1,10 +1,10 @@
-﻿# Anthony's Python Style Guide: Code and File Layout
+# Anthony's Python Style Guide: Code and File Layout
 
 This document provides comprehensive guidelines for organizing Python code in a file. It details the standard structure
-and layout that all Python files should follow, including the ordering of sections like shebang lines, module
-docstrings, imports, and definitions. The guidelines cover how to organize constants, functions, and classes, with
-special attention to class structure and the organization of methods within classes. Following these guidelines ensures
-consistency across the codebase, making it easier to navigate, understand, and maintain the project's source code.
+and layout that all Python files must follow, including the ordering of sections like shebang lines, module docstrings,
+imports, and definitions. The guidelines cover how to organize constants, functions, and classes, with special attention
+to class structure and the organization of methods within classes. Following these guidelines ensures consistency across
+the codebase, making it easier to navigate, understand, and maintain the project's source code.
 
 ## Table of Contents
 
@@ -36,7 +36,7 @@ consistency across the codebase, making it easier to navigate, understand, and m
 
 ## 1 General Python File Layout
 
-Each Python file, except for internal files, must follow this structure:
+Follow this structure for each Python file, except for internal files:
 
 1. Shebang Line (If applicable)
 2. Module Docstring
@@ -46,24 +46,21 @@ Each Python file, except for internal files, must follow this structure:
 6. Definitions section with constants, functions, classes, etc.
 7. Main Section
 
-Finally, there is always a blank line at the end of the file.
+Finally, ensure there is always a blank line at the end of the file.
 
 ### 1.1 Shebang Line
 
-Most .py files do not need to start with a `#!` line. Start the main file of a program with `#!/usr/bin/env python3` (to
+Omit the `#!` line for most `.py` files. Start the main file of a program with `#!/usr/bin/env python3` (to
 support virtualenvs) or `#!/usr/bin/python3` per PEP-394.
 
-This line is used by the kernel to find the Python interpreter, but is ignored by Python when importing modules. It is
-only necessary on a file intended to be executed directly.
+Use this line for the kernel to find the Python interpreter; Python ignores it when importing modules. Include it only on a file intended for direct execution.
 
 ### 1.2 Future Imports
 
 New language version semantic changes may be gated behind a special future import to enable them on a per-file basis
 within earlier runtimes.
 
-Use of `from __future__ import` statements is encouraged. It allows a given source file to start using more modern
-Python syntax features today. Once it is no longer necessary to run on a version where the features are hidden behind a
-`__future__` import, those lines may be removed.
+Use `from __future__ import` statements to start using more modern Python syntax features today. Remove those lines once it is no longer necessary to run on a version where the features are hidden behind a `__future__` import.
 
 In code that may execute on versions as old as 3.5 rather than >= 3.7, import:
 
@@ -73,34 +70,30 @@ from __future__ import generator_stop
 from __future__ import annotations
 ```
 
-For more information read the Python future statement definitions documentation.
+For more information, read the Python future statement definitions documentation.
 
-Please do not remove these imports until it is certain the code is only ever used in a sufficiently modern
-environment. Even if the specific feature enabled by a particular future import is not currently used in the code, keeping
-it in place prevents later modifications from inadvertently depending on the older behavior.
+Do not remove these imports until it is certain the code is only ever used in a sufficiently modern environment. Even if the specific feature enabled by a particular future import is not currently used in the code, keep it in place to prevent later modifications from inadvertently depending on the older behavior.
 
 Guidelines:
-- The Future Imports section should almost always go in the Imports section.
-- A Future Imports section may be put immediately after Shebang Line if and only if the imported modify either
-  docstrings or header variable assignments
+- Put the Future Imports section before the Header section to comply with Python's syntax requirements.
+- Omit the Future Imports section if there are no future imports.
 
 ### 1.3 Module Docstring
 
-The module docstring describes the contents of the file. The guidelines for docstrings can be found in
-[Docstrings](syntax/docstrings.md). The guidelines here are a reiteration of what is also in the Syntax topics.
+Describe the contents of the file in the module docstring. Find the guidelines for docstrings in [Docstrings](syntax/docstrings.md). These guidelines reiterate what is also in the Syntax topics.
 
 Guidelines:
-- Files should start with a docstring describing the contents and usage of the module
-- The first line of the module should be file name exactly as it is in the file system (typically lowercase)
-- The second line should be a one-line summary of the module or program, terminated by a period
-- The third line should be blank
-- Starting from the fourth line, the rest of docstring should include a detailed description of the module or program
+- Start files with a docstring describing the contents and usage of the module.
+- Use the file name exactly as it is in the file system (typically lowercase) as the first line of the module.
+- Provide a one-line summary of the module or program, terminated by a period, on the second line.
+- Leave the third line blank.
+- Include a detailed description of the module or program starting from the fourth line.
 
 ```python # pseudocode
 """file_name.py
 A one-line summary of the module or program, terminated by a period.
 
-Leave one blank line. The rest of this docstring should contain an overall description of the module or program. The
+Leave one blank line. Include an overall description of the module or program in the rest of the docstring. The
 description can be broken up into multiple paragraphs to present the functionality into logical sections. Bullet-point
 and numerical lists may be used as well, but only add them if they are needed.
 """
@@ -108,17 +101,17 @@ and numerical lists may be used as well, but only add them if they are needed.
 
 ### 1.4 Header Section
 
-The header section contains metadata about the file and the package. This section must be included in all Python files.
+The header section contains metadata about the file and the package. Include this section in all Python files.
 
 Guidelines:
-- The Header section must have the header comment: `# Header #`
-- The Header section must include the package name as `__package_name__`
-- The Header section must include author information as `__author__`
-- The Header section must include credits as `__credits__`
-  - Credits must be a list of strings or the contributors' names.
-- The Header section must include copyright information as `__copyright__`
-- The Header section must include license information as `__license__`
-- The Header section must include version information as `__version__`
+- Include the header comment `# Header #` in the Header section.
+- Include the package name as `__package_name__` in the Header section.
+- Include author information as `__author__` in the Header section.
+- Include credits as `__credits__` in the Header section.
+  - Ensure credits are a list of strings or the contributors' names.
+- Include copyright information as `__copyright__` in the Header section.
+- Include license information as `__license__` in the Header section.
+- Include version information as `__version__` in the Header section.
 
 Example:
 ```python # pseudocode
@@ -135,35 +128,30 @@ __version__ = "1.12.0"
 
 ### 1.5 Imports
 
-Python import statements are how python links code across multiple files. Imported items must be easily trackable. Also,
-with trackback tools, it is straightforward to find which definition is used.
+Python import statements link code across multiple files. Ensure imported items are easily trackable. Also, use trackback tools to find which definition is used.
 
 Guidelines:
-- Imports are always put at the top of the file, just after any module comments and docstrings and before module globals
-  and constants
-- The Imports section must have the header comment: `# Imports #`
-- Import must be grouped, in order, by future, standard library, third party, and project modules
-  - The future import group must have the header comment: `# Futures #`
-  - The standard library import group must have the header comment: `# Standard Libraries #`
-  - The third party import group must have the header comment: `# Third-Party Packages #`
-  - The project import group must have the header comment: `# Local Packages #`
-- The future import group should be omitted if there are no future imports
-- There must be one blank line between each import group
-- Within each grouping, imports must be sorted lexicographically, ignoring case, according to each module's full package path
-- Imports must be grouped from most generic to least generic
-- Package and module imports must be on separate lines
-- Preferably,`from x import y` must be used individual types, classes, or functions
-- Avoid wildcard imports (`from module import *`). Except when a module's `__init__.py` is importing all items from a sub-module
-- For conflicts, import the parent module/package then call the item from that module/package
-- For some conflicts, if a normally lower case class name conflicts, it can be imported as a camel case variant
-  (e.g., `from datetime import tzinfo as TZInfo`)
+- Put imports at the top of the file, just after any module comments and docstrings and before module globals and constants.
+- Include the header comment `# Imports #` in the Imports section.
+- Group imports, in order, by standard library, third party, and project modules.
+  - Include the header comment `# Standard Libraries #` for the standard library import group.
+  - Include the header comment `# Third-Party Packages #` for the third party import group.
+  - Include the header comment `# Local Packages #` for the project import group.
+- Ensure there is one blank line between each import group.
+- Sort imports lexicographically within each grouping, ignoring case, according to each module's full package path.
+- Group imports from most generic to least generic.
+- Put package and module imports on separate lines.
+- Use `from x import y` for individual types, classes, or functions.
+- Avoid wildcard imports (`from module import *`), except when a module's `__init__.py` imports all items from a sub-module.
+- For conflicts, import the parent module/package then call the item from that module/package.
+- For some conflicts, if a normally lower case class name conflicts, import it as a camel case variant (e.g., `from datetime import tzinfo as TZInfo`).
 - Use `from x import y as z` in any of the following circumstances:
-  - Two modules named y are to be imported
-  - y conflicts with a top-level name defined in the current module
-  - y conflicts with a common parameter name that is part of the public API (e.g., features)
-  - y is an inconveniently long name
-  - y is too generic in the context of the code (e.g., from storage.file_system import options as fs_options)
-- Use `import y as z` only when z is a standard abbreviation (e.g., `import numpy as np`)
+  - Two modules named y are to be imported.
+  - y conflicts with a top-level name defined in the current module.
+  - y conflicts with a common parameter name that is part of the public API (e.g., features).
+  - y is an inconveniently long name.
+  - y is too generic in the context of the code (e.g., from storage.file_system import options as fs_options).
+- Use `import y as z` only when z is a standard abbreviation (e.g., `import numpy as np`).
 
 Exemptions:
 - Symbols from the following modules are used to support static analysis and type checking:
@@ -199,30 +187,28 @@ import os, sys
 
 ### 1.6 Definitions Section
 
-The definitions section is a section of code that defines constants, functions, classes, etc. If there are no
-definitions, the section may be omitted.
+The definitions section contains code that defines constants, functions, classes, etc. If there are no definitions, omit the section.
 
-The definitions section must have the header comment: `# Definitions #`
+Include the header comment `# Definitions #` in the definitions section.
 
-Definitions should be organized into the following subsections with the recommended order:
+Organize definitions into the following subsections in the recommended order:
 1. Constants
 2. Functions
 3. Classes
 4. Additional Definitions
 
-However, the definition subsections may be organized in any order that makes sense for the code and may be omitted if
-there are no definitions in that section.
+However, optionally, organize the definition subsections in any order that makes sense for the code and omit them if there are no definitions in that section.
 
 #### 1.6.1 Constants
 
-Constants are values that must not be changed during program execution. They are typically defined at the module level.
+Constants are values that must not be changed during program execution. Typically, define them at the module level.
 
 Guidelines:
-- The Constants section must have the header comment: `# Constants #`
-- Constants must be named using ALL_CAPS_WITH_UNDERSCORES
-- Constants must be placed before function and class definitions
-- Constants must have a clear, descriptive name that indicates their purpose
-- Complex constants must have a comment explaining their purpose or derivation
+- Include the header comment `# Constants #` in the Constants section.
+- Name constants using ALL_CAPS_WITH_UNDERSCORES.
+- Place constants before function and class definitions.
+- Ensure constants have a clear, descriptive name that indicates their purpose.
+- Provide a comment for complex constants explaining their purpose or derivation.
 
 Example:
 ```python # pseudocode
@@ -232,18 +218,18 @@ EXCEL_INIT_DATE = datetime(1899, 12, 30)  # The initial date of Excel's date sys
 
 #### 1.6.2 Functions
 
-Functions are reusable blocks of code that perform specific tasks. They must be defined at the module level.
+Functions are reusable blocks of code that perform specific tasks. Define them at the module level.
 
 Guidelines:
-- Functions must be placed after constants and before class definitions
-- The Functions section must have the header comment: `# Functions #`
-- Each function must have a descriptive docstring that explains its purpose, parameters, and return values (See Syntactic Guidelines)
-- Function names must use snake_case (lowercase with underscores)
-- Function parameters must have type hints
-- Function return values must have type hints
-- Functions must be organized by functionality
-- Related functions must be grouped together
-- Decorator functions must be placed before the functions they decorate
+- Place functions after constants and before class definitions.
+- Include the header comment `# Functions #` in the Functions section.
+- Ensure each function has a descriptive docstring that explains its purpose, parameters, and return values (See Syntactic Guidelines).
+- Use snake_case (lowercase with underscores) for function names, except for decorators use lowercase with or without underscores (no underscores is preferred).
+- Include type hints for function parameters.
+- Include type hints for function return values.
+- Organize functions by functionality.
+- Group related functions together.
+- Place decorator functions before the functions they decorate.
 
 Example:
 ```python # pseudocode
@@ -264,16 +250,16 @@ def excel_date_to_datetime(timestamp: int | float | str | bytes, tzinfo: tzinfo 
 
 #### 1.6.3 Classes
 
-Classes are blueprints for creating objects that encapsulate data and behavior. They must be defined at the module level.
+Classes are blueprints for creating objects that encapsulate data and behavior. Define them at the module level.
 
 Guidelines:
-- Classes must be placed after constants and functions
-- The Classes section must have the header comment: `# Classes #`
-- Class names must use CamelCase (capitalize first letter of each word)
-- Each class must have a descriptive docstring that explains its purpose (See Syntactic Guidelines)
-- Classes must follow a consistent internal organization (see subsections below)
-- Related classes must be grouped together
-- Base classes must be defined before derived classes
+- Place classes after constants and functions.
+- Include the header comment `# Classes #` in the Classes section.
+- Use CamelCase (capitalize the first letter of each word) for class names, except for decorator classes use lowercase with or without underscores (no underscores is preferred).
+- Ensure each class has a descriptive docstring that explains its purpose (See Syntactic Guidelines).
+- Follow a consistent internal organization for classes (see subsections below).
+- Group related classes together.
+- Define base classes before derived classes.
 
 Example:
 ```python # pseudocode
@@ -284,7 +270,7 @@ class BaseObject(ABC):
     # Class structure follows...
 ```
 
-Classes must follow a consistent internal organization with the following sections:
+Follow a consistent internal organization for classes with the following sections:
 1. Docstring
 2. Static Methods
 3. Class Attributes
@@ -295,7 +281,7 @@ Classes must follow a consistent internal organization with the following sectio
 8. Magic Methods
 9. Instance Methods
 
-However, the only required section is the docstring. All other sections may be omitted if they are not needed.
+However, the only required section is the docstring. Omit all other sections if they are not needed.
 
 The docstring standards and best practices are described in the Syntactic Guidelines document.
 
@@ -304,12 +290,12 @@ The docstring standards and best practices are described in the Syntactic Guidel
 Static methods are methods that don't operate on instance data and don't require an instance of the class to be called.
 
 Guidelines:
-- Must be defined at the beginning of the class, before class attributes
-- Must be grouped under a comment: `# Static Methods #`
-- Must be decorated with `@staticmethod`
-- Names must use snake_case (lowercase with underscores)
-- Must have a descriptive docstring that explains their purpose, parameters, and return values
-- Must have type hints for parameters and return values
+- Define at the beginning of the class, before class attributes.
+- Group under a comment: `# Static Methods #`.
+- Decorate with `@staticmethod`.
+- Use snake_case (lowercase with underscores) for names.
+- Provide a descriptive docstring that explains their purpose, parameters, and return values.
+- Include type hints for parameters and return values.
 
 Example:
 ```python # pseudocode
@@ -332,13 +318,13 @@ def create_from_data(data: dict) -> "MyClass":
 Class attributes are variables that are shared by all instances of a class. They are defined at the class level.
 
 Guidelines:
-- Must be defined after static methods and before class magic methods
-- Must be grouped under a comment: `# Class Attributes #`
-- Must use snake_case (lowercase with underscores)
-- Must have type hints
-- Must bee type hinted with `ClassVar` (This what distinguishes class attributes from instance attributes)
-- Private class attributes must be prefixed with an underscore
-- Must be organized by related functionality
+- Define after static methods and before class magic methods.
+- Group under a comment: `# Class Attributes #`.
+- Use snake_case (lowercase with underscores).
+- Include type hints.
+- Use `ClassVar` for type hints (this distinguishes class attributes from instance attributes).
+- Prefix private class attributes with an underscore.
+- Organize by related functionality.
 
 Example:
 ```python # pseudocode
@@ -356,12 +342,12 @@ Class magic methods are special methods that are invoked by Python's syntax rath
 are defined at the class level and operate on the class itself rather than instances.
 
 Guidelines:
-- Must be defined after class attributes and before class methods
-- Must be grouped under a comment: `# Class Magic Methods #`
-- Must be prefixed and suffixed with double underscores (e.g., `__new__`)
-- Must have descriptive docstrings that explain their purpose, parameters, and return values
-- Must have type hints for parameters and return values
-- Must be organized by functionality (e.g., Construction/Destruction)
+- Define after class attributes and before class methods.
+- Group under a comment: `# Class Magic Methods #`.
+- Prefix and suffix with double underscores (e.g., `__new__`).
+- Provide descriptive docstrings that explain their purpose, parameters, and return values.
+- Include type hints for parameters and return values.
+- Organize by functionality (e.g., Construction/Destruction).
 
 Example:
 ```python # pseudocode
@@ -384,13 +370,13 @@ def __new__(cls, *args: Any, **kwargs: Any) -> Any:
 Class methods are methods that operate on the class itself rather than instances. They receive the class as their first argument (conventionally named `cls`).
 
 Guidelines:
-- Must be defined after class magic methods and before instance attributes
-- Must be grouped under a comment: `# Class Methods #`
-- Must be decorated with `@classmethod`
-- Names must use snake_case (lowercase with underscores)
-- Must have descriptive docstrings that explain their purpose, parameters, and return values
-- Must have type hints for parameters and return values
-- Must be organized by functionality
+- Define after class magic methods and before instance attributes.
+- Group under a comment: `# Class Methods #`.
+- Decorate with `@classmethod`.
+- Use snake_case (lowercase with underscores) for names.
+- Provide descriptive docstrings that explain their purpose, parameters, and return values.
+- Include type hints for parameters and return values.
+- Organize by functionality.
 
 Example:
 ```python # pseudocode
@@ -414,16 +400,16 @@ Instance attributes are variables that are specific to each instance of a class.
 scope and can be initialized in the `__init__` or `construct` methods.
 
 Guidelines:
-- Must be defined after class methods and before properties
-- Must be grouped under a comment: `# Attributes #` in the class definition scope (They are defined outside of `__init__`)
-- All instance attributes must be defined in this section at the class definition scope
-- Must use snake_case (lowercase with underscores)
-- Private/Protected instance attributes must be prefixed with an underscore
-- Must have type hints
-- Must NOT be type hinted with `ClassVar` (This what distinguishes instance attributes from class attributes)
-- Must be documented in the class docstring (Check Dostrings in Syntactic Guidelines for more information)
-- Should be organized by related functionality
-- Can be initialized in the `__init__` method but not necessary
+- Define after class methods and before properties.
+- Group under a comment: `# Attributes #` in the class definition scope (they are defined outside of `__init__`).
+- Define all instance attributes in this section at the class definition scope.
+- Use snake_case (lowercase with underscores).
+- Prefix private/protected instance attributes with an underscore.
+- Include type hints.
+- Do NOT use `ClassVar` for type hints (this distinguishes instance attributes from class attributes).
+- Document in the class docstring (check Docstrings in Syntactic Guidelines for more information).
+- Organize by related functionality.
+- Initialize in the `__init__` method, but it is not required.
 
 Example:
 ```python # pseudocode
@@ -443,34 +429,27 @@ def __init__(self, *args: Any, **kwargs: Any) -> None:
 
 ##### 1.6.3.6 Properties
 
-Properties may be used to control getting or setting attributes that require trivial computations or logic. Property
-implementations must match the general expectations of regular attribute access: that they are cheap, straightforward,
-and unsurprising.
+Properties may be used to control getting or setting attributes that require trivial computations or logic. Ensure property implementations match the general expectations of regular attribute access: that they are cheap, straightforward, and unsurprising.
 
-Properties are allowed, but, like operator overloading, must only be used when necessary and match the expectations of
-typical attribute access; follow the getters and setters rules otherwise.
+Use properties only when necessary and match the expectations of typical attribute access; follow the getters and setters rules otherwise.
 
-For example, using a property to simply both get and set an internal attribute isn't allowed: there is no computation
-occurring, so the property is unnecessary (make the attribute public instead). In comparison, using a property to
-control attribute access or to calculate a trivially derived value is allowed: the logic is simple and unsurprising.
+For example, using a property to simply both get and set an internal attribute is not allowed: there is no computation occurring, so the property is unnecessary (make the attribute public instead). In comparison, use a property to control attribute access or to calculate a trivially derived value: the logic is simple and unsurprising.
 
-Properties must be created with the `@property` decorator. Manually implementing a property descriptor is considered
-a power feature.
+Create properties with the `@property` decorator. Manually implementing a property descriptor is considered a power feature.
 
-Inheritance with properties can be non-obvious. Do not use properties to implement computations a subclass may ever want
-to override and extend.
+Inheritance with properties can be non-obvious. Do not use properties to implement computations a subclass may ever want to override and extend.
 
 ##### 1.6.3.7 Magic Methods
 
 Magic methods (also known as dunder methods) are special methods that are invoked by Python's syntax rather than by explicit method calls. They are defined at the instance level.
 
 Guidelines:
-- Must be defined after properties and before instance methods
-- Must be grouped under a comment: `# Magic Methods #`
-- Must be prefixed and suffixed with double underscores (e.g., `__str__`)
-- Must have descriptive docstrings that explain their purpose, parameters, and return values (see Syntactic Guidelines)
-- Must have type hints for parameters and return values
-- Must be organized by functionality (e.g., Construction/Destruction, Comparison, etc.)
+- Define after properties and before instance methods.
+- Group under a comment: `# Magic Methods #`.
+- Prefix and suffix with double underscores (e.g., `__str__`).
+- Provide descriptive docstrings that explain their purpose, parameters, and return values (see Syntactic Guidelines).
+- Include type hints for parameters and return values.
+- Organize by functionality (e.g., Construction/Destruction, Comparison, etc.).
 
 Example:
 ```python # pseudocode
@@ -496,8 +475,7 @@ def __copy__(self) -> Any:
 
 ###### 1.6.3.7.1 Magic Method Subcategories
 
-Magic methods should be organized into subcategories based on their functionality. This helps improve code readability
-and organization. Each subcategory should be preceded by a comment indicating the subcategory name.
+Organize magic methods into subcategories based on their functionality to improve code readability and organization. Precede each subcategory with a comment indicating the subcategory name.
 
 Common magic method subcategories include:
 
@@ -570,13 +548,13 @@ Instance methods are methods that operate on instance data and require an instan
 receive the instance as their first argument (conventionally named `self`).
 
 Guidelines:
-- Must be defined after magic methods and before getters and setters
-- Must be grouped under a comment: `# Instance Methods #`
-- Names must use snake_case (lowercase with underscores)
-- Must have descriptive docstrings that explain their purpose, parameters, and return values (see Syntactic Guidelines)
-- Must have type hints for parameters and return values
-- Must be organized by functionality (e.g., Constructors/Destructors, Setters, Parsers, etc.)
-- Related methods must be grouped together with subcategory comments
+- Define after magic methods and before getters and setters.
+- Group under a comment: `# Instance Methods #`.
+- Use snake_case (lowercase with underscores) for names.
+- Provide descriptive docstrings that explain their purpose, parameters, and return values (see Syntactic Guidelines).
+- Include type hints for parameters and return values.
+- Organize by functionality (e.g., Constructors/Destructors, Setters, Parsers, etc.).
+- Group related methods together with subcategory comments.
 
 Example:
 ```python # pseudocode
@@ -603,8 +581,7 @@ def set_kwarg(self, kwarg: str | None) -> None:
 
 ###### 1.6.3.8.1 Instance Method Subcategories
 
-Instance methods should be organized into subcategories based on their functionality. This helps improve code
-readability and organization. Each subcategory should be preceded by a comment indicating the subcategory name.
+Organize instance methods into subcategories based on their functionality to improve code readability and organization. Precede each subcategory with a comment indicating the subcategory name.
 
 Common instance method subcategories include:
 
@@ -678,22 +655,15 @@ def dispatch_call(self, method_name: str, *args: Any, **kwargs: Any) -> Any:
 
 ##### 1.6.3.9 Getters and Setters
 
-Getter and setter methods (also called accessors and mutators) are a type of method which must be used when they
-provide a meaningful role or behavior for getting or setting a variable's value.
+Use getter and setter methods (also called accessors and mutators) when they provide a meaningful role or behavior for getting or setting a variable's value.
 
-In particular, they must be used when getting or setting the variable is complex or the cost is significant, either
-currently or in a reasonable future.
+In particular, use them when getting or setting the variable is complex or the cost is significant, either currently or in a reasonable future.
 
-If, for example, a pair of getters/setters simply read and write an internal attribute, the internal attribute must be
-made public instead. By comparison, if setting a variable means some state is invalidated or rebuilt, it must be a
-setter function. The function invocation hints that a potentially non-trivial operation is occurring. Alternatively,
-properties may be an option when simple logic is needed, or refactoring to no longer need getters and setters.
+For example, if a pair of getters/setters simply read and write an internal attribute, make the internal attribute public instead. By comparison, if setting a variable means some state is invalidated or rebuilt, use a setter function. The function invocation hints that a potentially non-trivial operation is occurring. Alternatively, use properties when simple logic is needed, or refactor to no longer need getters and setters.
 
-Getters and setters must follow the Naming guidelines, such as `get_foo()` and `set_foo()`.
+Follow the Naming guidelines for getters and setters, such as `get_foo()` and `set_foo()`.
 
-If the past behavior allowed access through a property, do not bind the new getter/setter functions to the property. Any
-code still attempting to access the variable by the old method must break visibly, so they are made aware of the
-change in complexity.
+If the past behavior allowed access through a property, do not bind the new getter/setter functions to the property. Ensure any code still attempting to access the variable by the old method breaks visibly so that users are aware of the change in complexity.
 
 ##### 1.6.3.10 Additional Definitions
 
@@ -708,9 +678,7 @@ that case, the registration may be defined in a definitions section called: `# R
 
 ### 1.7 Main
 
-In Python, pydoc as well as unit tests require modules to be importable. If a file is meant to be used as an executable,
-its main functionality must be in a `main()` function, and the code must always check if `__name__ == '__main__'`
-before executing the main program, so that it is not executed when the module is imported.
+In Python, pydoc as well as unit tests require modules to be importable. If a file is intended for use as an executable, its main functionality must be in a `main()` function. Always check if `__name__ == '__main__'` before executing the main program so that it is not executed when the module is imported.
 
 When using absl, use app.run:
 
@@ -742,18 +710,17 @@ objects, or perform other operations that must not be executed when the file is 
 
 ## 2 \_\_init__.py File Layout
 
-The `__init__.py` file is a special file in Python that marks a directory as a Python package. It can be empty or
-contain code to initialize the package.
+The `__init__.py` file is a special file in Python that marks a directory as a Python package. It can be empty or contain code to initialize the package.
 
 Guidelines:
-- Must follow the same general structure as other Python files
-- Must include a module docstring that describes the package
-- Must include the Header section with package metadata
-- Must import and expose the public API of the package
-- Can use wildcard imports (`from .submodule import *`) to expose all public members from submodules
-- Must be kept simple and focused on package initialization
-- Must not contain implementation details
-- Can contain logic to handle package imports (i.e., try catch import block)
+- Follow the same general structure as other Python files.
+- Include a module docstring that describes the package.
+- Include the Header section with package metadata.
+- Import and expose the public API of the package.
+- Use wildcard imports (`from .submodule import *`) to expose all public members from submodules.
+- Keep it simple and focused on package initialization.
+- Do not include implementation details.
+- Include logic to handle package imports (i.e., try-catch import block).
 
 Example:
 ```python # pseudocode

@@ -1,4 +1,4 @@
-﻿# Anthony's Python Style Guide: Logging
+# Anthony's Python Style Guide: Logging
 
 ## Table of Contents
 
@@ -7,10 +7,7 @@
 
 ## 1 Logging Message Patterns
 
-For logging functions that expect a pattern-string (with %-placeholders) as their first argument: Always call them with
-a string literal (not an f-string!) as their first argument with pattern-parameters as subsequent arguments. Some
-logging implementations collect the unexpanded pattern-string as a queryable field. It also prevents spending time
-rendering a message that no logger is configured to output.
+For logging functions that expect a pattern-string (with %-placeholders) as their first argument: always call them with a string literal (not an f-string!) as their first argument and provide pattern-parameters as subsequent arguments. Use this approach because some logging implementations collect the unexpanded pattern-string as a queryable field, and it prevents spending time rendering a message that no logger is configured to output.
 
 Correct (stdlib):
 ```python # pseudocode
