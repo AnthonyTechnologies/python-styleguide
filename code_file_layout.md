@@ -322,7 +322,8 @@ Guidelines:
 - Group under a comment: `# Class Attributes #`.
 - Use snake_case (lowercase with underscores).
 - Include type hints.
-- Use `ClassVar` for type hints (this distinguishes class attributes from instance attributes).
+- Use `ClassVar` for type hints (this distinguishes class attributes from instance attributes). An exception is
+  `UnitTestClass`, which should NOT use `ClassVar`.
 - Prefix private class attributes with an underscore.
 - Organize by related functionality.
 
