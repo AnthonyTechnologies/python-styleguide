@@ -1,11 +1,14 @@
 ﻿# Anthony's Python Style Guide: Comments
 
-Comments should be used to outline sections of code and explain tricky parts of the code. All comments should be written
-in the third-person. When explaining features and how things work, use the third-person descriptive voice (e.g.,
-"Calculates the sum."). When instructing users on how to use things or providing requirements, use the third-person
-imperative voice. The voice should be active and be issued as commands (e.g., "The user must call this function
-first."). This ensures a professional and objective tone throughout the code. Avoid using first-person ("we") or
-second-person ("you") perspectives.
+Use comments to outline sections of code and explain complex logic. All comments must be written in the third-person to maintain a professional and objective tone.
+
+### Rationale
+Clear and objective comments are required to help maintainers understand the "why" and "how" of complex operations without cluttering the code with redundant descriptions of simple logic.
+
+Directives:
+- Use the third-person declarative voice for explaining features (e.g., "Calculates the sum").
+- Use the third-person imperative voice for instructions or requirements (e.g., "The user must call this function first").
+- Avoid first-person ("we") and second-person ("you") perspectives.
 
 ## Table of Contents
 
@@ -14,25 +17,28 @@ second-person ("you") perspectives.
 
 
 ## 1 Block and Inline
-In general, group operations into sections based on their purpose. Use comments to outline these sections and explain the purpose of the code.
 
-Comments guidelines:
-- Start comments with the `#` character, followed by a space before the text.
-- Include a title comment at the start of code sections defining the purpose of that section.
-- Provide a few lines of comments before complicated sections.
-- Describe what the section is trying to accomplish and how it achieves that.
-- Avoid describing what each line of code is doing.
-- Add comments at the end of the line for non-obvious operations.
-- Start inline comments at least 2 spaces away from the code they are commenting on.
+Group operations into sections and use comments to define the purpose of each section.
 
-Correct:
+### Rationale
+Sectioning code with comments is required to improve discoverability and reduce cognitive load when navigating large modules.
+
+Directives:
+- Start comments with `# ` (a hash followed by a space).
+- Include a title comment at the start of each major code section.
+- Provide explanatory comments before complicated logic blocks.
+- Describe goals and high-level implementation rather than line-by-line actions.
+- Use inline comments for non-obvious operations, starting at least 2 spaces away from the code.
+
+Compliant:
 ```python # pseudocode
 # Find Location in the Array
 # A weighted dictionary search is used to determine where i is in the array. The position is extrapolated based on the
-# largest number in the array and the array size, and then a binary search is performed to obtain the exact index.
+# largest number in the array and the array size, and then a binary search is performed to obtain the index.
 if i & (i-1) == 0:  # True if i is 0 or a power of 2.
 ```
-Incorrect:
+
+Non-Compliant:
 ```python # pseudocode
 # Now go through the b array and make sure whenever x occurs the next element is x+1
 for i, v in enum(b):
@@ -42,21 +48,26 @@ for i, v in enum(b):
 
 
 ## 2 TODO Comments
-Use TODO comments for code that is temporary, a short-term solution, or good-enough but not perfect.
 
-A TODO comment begins with the word `TODO` in all caps, followed by a colon and a link to a resource that contains the context, ideally a bug reference. Use a bug reference when possible because bugs are tracked and have follow-up comments. Follow this piece of context with an explanatory string introduced with a hyphen `-`. The purpose is to maintain a consistent `TODO` format that can be searched to find more details.
+Use `TODO` comments for temporary, short-term, or non-optimal solutions.
 
+### Rationale
+Standardized `TODO` comments are required to ensure that pending work is easily searchable and contains enough context for future resolution.
+
+Directives:
+- Start the comment with `TODO` in all caps, followed by a colon.
+- Include a link to a resource (ideally a bug or issue reference) for context.
+- Follow the context with an explanatory string introduced by a hyphen `-`.
+- Avoid referring to specific individuals or teams.
+- Ensure that `TODO` comments referring to future events include specific dates or triggers.
+
+Compliant:
 ```python # pseudocode
 # TODO: crbug.com/192795 - Investigate cpufreq optimizations.
 ```
 
-Avoid adding TODOs that refer to an individual or team as the context:
-
+Non-Compliant:
 ```python # pseudocode
-# TODO: @username - File an issue and use a '*' for repetition.
+# TODO: @username - File an issue.
 ```
-
-If a TODO is of the form "At a future date do something" ensure that it either includes a very specific date
-("Fix by November 2009") or a very specific event ("Remove this code when all clients can handle XML responses.") that
-future code maintainers will comprehend. Issues are ideal for tracking this.
 

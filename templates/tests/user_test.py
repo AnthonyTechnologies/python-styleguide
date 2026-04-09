@@ -26,12 +26,11 @@ from typing import Any, Final
 
 # Third-Party Packages #
 import pytest
-
-# Local Packages #
 from baseobjects.testsuite import BaseClassTestSuite
+
+# Source Packages #
 from templatepackage import User, UserRegistry
 from templatepackage.testsuite import UserTestSuite
-
 
 # Definitions #
 # Constants and Test Data #
@@ -113,7 +112,7 @@ class TestUserRegistry(BaseClassTestSuite):
         assert len(test_object.users) == 3
         assert "charlie" in test_object.get_all_names()
 
-    @pytest.mark.parametrize("name, expected", [
+    @pytest.mark.parametrize(("name", "expected"), [
         ("Alice", "alice"),
         ("  Bob  ", "bob"),
     ])

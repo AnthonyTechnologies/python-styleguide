@@ -18,7 +18,7 @@ __version__ = "0.1.0"
 
 
 # Imports #
-# Third-Party Packages #
+# Source Packages #
 from templatepackage.user import User
 from templatepackage.user_registry import UserRegistry, create_registry
 

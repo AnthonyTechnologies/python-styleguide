@@ -15,7 +15,7 @@ __version__ = "0.1.0"
 
 
 # Imports #
-# Third-Party Packages #
+# Source Packages #
 from templatepackage.hierarchy.concrete_hierarchy import ConcreteHierarchy
 
 

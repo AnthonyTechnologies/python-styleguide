@@ -1,22 +1,34 @@
 # Anthony's Python Style Guide: Exceptions and Error Messages
 
+Use exceptions to handle error conditions and provide meaningful feedback.
+
+### Rationale
+Clear and consistent exception handling is required to ensure that errors are predictable, easy to debug, and do not lead to silent failures.
+
 ## Table of Contents
 
 - [1 Exceptions](#1-exceptions)
 - [2 Error Messages](#2-error-messages)
+- [3 Exception Message Formatting](#3-exception-message-formatting)
 
 
 ## 1 Exceptions
 
-Ensure exceptions follow these conditions:
+Follow these directives for using and defining exceptions.
 
-Use built-in exception classes when appropriate. For example, raise a `ValueError` to indicate a programming mistake like a violated precondition, such as when validating function arguments.
+### Rationale
+Proper exception usage is required to maintain the integrity of application logic and to provide clear signals when a program enters an invalid state.
 
-Do not use `assert` statements in place of conditionals or for validating preconditions. Ensure they are not critical to the application logic. A litmus test is that the `assert` can be removed without breaking the code. Remember that `assert` conditionals are not guaranteed to be evaluated. For `pytest` based tests, `assert` is permitted and expected to verify expectations.
+Directives:
+- Use built-in exception classes when appropriate (e.g., `ValueError` for invalid arguments).
+- Do not use `assert` statements for critical application logic or precondition validation. `assert` must be limited to tests and non-critical checks.
+- Suffix custom exception names with `Error`.
+- Inherit custom exceptions from existing exception classes.
+- Avoid catch-all `except:` statements. Do not catch `Exception` unless re-raising or creating a documented isolation point.
+- Keep `try` blocks as small as possible to avoid hiding unrelated errors.
+- Use `finally` for required cleanup operations.
 
-Examples:
-
-Correct:
+Compliant:
 ```python # pseudocode
 # Setup minimal context so this snippet runs
 import logging
@@ -36,20 +48,19 @@ def connect_to_next_port(self, minimum: int) -> int:
         ConnectionError: If no available port is found.
     """
     if minimum < 1024:
-      # Note that this raising of ValueError is not mentioned in the doc
-      # string's "Raises:" section because it is not appropriate to
-      # guarantee this specific behavioral reaction to API misuse.
-      raise ValueError(f'Min. port must be at least 1024, not {minimum}.')
+      msg = f'Min. port must be at least 1024, not {minimum}.'
+      raise ValueError(msg)
     port = self._find_next_open_port(minimum)
     if port is None:
-        raise ConnectionError(
-            f'Could not connect to service on port {minimum} or higher.')
+        msg = f'Could not connect to service on port {minimum} or higher.'
+        raise ConnectionError(msg)
     # The code does not depend on the result of this assert.
-    assert port >= minimum, (f'Unexpected port {port} when minimum was {minimum}.')
+    msg = f'Unexpected port {port} when minimum was {minimum}.'
+    assert port >= minimum, msg
     return port
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 # Setup minimal context so this snippet runs
 import logging
@@ -72,26 +83,48 @@ def connect_to_next_port(self, minimum: int) -> int:
     return port
 ```
 
-Libraries or packages may define their own exceptions. When doing so, inherit from an existing exception class. End exception names in `Error` and avoid introducing repetition (e.g., use `FooError` not `foo.FooError` if the package name is already `foo`).
-
-Never use catch-all `except:` statements, and avoid catching `Exception` or `StandardError` except in the following cases:
-- Re-raising the exception.
-- Creating an isolation point in the program where exceptions are recorded and suppressed rather than propagated, such as protecting a thread from crashing by guarding its outermost block.
-
-Python's tolerance means `except:` catches everything, including misspelled names, `sys.exit()` calls, Ctrl+C interrupts, and `unittest` failures; avoid catching these unexpectedly.
-
-Minimize the amount of code in a `try`/`except` block. The larger the body of the `try`, the more likely an exception will be raised by a line of code that was not expected to raise one, potentially hiding a real error.
-
-Use the `finally` clause to execute code whether or not an exception is raised in the `try` block. This is useful for cleanup, such as closing a file.
+Directives:
+- Suffix custom exception names with `Error`.
+- Inherit custom exceptions from existing exception classes.
+- Avoid introducing repetition in the name (e.g., use `FooError` not `foo.FooError` if the package name is `foo`).
+- Avoid catch-all `except:` statements. Do not catch `Exception` unless re-raising or creating a documented isolation point.
+- Keep `try` blocks as small as possible to avoid hiding unrelated errors.
+- Use `finally` for required cleanup operations.
 
 ## 2 Error Messages
-Follow these guidelines for error messages (such as message strings on exceptions like `ValueError` or messages shown to the user):
 
-1. Match the message precisely to the actual error condition.
-2. Ensure interpolated pieces are always clearly identifiable.
-3. Ensure they allow simple automated processing (e.g., grepping).
+Follow these directives for formatting and content of error messages.
 
-Correct:
+### Rationale
+Clear and specific error messages are required to provide actionable information to developers and users.
+
+Directives:
+- Match the message precisely to the actual error condition.
+- Store the error message in a local variable named `msg` before passing to the exception or warning.
+- Use f-strings within the `msg` variable for clarity and consistency.
+- Avoid redundant information already present in the traceback.
+- Be specific about what was expected and what was received.
+- Start with a capital letter and avoid a period for short, single-sentence messages.
+
+Compliant:
+```python # pseudocode
+msg = f"Expected a positive integer, got {value}"
+raise ValueError(msg)
+
+msg = f"Expected str, got {type(value).__name__}"
+raise TypeError(msg)
+```
+
+Non-Compliant:
+```python # pseudocode
+# PROBLEM: Message not stored in 'msg' variable
+raise ValueError(f"Expected a positive integer, got {value}")
+
+# PROBLEM: Non-specific and not using 'msg' variable
+raise ValueError("Value must be positive.")
+```
+
+Compliant:
 ```python # pseudocode
 # Minimal context
 import os
@@ -101,15 +134,17 @@ p = 0.5
 workdir = "."
 
 if not 0 <= p <= 1:
-    raise ValueError(f'Not a probability: {p}')
+    msg = f'Not a probability: {p}'
+    raise ValueError(msg)
 
 try:
     os.rmdir(workdir)
 except OSError as error:
-    logging.warning('Could not remove directory (reason: %r): %r', error, workdir)
+    msg = 'Could not remove directory (reason: %r): %r'
+    logging.warning(msg, error, workdir)
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 import os
 import logging
@@ -117,24 +152,14 @@ p = 0.5
 workdir = "."
 
 if p < 0 or p > 1:  # PROBLEM: also false for float('nan')!
-    raise ValueError(f'Not a probability: {p}')
+    msg = f'Not a probability: {p}'
+    raise ValueError(msg)
 
 try:
     os.rmdir(workdir)
 except OSError:
-    # PROBLEM: Message makes an assumption that might not be true:
-    # Deletion might have failed for some other reason, misleading
-    # whoever has to debug this.
+    # PROBLEM: Message makes an assumption that might not be true.
+    # PROBLEM: Not using 'msg' variable
     logging.warning('Directory already was deleted: %s', workdir)
-
-try:
-    os.rmdir(workdir)
-except OSError:
-    # PROBLEM: The message is harder to grep for than necessary, and
-    # not universally non-confusing for all possible values of `workdir`.
-    # Imagine someone calling a library function with such code
-    # using a name such as workdir = 'deleted'. The warning would read:
-    # "The deleted directory could not be deleted."
-    logging.warning('The %s directory could not be deleted.', workdir)
 ```
 

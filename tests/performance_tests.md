@@ -1,28 +1,14 @@
 # Anthony's Python Style Guide: Performance Tests
 
-Performance testing is a critical aspect of software development that ensures code not only functions correctly but also
-executes efficiently. These tests help identify performance regressions, validate optimizations, and ensure that
-implementations meet performance requirements.
+Use performance tests to measure execution time, memory usage, and other efficiency metrics of individual components.
 
-The performance tests in this guide are designed around the unit testing framework described in
-[Unit Tests](unit_tests.md) as test performance against individual components of the code similar to
-unit tests.
+### Rationale
+Performance testing is required to identify regressions, validate optimizations, and ensure that implementations meet efficiency requirements.
 
-Unlike unit tests that verify functional correctness, performance tests measure execution time, memory usage, and other
-performance metrics. They often compare the performance of custom implementations against standard library equivalents
-or previous versions to ensure that optimizations are effective and that new features don't introduce performance
-regressions.
-
-Performance tests are not required for all modules and classes, but create them for any that may have a
-significant performance impact.
-
-This document focuses on performance test-specific aspects. For general code organization, file structure, naming
-conventions, docstrings, and other standard practices, please refer to:
-
-- [Code File Layout](../code_file_layout.md) - For file organization and structure
-- Syntax topics â€” [Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md), [Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md), [Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) â€” for naming conventions, docstrings, and code formatting
-- [Semantics Guidelines](../semantics.md) - For general code organization principles
-- [Unit Tests](unit_tests.md) - For general testing practices and patterns
+Directives:
+- Follow general style guidelines (naming, layout, docstrings) in all performance test code.
+- Create performance tests for any module or class with a significant performance impact.
+- Compare custom implementations against standard library equivalents or previous versions.
 
 ## Table of Contents
 
@@ -45,24 +31,30 @@ conventions, docstrings, and other standard practices, please refer to:
 
 ## 1 Directory Hierarchy
 
-Performance tests mostly follow the Unit Test Directory Hierarchy with some differences.
+Organize performance tests within a structure that separates them from functional unit tests.
 
-Place Performance Base Test Suites or performance test suites that cover general implementations in the package source code under `testsuite`, along with other unit test suites. Under normal circumstances, do not place test suites in the project source as only developers need them. However, given that PyPI currently does not support alternate package installations, include these test suites in the source to allow developers using PyPI to expand or create their own.
+### Rationale
+A dedicated performance directory is required to prevent performance-heavy tests from slowing down the primary unit test suite.
+
+Directives:
+- Place performance base suites in the package source under `testsuite/`.
+- Organize concrete performance tests in a `performance/` subdirectory within the corresponding module's test directory.
+- Name performance test files with a `_performance.py` suffix.
 
 Example:
 ```
 src/
 +-- baseobjects/                # The main source package
     +-- testsuite/
-    ¦   +-- bases/
-    ¦   ¦   +-- __init__.py
-    ¦   ¦   +-- basetestsuite.py
-    ¦   ¦   +-- baseperformancetestsuite.py
-    ¦   ¦   +-- ...
-    ¦   +-- __init__.py
-    ¦   +-- objecttestsuite.py
-    ¦   +-- objectperformancetestsuite.py
-    ¦   +-- ...
+    ï¿½   +-- bases/
+    ï¿½   ï¿½   +-- __init__.py
+    ï¿½   ï¿½   +-- basetestsuite.py
+    ï¿½   ï¿½   +-- baseperformancetestsuite.py
+    ï¿½   ï¿½   +-- ...
+    ï¿½   +-- __init__.py
+    ï¿½   +-- objecttestsuite.py
+    ï¿½   +-- objectperformancetestsuite.py
+    ï¿½   +-- ...
     +-- ...
 ```
 
@@ -77,38 +69,44 @@ Example:
 ```
 tests/
 +-- bases/                          # Tests for the bases package
-¦   +-- performance/                # Performance tests for the bases package
-¦   ¦   +-- baseobject_performance.py
-¦   ¦   +-- basecallable_performance.py
-¦   ¦   +-- ...
-¦   +-- ...
+ï¿½   +-- performance/                # Performance tests for the bases package
+ï¿½   ï¿½   +-- baseobject_performance.py
+ï¿½   ï¿½   +-- basecallable_performance.py
+ï¿½   ï¿½   +-- ...
+ï¿½   +-- ...
 +-- cachingtools/
     +-- performance/
-    ¦   +-- ...
+    ï¿½   +-- ...
     +-- ...
 ```
 
 
 ## 2 Performance Test Structure
 
-Use performance tests to measure the performance components of the code and provide a set of tools for measuring the performance of extensions. Ensure the structure of performance tests follows the structure described in [Unit Tests](unit_tests.md).
+Follow the structure established in [Unit Tests](unit_tests.md) for performance tests.
 
 ### 2.1 Performance Test Classes
 
-Use performance test classes to group related test methods and create test suites as described in [Unit Tests](unit_tests.md), section 4.1. Follow these additional requirements specific to performance testing:
+Use classes to group related performance benchmarks.
 
-- Define comparison objects in test classes that match the functionality of the test objects but use standard library or alternative implementations.
-- Define performance-specific attributes like `timeit_runs` and `speed_tolerance` in test classes.
+### Rationale
+Structured performance classes are required to manage benchmark parameters, such as iteration counts and speed tolerances, consistently across multiple tests.
+
+Directives:
+- Define comparison objects from the standard library or alternative implementations.
+- Set performance-specific attributes (e.g., `timeit_runs`, `speed_tolerance`) at the class level.
 
 ### 2.2 Performance Test Methods
 
-Ensure performance test methods follow the general test method guidelines in [Unit Tests](unit_tests.md). Follow these additional requirements specific to performance testing:
+Design methods to measure a specific performance metric.
 
-- Focus test methods on measuring a specific performance aspect (speed, memory usage, etc.).
-- Include performance-specific assertions in test methods that verify metrics meet requirements.
-- Include detailed performance reporting in test methods for analysis.
-- Assert that the percentage comparison is below the threshold.
-- Use different thresholds for different types of operations if necessary.
+### Rationale
+Granular measurement methods are required to isolate bottlenecks and provide clear, actionable feedback on performance changes.
+
+Directives:
+- Focus on a single aspect (e.g., speed, memory).
+- Include assertions that verify metrics against defined thresholds.
+- Provide detailed reporting for analysis upon failure.
 
 Example:
 ```python # pseudocode
@@ -135,44 +133,33 @@ def test_copy_speed(self, test_object: BaseObject) -> None:
     percent = (mean_new / mean_old) * 100
 
     # Print the performance comparison
-    print(f"\nNew: {mean_new:.3f} µs ({percent:.3f}% of old function time)")
+    print(f"\nNew: {mean_new:.3f} ï¿½s ({percent:.3f}% of old function time)")
     assert percent < self.speed_tolerance
 ```
 
 ### 2.3 Performance Test Suites
 
-Performance Test Suites are Test Classes designed to function as collections of related tests that assay the performance of a specific component, feature, or functionality. Ensure Performance Test Suites follow the general test suite guidelines in [Unit Tests](unit_tests.md).
+Use performance test suites to group related tests that evaluate the efficiency of a specific component or feature.
 
-Organize test suites hierarchically, with more specific test suites inheriting from more general base test suites to build up complex testing functionality while maintaining consistent testing patterns. The base hierarchy consists of Base Performance Test Suites and Concrete Test Suites.
+### Rationale
+Hierarchical test suites are required to maintain a consistent testing pattern while building complex, scalable performance validation logic.
+
+Directives:
+- Inherit from general base suites to share common benchmarks.
+- Use `BasePerformanceTestSuite` as the foundation for all performance suites.
+- Follow naming conventions: `Base<Component>PerformanceTestSuite` for generic suites and `<Component>PerformanceTestSuite` for specific implementations.
 
 #### 2.3.1 Base Performance Test Suites
 
-Base Performance Test Suites contain a collection of tests assaying the performance of a component, feature, or functionality with a focus on testing general aspects. Generally, follow the guidelines for Base Performance Test Suites in [Unit Tests](unit_tests.md).
+Define abstract and concrete methods in base suites to establish mandatory performance benchmarks.
 
-As in [Unit Tests](unit_tests.md), ensure a Base Performance Test Suite has a target to test such as `UnitTestClass` or `test_target`. Compose it of abstract and concrete methods which test the target against various unit tests which the target must pass. Establishing a test target allows subclassed test suites to interchange test targets to assay performance.
+### Rationale
+Base suites are required to enforce that all subclasses implement essential performance checks and use consistent measurement techniques.
 
-Use concrete performance tests in a Base Performance Test Suite to ensure that test targets are tested similarly, and use abstract tests to enforce that certain tests must be performed, with implementation details defined in more specific test suites.
-
-Use abstract methods when:
-- The implementation details depend on the specific class or function being tested.
-- The test is required for all subclasses, but the implementation varies.
-- The test requires specific knowledge about the class or function being tested that cannot be generalized.
-- The test suite needs to enforce that certain tests are implemented by subclasses.
-
-Use concrete methods when:
-- The implementation can be shared across all subclasses.
-- The test behavior is consistent regardless of the specific class or function being tested.
-- The test can be implemented in a general way that works for all subclasses.
-- The test suite provides a default implementation that subclasses may optionally override.
-
-Use the base performance test suites provided by the `baseobjects` package as a foundation. These classes provide common functionality and ensure consistency across performance tests.
-
-- `BasePerformanceTestSuite`: The abstract base class for performance tests.
-
-
-Guidelines:
-- Name generic test suites similarly to `BaseObjectPerformanceTestSuite`, where the component being validated is inserted between "Base" and "PerformanceTestSuite".
-- Name specific test suites that define most of the implementation similarly to `ObjectPerformanceTestSuite`, where the component being tested precedes "PerformanceTestSuite".
+Directives:
+- Use abstract methods when implementation details depend on the specific target.
+- Use concrete methods for benchmarks shared across all subclasses.
+- Establish a clear test target (e.g., `UnitTestClass`).
 
 Example:
 ```python # pseudocode
@@ -328,7 +315,7 @@ class WrapperPerformanceTestSuite(BasePerformanceTestSuite, BaseClassTestSuite):
         percent = (mean_new / mean_old) * 100
 
         # Print the performance comparison
-        print(f"\n{self.UnitTestClass.__name__} attribute access: {mean_new:.3f} µs ({percent:.3f}% of direct access time)")
+        print(f"\n{self.UnitTestClass.__name__} attribute access: {mean_new:.3f} ï¿½s ({percent:.3f}% of direct access time)")
         assert percent < self.speed_tolerance
 
 ```
@@ -457,7 +444,7 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
         percent = (mean_new / mean_old) * 100
 
         # Print the performance comparison
-        print(f"\n_setattr method: {mean_new:.3f} µs ({percent:.3f}% of normal set time)")
+        print(f"\n_setattr method: {mean_new:.3f} ï¿½s ({percent:.3f}% of normal set time)")
         # No assertion here, just measuring relative performance
 
 ```
@@ -465,24 +452,33 @@ class TestDynamicWrapperPerformance(WrapperPerformanceTestSuite):
 
 ## 3 Performance Test Semantics and Syntax
 
-Ensure performance tests conform to the semantics and syntax described in [Semantics Guidelines](../semantics.md) and the Syntax topics, but in some cases deviate from the general guidelines. The following sections describe semantics and syntax which take precedence over the general style guide.
+Follow established patterns for benchmarking and comparison to ensure reliable results.
+
+### Rationale
+Accurate benchmarking is required to identify minor performance variations that could indicate regressions or successful optimizations.
 
 ### 3.1 Benchmarking
 
-Use the `timeit` module for benchmarking performance tests. Follow these guidelines:
+Use the `timeit` module for high-precision timing of small code snippets.
 
-- Use the `timeit` module for measuring execution time.
-- Use a sufficient number of iterations to get reliable measurements (defined in `timeit_runs`).
-- Report times in microseconds for better readability.
-- Calculate and report the percentage comparison between implementations.
+### Rationale
+High-precision timing is required to accurately detect performance changes.
+
+Directives:
+- Use a sufficient number of iterations (defined in `timeit_runs`).
+- Report times in microseconds.
+- Calculate and report percentage comparisons between implementations.
 
 ### 3.2 Comparison Methodology
 
-Compare the performance of custom implementations against standard library equivalents or other reference implementations:
+Compare custom implementations against standard library baselines or previous versions.
 
-- Define functions that perform equivalent operations using different implementations.
-- Ensure that the compared operations are truly equivalent.
-- Use the same input data for all implementations.
+### Rationale
+Relative comparisons are recommended to account for hardware differences and provide a clear measure of impact.
+
+Directives:
+- Ensure compared operations are truly equivalent.
+- Use identical input data for all implementations.
 - Isolate the specific operation being tested.
 
 Example:
@@ -497,13 +493,16 @@ test_object.copy()
 
 ### 3.3 Measurement and Reporting
 
-Ensure performance measurements are accurate, consistent, and informative:
+Ensure that performance metrics are reported clearly.
 
-- Use the `timeit` module with a sufficient number of iterations.
-- Calculate mean execution time per operation.
-- Convert times to microseconds for better readability.
-- Calculate and report the percentage comparison between implementations.
-- Print detailed performance information for debugging.
+### Rationale
+Standardized reporting is required to facilitate the analysis of performance data across different environments and test runs.
+
+Directives:
+- Print the mean execution time in microseconds.
+- Include the percentage comparison to the reference implementation.
+- Use `speed_tolerance` to define the maximum acceptable performance degradation.
+- Provide detailed performance information for debugging.
 
 Example:
 ```python # pseudocode
@@ -517,15 +516,23 @@ mean_old = old_time / self.timeit_runs * 1000000
 percent = (mean_new / mean_old) * 100
 
 # Print the performance comparison
-print(f"\nNew: {mean_new:.3f} µs ({percent:.3f}% of old function time)")
+print(f"\nNew: {mean_new:.3f} ï¿½s ({percent:.3f}% of old function time)")
 ```
 
 
 ## 4 Common Patterns
 
+Use established patterns for common performance testing scenarios.
+
+### Rationale
+Consistent testing patterns are required to ensure that benchmarks are comparable and that common pitfalls are avoided.
+
 ### 4.1 Comparing with Standard Library
 
-Use this common pattern to compare the performance of custom implementations against standard library equivalents:
+Benchmark custom implementations against their standard library counterparts.
+
+### Rationale
+This comparison is recommended to justify the existence of custom code and ensure it provides a tangible performance benefit.
 
 ```python # pseudocode
 def test_copy_speed(self, test_object):
@@ -543,7 +550,10 @@ def test_copy_speed(self, test_object):
 
 ### 4.2 Comparing Implementation Variants
 
-Use this pattern to compare different implementation variants:
+Evaluate the performance of different internal implementations.
+
+### Rationale
+Comparing variants is required to select the most efficient implementation for a specific use case.
 
 ```python # pseudocode
 def test_copy_vs_dunder_copy(self, test_object):
@@ -556,7 +566,10 @@ def test_copy_vs_dunder_copy(self, test_object):
 
 ### 4.3 Measuring Overhead
 
-Use performance tests to measure the overhead of additional functionality:
+Measure the overhead introduced by wrappers, decorators, or other abstractions.
+
+### Rationale
+Quantifying overhead is recommended to ensure that abstractions do not unacceptably degrade performance.
 
 ```python # pseudocode
 def test_attribute_access_speed(self, test_object):

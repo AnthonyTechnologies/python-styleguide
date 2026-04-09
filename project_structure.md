@@ -1,12 +1,9 @@
 # Anthony's Python Style Guide: Project Structure
 
-This document describes an opinionated, practical structure for Python projects used in this repository and intended to
-be reusable for most Python packages. The structure is a fork of ["Hypermodern Python"](https://cjolowicz.github.io/posts/hypermodern-python-01-setup/) by [Claudio Jolowicz](https://github.com/cjolowicz).
+This document establishes an opinionated, practical structure for Python projects. This structure should be used for most Python packages to ensure consistency across the ecosystem. It is based on the "Hypermodern Python" approach.
 
-A consistent structure improves:
-- Discoverability: developers can quickly find code, tests, docs, and examples.
-- Maintainability: changes affect a single, well‑defined place.
-- Tooling integration: common tools (pytest, nox, pre-commit, type checkers, doc builders) work with little or no extra configuration.
+### Rationale
+A consistent structure is required to improve discoverability, maintainability, and tooling integration. Using a standard layout ensures that common tools (pytest, nox, pre-commit, type checkers, doc builders) work with minimal configuration, which must be a priority for all projects.
 
 ## Table of Contents
 
@@ -27,15 +24,16 @@ A consistent structure improves:
 
 ## 1 Project Overview
 
-Split a Python project into:
+Organize a Python project into:
 - Configurations that define the behavior of the project and its tools.
 - Source code (installable package under `src/`).
-- Tests that mirror source code.
+- Tests that mirror the source code structure.
 - Documentation (narrative guides, API references, and style guides).
 - Examples that demonstrate typical usage.
 - Tutorials for step-by-step learning paths.
 
-Maintain this separation to keep responsibilities clear and enable parallel development across these areas.
+### Rationale
+Maintaining this separation is required to keep responsibilities clear and enable parallel development across these areas.
 
 
 ## 2 Project Root Structure
@@ -51,6 +49,7 @@ project_root/
 ├── tests/                  # Test suite mirroring src/ (unit, integration, perf)
 ├── tutorials/              # In‑depth, step‑by‑step guides
 ├── .codecov.yml            # Code coverage configuration
+├── .lint_tests.toml         # Local lint configuration for tests
 ├── .editorconfig           # General config for code editors
 ├── .gitignore              # Specifies which files Git should ignore
 ├── .pre-commit-config.yaml # Pre-commit hook configurations
@@ -64,42 +63,23 @@ project_root/
 
 ### 2.1 Configurations
 
-Configuration files define how the project is built, tested, documented, formatted, and released. Keep these files at the repository root so tools can auto-discover them.
+Configuration files define how the project is built, tested, documented, formatted, and released. Keep these files at the repository root so tools can auto-discover them. This practice is required for efficient tool integration.
 
-Guidelines:
-- Refer to [project_tools.md](project_tools.md) for how pre-commit, nox, and other tools are configured and used.
-- Centralize tool configurations (ruff/flake8, black, isort, pytest, coverage, mypy, sphinx) inside `pyproject.toml` when supported.
+Directives:
+- Centralize tool configurations (e.g., linting, formatting, testing, type checking) inside the primary project configuration file (e.g., `pyproject.toml`) when supported. This should be done to reduce file clutter.
 - Treat `pyproject.toml` as the source of truth for package metadata.
-- Keep versioning unified (prefer single-source versioning via package `__init__` or Poetry’s version field).
-- When using Poetry, it is acceptable to expose metadata via the PEP 621 `[project]` table and set dynamic fields (e.g., version, readme) that are sourced from `[tool.poetry]`. Document this clearly in the `README`/`CONTRIBUTING` to avoid confusion.
-- Ensure CI runs nox sessions to keep local and CI workflows aligned.
-- Make pre-commit mandatory in contributor docs.
+- Keep versioning unified. Single-source versioning via the package `__init__` or the project configuration file is recommended.
+- Ensure CI runs nox sessions. This must be followed to keep local and CI workflows aligned.
+- Make pre-commit mandatory in contributor documentation.
 
 ### 2.2 Source Code
 
-Use the `src/` layout to prevent accidental imports from the project root and to mirror how the package is installed from a wheel/SDist.
+Use the `src/` layout. This layout is required to prevent accidental imports from the project root and to accurately mirror the package installation environment.
 
-Guidelines:
-- Refer to [code_file_layout.md](code_file_layout.md) for file structure, headers, imports, and definitions layout.
-- Refer to the Syntax topics — [Formatting](syntax/formatting.md), [Naming](syntax/naming.md), [Typing](syntax/typing.md), [Docstrings](syntax/docstrings.md), [Comments](syntax/comments.md), [Strings](syntax/strings.md), [Exceptions & Error Messages](syntax/exceptions_error_messages.md), [Logging](syntax/logging.md), and [Resources](syntax/resources.md) — for naming, docstrings, comments, and formatting rules.
-- Refer to [semantics.md](semantics.md) for code organization principles and design guidance.
-
-Structure:
-```
-src/
-└── packagename/
-    ├── module1/
-    ├── module2/
-    ├── module3/
-    ├── testsuite/       # Base test suites for the package
-    ├── __init__.py
-    └── py.typed         # Present if typing information is shipped
-```
-
-Guidelines:
-- Organize by domain: each top-level subpackage focuses on a clear subject (e.g., bases, collections, functions, operations for baseobjects).
-- Keep public API explicit via __all__ or documented imports in __init__.py.
-- Consider private implementation modules prefixed with _ when appropriate.
+Directives:
+- Organize code by domain. Each top-level subpackage must focus on a clear subject.
+- Keep the public API explicit. Use `__all__` or documented imports in `__init__.py`. This is recommended to clarify the intended entry points.
+- Prefix private implementation modules with an underscore `_`.
 
 ### 2.3 Tests
 
@@ -115,7 +95,7 @@ tests/
 ├── module1/
 ├── module2/
 ├── module3/
-├── .ruff_tests.toml
+├── .lint_tests.toml
 └── __init__.py
 ```
 
@@ -131,8 +111,7 @@ tests/
 - Prefer descriptive test names and arrange-act-assert structure.
 
 Linting:
-- This directory uses a local Ruff configuration at tests/.ruff_tests.toml to tailor linting rules for tests. It
-extends/overrides root pyproject [tool.ruff] settings for files under tests/.
+- This directory uses a local linting configuration to tailor rules for tests. It extends/overrides root project settings for files under `tests/`.
 
 ### 2.4 Documentation
 
@@ -160,12 +139,12 @@ examples/
 ├── module1/
 ├── module2/
 ├── module3/
-├── .ruff_examples.toml
+├── .lint_examples.toml
 └── __init__.py
 ```
 
 Linting:
-- This directory uses a local Ruff configuration at examples/.ruff_examples.toml to tailor linting rules for example code. It extends/overrides root pyproject [tool.ruff] settings for files under examples/.
+- This directory uses a local linting configuration to tailor rules for example code. It extends/overrides root project settings for files under `examples/`.
 
 ### 2.6 Tutorials
 
@@ -183,12 +162,12 @@ tutorials/
 ├── module1/
 ├── module2/
 ├── module3/
-├── .ruff_tutorials.toml
+├── .lint_tutorials.toml
 └── __init__.py
 ```
 
 Linting:
-- This directory uses a local Ruff configuration at tutorials/.ruff_tutorials.toml to tailor linting rules for tutorial content. It extends/overrides root pyproject [tool.ruff] settings for files under tutorials/.
+- This directory uses a local linting configuration to tailor rules for tutorial content. It extends/overrides root project settings for files under `tutorials/`.
 
 
 ## 3 Implementation Guidelines

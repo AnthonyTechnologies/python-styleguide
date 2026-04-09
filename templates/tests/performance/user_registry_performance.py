@@ -24,9 +24,9 @@ from typing import Final
 
 # Third-Party Packages #
 import pytest
-
-# Local Packages #
 from baseobjects.testsuite import BasePerformanceTestSuite
+
+# Source Packages #
 from templatepackage.user_registry import create_registry
 
 
@@ -61,7 +61,7 @@ class TestRegistryPerformance(BasePerformanceTestSuite):
         def baseline_impl() -> None:
             """Just creates User objects in a list."""
             # Simulating overhead of just creating User objects without Registry wrapper
-            # Local Packages #
+            # Source Packages #
             from templatepackage.user import User
             [User(user_id=n, name=n) for n in names]
 
@@ -78,8 +78,8 @@ class TestRegistryPerformance(BasePerformanceTestSuite):
         print(
             f"\n{_SECTION_LINE}\n"
             f"UserRegistry creation vs raw list\n"
-            f"mean_new:   {mean_new_us:10.3f} µs\n"
-            f"mean_base:  {mean_base_us:10.3f} µs\n"
+            f"mean_new:   {mean_new_us:10.3f} μs\n"
+            f"mean_base:  {mean_base_us:10.3f} μs\n"
             f"percent:    {percent_of_baseline:10.3f}% of baseline\n"
             f"tolerance:  {self.speed_tolerance:10.3f} (percent ceiling)\n"
             f"{_SECTION_LINE}\n"

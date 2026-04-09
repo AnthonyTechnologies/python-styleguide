@@ -21,7 +21,7 @@ __version__ = "0.1.0"
 # Third-Party Packages #
 import pytest
 
-# Local Packages #
+# Source Packages #
 from templatepackage.hierarchy import ConcreteHierarchy
 from templatepackage.testsuite.hierarchy import ConcreteHierarchyTestSuite
 

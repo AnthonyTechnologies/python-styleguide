@@ -1,16 +1,9 @@
 ﻿# Anthony's Python Style Guide: Docstrings
 
-Python uses docstrings to document code. A docstring is a string that is the first statement in a package, module,
-class, or function. These strings can be extracted automatically through the `__doc__` member of the object and are used
-by pydoc. (For example, run pydoc on a module to preview the output.) Always use the three-double-quote `"""` format for
-docstrings (per PEP 257). A docstring should be organized as a summary line (one physical line not exceeding 120
-characters) terminated by a period, question mark, or exclamation point. When writing more (encouraged), this must be
-followed by a blank line, followed by the rest of the docstring starting at the same cursor position as the first quote
-of the first line. There are more formatting guidelines for docstrings below. Be sure to use the right style for module,
-function, method docstrings, and inline comments.
+Use docstrings to document packages, modules, classes, and functions. A docstring is a string that must be the first statement in the entity. Docstrings follow the Google style by default, with specific requirements detailed below.
 
-All docstrings and comments should be written in the third-person and use the Google style docstrings throughout the
-project.
+### Rationale
+High-quality docstrings are required to ensure that code is self-documenting and to support automated documentation generation and IDE features.
 
 ## Table of Contents
 
@@ -29,29 +22,23 @@ project.
 
 ## 1 Writing Style
 
-The writing style should be in the third-person. When explaining features and how things work, use the
-third-person descriptive voice. When instructing users on how to use things, use the third-person imperative voice
-that is active and issued as commands.
+Write all docstrings in the third-person.
 
-### 1.1 Third-Person Descriptive Voice
+### Rationale
+Using a consistent third-person perspective is required to maintain a professional and objective tone across all documentation.
 
-Use the third-person descriptive voice to explain the behavior of functions, classes, and other features. This typically
-involves using the third-person singular present tense.
+Directives:
+- Use the third-person declarative mood for summary lines and feature descriptions (e.g., "Returns the name").
+- Use the third-person imperative mood when providing instructions or requirements (e.g., "The user must call this method"). Instructions must be active and issued as commands.
 
-Example:
+Compliant (Declarative):
 ```python # pseudocode
 def get_name(self) -> str:
     """Returns the name of the object."""
     return self.name
 ```
 
-### 1.2 Third-Person Imperative Voice
-
-Use the third-person imperative voice when providing instructions or requirements to the user or subclasses. The
-voice should be active and be issued as commands. This typically involves using words like "must," "should," or "shall"
-with a third-person subject.
-
-Example:
+Compliant (Imperative):
 ```python # pseudocode
 def setup(self) -> None:
     """Sets up the object.
@@ -64,95 +51,55 @@ def setup(self) -> None:
 
 ## 2 Modules
 
-Include license boilerplate in every file. Choose the appropriate boilerplate for the license used by the project (for example, Apache 2.0, BSD, LGPL, GPL).
+Include a docstring at the beginning of every module.
 
-Guidelines:
-- Set the first line of the module to the file name exactly as it is in the file system (typically lowercase).
-- Set the second line to a one-line summary of the module or program, terminated by a period.
+### Rationale
+Module-level documentation is required to provide an immediate overview of a file's purpose and contents.
+
+Directives:
+- Include license boilerplate as the first section if required.
+- Set the first line of the docstring to the exact file name.
+- Provide a one-line summary on the second line, terminated by a period.
 - Leave the third line blank.
-- Include a detailed description of the module or program starting from the fourth line.
+- Include a detailed description starting from the fourth line.
 
+Compliant:
 ```python # pseudocode
 """file_name.py
-A one-line summary of the module or program, terminated by a period.
+One-line summary of the module or program, terminated by a period.
 
-Leave one blank line. The rest of this docstring should contain an overall description of the module or program. The
-description can be broken up into multiple paragraphs to present the functionality into logical sections. Bullet-point
-and numerical lists may be used as well, but only add them if they are needed.
+Detailed description of the module or program. Logical sections should be separated 
+by blank lines.
 """
 ```
 
 
 ## 3 Classes
-Provide a docstring below the class definition describing the class. Document all attributes (excluding properties) in an Attributes section and follow the same formatting as a function's Args section.
 
-```python # pseudocode
-from typing import ClassVar
+Provide a docstring below the class definition describing the class. Document all attributes (excluding properties) in an `Attributes:` section and follow the same formatting as a function's `Args:` section.
 
-class ExampleClass:
-    """An example class.
+### Rationale
+Class docstrings are required to define the responsibility of a class and document its attributes for clear usage.
 
-    This example class outlines how a class should be formatted and structured. It provides examples of how attributes,
-    methods, and docstrings should be implemented. Furthermore, it demonstrates the class's implementation structure.
-    Particularly, the grouping of attributes and methods into different sections.
+Directives:
+- Start all class docstrings with a one-line summary.
+- Describe what the class instance represents.
+- Ensure subclasses of `Exception` describe what the exception represents, not the context in which it occurs.
+- Avoid repeating unnecessary information, such as stating that the class is a class.
 
-    Attributes:
-        _protected: A protected attribute.
-        integer: An integer to track.
-        floating_point: A floating point number to track.
-    """
-    # Class Attributes #
-    class_attribute: ClassVar[int] = 10
-
-    # Class Methods #
-    @classmethod
-    def class_method(cls) -> None:
-        """Prints the class attribute."""
-        print(cls.class_attribute)
-
-    # Attributes #
-    _protected: bool
-    integer: int
-    floating_point: float = 1.0
-
-    # Properties #
-    @property
-    def floating_point_inverse(self) -> float:
-        """The inverse of the floating point number."""
-        return 1 / self.floating_point
-
-    # Magic Methods #
-    # Construction/Destruction #
-    def __init__(self, is_protected: bool = True):
-        """Initializes the instance based on spam preference.
-
-        Args:
-            is_protected: Determines if the attribute is protected.
-        """
-        self._protected = is_protected
-```
-
-Start all class docstrings with a one-line summary that describes what the class instance represents. Ensure subclasses of `Exception` also describe what the exception represents, not the context in which it might occur. Avoid repeating unnecessary information in the class docstring, such as stating that the class is a class.
-
-Correct:
+Compliant:
 ```python # pseudocode
 class CheeseShopAddress:
-    """The address of a cheese shop.
-
-    ...
-    """
+    """The address of a cheese shop."""
 
 class OutOfCheeseError(Exception):
     """No more cheese is available."""
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 class CheeseShopAddress:
-    """Class that describes the address of a cheese shop.
-
-    ...
-    """
+    """Class that describes the address of a cheese shop."""
 
 class OutOfCheeseError(Exception):
     """Raised when no more cheese is available."""
@@ -161,28 +108,28 @@ class OutOfCheeseError(Exception):
 
 ## 4 Functions and Methods
 
-In this section, "function" means a method, function, generator, or property.
+In this section, "function" refers to a method, function, generator, or property.
 
-Include a mandatory docstring for every function that has one or more of the following properties:
+### Rationale
+Function docstrings are required to specify the interface, including parameters, return values, and potential exceptions, enabling developers to use the function without reading its implementation.
 
-- being part of the public API
-- nontrivial size
-- non-obvious logic
-
-Provide enough information in the docstring to write a call to the function without reading the function's code. Describe the function's calling syntax and its semantics, but generally avoid implementation details unless they are relevant to how the function is used. For example, if a function mutates one of its arguments as a side effect, note that in its docstring. Otherwise, express subtle but important implementation details not relevant to the caller as comments alongside the code rather than within the docstring.
-
-Use descriptive-style docstrings (e.g., `"""Fetches rows from a Bigtable."""`). Use the same style for a `@property` data descriptor's docstring as the docstring for an attribute or a function argument (e.g., `"""The Bigtable path."""`, rather than `"""Returns the Bigtable path."""`).
-
-Document certain aspects of a function in special sections, listed below. End each section heading line with a colon. Maintain a hanging indent of four spaces for all sections other than the heading. Omit these sections if the function's name and signature are informative enough to be aptly described using a one-line docstring.
+Directives:
+- Include a mandatory docstring for every function that is part of the public API, has a nontrivial size, or contains non-obvious logic.
+- Provide enough information to write a call to the function. Describe calling syntax and semantics.
+- Avoid implementation details unless they are relevant to how the function is used.
+- Use the third-person declarative voice for summaries and return descriptions.
+- Use the same style for a `@property` docstring as for an attribute.
+- Document specific aspects in sections: `Args:`, `Returns:`, `Yields:`, and `Raises:`.
+- Maintain a hanging indent of four spaces for all sections.
 
 **Args:**
-List each parameter by name. Follow the name with a description, separated by a colon and either a space or newline. Use a hanging indent of 4 spaces more than the parameter name if the description is too long to fit on a single 120-character line. Include required type(s) if the code does not contain a corresponding type annotation. List variable length argument lists (`*foo`) and arbitrary keyword arguments (`**bar`) if the function accepts them.
+List each parameter by name. Follow the name with a description, separated by a colon.
 
 **Returns:** (or **Yields:** for generators)
-Describe the semantics of the return value, including any type information that the type annotation does not provide. This section is not required if the function only returns `None`. Also, omit it if the docstring starts with "Return", "Returns", "Yield", or "Yields" (e.g., `"""Returns row from Bigtable as a tuple of strings."""`) and the opening sentence is sufficient to describe the return value. Do not imitate older 'NumPy style', which frequently documents a tuple return value as multiple return values with individual names. Instead, describe such a return value as: "Returns: A tuple (mat_a, mat_b), where mat_a is ..., and ...". Ensure auxiliary names in the docstring do not necessarily correspond to internal names used in the function body. For generators, use the `Yields:` section to document the object returned by `next()`, instead of the generator object itself.
+Describe the semantics of the return value. This section is not required if the function only returns `None`.
 
 **Raises:**
-List all exceptions relevant to the interface followed by a description. Use a similar exception name + colon + space or newline and hanging indent style as described in `Args:`. Do not document exceptions if the API specified in the docstring is violated.
+List all exceptions relevant to the interface followed by a description.
 
 ```python # pseudocode
 from typing import Mapping, Sequence
@@ -245,9 +192,11 @@ def fetch_table_rows(
             if row is not None:
                 result[key] = row
             elif require_all_keys:
-                raise IOError(f"Required key {key} not found")
+                msg = f"Required key {key} not found"
+                raise IOError(msg)
         except Exception as e:
-            raise IOError(f"Error accessing table: {e}")
+            msg = f"Error accessing table: {e}"
+            raise IOError(msg)
     return result
 ```
 
@@ -303,15 +252,21 @@ def fetch_smalltable_rows(
         if row is not None:
             result[k] = row
         elif require_all_keys:
-            raise IOError(f"Required key {k!r} not found")
+            msg = f"Required key {k!r} not found"
+            raise IOError(msg)
     return result
 ```
 
 ### 4.1 Overridden Methods
-A method that overrides a method from a base class does not need a docstring if it is explicitly decorated with
-`@override` (from typing_extensions or typing modules), unless the overriding method's behavior materially refines the
-base method's contract, or details need to be provided (e.g., documenting additional side effects), in which case a
-docstring with at least those differences is required on the overriding method.
+
+A method that overrides a base class method does not require a docstring if it is decorated with `@override`.
+
+### Rationale
+Reducing documentation redundancy is recommended when the base class docstring already accurately describes the method's contract.
+
+Directives:
+- Use the `@override` decorator for overridden methods.
+- Provide a docstring if the overriding method materially refines the contract or has additional side effects.
 
 ```python # pseudocode
 # Portable no-op `override` decorator so this snippet runs without third-party deps.
@@ -349,9 +304,12 @@ class Child3(Parent):
 
 ## 5 Empty Classes, Methods, and Functions
 
-When defining an empty class, method, or function, use a docstring to define it and omit the `pass` statement.
+Use a docstring and omit the `pass` statement when defining empty classes, methods, or functions.
 
-Correct:
+### Rationale
+Using a docstring instead of `pass` is recommended to provide context for why the entity is empty.
+
+Compliant:
 ```python # pseudocode
 class EmptyClass:
     """An empty class."""
@@ -361,7 +319,7 @@ def empty_function():
     """An empty function."""
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 class EmptyClass:
     pass
@@ -373,7 +331,10 @@ def empty_function():
 
 ## 6 Standard Templates
 
-To ensure consistency across the codebase, the following templates should be used for common methods and structures.
+Use the following templates for common methods and structures to ensure consistency across the codebase.
+
+### Rationale
+Standardized templates are required to maintain a uniform documentation style and quality.
 
 ### 6.1 Module Level
 

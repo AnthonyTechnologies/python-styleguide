@@ -18,7 +18,6 @@ __version__ = "0.1.0"
 
 # Imports #
 # Standard Libraries #
-from typing import Any
 
 
 # Definitions #

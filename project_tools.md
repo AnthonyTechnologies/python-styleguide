@@ -1,14 +1,16 @@
 # Anthony's Python Style Guide: Project Tooling
 
-This document describes the core development tools that may be used across projects and how they fit into day‑to‑day
-workflows. Of these tools, two tools are central for managing the other tools:
+Use a standardized set of development tools to ensure consistency and automation across all projects. Two tools are central to managing the workflow:
 
-- nox — automates repeatable development tasks in isolated virtual environments (tests, type checks, docs, etc.).
-- pre-commit — automates formatting and quick static checks on each commit/push.
+- **nox**: Automates repeatable development tasks in isolated virtual environments.
+- **pre-commit**: Automates formatting and quick static checks on each commit.
 
-Configurations for all these tools are not explicitly listed here to allow for flexibility in specification designation.
-Contain configurations in their respective projects. However, examples of the configuration files can be
-found in the Python Package Project Template repository https://github.com/AnthonyTechnologies/python-packagetemplate.
+### Rationale
+A unified tooling strategy is required to provide a predictable development environment and reduce manual effort for repetitive tasks like testing and linting.
+
+Directives:
+- Store tool configurations in their respective projects (e.g., `pyproject.toml`, `noxfile.py`).
+- Refer to the [Python Package Project Template](https://github.com/AnthonyTechnologies/python-packagetemplate) for canonical configuration examples.
 
 ## Table of Contents
 
@@ -71,405 +73,161 @@ found in the Python Package Project Template repository https://github.com/Antho
 
 ## 1 Nox
 
-Use Nox to provide reproducible automation by running tasks inside session‑scoped virtual environments defined in `noxfile.py`.
+Use Nox to provide reproducible automation by running tasks inside session‑scoped virtual environments.
 
-Configuration: `noxfile.py` (repository root)
+### Rationale
+Nox is required to ensure that all developers and CI systems run tasks in identical, isolated environments, preventing "it works on my machine" issues.
 
-### 1.1 Purpose
-
-Use Nox to orchestrate common dev tasks, including:
-
-- pre-commit — run the full pre-commit suite in a controlled virtualenv and patch installed git hooks to use it.
-- mypy — perform static type checking with strict settings.
-- tests — run the test suite with coverage collection enabled by default.
-- coverage — report or combine coverage data.
-- typeguard — perform runtime type checking during tests for additional guarantees.
-- xdoctest — validate examples embedded in docstrings and modules.
-- docs-build — build Sphinx documentation.
-- docs — serve live‑reloading Sphinx docs during development.
-
-The default sessions list is set in `noxfile.py` (`nox.options.sessions`).
-
-### 1.2 Installation
-
-- Install Nox and its Poetry integration:
-  - pip install nox nox-poetry
-
-### 1.3 Common Sessions
-
-From noxfile.py, notable sessions include:
-
-- nox -s pre-commit — run pre-commit hooks in a managed env.
-- nox -s mypy — run static type checks.
-- nox -s tests — run unit tests.
-- nox -s coverage -- report — show coverage report; combine if multiple files exist.
-- nox -s typeguard — run tests with runtime type checking enabled.
-- nox -s xdoctest — run doctests/examples.
-- nox -s docs-build — build docs into docs/_build.
-- nox -s docs — serve docs with live rebuilds.
-
-### 1.4 Running Sessions
-
-- List available sessions:
-  - nox -l
-- Run one session (example: tests):
-  - nox -s tests
-- Pass through extra arguments to tools (example: pytest options):
-  - nox -s tests -- -k "pattern" -q
+Directives:
+- Define sessions in `noxfile.py` at the repository root.
+- Use Nox to orchestrate common tasks:
+    - `pre-commit`: Run the full pre-commit suite.
+    - `mypy`: Perform static type checking.
+    - `tests`: Run the test suite with coverage.
+    - `coverage`: Report or combine coverage data.
+    - `docs-build`: Build Sphinx documentation.
+- Install Nox and the Poetry integration using `pip install nox nox-poetry`.
+- Execute sessions using `nox -s <session_name>`.
 
 
 ## 2 Pre-commit
 
-Use pre-commit to manage and run lightweight checks before code is committed or pushed. Keep the repository clean and consistent by catching issues early.
+Use pre-commit to manage and run lightweight checks before code is committed or pushed.
 
-Configuration: `.pre-commit-config.yaml` (repository root)
+### Rationale
+Pre-commit is required to catch formatting issues, linting errors, and other common mistakes before they reach the repository, maintaining a high standard of code quality.
 
-### 2.1 Purpose
-
-Use current hooks configured in `.pre-commit-config.yaml` to:
-
-- check-added-large-files — block accidentally committing very large files.
-- check-toml — validate TOML files (e.g., `pyproject.toml`).
-- check-yaml — validate YAML files (e.g., CI workflows).
-- ruff-check — run a fast linter for Python with an extensive rule set.
-- ruff-format — apply an opinionated Python code formatter via Ruff.
-- isort — sort and group imports consistently.
-- end-of-file-fixer — ensure a single trailing newline.
-- trailing-whitespace-fixer — remove stray trailing whitespace.
-- pip-audit — scan Python environments for known vulnerabilities.
-
-Note: Some hooks are provided through the "local" repo and run using system installs. Their behavior is governed by per-tool settings in `pyproject.toml` where applicable (e.g., `[tool.ruff]`, `[tool.isort]`).
-
-### 2.2 Installation
-
-- Ensure Python and pip are available in the environment.
-- Install pre-commit into the active environment:
-  - pip install pre-commit
-- Install the git hooks into the repository:
-  - pre-commit install --install-hooks
-
-### 2.3 Running Hooks
-
-- Automatically runs on git commit and, for some hooks, on push.
-- Run against all files manually:
-  - pre-commit run --all-files
-- Run a specific hook:
-  - pre-commit run ruff-check --all-files
-
-### 2.4 Updating Hooks
-
-- Update hook revisions to the latest recommended versions:
-  - pre-commit autoupdate
+Directives:
+- Configure hooks in `.pre-commit-config.yaml` at the repository root.
+- Include essential hooks:
+    - `check-added-large-files`
+    - `ruff-check` and `ruff-format`
+    - `isort`
+    - `pip-audit`
+- Install pre-commit into the active environment using `pip install pre-commit`.
+- Install the git hooks using `pre-commit install`.
+- Run against all files manually using `pre-commit run --all-files`.
+- Keep hooks updated using `pre-commit autoupdate`.
 
 
 ## 3 Ruff
 
 Use Ruff as a fast Python linter and code formatter.
 
-Configuration: `[tool.ruff]`, `[tool.ruff.lint]`, `[tool.ruff.format]` in `pyproject.toml`
+### Rationale
+Ruff is required to enforce rulesets, line length, and formatting consistently while maintaining high performance.
 
-### 3.1 Purpose
+Directives:
+- Configure Ruff in `pyproject.toml`.
+- Use Ruff to:
+    - Enforce line length and docstyle.
+    - Support directory-specific configurations (e.g., `tests/.ruff_tests.toml`).
+- Install with `pip install ruff`.
+- Format files with `ruff format .` and check with `ruff check .`.
 
-Use Ruff to:
 
-- Enforce rulesets, line length, docstyle, and formatting.
-- Support directory-specific configurations:
-    - `examples/.ruff_examples.toml` — use relaxed rules for narrative/demo code.
-    - `tests/.ruff_tests.toml` — use adapted rules for testing patterns.
-    - `tutorials/.ruff_tutorials.toml` — optimize for learner readability.
-- Extend or override root settings for local directory trees.
-
-### 3.2 Installation
-
-- Install Ruff:
-    - pip install ruff
-
-### 3.3 Running Ruff
-
-- Format files:
-    - ruff format .
-- Check files:
-    - ruff check .
-
-### 3.4 Updating
-
-- Update to latest version:
-    - pip install --upgrade ruff
-
+## 4 isort
 
 Use isort to sort imports alphabetically and automatically separate them into sections.
 
-Configuration: `[tool.isort]` in `pyproject.toml`
+### Rationale
+Consistent import organization is required to improve readability and avoid merge conflicts.
 
-### 4.1 Purpose
+Directives:
+- Configure isort in `pyproject.toml`.
+- Install with `pip install isort`.
+- Sort imports with `isort .`.
+- Check if files are sorted with `isort --check-only .`.
 
-Use isort to:
 
-- Control import grouping.
-- Set line length limits.
-- Configure import section headings.
-- Maintain consistent import ordering.
-
-### 4.2 Installation
-
-- Install isort:
-    - pip install isort
-
-### 4.3 Running isort
-
-- Sort imports in a file:
-    - isort file.py
-- Check if files are sorted:
-    - isort --check-only file.py
-- Show diff without changes:
-    - isort --diff file.py
-
-### 4.4 Updating
-
-- Update to latest version:
-    - pip install --upgrade isort
-
+## 5 pip-audit
 
 Use pip-audit to scan Python environments for packages with known vulnerabilities.
 
-Configuration: `.pre-commit-config.yaml`
+### Rationale
+Vulnerability scanning is required to ensure that the project and its dependencies remain secure.
 
-### 5.1 Purpose
+Directives:
+- Install with `pip install pip-audit`.
+- Check the current environment with `pip-audit`.
+- Run through pre-commit using `pre-commit run pip-audit --all-files`.
 
-Use pip-audit to:
 
-- Scan dependencies for vulnerabilities.
-- Check against PyPI JSON API and OSV.
-- Integrate with pre-commit.
-- Provide detailed security reports.
-
-### 5.2 Installation
-
-- Install pip-audit:
-    - pip install pip-audit
-
-### 5.3 Running pip-audit
-
-- Check current environment:
-    - pip-audit
-- Run via pre-commit:
-    - pre-commit run pip-audit --all-files
-
-### 5.4 Updating
-
-- Update to latest version:
-    - pip install --upgrade pip-audit
-
+## 6 mypy
 
 Use mypy as a static type checker for Python code.
 
-Configuration: `[tool.mypy]` in `pyproject.toml`
+### Rationale
+Static type checking is required to catch type-related errors early and provide comprehensive type analysis.
 
-### 6.1 Purpose
+Directives:
+- Configure mypy in `pyproject.toml`.
+- Install with `pip install mypy`.
+- Run checks with `mypy .`.
 
-Use mypy to:
 
-- Perform static type checking.
-- Enforce strict validation settings.
-- Provide verbose error reporting.
-- Conduct comprehensive type analysis.
+## 7 pytest
 
-### 6.2 Installation
+Use pytest as a feature-rich testing framework.
 
-- Install mypy:
-    - pip install mypy
+### Rationale
+A robust testing framework is required to ensure that tests are easy to write, discover, and run.
 
-### 6.3 Running mypy
+Directives:
+- Install with `pip install pytest`.
+- Run tests with `pytest`.
+- Use CLI flags (e.g., `-v`, `-m`) to customize output and markers.
 
-- Check types in a file:
-    - mypy file.py
-- Check with specific config:
-    - mypy --config-file mypy.ini file.py
-- Show error codes:
-    - mypy --show-error-codes file.py
 
-### 6.4 Updating
+## 8 coverage
 
-- Update to latest version:
-    - pip install --upgrade mypy
+Use coverage to measure and report code coverage.
 
+### Rationale
+Coverage measurement is required to identify untested parts of the codebase and maintain a high standard of testing.
 
-Use pytest as a feature-rich testing framework for Python.
+Directives:
+- Configure coverage in `pyproject.toml`.
+- Install with `pip install coverage`.
+- Run collection with `coverage run -m pytest`.
+- Generate reports with `coverage report` or `coverage html`.
 
-Configuration: Via nox sessions and CLI flags.
 
-### 7.1 Purpose
+## 9 typeguard
 
-Use pytest to:
+Use typeguard for runtime type checking.
 
-- Discover and run test cases.
-- Provide rich assertion introspection.
-- Support test fixtures and parameterization.
-- Integrate with coverage reporting.
-- Primary configuration through nox.
-- Customize via standard CLI flags in sessions.
+### Rationale
+Runtime type checking is recommended to complement static analysis and provide additional guarantees during execution.
 
-### 7.2 Installation
+Directives:
+- Install with `pip install typeguard`.
+- Enable runtime checks during tests using `pytest --typeguard-packages=<package_name>`.
+- Use the `@typeguard.typechecked` decorator for specific functions or classes.
 
-- Install pytest:
-    - pip install pytest
 
-### 7.3 Running pytest
+## 10 xdoctest
 
-- Run all tests:
-    - pytest
-- Run specific test file:
-    - pytest tests/test_file.py
-- Run with verbose output:
-    - pytest -v
-- Run with specific marker:
-    - pytest -m marker_name
+Use xdoctest to validate code examples in docstrings.
 
-### 7.4 Updating
+### Rationale
+Doctest validation is required to ensure that documentation examples remain accurate and runnable as the code evolves.
 
-- Update to latest version:
-    - pip install --upgrade pytest
+Directives:
+- Install with `pip install xdoctest`.
+- Run all doctests with `python -m xdoctest <module_name>`.
+- Use the `-v` flag for verbose output.
 
 
-Use coverage to provide code coverage measurement and reporting for Python projects.
+## 11 Sphinx
 
-Configuration: `[tool.coverage.*]` in `pyproject.toml`
+Use Sphinx as the documentation generator.
 
-### 8.1 Purpose
+### Rationale
+Sphinx is required to produce professional, searchable, and well-structured documentation for the project.
 
-Use coverage to:
-
-- Measure code execution during tests.
-- Generate detailed coverage reports.
-- Enforce minimum coverage thresholds.
-- Support branch coverage analysis.
-- Configure paths and patterns.
-- Report thresholds (e.g., `fail_under=100`).
-
-### 8.2 Installation
-
-- Install coverage:
-    - pip install coverage
-
-### 8.3 Running coverage
-
-- Run coverage collection:
-    - coverage run -m pytest
-- Generate report:
-    - coverage report
-- Generate HTML report:
-    - coverage html
-- Show missing lines:
-    - coverage report --show-missing
-
-### 8.4 Updating
-
-- Update to latest version:
-    - pip install --upgrade coverage
-
-
-Use typeguard to provide runtime type checking for Python.
-
-Configuration: Via nox session.
-
-### 9.1 Purpose
-
-Use typeguard to:
-
-- Perform runtime type checking.
-- Validate type hints during execution.
-- Complement static type checking.
-- Enable through a dedicated nox session.
-- Report type violations during tests.
-
-### 9.2 Installation
-
-- Install typeguard:
-    - pip install typeguard
-
-### 9.3 Running typeguard
-
-- Run with pytest:
-    - pytest --typeguard-packages=package_name
-- Enable for specific module:
-    - python -m typeguard module_name
-- Use as a decorator:
-    - @typeguard.typechecked
-
-### 9.4 Updating
-
-- Update to latest version:
-    - pip install --upgrade typeguard
-
-
-Use xdoctest as an improved doctest implementation.
-
-Configuration: Via nox sessions.
-
-### 10.1 Purpose
-
-Use xdoctest to:
-
-- Validate code examples in docstrings.
-- Provide better error messages than standard doctest.
-- Support native Python syntax.
-- Invoke through dedicated nox sessions.
-- Use default settings unless overridden.
-- Accept custom flags when needed.
-
-### 10.2 Installation
-
-- Install xdoctest:
-    - pip install xdoctest
-
-### 10.3 Running xdoctest
-
-- Run all doctests:
-    - python -m xdoctest module_name
-- Run specific test:
-    - python -m xdoctest module_name function_name
-- Run with verbose output:
-    - python -m xdoctest module_name -v
-
-### 10.4 Updating
-
-- Update to latest version:
-    - pip install --upgrade xdoctest
-
-
-Use Sphinx as a documentation generator for Python projects.
-
-Configuration: `docs/conf.py` and nox session arguments.
-
-### 11.1 Purpose
-
-Use Sphinx to:
-
-- Generate project documentation.
-- Build multiple output formats.
-- Support extensive extensions.
-- Include features like:
-    - `sphinx-click`
-    - `sphinx-rtd-theme`
-    - `furo`
-    - `myst-parser`
-    - Core Sphinx features.
-
-### 11.2 Installation
-
-- Install Sphinx and extensions:
-    - pip install sphinx sphinx-rtd-theme sphinx-click furo myst-parser
-
-### 11.3 Running Sphinx
-
-- Build HTML documentation:
-    - sphinx-build -b html docs/source docs/build
-- Run live server:
-    - sphinx-autobuild docs/source docs/build
-- Check documentation:
-    - sphinx-build -b linkcheck docs/source docs/build
-
-### 11.4 Updating
-
-- Update to latest version:
-    - pip install --upgrade sphinx
+Directives:
+- Configure in `docs/conf.py`.
+- Install Sphinx and extensions using `pip install sphinx sphinx-rtd-theme sphinx-click furo myst-parser`.
+- Build HTML documentation using `sphinx-build -b html docs/source docs/build`.
+- Use `sphinx-autobuild` for a live-reloading preview.

@@ -1,23 +1,14 @@
 # Anthony's Python Style Guide: Examples
 
-Examples are crucial for helping users understand how to use a library or framework. They provide practical
-demonstrations of the library's functionality and serve as reference implementations for common use cases. Well-crafted
-examples can significantly reduce the learning curve for new users and serve as a quick reference for experienced users.
+Use examples to provide practical demonstrations of library functionality and serve as reference implementations for common use cases.
 
-Examples are supplementary to the library's documentation. While tutorials and reference guides provide a conceptual
-overview of the library and are meant to educate users on its features and usage, examples provide more in-depth
-explanations and demonstrations on how to use the library in real-world scenarios. Additionally, examples are written in
-Python files rather than Jupyter notebooks, so it is easier to implement their content into other projects.
+### Rationale
+Well-crafted examples are required to reduce the learning curve for new users and provide quick reference for experienced developers.
 
-This document provides guidelines specific to creating effective examples for Python packages. It focuses on
-example-specific considerations while referencing other style guides for general Python coding practices:
-
-- For general Python code style and syntax, refer to the Syntax topics: [Formatting](syntax/formatting.md), [Naming](syntax/naming.md), [Typing](syntax/typing.md), [Docstrings](syntax/docstrings.md), [Comments](syntax/comments.md), [Strings](syntax/strings.md), [Exceptions & Error Messages](syntax/exceptions_error_messages.md), [Logging](syntax/logging.md), and [Resources](syntax/resources.md)
-- For file structure and organization, refer to [Code and File Layout](code_file_layout.md)
-- For semantic aspects of code, refer to [Semantics Guidelines](semantics.md)
-
-The Examples Guidelines are built upon these foundational documents, adding specific guidance for creating educational
-and demonstrative code examples.
+Directives:
+- Write examples in Python files (.py) rather than Jupyter notebooks to facilitate easier implementation into other projects.
+- Follow general style guidelines (naming, layout, docstrings) in all example code.
+- Prioritize clarity and educational value.
 
 ## Table of Contents
 
@@ -56,15 +47,17 @@ and demonstrative code examples.
 
 ## 1 Directory Hierarchy
 
-Organize examples in a directory structure that mirrors the package structure. This makes it easy for users to find examples relevant to specific components.
+Organize examples within a directory structure that mirrors the package structure.
 
+### Rationale
+A mirrored directory structure is required to make examples easily discoverable based on the component they demonstrate.
+
+Directives:
 - Create a directory for each major package under the `examples/` directory.
-- Give subpackages their own subdirectories when they contain multiple components.
-- Group related examples together in the same directory.
-- Start filenames with a descriptive name followed by `_example` (e.g., `name_example.py`).
-- Use the format `<component_name>_example.py` for individual component examples.
-- For examples that demonstrate multiple components working together, use a descriptive name that indicates the functionality being demonstrated, e.g., `caching_with_sentinel_example.py`.
-- Use lowercase with underscores for file names (snake_case).
+- Use subdirectories for subpackages when they contain multiple components.
+- Group related examples together.
+- Name files with an `_example.py` suffix (e.g., `name_example.py`).
+- Use `snake_case` for all filenames.
 
 Example:
 ```
@@ -81,15 +74,22 @@ examples/
 
 ## 2 Example Structure
 
-Follow the general Python file layout guidelines as described in [Code and File Layout](code_file_layout.md) for example files, and include the additional example-specific considerations outlined below.
+Follow the [Code and File Layout](code_file_layout.md) guidelines for all example files, incorporating the additional considerations detailed below.
+
+### Rationale
+A consistent structure is required to ensure that examples are easy to read, understand, and adapt for other projects.
 
 ### 2.1 Example File Header
 
-Include a docstring in example files that clearly explains:
+Include a descriptive module docstring in every example file.
 
-1. What the example demonstrates.
-2. A numbered list of key concepts or features being demonstrated.
-3. Put imports from the example's package in the Third-Party Packages section instead of the Local Packages section.
+### Rationale
+Clear headers are required to provide an immediate summary of the example's purpose and the concepts it demonstrates.
+
+Directives:
+- Explain what the example demonstrates.
+- Provide a numbered list of key concepts or features.
+- Place imports from the library being demonstrated in the `Third-Party Packages` section to simulate external usage.
 
 Example:
 ```python # pseudocode
@@ -120,14 +120,16 @@ For general file header guidelines, imports organization, and definitions struct
 
 ### 2.2 Main Section for Examples
 
-The main section in example files is particularly important as it demonstrates the usage of the defined classes and functions:
+Use the `if __name__ == "__main__":` block to orchestrate the demonstration.
 
-1. Include a `if __name__ == "__main__":` block
-2. Organize demonstrations in a logical sequence, from basic to advanced
-3. Use print statements to explain what's happening and show results
-4. Include comments to explain the purpose of each demonstration
-5. Include comments to show the executed outcome and the expected outcome
-6. If the main is excessive, it can broken down into supporting functions which categorize sections of the example
+### Rationale
+A standardized entry point is required to make examples directly runnable and to provide a logical flow for the demonstration.
+
+Directives:
+- Organize demonstrations from basic to advanced.
+- Use `print()` statements to provide context and display results.
+- Include comments explaining the purpose and expected outcome of each step.
+- Break down excessive logic into supporting functions categorized by functionality.
 
 Examples:
 ```python # pseudocode
@@ -181,10 +183,14 @@ if __name__ == "__main__":
 
 ### 2.3 Example Category Functions
 
-Use Example Category Functions to break down the main section into categories focusing on one aspect of the examples. Ensure these functions follow the same guidelines as the main section:
+Use supporting functions to categorize complex demonstrations.
 
-1. Organize demonstrations in a logical sequence, from basic to advanced.
-2. Use print statements to explain what is happening and show results.
+### Rationale
+Function-based categorization is recommended to improve the modularity and readability of extensive examples.
+
+Directives:
+- Organize demonstrations in a logical sequence.
+- Use `print()` statements to explain the context.
 3. Include comments to explain the purpose of each demonstration.
 4. Include comments to show the executed outcome and the expected outcome.
 
@@ -261,7 +267,7 @@ if __name__ == "__main__":
 
 ## 3 Example Semantics and Syntax
 
-Ensure examples conform to the semantics and syntax described in [Semantics Guidelines](semantics.md) and the Syntax topics � [Formatting](syntax/formatting.md), [Naming](syntax/naming.md), [Typing](syntax/typing.md), [Docstrings](syntax/docstrings.md), [Comments](syntax/comments.md), [Strings](syntax/strings.md), [Exceptions & Error Messages](syntax/exceptions_error_messages.md), [Logging](syntax/logging.md), and [Resources](syntax/resources.md). In some cases, deviate from the general guidelines. The following sections describe semantics and syntax which take precedence over the general style guide.
+Ensure examples conform to the semantics and syntax described in [Semantics Guidelines](semantics.md) and the Syntax topics [Formatting](syntax/formatting.md), [Naming](syntax/naming.md), [Typing](syntax/typing.md), [Docstrings](syntax/docstrings.md), [Comments](syntax/comments.md), [Strings](syntax/strings.md), [Exceptions & Error Messages](syntax/exceptions_error_messages.md), [Logging](syntax/logging.md), and [Resources](syntax/resources.md). In some cases, deviate from the general guidelines. The following sections describe semantics and syntax which take precedence over the general style guide.
 
 ### 3.1 Example Documentation
 
@@ -269,12 +275,16 @@ Refer to the Syntax topics, particularly [Docstrings](syntax/docstrings.md) and 
 
 #### 3.1.1 Print Statements
 
-Use print statements in examples as a narrative to guide the user through the demonstration:
+Use `print()` statements in examples as a narrative to guide the user through the demonstration.
 
-1. Use print statements to indicate what is being demonstrated.
-2. Print input values, results, and expected results to show the effect of operations.
-3. Use descriptive messages that explain what is happening.
-4. Format output to make it easy to read and understand.
+### Rationale
+Frequent output is required to ensure that the execution flow and state changes are transparent to the user.
+
+Directives:
+- Use `print()` statements to indicate what is being demonstrated.
+- Print input values, results, and expected results to show the effect of operations.
+- Use descriptive messages that explain the context.
+- Format output to improve readability.
 
 Example:
 
@@ -287,11 +297,15 @@ print(f"Result: {advanced1} == 'item1item1'")
 
 #### 3.1.2 Error Handling
 
-Demonstrate proper error handling in examples:
+Include explicit error handling in examples to demonstrate robust usage.
 
-1. Show how to handle common exceptions.
-2. Demonstrate best practices for error recovery.
-3. Include examples of input validation and error prevention.
+### Rationale
+Showing how to handle exceptions is recommended to prepare users for real-world integration challenges.
+
+Directives:
+- Show how to handle common exceptions.
+- Demonstrate best practices for error recovery.
+- Include examples of input validation and error prevention.
 
 Example:
 
@@ -307,13 +321,15 @@ except Exception as e:
 
 ### 3.2 Assertions
 
-Assertions are a base Python feature that allow for checking the state of a program at runtime. Avoid assertions in source code because they do not conform to Python's error handling principles. However, use assertions for debugging, testing, examples, and tutorials because they are good for explaining the behavior of a program. In these scenarios, the user manages error handling rather than the program.
+Use `assert` statements to verify correctness within examples.
 
-Guidelines:
-- Include at least one assertion in each test.
+### Rationale
+Assertions are recommended in examples because they serve as a form of executable documentation that clarifies the expected state. While discouraged in production source code, they are appropriate for demonstrations where the user manages error handling.
+
+Directives:
+- Include at least one assertion in each major section of an example.
 - Use specific assertions that verify a single aspect of behavior.
-- Use appropriate assertion methods for the type of comparison being made.
-- Include descriptive error messages in assertions to make test failures more informative.
+- Include descriptive error messages in assertions to make failures informative.
 
 Example:
 ```python # pseudocode
@@ -331,44 +347,32 @@ assert unpickled is not test_object
 
 ### 3.3 Writing Style
 
-The writing style for examples should be in the third-person for both code comments and accompanying text. When
-explaining features and how things work, use the third-person descriptive voice. When instructing users on how to use
-things, use the third-person imperative voice that is active and issued as commands.
+Follow the [Writing Voice](guide_voice.md) guidelines for all example documentation and code comments.
 
-#### 3.3.1 Third-Person Descriptive Voice
+### Rationale
+A consistent writing voice is required to maintain the "Standard-Setter" persona and ensure that all examples are professional, objective, and easy to follow.
 
-Use the third-person descriptive voice to explain the behavior of the example code. This typically involves using the
-third-person singular present tense.
-
-Example:
-```python # pseudocode
-# Calculates the total sum of the items.
-total = sum(items)
-```
-
-#### 3.3.2 Third-Person Imperative Voice
-
-Use the third-person imperative voice when providing instructions or requirements within the example. The voice should
-be active and be issued as commands. This typically involves using words like "must," "should," or "shall" with a
-third-person subject.
-
-Example:
-```python # pseudocode
-# The user must provide a valid API key.
-client = APIClient(api_key="...")
-```
+Directives:
+- Use the direct imperative mood for setup and execution instructions.
+- Use the third-person descriptive voice for explaining example logic.
+- Avoid all pronouns in both documentation and code comments.
+- Integrate RFC 2119 keywords naturally into sentences using lowercase.
 
 
 ## 4 Example Content Guidelines
 
 ### 4.1 Self-Contained Examples
 
-Ensure examples are self-contained and runnable without external dependencies:
+Ensure examples are self-contained and runnable without external dependencies.
 
-1. Include all necessary imports.
-2. Generate sample data within the example.
-3. Avoid reliance on external files or services.
-4. If external resources are necessary, provide clear instructions or mock the data.
+### Rationale
+Self-contained examples are required to allow users to verify functionality immediately without additional configuration or resource provisioning.
+
+Directives:
+- Include all necessary imports.
+- Generate sample data within the example.
+- Avoid reliance on external files or services unless they are the subject of the demonstration.
+- Mock external resources or provide clear setup instructions if they are necessary.
 
 Example:
 
@@ -386,12 +390,15 @@ processor = DataProcessor(data)
 
 ### 4.2 Progressive Complexity
 
-Structure examples to progress from simple to complex:
+Structure examples to progress from simple usage to complex scenarios.
 
-1. Start with basic usage that demonstrates core functionality
-2. Gradually introduce more advanced features
-3. Build on previous concepts to show how components work together
-4. End with complex, real-world scenarios that showcase the full power of the library
+### Rationale
+Gradual introduction of features is recommended to prevent overwhelming new users and to build a solid foundation of understanding.
+
+Directives:
+- Start with basic usage of core functionality.
+- Gradually introduce advanced features.
+- Demonstrate how multiple components work together in complex scenarios.
 
 Example:
 
@@ -411,12 +418,15 @@ print("\nComplex scenario:")
 
 ### 4.3 Real-World Scenarios
 
-Include examples that demonstrate real-world use cases:
+Include examples that demonstrate library usage in real-world contexts.
 
-1. Show how the library solves common problems
-2. Demonstrate integration with other libraries or systems
-3. Include scenarios that users are likely to encounter
-4. Provide context for why certain approaches are beneficial
+### Rationale
+Real-world scenarios are required to justify the library's features and show how they solve common development challenges.
+
+Directives:
+- Show how the library solves practical problems.
+- Demonstrate integration with common systems or other libraries.
+- Provide context for why a specific approach is recommended.
 
 Example:
 
@@ -437,28 +447,41 @@ result2 = cached_api.get_data("endpoint1")
 
 ### 4.4 Edge Cases
 
-Include examples that demonstrate how to handle edge cases:
+Include examples that demonstrate behavior under unusual conditions.
 
-1. Show how the library behaves with unusual inputs
-2. Demonstrate error handling for invalid inputs
-3. Include examples of boundary conditions
-4. Show how to handle resource constraints or performance issues
+### Rationale
+Edge case examples are required to document the library's robustness and guide users on correct error handling and boundary conditions.
+
+Directives:
+- Show behavior with unusual or invalid inputs.
+- Demonstrate resource constraint management and performance considerations.
 
 ### 4.5 Implement Base Classes
 
-Demonstrate how to implement base classes in examples. Use base classes for creating reusable components that can be used in multiple scenarios. Use examples to demonstrate how to use base classes to implement common functionality.
+Demonstrate the implementation of base classes to show extensibility.
+
+### Rationale
+Implementation examples are required to guide users on how to customize and extend the library for their specific needs.
 
 
 ## 5 Example Styles
 
-Use different example styles to enhance the learning experience for users. Each style has its own strengths and is suitable for different learning objectives. The following sections provide an overview of the different styles and examples that demonstrate them.
+Use diverse example styles to cater to different learning objectives.
+
+### Rationale
+A variety of styles is recommended to engage different types of learners and provide comprehensive coverage of the library's capabilities.
 
 ### 5.1 Cookbook Style
 
-Provide practical, ready-to-use code snippets for common tasks.
-   - Format as problem-solution pairs.
-   - Include brief explanations of why the solution works.
-   - Focus on practical utility over theoretical understanding.
+Provide practical, ready-to-use snippets for common tasks.
+
+### Rationale
+The cookbook style is recommended for its high utility and immediate value to developers looking for quick solutions.
+
+Directives:
+- Use problem-solution pairs.
+- Include brief explanations of why the solution works.
+- Focus on practical application.
 
 ```python # pseudocode
 # Problem: How to efficiently filter a dictionary by value
@@ -472,9 +495,14 @@ print(f"Filtered dictionary: {filtered} == {expected}")  # Output: Filtered dict
 ### 5.2 Compare and Contrast
 
 Show multiple approaches to solving the same problem, highlighting trade-offs.
-   - Present at least two different implementations.
-   - Explain the advantages and disadvantages of each approach.
-   - Include performance considerations when relevant.
+
+### Rationale
+Comparing different implementations is required to help users understand the benefits and drawbacks of various techniques, such as readability versus performance.
+
+Directives:
+- Present at least two different implementations.
+- Explain the advantages and disadvantages of each approach.
+- Include performance considerations when relevant.
 
 ```python # pseudocode
 # Approach 1: Using a for loop (more readable)
@@ -494,9 +522,14 @@ print(f"Result: {result2} == {expected_result2}")
 ### 5.3 Step-by-Step Transformation
 
 Show the evolution of data through a series of operations.
-   - Start with initial data.
-   - Apply transformations one at a time.
-   - Show intermediate results after each step.
+
+### Rationale
+Step-by-step demonstrations are recommended for complex processing pipelines to make each transformation clear and verifiable.
+
+Directives:
+- Start with initial data.
+- Apply transformations one at a time.
+- Show intermediate results after each step.
 
 ```python # pseudocode
 # Initial data
@@ -519,9 +552,14 @@ print(f"Final result (sum): {total} == {expected_total}")
 ### 5.4 Annotated Examples
 
 Provide code examples with detailed comments explaining each line or block.
-   - Add comments that explain not just what the code does, but why.
-   - Highlight important concepts or patterns.
-   - Use a consistent comment style throughout.
+
+### Rationale
+Deeply annotated examples are required for complex patterns to explain the "why" behind the implementation choices.
+
+Directives:
+- Explain both the action and the rationale in comments.
+- Highlight important concepts or patterns.
+- Maintain a consistent comment style throughout.
 
 ```python # pseudocode
 # Create a processor with caching capabilities
@@ -544,9 +582,14 @@ print(f"Second call result: {result2}  == {expected_result2}")
 ### 5.5 Interactive Examples
 
 Create examples that encourage users to modify parameters and observe different outcomes.
-   - Provide a base example that works.
-   - Suggest modifications for users to try.
-   - Explain expected outcomes for different modifications.
+
+### Rationale
+Interactive elements are recommended to promote active learning and help users understand how different inputs affect system behavior.
+
+Directives:
+- Provide a working base example.
+- Suggest specific modifications for the user to try.
+- Explain the expected outcomes for those modifications.
 
 ```python # pseudocode
 # Base example - try modifying the parameters!
@@ -575,14 +618,19 @@ print(f"{x} {operation} {y} = {result}")
 
 ### 5.6 Error-Driven Learning
 
-Use examples to intentionally show common errors and how to fix them.
-   - Show incorrect code first.
-   - Explain why it is wrong and what error it produces.
-   - Provide the corrected version.
+Use examples to intentionally show common errors and their resolutions.
+
+### Rationale
+Showing incorrect code is recommended to help users recognize and avoid common pitfalls and to demonstrate effective debugging techniques.
+
+Directives:
+- Show the incorrect code first.
+- Explain the error produced and why it occurs.
+- Provide the corrected version.
 
 ```python # pseudocode
-# INCORRECT: This will raise a KeyError
-print("Incorrect approach:")
+# NON-COMPLIANT: This will raise a KeyError
+print("Non-compliant approach:")
 try:
     data = {"a": 1, "b": 2}
     value = data["c"]  # KeyError: 'c'
@@ -590,8 +638,8 @@ try:
 except KeyError as e:
     print(f"Error: {e}")
 
-# CORRECT: Using get() method with a default value
-print("\nCorrect approach:")
+# COMPLIANT: Using get() method with a default value
+print("\nCompliant approach:")
 data = {"a": 1, "b": 2}
 value = data.get("c", 0)  # Returns 0 if key doesn't exist
 print(f"Value: {value}  == {expected_value1}")
@@ -600,9 +648,14 @@ print(f"Value: {value}  == {expected_value1}")
 ### 5.7 Incremental Complexity
 
 Start with a minimal example and gradually add features.
-   - Begin with the simplest possible implementation.
-   - Add complexity one feature at a time.
-   - Explain each addition and its purpose.
+
+### Rationale
+Building complexity incrementally is required to help users master individual concepts before combining them into a full solution.
+
+Directives:
+- Begin with the simplest possible implementation.
+- Add features one at a time.
+- Explain each addition and its specific purpose.
 
 ```python # pseudocode
 # Stage 1: Basic implementation
@@ -638,9 +691,14 @@ print(f"Result: {result2} == {expected_result2}")
 ### 5.8 Visual Learning
 
 Use ASCII art, tables, or other visual representations to illustrate concepts.
-   - Use visual elements to clarify complex relationships or structures.
-   - Ensure visuals are readable in monospace font.
-   - Include explanatory text alongside visuals.
+
+### Rationale
+Visual aids are recommended for structural concepts, such as trees or network protocols, where spatial representation improves clarity.
+
+Directives:
+- Use visual elements to clarify complex relationships or structures.
+- Ensure visuals are readable in monospace fonts.
+- Include explanatory text alongside all visuals.
 
 ```python # pseudocode
 # Example of a binary tree structure
@@ -677,64 +735,48 @@ root.right.right = Node("G")
 
 ### 5.9 Example Styles Conclusions
 
-Consider which style or combination of styles will best help users understand the concept being demonstrated when creating examples. Different styles are more effective for different types of learning objectives:
+Choose the style or combination of styles that best suits the learning objective.
 
-- Use **Cookbook Style** for practical, task-oriented learning.
-- Use **Compare and Contrast** to develop critical thinking about implementation choices.
-- Use **Step-by-Step Transformation** to show data flow and processing pipelines.
-- Use **Annotated Examples** for detailed understanding of complex code.
-- Use **Interactive Examples** to encourage experimentation and active learning.
-- Use **Error-Driven Learning** to help users avoid common pitfalls.
-- Use **Incremental Complexity** for building comprehensive understanding of complex features.
-- Use **Visual Learning** for concepts that benefit from spatial or structural representation.
+### Rationale
+Matching the example style to the concept being taught is required to maximize educational effectiveness.
 
-For this style guide, primarily use a mixture of Step-by-Step Transformation, Annotated Examples, Interactive Examples, and Incremental Complexity because other sections of the project should cover the goals of the other styles.
+Directives:
+- Use **Cookbook Style** for task-oriented learning.
+- Use **Compare and Contrast** for critical thinking about implementation choices.
+- Use **Step-by-Step Transformation** for data pipelines.
+- Use **Annotated Examples** for deep dives into complex code.
+- Use **Interactive Examples** for active experimentation.
+- Use **Error-Driven Learning** for pitfall avoidance.
+- Use **Incremental Complexity** for building full system understanding.
+- Use **Visual Learning** for structural or spatial concepts.
 
 
 ## 6 Example-Specific Best Practices
 
-Refer to the Syntax topics � [Formatting](syntax/formatting.md), [Naming](syntax/naming.md), [Typing](syntax/typing.md), [Docstrings](syntax/docstrings.md), [Comments](syntax/comments.md), [Strings](syntax/strings.md), [Exceptions & Error Messages](syntax/exceptions_error_messages.md), [Logging](syntax/logging.md), and [Resources](syntax/resources.md) � and [Semantics Guidelines](semantics.md) for general code readability, performance, and maintainability guidelines. Use the following best practices specific to example files:
+Follow these best practices to ensure that examples are effective educational tools.
 
-- **Educational Focus**: Prioritize clarity and educational value over code optimization in examples. Sometimes a slightly less efficient approach may be more instructive.
-- **Comparative Approaches**: When relevant, show both basic/simple approaches and more advanced/efficient approaches to demonstrate the benefits of different techniques:
-```python # pseudocode
-# Basic approach (for clarity)
-print("\nBasic approach:")
-for key in data:
-    result = processor.process_data(key)
-    print(f"{key}: {result}")
+### Rationale
+Adhering to best practices is required to maintain a high standard of quality and consistency across all library examples.
 
-# Advanced approach (for efficiency)
-print("\nAdvanced approach:")
-keys = list(data.keys())
-results = [processor.process_data(key) for key in keys]
-for key, result in zip(keys, results):
-    print(f"{key}: {result}")
-```
-- **Explicit Constants**: Use named constants for values that might be referenced multiple times or that have special meaning:
-```python # pseudocode
-# Constants
-CACHE_LIFETIME = 5  # seconds
-MAX_CACHE_SIZE = 100  # items
-
-# Use constants instead of hardcoded values
-processor.set_lifetimes(CACHE_LIFETIME)
-processor.set_maxsize(MAX_CACHE_SIZE)
-```
-
-- **Self-Contained**: Ensure examples are runnable without requiring external files or dependencies beyond the library itself.
-- **Progressive Disclosure**: Structure examples to start with basic concepts and gradually introduce more complex features.
-- **Tests as Inspiration**: Use unit tests as a reference if they exist, but do not copy them exactly. Use examples to educate the user on how to use key aspects of the module and how they can use it to create new programs, not just test it.
+Directives:
+- Prioritize educational clarity over absolute code optimization.
+- Show both basic and advanced approaches when relevant.
+- Use named constants instead of hardcoded values.
+- Ensure examples are self-contained.
+- Structure examples with progressive disclosure of complexity.
+- Use existing tests as inspiration but do not copy them exactly.
 
 
 ## 7 Testing Examples
 
-Test examples to ensure they work as expected:
+Test examples to ensure they remain accurate and functional.
 
-1. Run each example to verify it produces the expected output.
-2. Test examples with different Python versions if the library supports multiple versions.
-3. Verify that examples work with the latest version of the library.
-4. Include comments about expected output or behavior.
+### Rationale
+Regular testing of examples is required to prevent documentation rot and ensure that demonstrations remain valid as the library evolves.
 
-Following these guidelines ensures that developers create examples that effectively demonstrate library functionality and help users understand how to apply it in their own projects.
+Directives:
+- Run every example to verify it produces the expected output.
+- Verify that examples work with all supported Python versions.
+- Test examples against the latest version of the library.
+- Include comments specifying expected output or behavior.
 

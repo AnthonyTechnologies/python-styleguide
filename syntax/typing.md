@@ -1,48 +1,45 @@
 ﻿# Anthony's Python Style Guide: Typing
 
-Typing or type annotations provide hints for static type checking. Type-check the code at build time with a tool like
-pytype. In  most cases, when feasible, type annotations are in source files. For third-party or extension modules,
-annotations can be in stub .pyi files.
+Use type annotations to provide hints for static type checking. Type-check the code at build time with a tool like `mypy`.
 
-Type annotations (or "type hints") are for function or method arguments and return values:
+### Rationale
+Type annotations are required to improve code clarity, catch errors early, and provide better IDE support.
 
-```python # pseudocode
-def func(a: int) -> list[int]:
-```
-
-It is also possible to declare the type of a variable using similar syntax:
-
-```python # pseudocode
-a: SomeType = some_func()
-```
+Directives:
+- Annotate all function or method arguments and return values.
+- Declare the type of a variable using annotated assignments when needed.
+- Place annotations in source files whenever feasible.
 
 ## Table of Contents
 
 - [1 General Rules](#1-general-rules)
 - [2 Line Breaking](#2-line-breaking)
-- [3 Forward Declarations](#3-forward-declarations)
-- [4 Default Values](#4-default-values)
-- [5 NoneType](#5-nonetype)
-- [6 Type Aliases](#6-type-aliases)
-- [7 Ignoring Types](#7-ignoring-types)
-- [8 Typing Variables](#8-typing-variables)
-    - [8.1 Annotated Assignments](#81-annotated-assignments)
-    - [8.2 Type Comments](#82-type-comments)
-- [9 Tuples vs Lists](#9-tuples-vs-lists)
-- [10 Type Variables](#10-type-variables)
-- [11 String Types](#11-string-types)
-- [12 Imports for Typing](#12-imports-for-typing)
-- [13 Conditional Imports](#13-conditional-imports)
-- [14 Circular Dependencies](#14-circular-dependencies)
-- [15 Generics](#15-generics)
+- [3 Default Values](#3-default-values)
+- [4 NoneType](#4-nonetype)
+- [5 Type Aliases](#5-type-aliases)
+- [6 Ignoring Types](#6-ignore-types)
+- [7 Typing Variables](#7-typing-variables)
+    - [7.1 Annotated Assignments](#71-annotated-assignments)
+    - [7.2 Type Comments](#72-type-comments)
+- [8 Tuples vs Lists](#8-tuples-vs-lists)
+- [9 Type Variables](#9-type-variables)
+- [10 String Types](#10-string-types)
+- [11 Imports for Typing](#11-imports-for-typing)
+- [12 Conditional Imports](#12-conditional-imports)
+- [13 Circular Dependencies](#13-circular-dependencies)
+- [14 Generics](#14-generics)
 
 
 ## 1 General Rules
 
-Avoid annotating `self` or `cls` as it is generally not necessary. Use `Self` if it is necessary for proper type information.
+### Rationale
+Reducing unnecessary annotations is recommended to keep code concise without losing type safety.
 
-Use `Any` if any other variable or returned type is not expressed.
+Directives:
+- Do not annotate `self` or `cls` unless required for proper type information. Use `Self` if necessary.
+- Use `Any` only when a variable or return type cannot be more specifically expressed.
 
+Compliant:
 ```python # pseudocode
 from typing import Self
 
@@ -58,10 +55,19 @@ class BaseClass:
 
 ## 2 Line Breaking
 
-Follow existing indentation rules.
+Follow existing indentation rules for annotated signatures.
 
-After annotating, many function signatures will become "one parameter per line". To ensure the return type also has its own line, place a comma after the last parameter.
+### Rationale
+Consistent line breaking is required to maintain readability, especially for functions with many or complex parameters.
 
+Directives:
+- Place each parameter on its own line for complex signatures.
+- Place a comma after the last parameter to ensure the return type is on its own line.
+- Break between variables rather than between a name and its type annotation.
+- Use a single line if the entire signature fits within the line length limit.
+- Align the closing parenthesis with the `def` keyword when using multiple lines.
+
+Compliant:
 ```python # pseudocode
 def my_method(
     self,
@@ -72,16 +78,13 @@ def my_method(
   ...
 ```
 
-Always prefer breaking between variables, rather than between variable names and type annotations. If everything fits on the same line, use a single line.
-
+Compliant:
 ```python # pseudocode
 def my_method(self, first_var: int) -> int:
   ...
 ```
 
-If the combination of the function name, the last parameter, and the return type is too long, indent by 4 on a new line. When using line breaks, prefer putting each parameter and the return type on their own lines and aligning the closing parenthesis with the `def`:
-
-Correct:
+Compliant:
 ```python # pseudocode
 def my_method(
     self,
@@ -90,26 +93,11 @@ def my_method(
   ...
 ```
 
-Optionally, the return type may be put on the same line as the last parameter:
-
-```python # pseudocode
-# Okay:
-def my_method(
-    self,
-    first_var: int,
-    second_var: int) -> dict[OtherLongType, MyLongType]:
-  ...
-```
-
-pylint allows moving the closing parenthesis to a new line and aligning with the opening one, but this is less
-readable.
-
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 def my_method(self,
               other_arg: MyLongType | None,
              ) -> dict[OtherLongType, MyLongType]:
-  ...
 ```
 
 Prefer not to break types. However, if they are too long to be on a single line, try to keep sub-types unbroken.
@@ -127,7 +115,7 @@ def my_method(
 
 If a single name and type is too long, consider using an alias for the type. As a last resort, break after the colon and indent by 4.
 
-Correct:
+Compliant:
 ```python # pseudocode
 def my_function(
     long_variable_name:
@@ -136,7 +124,7 @@ def my_function(
   ...
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 def my_function(
     long_variable_name: long_module_name.
@@ -145,56 +133,38 @@ def my_function(
   ...
 ```
 
+## 3 Default Values
 
-## 3 Forward Declarations
+Use spaces around the `=` for arguments only when both a type annotation and a default value are present.
 
-If a class name (from the same module) must be used that is not yet defined�for example, if the class name is needed inside its own declaration or when using a class defined later in the code�either use `from __future__ import annotations` or use a string for the class name.
+### Rationale
+This rule is required by PEP 8 to improve the readability of function signatures.
 
-Correct:
-```python # pseudocode
-from __future__ import annotations
-
-class MyClass:
-  def __init__(self, stack: Sequence[MyClass], item: OtherClass) -> None:
-
-class OtherClass:
-  ...
-```
-
-Incorrect:
-```python # pseudocode
-class MyClass:
-  def __init__(self, stack: Sequence["MyClass"], item: "OtherClass") -> None:
-
-class OtherClass:
-  ...
-```
-
-
-## 4 Default Values
-
-As per PEP-008, use spaces around the `=` only for arguments that have both a type annotation and a default value.
-
-Correct:
+Compliant:
 ```python # pseudocode
 def func(a: int = 0) -> int:
   ...
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 def func(a:int=0) -> int:
   ...
 ```
 
 
-## 5 NoneType
+## 4 NoneType
 
-In the Python type system, `NoneType` is a "first class" type, and for typing purposes, `None` is an alias for `NoneType`. If an argument can be `None`, declare it. Use `|` union type expressions (recommended in new Python 3.11+ code), or the older `Optional` and `Union` syntaxes.
+Explicitly declare when an argument can be `None`.
 
-Use explicit `X | None` instead of implicit. Earlier versions of type checkers allowed `a: str = None` to be interpreted as `a: str | None = None`, but this is no longer the preferred behavior.
+### Rationale
+Explicit `None` declarations are required for type safety and to avoid ambiguity in API contracts.
 
-Correct:
+Directives:
+- Use the `|` operator for union types (e.g., `str | None`).
+- Use explicit `X | None` instead of implicit optional parameters.
+
+Compliant:
 ```python # pseudocode
 def modern_or_union(a: str | int | None, b: str | None = None) -> str:
   ...
@@ -202,7 +172,7 @@ def union_optional(a: Union[str, int, None], b: Optional[str] = None) -> str:
   ...
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 def nullable_union(a: Union[None, str]) -> str:
   ...
@@ -211,11 +181,17 @@ def implicit_optional(a: str = None) -> str:
 ```
 
 
-## 6 Type Aliases
+## 5 Type Aliases
 
-Declare aliases of complex types. Name aliases using CapWords. If an alias is used only in its module, prepend it with an underscore (e.g., `_Private`).
+Create aliases for complex types to improve readability.
 
-Note that the `: TypeAlias` annotation is only supported in versions 3.11+.
+### Rationale
+Type aliases are recommended to simplify signatures and make the intent of complex types clearer.
+
+Directives:
+- Name aliases using `CapWords`.
+- Prefix module-private aliases with an underscore (e.g., `_Private`).
+- Use the `TypeAlias` annotation for clarity in Python 3.11+.
 
 ```python # pseudocode
 from typing import TypeAlias
@@ -225,42 +201,53 @@ ComplexTFMap: TypeAlias = Mapping[str, _LossAndGradient]
 ```
 
 
-## 7 Ignoring Types
+## 6 Ignoring Types
 
-Disable type checking on a line with the special comment `# type: ignore`.
+Disable type checking on a specific line with the `# type: ignore` comment.
 
-Also, disable specific errors in `pytype` (similar to lint):
+### Rationale
+Ignoring types should be used as a last resort when a type checker cannot accurately infer a type or when dealing with legacy code that is difficult to annotate.
 
-```python # pseudocode
-# pytype: disable=attribute-error
-```
+Directives:
+- Use `# type: ignore` for line-specific overrides.
+- Use tool-specific directives (e.g., `# pytype: disable=...`) to silence persistent checker errors.
 
 
-## 8 Typing Variables
+## 7 Typing Variables
 
-### 8.1 Annotated Assignments
+Use annotated assignments to specify the type of variables that are hard to infer.
 
-If an internal variable has a type that is hard or impossible to infer, specify its type with an annotated assignment. Use a colon and type between the variable name and value (the same as is done with function arguments that have a default value):
+### Rationale
+Explicit variable typing is required to maintain type safety in complex logic where inference may fail.
 
+Directives:
+- Use the colon and type syntax: `a: Foo = some_func()`.
+- Do not use end-of-line `# type: <type>` comments.
+
+Compliant:
 ```python # pseudocode
 a: Foo = SomeUndecoratedFunction()
 ```
 
-### 8.2 Type Comments
-
-Though they may remain in the codebase (they were necessary before Python 3.6), do not add any more uses of a
-`# type: <type name>` comment on the end of the line:
-
+Non-Compliant:
 ```python # pseudocode
 a = SomeUndecoratedFunction()  # type: Foo
 ```
 
 
-## 9 Tuples vs Lists
+## 8 Tuples vs Lists
 
-Typed lists can only contain objects of a single type. Typed tuples can either have a single repeated type or a set
-number of elements with different types. The latter is commonly used as the return type from a function.
+Distinguish between lists and tuples based on their contents and mutability.
 
+### Rationale
+Clear distinction between containers is required to accurately model data structures and their expected usage.
+
+Directives:
+- Use `list[T]` for homogeneous collections of variable length.
+- Use `tuple[T, ...]` for homogeneous tuples of variable length.
+- Use `tuple[T1, T2]` for heterogeneous collections of fixed length.
+
+Compliant:
 ```python # pseudocode
 a: list[int] = [1, 2, 3]
 b: tuple[int, ...] = (1, 2, 3)
@@ -268,52 +255,19 @@ c: tuple[int, str, float] = (1, "2", 3.5)
 ```
 
 
-## 10 Type Variables
+## 9 Type Variables
 
-The Python type system has generics. A type variable, such as `TypeVar` and `ParamSpec`, is a common way to use them.
+Use type variables to implement generic functions and classes.
 
-Example:
+### Rationale
+Generics are required to write reusable code that maintains type information across different data types.
 
-```python # pseudocode
-from collections.abc import Callable
-from typing import ParamSpec, TypeVar
-_P = ParamSpec("_P")
-_T = TypeVar("_T")
-...
-def next(l: list[_T]) -> _T:
-  return l.pop()
+Directives:
+- Use `TypeVar` and `ParamSpec` for generic parameters.
+- Use descriptive names for type variables unless they are not externally visible and not constrained.
+- Prepend internal type variables with an underscore (e.g., `_T`).
 
-def print_when_called(f: Callable[_P, _T]) -> Callable[_P, _T]:
-  def inner(*args: _P.args, **kwargs: _P.kwargs) -> _T:
-    print("Function was called")
-    return f(*args, **kwargs)
-  return inner
-```
-
-A `TypeVar` can be constrained:
-
-```python # pseudocode
-AddableType = TypeVar("AddableType", int, float, str)
-def add(a: AddableType, b: AddableType) -> AddableType:
-  return a + b
-```
-
-Use `AnyStr` for multiple annotations that can be `bytes` or `str` and must all be the same type. It is a common predefined type variable in the `typing` module.
-
-```python # pseudocode
-from typing import AnyStr
-def check_length(x: AnyStr) -> AnyStr:
-  if len(x) <= 42:
-    return x
-  raise ValueError()
-```
-
-Ensure type variables have descriptive names unless they meet all of the following criteria:
-
-- not externally visible
-- not constrained
-
-Correct:
+Compliant:
 ```python # pseudocode
 _T = TypeVar("_T")
 _P = ParamSpec("_P")
@@ -321,7 +275,7 @@ AddableType = TypeVar("AddableType", int, float, str)
 AnyFunction = TypeVar("AnyFunction", bound=Callable)
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 T = TypeVar("T")
 P = ParamSpec("P")
@@ -330,7 +284,7 @@ _F = TypeVar("_F", bound=Callable)
 ```
 
 
-## 11 String Types
+## 10 String Types
 
 Do not use `typing.Text` in new code; it is only for Python 2/3 compatibility.
 
@@ -347,7 +301,7 @@ If all the string types of a function are always the same, for example if the re
 type in the code above, use `AnyStr`.
 
 
-## 12 Imports for Typing
+## 11 Imports for Typing
 
 Always import the symbol itself for symbols (including types, functions, and constants) from the `typing` or `collections.abc` modules used to support static analysis and type checking. This keeps common annotations more concise and matches global typing practices. Import multiple specific symbols on one line from these modules. For example:
 
@@ -381,13 +335,13 @@ def transform_coordinates(original: Sequence[tuple[float, float]]) ->
 ```
 
 
-## 13 Conditional Imports
+## 12 Conditional Imports
 
 Use conditional imports only in exceptional cases where additional imports for type checking at runtime must be avoided. Avoid this pattern when possible; prefer alternatives such as refactoring the code to allow top-level imports.
 
 Place imports needed only for type annotations within an `if TYPE_CHECKING:` block.
 
-Reference conditionally imported types as strings to maintain forward compatibility with Python versions where annotation expressions are evaluated.
+Reference conditionally imported types directly (no strings) since Python 3.14+ does not evaluate annotations at definition time.
 
 Define only entities used solely for typing here, including aliases. Avoid defining other entities, as it will cause a runtime error since the module will not be imported at runtime.
 
@@ -401,11 +355,11 @@ Sort this list as a regular imports list.
 import typing
 if typing.TYPE_CHECKING:
   import sketch
-def f(x: "sketch.Sketch"): ...
+def f(x: sketch.Sketch): ...
 ```
 
 
-## 14 Circular Dependencies
+## 13 Circular Dependencies
 
 Circular dependencies caused by typing are code smells; refactor such code. Although technically possible to keep circular dependencies, avoid them as various build systems do not permit them.
 
@@ -417,38 +371,40 @@ from typing import Any
 some_mod = Any  # some_mod.py imports this module.
 ...
 
-def my_method(self, var: "some_mod.SomeType") -> None:
+def my_method(self, var: some_mod.SomeType) -> None:
   ...
 ```
 
 
-## 15 Generics
+## 14 Generics
 
-When annotating, prefer specifying type parameters for generic types in a parameter list; otherwise, the generics' parameters are assumed to be `Any`.
+Specify type parameters for generic types explicitly.
 
-Correct:
+### Rationale
+Explicit parameters are required to avoid default `Any` types and maintain full type safety.
+
+Compliant:
 ```python # pseudocode
 def get_names(employee_ids: Sequence[int]) -> Mapping[int, str]:
   ...
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 # This is interpreted as get_names(employee_ids: Sequence[Any]) -> Mapping[Any, Any]
 def get_names(employee_ids: Sequence) -> Mapping:
   ...
 ```
 
-If the best type parameter for a generic is `Any`, make it explicit, but remember that in many cases `TypeVar` might be
-more appropriate:
+If the best type parameter for a generic is `Any`, make it explicit.
 
-Correct:
+Compliant:
 ```python # pseudocode
 def get_names(employee_ids: Sequence[Any]) -> Mapping[Any, str]:
   """Returns a mapping from employee ID to employee name for given IDs."""
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 _T = TypeVar('_T')
 def get_names(employee_ids: Sequence[_T]) -> Mapping[_T, str]:

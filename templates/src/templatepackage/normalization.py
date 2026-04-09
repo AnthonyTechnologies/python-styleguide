@@ -20,6 +20,7 @@ __version__ = "0.1.0"
 # Imports #
 # Standard Libraries #
 from collections.abc import Callable, Iterable
+from typing import Any
 
 
 # Definitions #
@@ -29,7 +30,7 @@ DEFAULT_NORMALIZE_STRIP: str = ""  # Characters to strip in normalization (empty
 
 # Functions #
 # Decorators #
-def require_iterable_of_str(func: Callable[[Iterable[str]], list[str]]) -> Callable[[Iterable[str]], list[str]]:
+def require_iterable_of_str(func: Callable[[Iterable[str]], list[str]]) -> Callable[[Iterable[Any]], list[str]]:
     """Validates that the input is an iterable of strings.
 
     This decorator is intended to be placed before the functions it decorates, per the style guide.
@@ -41,7 +42,7 @@ def require_iterable_of_str(func: Callable[[Iterable[str]], list[str]]) -> Calla
         A wrapped function enforcing type checks at runtime.
     """
 
-    def wrapper(names: Iterable[str]) -> list[str]:
+    def wrapper(names: Iterable[Any]) -> list[str]:
         """Enforces an iterable of str at runtime before calling func.
 
         Args:

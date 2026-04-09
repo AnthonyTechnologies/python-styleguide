@@ -1,11 +1,9 @@
 # Anthony's Python Style Guide: Semantics
 
-This document provides guidelines for the semantic aspects of Python code based on Google's Python Style Guide with
-customizations [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html). It is mostly copy-pasted
-from there but has some edits. This document addresses programming practices that affect code behavior and
-maintainability, including the use of mutable global state, function length, nested classes and functions, lexical
-scoping, and threading considerations. These guidelines help developers write code that is semantically sound, leading
-to more robust, maintainable, and bug-free applications.
+This document establishes guidelines for the semantic aspects of Python code, including program structure, behavior, and maintainability.
+
+### Rationale
+Semantically sound code is required to ensure that applications are robust, maintainable, and predictable.
 
 ## Table of Contents
 
@@ -47,66 +45,54 @@ to more robust, maintainable, and bug-free applications.
 
 
 ## 1 Mutable Global State
+
 Avoid mutable global state.
 
-### 1.1 Definition
-Module-level values or class attributes that can get mutated during program execution.
+### Rationale
+Mutable global state breaks encapsulation and can lead to unpredictable behavior, especially during concurrent execution or module imports.
 
-### 1.2 Pros
-Occasionally useful.
-
-### 1.3 Cons
-Breaks encapsulation: Such design can make it hard to achieve valid objectives. For example, if global state is used to
-manage a database connection, then connecting to two different databases at the same time (such as for computing
-differences during a migration) becomes difficult. Similar problems easily arise with global registries.
-
-Has the potential to change module behavior during the import, because assignments to global variables are done when the
-module is first imported.
-
-### 1.4 Decision
-Avoid mutable global state.
-
-In those rare cases where using global state is warranted, declare mutable global entities at the module level or as a class attribute and make them internal by prepending an `_` to the name. If necessary, ensure external access to mutable global state is done through public functions or class methods. See Naming below. Explain the design reasons why mutable global state is being used in a comment or a doc linked from a comment.
-
-Module-level constants are permitted and encouraged. For example: `_MAX_HOLY_HANDGRENADE_COUNT = 3` for an internal use constant or `SIR_LANCELOTS_FAVORITE_COLOR = "blue"` for a public API constant. Name constants using all caps with underscores. See Naming below.
+Directives:
+- Do not use mutable module-level values or class attributes.
+- Use module-level constants for fixed values.
+- Declare mutable entities as internal (prefixed with `_`) and provide access through public functions or class methods if global state is strictly required.
+- Explain the necessity of global state in a comment.
 
 
 ## 2 Function Length
+
 Use small and focused functions.
 
-Long functions are sometimes appropriate, so no hard limit is placed on function length. If a function exceeds about 40 lines, determine whether it can be broken up without harming the structure of the program.
+### Rationale
+Short functions are required to improve readability, simplify testing, and reduce the likelihood of introducing bugs during modification.
 
-Even if a long function works perfectly now, someone modifying it in a few months may add new behavior. This could result in bugs that are hard to find. Keep functions short and simple to make it easier for other people to read and modify the code.
-
-Expect long and complicated functions when working with existing code. Do not be intimidated by modifying such code: if working with a function proves difficult, if errors are hard to debug, or if a piece of it is needed in several different contexts, break up the function into smaller and more manageable pieces.
+Directives:
+- Aim for functions that are approximately 40 lines or fewer.
+- Break up functions that exceed this length if the program structure allows.
+- Prioritize clarity and simplicity over brevity.
 
 
 ## 3 Nested/Local/Inner Classes and Functions
-Nested local functions or classes are fine when used to close over a local variable. Inner classes are fine.
 
-### 3.1 Definition
-A class can be defined inside of a method, function, or class. A function can be defined inside a method or function.
-Nested functions have read-only access to variables defined in enclosing scopes.
+Nested local functions or classes are permissible when used to close over a local variable.
 
-### 3.2 Pros
-Allows definition of utility classes and functions that are only used inside of a very limited scope. Commonly used for
-implementing decorators.
+### Rationale
+Nesting allows for the definition of utility entities within a limited scope, which is required for patterns like decorators.
 
-### 3.3 Cons
-Nested functions and classes cannot be directly tested. Nesting can make the outer function longer and less readable.
-
-### 3.4 Decision
-They are fine with some caveats. Avoid nested functions or classes except when closing over a local value other than `self` or `cls`. Do not nest a function just to hide it from users of a module. Instead, prefix its name with an `_` at the module level so that it can still be accessed by tests.
+Directives:
+- Avoid nesting functions or classes unless closing over a local value (other than `self` or `cls`).
+- Do not nest entities solely to hide them from module users; use an internal name (prefixed with `_`) at the module level instead.
 
 
 ## 4 Lexical Scoping
-Okay to use, but try to avoid.
 
-### 4.1 Definition
-A nested Python function can refer to variables defined in enclosing functions, but cannot assign to them. Variable
-bindings are resolved using lexical scoping, that is, based on the static program text. Any assignment to a name in a
-block will cause Python to treat all references to that name as a local variable, even if the use precedes the
-assignment. If a global declaration occurs, the name is treated as a global variable.
+Use lexical scoping with caution.
+
+### Rationale
+Lexical scoping provides a powerful mechanism for referring to variables in enclosing scopes, but it can lead to confusing bugs if variable bindings are misunderstood.
+
+Directives:
+- Ensure understanding of how Python resolves names in nested scopes before using lexical scoping.
+- Avoid re-assigning names in inner scopes that are also used in outer scopes to prevent unintended shadowing.
 
 Example:
 ```python # pseudocode
@@ -145,52 +131,44 @@ Use them when necessary, but try to avoid them.
 
 
 ## 5 Lambda Functions
-Use lambdas for one-liners. Prefer generator expressions over `map()` or `filter()` with a lambda.
 
-### 5.1 Definition
-Lambdas define anonymous functions in an expression, as opposed to a statement.
+Use lambda functions for simple, one-line expressions.
 
-### 5.3 Pros
-Convenient.
+### Rationale
+Lambdas are recommended for concise, anonymous function definitions where a full function name is not necessary for clarity.
 
-### 5.4 Cons
-Harder to read and debug than local functions. The lack of names means stack traces are difficult to understand.
-Expressiveness is limited because the function may only contain an expression.
-
-### 5.5 Decision
-Lambdas are allowed. If the code inside the lambda function spans multiple lines or is longer than 120 chars, define it as a regular nested function.
-
-For common operations like multiplication, use the functions from the `operator` module instead of lambda functions. For example, prefer `operator.mul` to `lambda x, y: x * y`.
+Directives:
+- Prefer generator expressions over `map()` or `filter()` with a lambda.
+- Avoid multi-line lambdas or those exceeding 120 characters; define a regular nested function instead.
+- Use the `operator` module for common operations (e.g., `operator.mul`) instead of lambda functions.
 
 ## 6 Threading
 
 Do not rely on the atomicity of built-in types.
 
-While Python's built-in data types such as dictionaries appear to have atomic operations, there are corner cases where they are not atomic (e.g., if `__hash__` or `__eq__` are implemented as Python methods); do not rely on their atomicity. Avoid relying on atomic variable assignment (since this in turn depends on dictionaries).
+### Rationale
+Built-in operations may not be atomic in all corner cases, making reliance on them unsafe for thread-critical logic.
 
-Use the `queue` module's `Queue` data type as the preferred way to communicate data between threads. Otherwise, use the `threading` module and its locking primitives. Prefer condition variables and `threading.Condition` instead of using lower-level locks.
+Directives:
+- Use `queue.Queue` for inter-thread communication.
+- Use the `threading` module and its locking primitives for shared state.
+- Prefer `threading.Condition` over lower-level locks.
 
 
 ## 7 Comprehensions & Generator Expressions
-Use them for simple cases.
 
-### 7.1 Definition
-List, Dict, and Set comprehensions as well as generator expressions provide a concise and efficient way to create
-container types and iterators without resorting to the use of traditional loops, `map()`, `filter()`, or `lambda`.
+Use comprehensions and generator expressions for simple cases.
 
-### 7.2 Pros
-Simple comprehensions can be clearer and simpler than other dict, list, or set creation techniques. Generator
-expressions can be very efficient, since they avoid the creation of a list entirely.
+### Rationale
+Comprehensions provide a concise and efficient way to create containers, but they can become unreadable if they are overly complex.
 
-### 7.3 Cons
-Complicated comprehensions or generator expressions can be hard to read.
+Directives:
+- Use list, dict, and set comprehensions for simple mapping and filtering.
+- Use generator expressions for memory-efficient iteration.
+- Do not use multiple `for` clauses or filter expressions in a single comprehension.
+- Optimize for readability rather than absolute conciseness.
 
-### 7.4 Decision
-Comprehensions are allowed; however, do not use multiple `for` clauses or filter expressions. Optimize for readability, not conciseness.
-
-Examples:
-
-Correct:
+Compliant:
 ```python # pseudocode
 result = [mapping_expr for value in iterable if filter_expr]
 ```
@@ -229,7 +207,7 @@ return (x**2 for x in range(10))
 unique_names = {user.name for user in users if user is not None}
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 result = [(x, y) for x in range(10) for y in range(5) if x * y > 10]
 ```
@@ -247,13 +225,16 @@ return (
 
 ## 8 Default Iterators and Operators
 
-Use default iterators and operators for types that support them, like lists, dictionaries, and files. The built-in types
-define iterator methods, too. Prefer these methods to methods that return lists, except that a container should not be
-mutated while iterating over it.
+Use default iterators and operators for types that support them (e.g., lists, dictionaries, files).
 
-Examples:
+### Rationale
+Default iterators are required to ensure code is Pythonic, efficient, and consistent with built-in behavior.
 
-Correct:
+Directives:
+- Prefer default iteration (e.g., `for key in adict`) over explicit method calls (e.g., `for key in adict.keys()`).
+- Avoid mutating a container while iterating over it.
+
+Compliant:
 ```python # pseudocode
 for key in adict: ...
 if obj in alist: ...
@@ -261,7 +242,7 @@ for line in afile: ...
 for k, v in adict.items(): ...
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 for key in adict.keys(): ...
 for line in afile.readlines(): ...
@@ -269,50 +250,35 @@ for line in afile.readlines(): ...
 
 ## 9 Generators
 
-Use "Yields:" rather than "Returns:" in the docstring for generator functions.
+Use generators to implement efficient iterators.
 
-If the generator manages an expensive resource, force the clean up.
+### Rationale
+Generators are recommended for handling large data sets or expensive operations because they yield values lazily.
 
-Wrap the generator with a context manager (PEP-0533) to handle the clean up.
+Directives:
+- Use `Yields:` instead of `Returns:` in the docstring.
+- Ensure generators that manage expensive resources are properly cleaned up, ideally using a context manager.
 
 
 ## 10 Conditional Expressions
-Use them for simple cases.
 
-### 10.1 Definition
-Conditional expressions (sometimes called a "ternary operator") are mechanisms that provide a shorter syntax for if
-statements. For example: `x = 1 if cond else 2`.
+Use conditional expressions (ternary operators) for simple, one-line cases.
 
-### 10.2 Pros
-Shorter and more convenient than an if statement.
+### Rationale
+Conditional expressions are recommended for improving brevity in simple assignments without sacrificing clarity.
 
-### 10.3 Cons
-May be harder to read than an if statement. The condition may be difficult to locate if the expression is long.
+Directives:
+- Use the `true_value if condition else false_value` syntax.
+- Ensure each portion fits on one line.
+- Use a complete `if` statement for complex logic.
 
-### 10.4 Decision
-Use them for simple cases. Each portion must fit on one line: true-expression, if-expression, and else-expression. Use a complete `if` statement when things become more complicated.
-
-Examples:
-
-Correct:
+Compliant:
 ```python # pseudocode
 one_line = 'yes' if predicate(value) else 'no'
 ```
-```python # pseudocode
-slightly_split = ('yes' if predicate(value)
-                  else 'no, nein, nyet')
-```
-```python # pseudocode
-the_longest_ternary_style_that_can_be_done = (
-    'yes, true, affirmative, confirmed, correct'
-    if predicate(value)
-    else 'no, false, negative, nay'
-)
-```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
-# No:
 bad_line_breaking = ('yes' if predicate(value) else
                      'no')
 ```
@@ -325,50 +291,44 @@ portion_too_long = ('yes'
 
 
 ## 11 True/False Evaluations
-Use the "implicit" false if possible (with a few caveats).
 
-Use the "implicit" false if possible, e.g., `if foo:` rather than `if foo != []:`. Keep a few caveats in mind:
+Use the implicit "falsiness" of Python objects where possible.
 
-Always use `if foo is None:` (or `is not None`) to check for a `None` value. For example, use this when testing whether a variable or argument that defaults to `None` was set to some other value. The other value might be false in a boolean context!
+### Rationale
+Implicit Boolean evaluations are required to write idiomatic Python code that is concise and readable.
 
-Never compare a boolean variable to `False` using `==`. Use `if not x:` instead. If distinguishing `False` from `None` is necessary, then chain the expressions, such as `if not x and x is not None:`.
+Directives:
+- Use `if not x:` to check for empty containers or `None`.
+- Use `if x:` to check for non-empty containers or non-zero values.
+- Prefer `if x is None:` or `if x is not None:` when explicitly checking for the `None` singleton.
+- Avoid comparing Boolean variables to `True` or `False`.
+- Use the `.size` attribute when testing emptiness of a NumPy array.
 
-For sequences (strings, lists, tuples), use the fact that empty sequences are false; `if seq:` and `if not seq:` are preferable to `if len(seq):` and `if not len(seq):` respectively.
-
-When handling integers, implicit false may involve more risk than benefit (i.e., accidentally handling `None` as 0). Compare a value that is known to be an integer (and is not the result of `len()`) against the integer 0.
-
-Examples:
-
-Correct:
+Compliant:
 ```python # pseudocode
 if not users:
     print('no users')
-```
-```python # pseudocode
+
 if i % 10 == 0:
     self.handle_multiple_of_ten()
-```
-```python # pseudocode
+
 def f(x=None):
     if x is None:
         x = []
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 if len(users) == 0:
     print('no users')
-```
-```python # pseudocode
+
 if not i % 10:
     self.handle_multiple_of_ten()
-```
-```python # pseudocode
+
 def f(x=None):
     x = x or []
 ```
-Note that '0' (i.e., 0 as string) evaluates to true.
-
-Note that Numpy arrays may raise an exception in an implicit boolean context. Prefer the .size attribute when testing
-emptiness of a np.array (e.g. `if not users.size`).
+Directives:
+- Use the `.size` attribute when testing emptiness of a NumPy array (e.g., `if not users.size`).
+- Note that '0' (as a string) evaluates to true.
 

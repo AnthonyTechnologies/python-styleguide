@@ -1,15 +1,16 @@
 # Anthony's Python Style Guide: Naming
 
-Names should be descriptive. This includes functions, classes, variables, attributes, files and any other type of named
-entities.
+Use descriptive names for all entities, including functions, classes, variables, attributes, and files.
 
-Avoid abbreviation. In particular, do not use abbreviations that are ambiguous or unfamiliar to readers outside the
-project, and do not abbreviate by deleting letters within a word.
+### Rationale
+Clear and descriptive naming is required to ensure that code intent is obvious and to reduce the need for excessive comments.
 
-Always use a `.py` filename extension. Never use dashes.
+Directives:
+- Avoid abbreviations. Ambiguous or unfamiliar abbreviations must not be used. Do not abbreviate by deleting letters within a word.
+- Use a `.py` filename extension for all Python files.
+- Never use dashes in filenames.
 
-Examples:
-
+Compliant:
 `module_name`, `packagename`, `ClassName`, `method_name`, `ExceptionName`, `function_name`, `mydecorator`, `my_decorator`, `GLOBAL_CONSTANT_NAME`,
 `global_var_name`, `instance_var_name`, `function_parameter_name`, `local_var_name`, `query_proper_noun_for_thing`,
 `send_acronym_via_https`.
@@ -23,40 +24,39 @@ Examples:
 
 ## 1 Names to Avoid
 
-- dashes (-) in any package/module name
-- names that needlessly include the type of the variable (for example: id_to_name_dict)
-- single character names, except for specifically allowed cases:
-  - counters or iterators (e.g. i, j, k, v, et al.)
-  - e as an exception identifier in try/except statements.
-  - f as a file handle in with statements
-  - private type variables with no constraints (e.g. _T = TypeVar("_T"), _P = ParamSpec("_P"))
-  - names that match established notation in a reference paper or algorithm (see Mathematical Notation)
+Directives:
+- Do not use dashes (-) in any package or module name.
+- Avoid names that needlessly include the type of the variable (e.g., `id_to_name_dict`).
+- Use single-character names sparingly. These should only be used for:
+  - Counters or iterators (e.g., `i`, `j`, `k`, `v`).
+  - Exception identifiers in `try`/`except` statements (e.g., `e`).
+  - File handles in `with` statements (e.g., `f`).
+  - Private type variables with no constraints (e.g., `_T`).
+  - Names that match established mathematical notation.
 
-Avoid using single-character naming excessively. Descriptiveness should be proportional to the name's scope of visibility. For example, `i` might be appropriate for a 5-line code block but is likely too vague within multiple nested scopes.
+### Rationale
+Descriptiveness must be proportional to the scope of a name's visibility. Short names are required to be limited to very small scopes to prevent ambiguity.
 
 ## 2 Naming Conventions
 
-"Internal" means internal to a module, or protected or private within a class.
+"Internal" refers to entities internal to a module, or protected/private members within a class.
 
-Prepend a single underscore (`_`) to protect module variables and functions (linters will flag protected member access). Note that unit tests may access protected constants from the modules under test.
+### Rationale
+Clear naming conventions are required to signal the intended scope and usage of an entity to other developers and tools.
 
-Avoid prepending a double underscore (`__` aka "dunder") to an instance variable or method unless necessary, as it effectively makes them private to the class using name mangling, which impacts readability and testability. Prefer a single underscore.
+Directives:
+- Prepend a single underscore (`_`) to protect module variables and functions.
+- Avoid double underscores (`__`) unless strictly necessary. Name mangling impacts readability and testability, so a single underscore should be used instead.
+- Place related classes and top-level functions together in a module.
+- Follow specific casing rules for each entity type:
+  - Packages: lowercase, no underscores.
+  - Modules: lowercase, with underscores.
+  - Classes and Exceptions: CapWords (PascalCase).
+  - Functions, Methods, and Variables: lowercase, with underscores.
+  - Constants: ALL_CAPS_WITH_UNDER.
+- Import with an alias if a conflict occurs. For example, `from datetime import tzinfo as TZInfo` is permissible.
 
-Place related classes and top-level functions together in a module.
-
-- Packages: Lowercase, no underscores.
-- Modules: Lowercase, with underscores.
-- Classes: CapWords/PascalCase.
-- Exceptions: CapWords/PascalCase.
-- Functions: lowercase, with underscores.
-- Decorators: lowercase, with or without underscores (without underscores is preferred).
-- Global/Class Constants: ALL_CAPS.
-- Global/Class Variables: lowercase, with underscores.
-- Methods: lowercase, with underscores.
-- Function/Method Parameters: lowercase, with underscores.
-- Local Variables: lowercase, with underscores.
-
-Examples:
+Compliant:
 
 | Type | Public | Internal/Protected    |
 | ---- | ------ |-----------------------|
@@ -75,6 +75,10 @@ Examples:
 
 ## 3 File Naming
 
-Python filenames must have a `.py` extension and must not contain dashes (-). If an executable must be accessible without the extension, use a symbolic link or a simple bash wrapper containing `exec "$0.py" "$@"`.
+Python filenames must have a `.py` extension and must not contain dashes (-).
 
-Ensure unit test files follow PEP 8 compliant `lower_with_under` names, for example, `<name>_test.py`. For consistency with legacy modules that follow `CapWords` function names, underscores may appear in method names starting with `test` to separate logical components of the name. One possible pattern is `test<MethodUnderTest>_<state>`.
+### Rationale
+Standardized file naming is required for consistency and to ensure that modules can be imported without issues in Python.
+
+Directives:
+- Ensure unit test files follow the `lower_with_under` naming convention (e.g., `<name>_test.py`).

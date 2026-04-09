@@ -1,21 +1,14 @@
 # Anthony's Python Style Guide: Unit Tests
 
-Unit tests are used to verify the correctness of the code being tested to ensure that it is working as expected.
-Typically, unit tests are written to verify individual components of the code.
+Use unit tests to verify the correctness of individual components and ensure that code behaves as expected.
 
-Test suites are collections of related tests that validate a specific component, feature, or functionality of the
-software. They help organize tests logically and provide a structured way to verify multiple aspects of the code. Test
-suites can inherit from base test suites to provide consistent testing patterns across similar components.
+### Rationale
+A comprehensive unit test suite is required to maintain code quality, prevent regressions, and enable confident refactoring.
 
-Ensure unit tests and test suites follow the guidelines set forth by the general styleguide such as the code
-organization, file structure, naming conventions, docstrings, and other standard practices in:
-
-- [Code File Layout](../code_file_layout.md) - For file organization and structure
-- Syntax topics � [Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md), [Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md), [Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) � for naming conventions, docstrings, and code formatting
-- [Semantics Guidelines](../semantics.md) - For general code organization principles
-
-The guidelines in this document are supplemental to the general guidelines and focus on test-specific code to ensure
-consistency, maintainability, and effectiveness of the test suite across the project.
+Directives:
+- Follow general style guidelines (naming, layout, docstrings) in all test code.
+- Prioritize "Project Consistency" across all test modules. Once a project-wide standard is established, it must be applied uniformly to all tests.
+- Refer to [Code File Layout](../code_file_layout.md) and [Syntactic Guidelines](../syntax/) for baseline standards.
 
 ## Table of Contents
 
@@ -39,20 +32,31 @@ consistency, maintainability, and effectiveness of the test suite across the pro
 
 ## 1 pytest
 
-**pytest** testing framework is the preferred framework for Python projects, as it provides more features and
-flexibility than python's unittest library.
+Use the **pytest** framework for all Python projects.
 
-In pytest, tests can be created by defining a test function with a `test_` prefix. pytest can then run the tests using
-its Python or command line interface and display diagnostics about the tests. Additionally, the pytest API offers an
-extensive array of options for customizing the run conditions and diagnostic information of these tests. For more
-information on pytest, see the [pytest documentation](https://docs.pytest.org/en/latest/).
+### Rationale
+Pytest is required because it provides superior features, flexibility, and a more concise syntax than the standard `unittest` library.
 
-The pytest package has many features, and this styleguide will offer guidance on how to use them.
+Directives:
+- Create tests by defining functions with a `test_` prefix.
+- Use the pytest API and command-line interface to manage run conditions and diagnostics.
 
 
 ## 2 Directory Hierarchy
 
-Place Base Test Suites or test suites that cover general implementations in the package source code under `testsuite`. Under normal circumstances, do not place test suites in the project source as only developers need them. However, given that PyPI currently does not support alternate package installations, include these test suites in the source to allow developers using PyPI to expand or create their own.
+Organize tests into a hierarchy that mirrors the package source code.
+
+### Rationale
+A mirrored directory structure is required to make test discovery intuitive and to maintain a clear mapping between code and its corresponding tests.
+
+Directives:
+- Place base test suites in the package source under `testsuite/`.
+- Organize concrete tests in a `tests/` directory at the repository root.
+- Mirror the `src/` package structure within the `tests/` directory.
+- Create a directory for each major package under the `tests/` directory.
+- Use subdirectories for subpackages and functional groupings.
+- Name test files with a `_test.py` suffix (e.g., `name_test.py`).
+- Use additional files for fixtures, test doubles, and base classes.
 
 Example:
 ```
@@ -98,25 +102,28 @@ tests/
 
 ## 3 Test Structure
 
-Use test code to not only verify that the code works as expected but also to provide a set of tools for testing extensions. For example, even if a class outlines functionality not yet implemented, the test code must verify that the class works as expected.
+Structure tests to verify implementation correctness and provide tools for extension.
 
-In `pytest`, organize tests into classes and subclasses to parameterize tests or create test suites to verify different implementations.
+### Rationale
+Well-structured tests are required to ensure that functionality is verified comprehensively and that test code is reusable for future enhancements.
 
-Follow the general docstring guidelines in [Docstrings](../syntax/docstrings.md), particularly the module and test module subsections, for creating documentation.
+Directives:
+- Organize tests into classes and subclasses to support parameterization and reuse.
+- Follow the [Docstrings](../syntax/docstrings.md) guidelines for all test modules and classes.
+- Ensure test code verifies implementation even for functionality not yet fully realized.
 
 ### 3.1 Test Classes
 
-Use test classes to group related test methods and create test suites. Create base test classes to provide consistent testing patterns across the project.
+Use test classes to group related test methods and create test suites.
 
-Ensure test classes inherit from appropriate base test classes/suites to maintain consistency.
+### Rationale
+Test classes are required to maintain an organized and scalable test structure, allowing for shared setup and parameterization.
 
-Guidelines:
-- Inherit test classes from an appropriate base test class/suite.
-- Include a descriptive docstring in test classes explaining what is being tested.
-- Define a `UnitTestClass` class attribute to specify the class or function being tested. This allows generic test suites to interchange test targets.
-- Ensure test classes contain most of their resources within their scope so the resource may be changed to suit different test variations.
-  - Define classes involved in tests either as inner classes or define them elsewhere and assign them to a class attribute.
-  - Define functions involved in tests either as inner functions or define them elsewhere and assign them to a class attribute.
+Directives:
+- Inherit from appropriate base test classes or suites to ensure consistency.
+- Include descriptive docstrings explaining the scope of the test class.
+- Define a `UnitTestClass` attribute to specify the target of the tests.
+- Keep resources within the class scope to allow for variation in subclasses.
 
 For test method naming and organization, follow the general method guidelines in the Syntax topics �
 [Formatting](../syntax/formatting.md), [Docstrings](../syntax/docstrings.md), and [Comments](../syntax/comments.md) �
@@ -124,17 +131,17 @@ and [Code File Layout](../code_file_layout.md).
 
 ### 3.2 Test Methods
 
-Design test methods to test a specific aspect of the class or function. Ensure each test method is focused, independent, and provides clear feedback upon failure.
+Design test methods to verify a specific aspect of behavior.
 
-Guidelines:
-- Name test methods with a `test_` prefix followed by a descriptive name.
-- Include a descriptive docstring in test methods explaining what is being tested.
-- Use type hints for test method parameters and return values.
-- Ensure test methods are independent and do not rely on state from other tests.
-- Focus test methods on testing a single aspect of behavior.
-- Include assertions in test methods to verify expected behavior.
-- Handle both normal and edge cases in test methods.
-- Use attributes provided by the test class (this allows more options when used as a test suite).
+### Rationale
+Focused test methods are required to provide clear feedback and simplify debugging when a failure occurs.
+
+Directives:
+- Use the `test_` prefix for all test method names.
+- Provide a descriptive docstring for every test method.
+- Ensure methods are independent and do not rely on side effects from other tests.
+- Verify expected behavior with explicit assertions.
+- Use parameterized tests to avoid duplication when testing similar functionality.
 
 Example:
 ```python # pseudocode
@@ -162,13 +169,14 @@ When creating test methods that test similar functionality across different impl
 
 ### 3.3 Test Suites
 
-Test suites are collections of related tests that validate a specific component, feature, or functionality of the
-software. For detailed guidelines on creating and using test suites, see [Test Suites](test_suites.md).
+Use test suites to validate complex components or features. Refer to [Test Suites](test_suites.md) for detailed guidelines.
 
 ### 3.4 Main
 
-Include a `__main__` block in test files for running the tests directly. Mainly it sets the run options for pytest
-for the tests in the file.
+Include a `if __name__ == "__main__":` block to enable direct execution of test files.
+
+### Rationale
+Providing a direct entry point is recommended for quick validation of individual test files during development.
 
 Example:
 ```python # pseudocode
@@ -179,25 +187,19 @@ if __name__ == "__main__":
 
 ## 4 Test Semantics and Syntax
 
-Ensure tests conform to the semantics and syntax described in [Semantics Guidelines](../semantics.md) and the Syntax topics:
-[Formatting](../syntax/formatting.md), [Naming](../syntax/naming.md), [Typing](../syntax/typing.md), [Docstrings](../syntax/docstrings.md),
-[Comments](../syntax/comments.md), [Strings](../syntax/strings.md), [Exceptions & Error Messages](../syntax/exceptions_error_messages.md),
-[Logging](../syntax/logging.md), and [Resources](../syntax/resources.md) � but in some cases it may be necessary to deviate from the general
-guidelines. The following sections describe semantics and syntax which take precedence over the general styleguide.
+Follow the general [Semantics Guidelines](../semantics.md) and Syntax topics, but prioritize the test-specific rules below when they conflict.
 
 ### 4.1 Assertions
 
-Assertions are a base Python feature that allows for checking the state of a program at runtime and are used by pytest
-as the primary means of verifying test conditions. Assertions are discouraged in source code because they do not conform
-to Python's error handling principles. However, assertions are permitted for debugging, testing, examples, and tutorials
-because assertions are good for explaining the behavior of a program, and in these scenarios error handling
-is managed by the user rather than the program.
+Use plain `assert` statements as the primary verification mechanism.
 
-Guidelines:
-- Include at least one assertion in each test
-- Ensure assertions are specific and verify a single aspect of behavior
-- Use appropriate assertion methods for the type of comparison being made
-- Include descriptive error messages in assertions to make test failures more informative
+### Rationale
+Pytest leverages standard Python `assert` statements to provide detailed failure diagnostics, making them the preferred choice for unit testing.
+
+Directives:
+- Include at least one assertion per test.
+- Use specific, non-composite assertions.
+- Provide descriptive error messages for complex checks.
 
 Example:
 ```python # pseudocode
@@ -215,20 +217,23 @@ assert unpickled is not test_object
 
 ### 4.2 Fixtures
 
-Use `pytest` fixtures to provide a setup and teardown of test environments and create test objects.
+Use fixtures to manage test dependencies and state.
 
-Guidelines:
-- Use fixtures for setting up test environments and creating test objects.
-- Define fixtures at the appropriate scope (function, class, module, or session).
-- Include a descriptive docstring in fixtures explaining their purpose and return value.
-- Use type hints for fixture parameters and return values.
-- Define common fixtures in base test modules.
-- Organize fixtures under a `# Fixtures` comment.
+### Rationale
+Fixtures are required to ensure that test setup and teardown are consistent, reusable, and isolated from the tests themselves.
+
+Directives:
+- Use `pytest` fixtures for setting up environments and creating test objects.
+- Use `@pytest.fixture()` with parentheses.
+- Define fixtures at the appropriate scope (e.g., `function`, `module`, `session`).
+- Include descriptive docstrings and type hints for all fixtures.
+- Define common fixtures in base test modules or `conftest.py`.
+- Organize fixtures under a `# Fixtures` header comment.
 
 Example:
 ```python # pseudocode
 # Fixtures
-@pytest.fixture
+@pytest.fixture()
 def test_object(self, *args: Any, **kwargs: Any) -> BaseObject:
     """Creates a test object instance for use in tests.
 
@@ -256,18 +261,16 @@ def tmp_dir(tmpdir: Any) -> Path:
 
 ### 4.3 Test Doubles
 
-Use test doubles (mocks, stubs, fakes, etc.) to isolate the code being tested from its dependencies.
+Use mocks, stubs, and fakes to isolate the code under test.
 
-Guidelines:
-- Use test doubles to isolate the code being tested from its dependencies.
-- Use the appropriate type of test double for the situation:
-  - Stubs: return predefined values.
-  - Mocks: verify interactions.
-  - Fakes: simplified implementations.
-  - Spies: record interactions.
-- Use `pytest`'s `monkeypatch` fixture for patching functions and methods.
-- Use `unittest.mock` for creating mock objects.
-- Reset or tear down test doubles after use.
+### Rationale
+Test doubles are recommended to prevent unit tests from depending on external systems, improve test speed, and enable verification of edge cases.
+
+Directives:
+- Use the appropriate type of test double (Stub, Mock, Fake, Spy) for the situation.
+- Use `pytest`'s `monkeypatch` fixture for simple patching.
+- Use `unittest.mock` for creating complex mock objects and verifying interactions.
+- Ensure test doubles are reset or torn down after use.
 
 Example:
 ```python # pseudocode
@@ -295,25 +298,14 @@ def test_with_mock(self, monkeypatch: pytest.MonkeyPatch) -> None:
 
 ### 4.4 Parameterization
 
-Use `pytest` parameterization to run a test function or method multiple times with different sets of arguments. This
-reduces code duplication and ensures consistent testing across multiple scenarios.
+Use `@pytest.mark.parametrize` to run a test with multiple sets of data.
 
-Guidelines:
-- Use `@pytest.mark.parametrize` for function-level parameterization.
-- Use the `ids` parameter to provide descriptive names for each test case, which helps in identifying failures.
-- When testing similar functionality across different implementations, consider using parameterized tests to reduce
-  code duplication and ensure consistent testing.
+### Rationale
+Parameterization is required to reduce code duplication and ensure that a wide range of inputs is verified systematically.
 
-#### When to Use Parameterization
-
-- **Data-Driven Tests**: When the same test logic is applied to multiple inputs and expected results.
-- **Edge Case Validation**: When testing multiple boundary conditions or edge cases for a single function or method.
-- **Equivalent Operations**: When verifying that different ways of performing an operation (e.g., a function call vs. a
-  method call) yield the same results.
-- **Cross-Implementation Testing**: When testing that different subclasses or implementations of an interface behave
-  identically under the same conditions.
-
-#### When Not to Use Parameterization
+Directives:
+- Use the `ids` parameter to provide descriptive names for each test case.
+- Apply parameterization for data-driven tests, edge case validation, and cross-implementation testing.
 
 - **Complex Test Logic**: If different parameters require significantly different test logic, leading to complex
   conditional branching (`if/else`) within the test method. In such cases, separate test methods are clearer.
@@ -349,11 +341,14 @@ def test_multiply_by_two(self, input_val: int, expected_output: int) -> None:
 
 ### 4.5 Async Testing
 
-Use `@pytest.mark.asyncio` for asynchronous test methods. If a method might not be implemented in a specific test target, handle the `NotImplementedError` and skip the test using `pytest.skip`.
+Use `pytest-asyncio` for testing asynchronous code.
 
-Guidelines:
-- Use `@pytest.mark.asyncio` to decorate asynchronous test methods.
-- Handle `NotImplementedError` or `AttributeError` by skipping the test with `pytest.skip` when the functionality is not implemented or not applicable for the current test target.
+### Rationale
+Asynchronous tests are required to ensure that `async` functions and event loops are handled correctly.
+
+Directives:
+- Mark async tests with `@pytest.mark.asyncio`.
+- Handle `NotImplementedError` or `AttributeError` by skipping the test if the functionality is not applicable to the target.
 
 Example:
 ```python # pseudocode
@@ -373,11 +368,14 @@ async def test_async_method(self, test_object: BaseObject) -> None:
 
 ### 4.6 Skipping Tests
 
-Use `pytest.skip` to skip tests that are not applicable to the current test target or environment. Provide a clear reason for skipping to help with maintenance.
+Use markers to skip tests that cannot be run in certain environments.
 
-Guidelines:
-- Call `pytest.skip` within a test method or fixture when the test cannot be executed.
-- Provide a descriptive message explaining why the test is being skipped.
+### Rationale
+Explicitly skipping tests is required to prevent build failures due to environment-specific limitations while still tracking test coverage.
+
+Directives:
+- Use `pytest.skip` within a test or fixture when execution is impossible.
+- Provide a clear, descriptive reason for skipping.
 
 Example:
 ```python # pseudocode
@@ -391,12 +389,15 @@ def test_conditional_feature(self, test_object: BaseObject) -> None:
 
 ### 4.7 Testing Exceptions
 
-Use `pytest.raises` to verify that the code raises the expected exception under specific conditions.
+Use `pytest.raises()` to verify that the correct exceptions are raised.
 
-Guidelines:
+### Rationale
+Explicit exception verification is required to ensure that error handling logic behaves as expected.
+
+Directives:
 - Use `pytest.raises` as a context manager.
-- Specify the expected exception type.
-- Use the `match` parameter to verify the error message when appropriate.
+- Specify the most specific exception type possible.
+- Use the `match` parameter to verify the exception message.
 
 Example:
 ```python # pseudocode
@@ -412,14 +413,15 @@ def test_invalid_input(self, test_object: BaseObject) -> None:
 
 ## 5 Test Execution
 
-Ensure tests are easy to run and provide clear feedback on failures.
+Execute tests using the `pytest` command or through Nox.
 
-Guidelines:
-- Ensure tests are runnable using `pytest`.
-- Ensure tests are runnable individually or as part of a test suite.
-- Ensure tests provide clear error messages on failure.
-- Ensure tests clean up after themselves.
-- Ensure tests do not depend on the order of execution.
+### Rationale
+Standardizing test execution is required to ensure that all developers and CI systems run the same set of tests in a consistent environment.
+
+Directives:
+- Ensure tests are runnable using `pytest` and provide clear feedback.
+- Verify that tests clean up resources and do not depend on execution order.
+- Use `nox -s tests` for automated multi-environment testing.
 
 Running tests:
 ```bash

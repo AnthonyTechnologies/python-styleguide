@@ -2,8 +2,8 @@
 """hierarchy_performance.py
 Template module demonstrating performance tests for a complex class hierarchy.
 
-This module provides a template for measuring the performance of methods within a class hierarchy, focusing on the overhead
-of various class levels and mixins.
+This module provides a template for measuring the performance of methods within a class hierarchy, focusing on the
+overhead of various class levels and mixins.
 """
 
 # Header #
@@ -24,9 +24,9 @@ from typing import Final
 
 # Third-Party Packages #
 import pytest
-
-# Local Packages #
 from baseobjects.testsuite import BasePerformanceTestSuite
+
+# Source Packages #
 from templatepackage.hierarchy import BaseHierarchy, ConcreteHierarchy
 
 
@@ -76,8 +76,8 @@ class TestHierarchyPerformance(BasePerformanceTestSuite):
         print(
             f"\n{_SECTION_LINE}\n"
             f"Concrete vs Base description performance\n"
-            f"mean_concrete: {mean_concrete_us:10.3f} µs\n"
-            f"mean_base:     {mean_base_us:10.3f} µs\n"
+            f"mean_concrete: {mean_concrete_us:10.3f} μs\n"
+            f"mean_base:     {mean_base_us:10.3f} μs\n"
             f"percent:       {percent_of_baseline:10.3f}% of baseline\n"
             f"tolerance:     {self.speed_tolerance:10.3f} (percent ceiling)\n"
             f"{_SECTION_LINE}\n"

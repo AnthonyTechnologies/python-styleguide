@@ -228,7 +228,8 @@ class User:
     def set_display_name(self, name: str) -> None:
         """Sets the display name with minimal validation.
 
-        The user should prefer using setters only when non-trivial logic is required; shown here for template completeness.
+        The user should prefer using setters only when non-trivial logic is required; shown here for template
+        completeness.
 
         Args:
             name: The new display name.

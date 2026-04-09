@@ -22,8 +22,8 @@ __version__ = "0.1.0"
 from dataclasses import dataclass
 
 # Local Packages #
-from .user import User
 from .normalization import normalize_names
+from .user import User
 
 
 # Definitions #

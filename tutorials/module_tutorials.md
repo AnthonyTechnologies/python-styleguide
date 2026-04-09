@@ -1,17 +1,14 @@
 ﻿# Anthony's Python Style Guide: Module Tutorials
 
-A tutorial is a step-by-step guide to a specific topic. It provides a clear and concise explanation of the topic,
-demonstrating the functionality and use cases. It is designed to be self-contained and easy to follow.
-However, the purpose of a tutorial is to not only educate users on functionality but also provide inspiration for new
-approaches to solving problems.
+Use tutorials to provide step-by-step guidance on specific topics, demonstrating functionality and practical use cases.
 
-This document provides specific guidelines for creating Jupyter Notebook tutorials focused on individual modules.
+### Rationale
+High-quality tutorials are required to educate users on library features and inspire new approaches to problem-solving.
 
-Unlike package-level tutorials, these module tutorials offer a more targeted approach, helping users understand the
-functionality, features, and use cases of specific modules. The guidelines cover how to define the audience and scope,
-structure the tutorial content, demonstrate module-specific functionality, show interactions with other modules, and
-present practical examples. By following these guidelines, developers can create focused, effective tutorials that help
-users leverage the full potential of individual modules within the larger package ecosystem.
+Directives:
+- Focus module tutorials on individual components rather than the entire package.
+- Use Jupyter Notebooks (.ipynb) to provide an interactive learning experience.
+- Follow general style guidelines (naming, layout, docstrings) within code cells.
 
 ## Table of Contents
 
@@ -45,26 +42,28 @@ users leverage the full potential of individual modules within the larger packag
 
 ## 1 Jupyter Notebook
 
-Jupyter Notebooks are a powerful tool for creating interactive tutorials. They allow users to combine text, code, and
-visualizations into a single document. They are ideal for educational purposes, as they provide a clear and concise
-explanation of a topic, demonstrating the functionality and use cases.
+Use Jupyter Notebooks to create interactive and educational tutorials that combine text, code, and visualizations.
 
-Consider and report the following when creating a tutorial:
-- **Kernel Choice:** Specify if needed.
-- **Magic Commands:** Explain any used.
+### Rationale
+Jupyter Notebooks are recommended for tutorials because they allow users to execute code in real-time, facilitating active learning and experimentation.
+
+Directives:
+- Specify the required kernel.
+- Explain any magic commands used in the notebook.
 
 
 ## 2 Directory Hierarchy
 
-Organize tutorials in a directory structure that mirrors the package structure. This makes it easy for users to find tutorials relevant to specific components.
+Organize tutorials within a directory structure that mirrors the package structure.
 
+### Rationale
+A mirrored directory structure is required to make tutorials easily discoverable based on the module they cover.
+
+Directives:
 - Create a directory for each major package under the `tutorials/` directory.
-- Give subpackages their own subdirectories when they contain multiple components.
-- Group related tutorials together in the same directory.
-- Start filenames with a descriptive name followed by `_tutorial` (e.g., `name_tutorial.py`).
-- Use the format `<component_name>_tutorial.py` for individual component tutorials.
-- For tutorials that demonstrate multiple components working together, use a descriptive name that indicates the functionality being demonstrated, e.g., `caching_with_sentinel_tutorial.py`.
-- Use lowercase with underscores for file names (snake_case).
+- Use subdirectories for subpackages.
+- Name files with a `_tutorial.ipynb` suffix (e.g., `name_tutorial.ipynb`).
+- Use `snake_case` for all filenames.
 
 Example:
 ```
@@ -82,22 +81,22 @@ tutorials/
 
 ## 3 Module Tutorial Notebook Structure
 
-Ensure tutorial files follow a consistent naming convention to make them easily identifiable:
+Establish a clear and logical flow for all tutorial notebooks.
 
-- Use the format `<component_name>_tutorial.py` for individual module tutorials.
-- Use lowercase with underscores for file names (snake_case).
-- Avoid generic names like `tutorial.py` or `demo.py`.
+### Rationale
+A standardized structure is required to ensure that tutorials are easy to navigate and that users know what to expect.
 
-A clear and logical flow is essential in a tutorial. Use these recommended sections:
-
-1. Title and Introduction
-2. Core Functionality
-3. Module Interactions
-4. Advanced Features
-5. Examples
-6. API Highlights
-7. Troubleshooting / FAQs
-8. Conclusion and Next Steps
+Directives:
+- Use the `_tutorial.ipynb` suffix for filenames.
+- Include these sections in order:
+    1. Title and Introduction
+    2. Core Functionality
+    3. Module Interactions
+    4. Advanced Features
+    5. Examples
+    6. API Highlights
+    7. Troubleshooting / FAQs
+    8. Conclusion and Next Steps
 
 ### 3.1 Title and Introduction
 
@@ -187,127 +186,112 @@ Use the Conclusion and Next Steps section to wrap up the tutorial and provide gu
 
 ## 4 Content Guidelines
 
-Ensure the contents of a tutorial are accessible, practical, and valuable to users. Presentation is crucial to ensure that it is easy to follow and understand.
+Ensure the contents of a tutorial are accessible, practical, and valuable.
+
+### Rationale
+Clear content presentation is required to ensure that tutorials are easy to follow and that users can successfully implement the demonstrated functionality.
 
 ### 4.1 Define the Audience and Scope
 
-**Target Audience:** The target audience will be the main user-base reading and using this tutorial.
-- Typically, assume the target audience is familiar with the Python Standard Library, popular packages, and possibly some dependencies.
-- For modules, assume the audience is familiar with the package's modules and their dependencies.
-- Adjust the target audience depending on the goal of the tutorial.
-- Tailor language, complexity of examples, and depth of explanation to the intended audience.
+Identify the target audience and the specific goals of the tutorial.
 
-**Module Scope:** Clearly define what this module does and what it *does not* do.
-- Consider how this tutorial fits into the understanding of the broader package.
+### Rationale
+Defining the audience and scope is recommended to manage user expectations and ensure that the content remains focused.
 
-**Prerequisites:** List knowledge and resource requirements needed to complete the tutorial.
-- List concepts of the broader package used in the module.
-- List any advanced or obscure Python Standard Library concepts used.
-- List dependency concepts used in the module.
-- List any resources the user must import.
+Directives:
+- Assume the audience is familiar with the Python Standard Library and the package's core modules.
+- Clearly define what the module does and what it does not do.
+- List all prerequisites, including knowledge and resource requirements.
 
-### 4.2 Language
+### 4.2 Writing Voice
 
-Ensure the language used in module tutorials is clear, accessible, and professional. Effective communication is crucial for ensuring users can understand and implement the module's functionality. Follow these guidelines to maintain consistent and user-friendly language throughout the tutorial:
+Follow the [Writing Voice](../guide_voice.md) guidelines for all tutorial content.
 
-- Be polite, friendly, and approachable while remaining clear, concise, and certain.
-- Use simple, direct language. Avoid jargon where possible, or explain it if necessary.
-- Keep sentences and paragraphs short.
-- When explaining features and how things work, use the third-person descriptive voice (e.g., "The module provides...").
-- When instructing users on how to use things, use the third-person imperative voice. The voice should be active
-  and be issued as commands (e.g., "The user should..."). Start with the Verb; avoid "The user should now try to
-  click..." and use "Click..." instead.
+### Rationale
+A consistent writing voice is required to maintain the "Standard-Setter" persona and ensure that all tutorials are professional, objective, and educational.
+
+Directives:
+- Use the direct imperative mood for setup and execution instructions.
+- Use the third-person descriptive voice for explaining module features and behavior.
+- Avoid all pronouns in both narrative text and code comments.
+- Integrate RFC 2119 keywords naturally into sentences using lowercase.
 
 ### 4.3 Logical Flow
 
-Logical flow of content is crucial for effective learning. Ensure the tutorial progresses naturally, building upon previous concepts and maintaining a clear connection between topics.
+Organize content from simple to complex.
 
-- Organize topics from simple to complex.
+### Rationale
+A progressive logical flow is required to build user understanding before introducing advanced features.
+
+Directives:
+- Ensure top-to-bottom cell execution is possible.
 - Maintain smooth transitions between sections.
-- Ensure top-to-bottom cell execution.
-- Build each section upon the previous ones.
 
 ### 4.4 Markdown Cells
 
-Use Markdown cells to provide context, explanations, and documentation. Use them to break up code sections, explain concepts, and guide users through the learning process. Ensure these cells are well-formatted and informative to make the tutorial easy to follow.
+Use Markdown cells for narrative explanations and documentation.
 
-- Introduce each code cell or group of related code cells with a Markdown cell.
-- Explain the purpose of the code, rather than providing a line-by-line translation.
-- Use Markdown formatting (headings, lists, bold, italics, code highlighting) to improve readability.
+### Rationale
+Clear narrative text is required to explain the "why" behind the code examples.
+
+Directives:
+- Introduce each code cell or group of related cells with a Markdown cell.
+- Explain the purpose of the code rather than providing a line-by-line translation.
 
 ### 4.5 Code Cells
 
-Use code cells to demonstrate the functionality of the module. Provide a clear and concise way to demonstrate the module's functionality and provide examples of how to use it.
+Use code cells for runnable demonstrations.
 
-- Ensure every code cell is runnable independently or in sequence.
-- Place imports and variable initializations correctly.
+### Rationale
+Executable code is required to provide an interactive and verifiable learning experience.
+
+Directives:
+- Ensure all code cells are runnable independently or in sequence.
 - Test all code cells thoroughly.
-- Display Outputs: ensure cell outputs are visible and illustrative.
-- Ensure plots render correctly in the notebook.
+- Ensure outputs are illustrative and visible.
 
 ### 4.6 Self-Contained Examples
 
-Use self-contained examples to ensure that users can run and understand the tutorial without external dependencies or setup requirements. Provide complete, runnable units of code that demonstrate specific functionality while being independent of external resources. This approach makes the tutorial more accessible and reduces potential points of failure.
+Ensure each major section has self-contained code.
 
-- Avoid reliance on external files or services if possible. If necessary, provide clear instructions on how to obtain/set them up, or include mock data/objects directly in the notebook.
-- For data, consider including a small CSV or generating data programmatically.
-- If there are unit tests, use them as a reference but do not copy them exactly. Use the tutorial and examples to educate the user on how to use key aspects of the module and how to create new programs, not just test it.
+### Rationale
+Self-contained code is recommended to allow users to verify functionality without complex setup requirements.
+
+Directives:
+- Avoid reliance on external files or services where possible.
+- Provide mock data or clear setup instructions if external resources are necessary.
 
 ### 4.7 Error Handling Examples
 
-Use the Error Handling Examples section to demonstrate how to handle common errors and exceptions that users might encounter. Help users understand potential pitfalls and how to gracefully handle error conditions to make their code more robust and maintainable. This section is optional, but recommended.
+Demonstrate how to handle common errors.
 
-- Show how to handle common exceptions or invalid inputs if relevant to the package's usage.
+### Rationale
+Showing error handling is recommended to prepare users for real-world integration challenges.
 
 
 ## 5 Formatting and Style
 
-This section provides specific formatting and style guidelines to ensure consistency and readability. These conventions
-help create a professional and easily navigable document.
+Follow standardized formatting conventions to ensure consistency.
 
-### 5.1 Headings
+### Rationale
+Consistent formatting is required to create a professional and easily navigable document.
 
-- Use `#` for the main title (H1).
-- Use `##` for major sections (H2).
-- Use `###` for sub-sections (H3), and so on.
-- Be consistent with heading levels.
-
-### 5.2 Code Blocks
-
-- In Markdown cells, use backticks for inline code: `my_function()`.
-- Use triple backticks for code blocks:
-    ```python # pseudocode
-    # Python code goes here
-    ```
-- Specify the language for syntax highlighting in Markdown code blocks (e.g., ` ```python # pseudocode`).
-
-### 5.3 Emphasis
-
-- Use `**bold**` for strong emphasis (e.g., key terms, warnings).
-- Use `*italics*` for mild emphasis or for terms being defined.
-
-### 5.4 Lists
-
-- Use numbered lists for sequential steps.
-- Use bulleted lists for non-sequential items or features.
-
-### 5.5 Links
-
-- Use descriptive text for hyperlinks:
-    - Good: `[Read the full API documentation](link-to-docs)`
-    - Avoid: `Click [here](link-to-docs)`
+Directives:
+- Use `#` for the main title and `##` for major sections.
+- Use backticks for inline code and triple backticks for code blocks.
+- Specify the language for syntax highlighting in all code blocks.
+- Use bold for strong emphasis and italics for mild emphasis.
+- Use descriptive text for all hyperlinks.
 
 ## 6 Tips for Module Tutorial Effectiveness
 
-This section provides practical recommendations for creating impactful and successful module tutorials. These tips help
-ensure the tutorial achieves its educational goals while maintaining user engagement.
+### Rationale
+Adhering to these tips is recommended to maximize the educational impact of the tutorial.
 
-- **Focus:** Keep the tutorial tightly focused on the functionalities of the specific module. Avoid extensive detours into other modules unless demonstrating direct interaction.
-- **Context within Package:** Briefly remind users how this module fits into the overall architecture or purpose of the parent package.
-- **Independence:** While part of a package, aim for the module tutorial to be as understandable as possible, even if a user jumps directly to it (though prerequisites should be stated).
-- **Test Thoroughly:** Run in a clean kernel. Have someone unfamiliar with the module test it.
-- **Keep Updated:** Module APIs can change. Ensure the tutorial reflects the current version of the module.
-
-
-Adhere to this style guide to create clear, focused, and highly effective Jupyter Notebook tutorials for individual modules within Python packages, enabling users to leverage their full potential.
+Directives:
+- Keep the tutorial tightly focused on the functionalities of the specific module.
+- Briefly remind the user how the module fits into the overall architecture.
+- Aim for independence so the tutorial is understandable even if the user jumps directly to it.
+- Run the tutorial in a clean kernel to verify its correctness.
+- Update the tutorial whenever the module API changes.
 

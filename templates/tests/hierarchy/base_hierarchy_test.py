@@ -2,8 +2,8 @@
 """base_hierarchy_test.py
 Template module demonstrating unit tests for the base_hierarchy class.
 
-This module provides a template for writing unit tests for the `base_hierarchy` class using the `base_hierarchyTestSuite`,
-ensuring it is correctly tested.
+This module provides a template for writing unit tests for the `base_hierarchy` class using the
+`base_hierarchyTestSuite`, ensuring it is correctly tested.
 """
 
 # Header #
@@ -21,7 +21,7 @@ __version__ = "0.1.0"
 # Third-Party Packages #
 import pytest
 
-# Local Packages #
+# Source Packages #
 from templatepackage.hierarchy import BaseHierarchy
 from templatepackage.testsuite.hierarchy import BaseHierarchyTestSuite
 

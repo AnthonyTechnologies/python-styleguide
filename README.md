@@ -1,11 +1,26 @@
 # Anthony's Python Style Guide
 
-This repository contains a practical, opinionated Python style guide that remixes the official Google Python Style Guide
+This project is a practical, opinionated Python style guide that remixes the official Google Python Style Guide
 and augments it with additional guidance for modern Python projects which use Python version greater than or equal to
-3.10. It is intended to be copy‑pasted or referenced directly in projects to keep code consistent, readable, and
+3.14. It is intended to be copy‑pasted or referenced directly in projects to keep code consistent, readable, and
 maintainable. The structure is a fork of the [Google Style Guide](https://google.github.io/styleguide/pyguide.html) and
 [Hypermodern Python](https://cjolowicz.github.io/posts/hypermodern-python-01-setup/) by
 [Claudio Jolowicz](https://github.com/cjolowicz).
+
+As a neutral arbiter of quality, this guide prioritizes clarity and explains the rationale behind each rule. This
+approach allows developers to understand the underlying goals even if specific implementations must deviate for unique
+project needs.
+
+## Core Tenets
+### Project Consistency
+Prioritize consistency within the project over strict adherence to this global guide. Once a project-wide standard is
+established, it must be applied uniformly across all files and modules within that project to ensure clarity. This
+rule acknowledges that projects are encapsulated, but requires internal uniformity to reduce cognitive load and
+maintain readability.
+
+### Readability and Maintenance
+The guide focuses on readability, modularity, and automation to keep code consistent and easy to maintain. It is
+intended to be referenced directly in projects using Python 3.14 or greater.
 
 ## Features
 - Readability
@@ -14,14 +29,13 @@ maintainable. The structure is a fork of the [Google Style Guide](https://google
 - Project Tools Integration
 - Automation
 
-## Machine‑Readable Style Guide Index
-For automation and easier adoption, this repo includes a machine‑readable style guide index in
-[`style_guide.toml`](style_guide.toml). Tools and agents can ingest this file to configure linters/formatters
-consistently across projects and is the entry point to using this style guide. If tools and agents need further
-clarification, they can review the corresponding files.
+## Agent‑Focused Style Guide Index
+For automation and easier adoption, this repo includes an agent‑focused style guide index in
+[`style_guide_summary.md`](style_guide_summary.md). Tools and agents should ingest this file to understand conventions
+and find detailed documentation. This file is the primary entry point for using this style guide.
 
-Specific projects tool guidelines can be found in [`project_tools.md`](project_tools.md), for which their configurations
-are set in their respective configuration files, not in `style_guide.toml`.
+Specific projects tool guidelines can be found in [`project_tools.md`](project_tools.md), for which their configurations are set in
+their respective configuration files, not in `style_guide_summary.md`.
 
 ## Contents
 The guide is split into focused documents and templates that can be read independently:
@@ -29,7 +43,7 @@ The guide is split into focused documents and templates that can be read indepen
 - Top-level files:
   - [`README.md`](README.md): overview and navigation for this style guide repository.
   - [`LICENSE`](LICENSE): open‑source license (MIT).
-  - [`style_guide.toml`](style_guide.toml): compact TOML index of key rules for tooling automation.
+  - [`style_guide_summary.md`](style_guide_summary.md): compact agent-focused index of key rules.
 
 
 - Syntax: split into focused topics under `syntax/`:
@@ -47,6 +61,11 @@ The guide is split into focused documents and templates that can be read indepen
       concerns.
     - [`exceptions_error_messages.md`](syntax/exceptions_error_messages.md) — raising, catching, and designing helpful
       error messages without masking root causes.
+    - [`async.md`](syntax/async.md) — best practices for asynchronous programming, event loop management, and timeouts.
+    - [`security.md`](syntax/security.md) — security guidelines, including input validation, restricted operations, and
+      safe serialization.
+    - [`bugs.md`](syntax/bugs.md) — common bugs and code smells to avoid, including class design, shadowing, and unused
+      variables.
     - [`logging.md`](syntax/logging.md) — structured, level-appropriate logging; avoid print, include context, and keep
       logs machine-parseable.
     - [`resources.md`](syntax/resources.md) — safe handling of files, network connections, subprocesses, and other
@@ -61,6 +80,7 @@ The guide is split into focused documents and templates that can be read indepen
   autodoc, autosummary, napoleon, intersphinx, and sphinx‑click.
 - [`project_tools.md`](project_tools.md) — guidance for pre‑commit, nox, coverage, editorconfig, CI, and related
   developer tooling.
+- [`guide_voice.md`](guide_voice.md) — guidance for writing clear, concise, and consistent documentation.
 
 
 - Tests: split into focused topics under `tests/`:
@@ -114,7 +134,7 @@ etc.
 3. Set up tooling and automation:
     - Configure tools following [`project_tools.md`](project_tools.md) and [`documentation.md`](documentation.md)
       guidance
-    - Point automation to [`style_guide.toml`](style_guide.toml)
+    - Point automation and agents to [`style_guide_summary.md`](style_guide_summary.md)
     - Align tool settings using instructions in [`project_tools.md`](project_tools.md)
     - Add pre-commit hooks and CI checks to catch style violations early
 

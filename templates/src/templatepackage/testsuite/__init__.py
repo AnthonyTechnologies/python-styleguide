@@ -19,7 +19,7 @@ __version__ = "0.1.0"
 
 # Imports #
 # Local Packages #
-from .usertestsuite import UserTestSuite
 from .hierarchy import *
+from .usertestsuite import UserTestSuite
 
-__all__ = ["UserTestSuite", "BaseHierarchyTestSuite", "ConcreteHierarchyTestSuite"]
+__all__ = ["BaseHierarchyTestSuite", "ConcreteHierarchyTestSuite", "UserTestSuite"]

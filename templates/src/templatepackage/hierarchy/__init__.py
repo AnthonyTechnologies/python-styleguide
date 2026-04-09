@@ -15,9 +15,9 @@ __version__ = "0.1.0"
 
 # Imports #
 # Local Packages #
-from .base_hierarchy import BaseHierarchy
-from .hierarchy_mixin import HierarchyMixin
 from .abstract_hierarchy import AbstractHierarchy
+from .base_hierarchy import BaseHierarchy
 from .concrete_hierarchy import ConcreteHierarchy
+from .hierarchy_mixin import HierarchyMixin
 
-__all__ = ["BaseHierarchy", "HierarchyMixin", "AbstractHierarchy", "ConcreteHierarchy"]
+__all__ = ["AbstractHierarchy", "BaseHierarchy", "ConcreteHierarchy", "HierarchyMixin"]

@@ -1,8 +1,9 @@
 ﻿# Anthony's Python Style Guide: Formatting
 
-The code formatting should establish the visual and syntactic conventions that make Python source readable, consistent,
-and easy to maintain across a codebase. While there can be sensible exceptions, the aim is uniformity, predictability,
-and readability.
+Code formatting establishes the visual and syntactic conventions that make Python source readable, consistent, and easy to maintain. While valid exceptions may exist, the goal is uniformity, predictability, and readability.
+
+### Rationale
+A consistent formatting style is required to reduce cognitive load and ensure that developers can focus on logic rather than layout.
 
 ## Table of Contents
 
@@ -16,34 +17,45 @@ and readability.
 - [8 Blank Lines](#8-blank-lines)
 - [9 Whitespace](#9-whitespace)
 - [10 Mathematical Notation](#10-mathematical-notation)
+- [11 Comprehensions](#11-comprehensions)
+- [12 Return Logic](#12-return-logic)
+- [13 Exception Raising Syntax](#13-exception-raising-syntax)
 
 
 ## 1 Punctuation, Spelling, and Grammar
 
-Pay attention to punctuation, spelling, and grammar; it is easier to read well-written code.
+Maintain high standards for punctuation, spelling, and grammar. Well-written code is significantly easier to read and understand.
 
-Ensure comments and docstrings are as readable as narrative text, with proper capitalization and punctuation. Use complete sentences when they are more readable than sentence fragments. Use a less formal style for shorter comments, such as comments at the end of a line of code, but maintain a consistent style.
+### Rationale
+Clear communication in natural language is required for long-term maintainability and readability.
+
+Directives:
+- Ensure comments and docstrings are as readable as narrative text. Proper capitalization and punctuation must be used.
+- Use complete sentences when they are more readable than sentence fragments.
+- Maintain a consistent style for shorter comments, such as those at the end of a line of code.
 
 
 ## 2 Line Length
 
-Ensure the maximum line length is 120 characters.
+Limit the maximum line length to 120 characters. This rule is required to ensure that code remains readable on various screen sizes and in split-view editors.
+
+### Rationale
+Restricting line length prevents horizontal scrolling and improves the side-by-side comparison of files.
 
 Explicit exceptions to the 120-character limit:
 - Long import statements.
 - URLs, pathnames, or long flags in comments.
-- Long string module-level constants not containing whitespace that would be inconvenient to split across lines, such as URLs or pathnames.
-- Pylint disable comments (e.g., `# pylint: disable=invalid-name`).
+- Long string module-level constants not containing whitespace that would be inconvenient to split across lines.
+- Pylint disable comments.
 
-Do not use a backslash for explicit line continuation.
+Directives:
+- Do not use a backslash for explicit line continuation. Backslashes must be avoided to prevent accidental errors and improve readability.
+- Use Python's implicit line joining inside parentheses, brackets, and braces. If necessary, add an extra pair of parentheses around an expression.
+- Use parentheses for implicit line joining when a literal string does not fit on a single line.
+- Break lines at the highest possible syntactic level. If a line must be broken twice, it should be broken at the same syntactic level both times.
+- Put long URLs on their own line within comments if necessary.
 
-Instead, use Python's implicit line joining inside parentheses, brackets, and braces. If necessary, add an extra pair of parentheses around an expression.
-
-Note that this rule does not prohibit backslash-escaped newlines within strings (see below).
-
-Examples:
-
-Correct:
+Compliant:
 ```python # pseudocode
 foo_bar(
     self,
@@ -73,7 +85,7 @@ with (
     place_order(eggs, beans, spam, beans)
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 if width == 0 and height == 0 and \
     color == 'red' and emphasis == 'strong':
@@ -89,17 +101,13 @@ with very_long_first_expression_function() as spam, \
     place_order(eggs, beans, spam, beans)
 ```
 
-When a literal string won't fit on a single line, use parentheses for implicit line joining.
-
+Compliant:
 ```python # pseudocode
 x = ('This will build a very long long '
      'long long long long long long string')
 ```
 
-Prefer breaking lines at the highest possible syntactic level. If a line must be broken twice, break it at the same
-syntactic level both times.
-
-Correct:
+Compliant:
 ```python # pseudocode
 bridgekeeper.answer(
     name="Arthur",
@@ -119,7 +127,7 @@ if (
     use_tabs()
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 bridgekeeper.answer(name="Arthur", quest=questlib.find(
     owner="Arthur", perilous=True))
@@ -134,15 +142,13 @@ if (config is None or 'editor.language' not in config or config[
   use_tabs()
 ```
 
-Within comments, put long URLs on their own line if necessary.
-
-Correct:
+Compliant:
 ```python # pseudocode
 # See details at
 # http://www.example.com/us/developer/documentation/api/content/v2.0/csv_file_name_extension_full_specification.html
 ```
 
-Correct:
+Compliant:
 ```python # pseudocode
 # See details at
 # http://www.example.com/us/developer/documentation/api/content/\
@@ -161,23 +167,28 @@ In cases where a line exceeds 120 characters and the auto-formatter does not bri
 
 Do not terminate lines with semicolons, and do not use semicolons to put two statements on the same line.
 
+### Rationale
+Semicolons are redundant in Python and must be avoided to maintain a clean, Pythonic style.
+
 
 ## 4 Statements
 
 Generally, use only one statement per line.
 
-However, place the result of a test on the same line as the test only if the entire statement fits on one line. Never do this with `try`/`except` since the `try` and `except` cannot both fit on the same line. This is acceptable with an `if` only when there is no `else`.
+### Rationale
+Single-statement lines improve readability and simplify debugging and version control diffs.
 
-When defining an empty class, method, or function, use a docstring and omit the `pass` statement. See [Docstrings](docstrings.md#5-empty-classes-methods-and-functions) for more information.
+Directives:
+- Place the result of a test on the same line as the test only if the entire statement fits on one line.
+- Do not use one-line statements with `try`/`except`. This is required to ensure that exceptions are not accidentally masked.
+- Use a docstring and omit the `pass` statement when defining an empty class, method, or function.
 
-Examples:
-
-Correct:
+Compliant:
 ```python # pseudocode
 if foo: bar(foo)
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 if foo: bar(foo)
 else:   baz(foo)
@@ -194,11 +205,14 @@ except ValueError: baz(foo)
 
 Use parentheses sparingly.
 
-Use parentheses around tuples if preferred, though it is not required. Do not use them in `return` statements or conditional statements unless using them for implied line continuation or to indicate a tuple.
+### Rationale
+Excessive parentheses increase visual noise without providing additional clarity and should be avoided.
 
-Examples:
+Directives:
+- Use parentheses around tuples if preferred, though this is not strictly required.
+- Do not use parentheses in `return` statements or conditional statements unless using them for implied line continuation or to indicate a tuple.
 
-Correct:
+Compliant:
 ```python # pseudocode
 if foo:
     bar()
@@ -216,7 +230,7 @@ return (spam, beans)
 for (x, y) in dict.items(): ...
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 if (x):
     bar()
@@ -229,15 +243,16 @@ return (foo)
 
 Indent code blocks with 4 spaces.
 
-Never use the tab character.
+### Rationale
+Consistent indentation is required to maintain code structure and readability. This is especially important in Python where indentation is semantically significant.
 
-Some editors automatically insert spaces when the Tab key is pressed. Ensure the editor is configured to use 4 spaces for indentation.
+Directives:
+- Never use the tab character. Tab characters must be avoided to ensure code is rendered consistently across all environments.
+- Ensure the editor is configured to use 4 spaces for indentation.
+- Align wrapped elements vertically for implied line continuation or use a hanging 4-space indent.
+- Place closing brackets at the end of the expression or on separate lines. If placed on a separate line, indent them the same as the line with the corresponding opening bracket.
 
-Ensure implied line continuation aligns wrapped elements vertically (see line length examples) or uses a hanging 4-space indent. Place closing (round, square, or curly) brackets at the end of the expression or on separate lines; if on separate lines, indent them the same as the line with the corresponding opening bracket.
-
-Examples:
-
-Correct:
+Compliant:
 ```python # pseudocode
 # Aligned with opening delimiter.
 foo = long_function_name(var_one, var_two,
@@ -283,7 +298,7 @@ foo = {
 }
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 # Stuff on first line forbidden.
 foo = long_function_name(var_one, var_two,
@@ -294,8 +309,8 @@ meal = (spam,
 ```python # pseudocode
 # 4-space hanging indent forbidden.
 foo = long_function_name(
-  var_one, var_two, var_three,
-  var_four)
+    var_one, var_two, var_three,
+    var_four)
 ```
 ```python # pseudocode
 # No hanging indent in a dictionary.
@@ -309,9 +324,12 @@ foo = {
 
 ## 7 Trailing Commas in Sequences of Items
 
-Trailing commas in sequences of items are required if and only if the closing container token `]`, `)`, or `}` does not appear on the same line as the final element, as well as for tuples with a single element. Use a trailing comma as a hint to the Python code auto-formatter Black or Pyink to format the container items to one per line.
+Use trailing commas in sequences of items if and only if the closing container token `]`, `)`, or `}` does not appear on the same line as the final element. A trailing comma is required for tuples with a single element.
 
-Correct:
+### Rationale
+Trailing commas should be used to simplify version control diffs and to provide a hint to auto-formatters to place items on separate lines.
+
+Compliant:
 ```python # pseudocode
 golomb3 = [0, 1, 3]
 golomb4 = [
@@ -322,7 +340,7 @@ golomb4 = [
 ]
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 golomb4 = [
     0,
@@ -334,97 +352,104 @@ golomb4 = [
 
 ## 8 Blank Lines
 
-Use two blank lines between top-level definitions, whether function or class definitions. Use one blank line between method definitions and between the docstring of a class and the first method. Do not use a blank line following a `def` line. Use single blank lines as appropriate within functions or methods.
+Use two blank lines between top-level definitions and one blank line between method definitions.
 
-Blank lines do not need to be anchored to the definition. For example, use related comments immediately preceding function, class, and method definitions. Consider whether the comment might be more useful as part of the docstring.
+### Rationale
+Vertical whitespace is required to visually separate logical blocks of code and improve readability.
+
+Directives:
+- Use two blank lines between top-level function or class definitions.
+- Use one blank line between method definitions and between the docstring of a class and the first method.
+- Do not use a blank line following a `def` line.
+- Use single blank lines as appropriate within functions or methods to separate logical steps.
+- Place related comments immediately preceding the definition.
 
 
 ## 9 Whitespace
 
 Follow standard typographic rules for the use of spaces around punctuation.
 
-No whitespace inside parentheses, brackets, or braces.
+### Rationale
+Consistent whitespace is required to maintain a clean appearance and to ensure that code adheres to established Python conventions.
 
-Correct:
+Directives:
+- Do not use whitespace inside parentheses, brackets, or braces.
+- Do not use whitespace before a comma, semicolon, or colon.
+- Use whitespace after a comma, semicolon, or colon, except at the end of a line.
+- Use no whitespace before the open paren/bracket that starts an argument list, indexing, or slicing.
+- Do not use trailing whitespace.
+- Use a single space on either side of binary operators for assignment, comparisons, and Booleans.
+- Use best judgment for the insertion of spaces around arithmetic operators.
+- Never use spaces around `=` when passing keyword arguments or defining a default parameter value, unless a type annotation is present.
+- Avoid using spaces to vertically align tokens on consecutive lines.
+
+Compliant:
 ```python # pseudocode
 spam(ham[1], {'eggs': 2}, [])
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 spam( ham[ 1 ], { 'eggs': 2 }, [ ] )
 ```
 
-Do not use whitespace before a comma, semicolon, or colon. Use whitespace after a comma, semicolon, or colon, except at the end of the line.
-
-Correct:
+Compliant:
 ```python # pseudocode
 if x == 4:
      print(x, y)
  x, y = y, x
 ```
 
-Incorrect
+Non-Compliant
 ```python # pseudocode
 if x == 4 :
      print(x , y)
  x , y = y , x
 ```
 
-Use no whitespace before the open paren/bracket that starts an argument list, indexing, or slicing.
-
-Correct:
+Compliant:
 ```python # pseudocode
 spam(1)
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 spam (1)
 ```
 
-Correct:
+Compliant:
 ```python # pseudocode
 dict['key'] = list[index]
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 dict ['key'] = list [index]
 ```
 
-Do not use trailing whitespace.
-
-Use a single space on either side of binary operators for assignment (`=`), comparisons (`==`, `<`, `>`, `!=`, `<>`, `<=`, `>=`, `in`, `not in`, `is`, `is not`), and Booleans (`and`, `or`, `not`). Use best judgment for the insertion of spaces around arithmetic operators (`+`, `-`, `*`, `/`, `//`, `%`, `**`, `@`).
-
-Correct:
+Compliant:
 ```python # pseudocode
 x == 1
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 x<1
 ```
 
-Never use spaces around `=` when passing keyword arguments or defining a default parameter value, with one exception:
-when a type annotation is present, do use spaces around the `=` for the default parameter value.
-
-Correct:
+Compliant:
 ```python # pseudocode
 def complex(real, imag=0.0): return Magic(r=real, i=imag)
 def complex(real, imag: float = 0.0): return Magic(r=real, i=imag)
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 def complex(real, imag = 0.0): return Magic(r = real, i = imag)
 def complex(real, imag: float=0.0): return Magic(r = real, i = imag)
 ```
 
-Avoid using spaces to vertically align tokens on consecutive lines, as it becomes a maintenance burden (applies to `:`, `#`, `=`, etc.).
-
-Correct:
+Compliant:
 ```python # pseudocode
 foo = 1000  # comment
 long_name = 2  # comment that should not be aligned
@@ -435,7 +460,7 @@ dictionary = {
 }
 ```
 
-Incorrect:
+Non-Compliant:
 ```python # pseudocode
 foo       = 1000  # comment
 long_name = 2     # comment that should not be aligned
@@ -449,13 +474,91 @@ dictionary = {
 
 ## 10 Mathematical Notation
 
-For mathematically-heavy code, short variable names that would otherwise violate the style guide are preferred when they
-match established notation in a reference paper or algorithm.
+Use short variable names that match established notation in a reference paper or algorithm for mathematically-heavy code.
 
-When using names based on established notation:
+### Rationale
+In mathematical contexts, matching established notation is required to improve readability and verifiability for domain experts.
 
-- Cite the source of all naming conventions, preferably with a hyperlink to academic resource itself, in a comment or docstring. If the source is not accessible, clearly document the naming conventions.
-- Prefer PEP8-compliant descriptive_names for public APIs, which are much more likely to be encountered out of context.
-- Use a narrowly-scoped `python # pseudocodelint: disable=invalid-name` directive to silence warnings. For just a few variables, use the directive as an endline comment for each one; for more, apply the directive at the beginning of a block.
+Directives:
+- Cite the source of all naming conventions in a comment or docstring. Citing the source is required to provide context for the naming choices.
+- Prefer PEP 8-compliant descriptive names for public APIs.
+- Use tool-specific suppression directives to silence warnings when necessary.
+
+
+## 11 Comprehensions
+
+Use list, set, and dictionary comprehensions and generator expressions for concise and efficient container creation.
+
+### Rationale
+Comprehensions are recommended over functional programming constructs like `map()` and `filter()` for simple logic because they are more readable and performant in Python.
+
+Compliant:
+```python # pseudocode
+# List comprehension
+[x * 2 for x in numbers if x > 0]
+
+# Generator expression
+sum(x * 2 for x in numbers)
+
+# Dictionary comprehension
+{k: v for k, v in data.items() if v is not None}
+```
+
+Non-Compliant:
+```python # pseudocode
+# Avoid map and filter for simple logic
+list(map(lambda x: x * 2, filter(lambda x: x > 0, numbers)))
+```
+
+
+## 12 Return Logic
+
+Structure return statements to maximize clarity and minimize nesting.
+
+### Rationale
+Clear return logic is required to ensure that the execution flow of a function is intuitive and easy to follow.
+
+### 12.1 Unnecessary Else after Return
+Do not use an `else` or `elif` block immediately following a `return`, `raise`, `break`, or `continue` statement.
+
+### Rationale
+Eliminating unnecessary blocks reduces nesting and improves readability.
+
+Compliant:
+```python # pseudocode
+def check_value(x):
+    if x > 0:
+        return "Positive"
+    return "Non-positive"
+```
+
+Non-Compliant:
+```python # pseudocode
+def check_value(x):
+    if x > 0:
+        return "Positive"
+    else:
+        return "Non-positive"
+```
+
+
+## 13 Exception Raising Syntax
+
+Do not use redundant parentheses around the exception object if it does not take any arguments.
+
+### Rationale
+Consistent exception syntax is recommended to maintain a clean and uniform codebase.
+
+Compliant:
+```python # pseudocode
+msg = "Invalid input"
+raise ValueError(msg)
+raise ValueError
+```
+
+Non-Compliant:
+```python # pseudocode
+raise ValueError()
+```
 
 

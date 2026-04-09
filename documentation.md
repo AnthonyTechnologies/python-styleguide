@@ -1,14 +1,17 @@
-# Anthony's Python Style Guide: Documentation
+﻿# Anthony's Python Style Guide: Documentation
 
-Projects use Sphinx to build documentation from reStructuredText source files and Python docstrings. Extensions are configured to:
+Use Sphinx to build documentation from reStructuredText source files and Python docstrings.
 
-- generate API reference pages from code (autodoc, autosummary),
-- parse Google/NumPy-style docstrings (Napoleon),
-- provide deep links back to source code (viewcode),
-- link out to external projects like the Python standard library (intersphinx), and
-- include and track TODOs during development (todo).
+### Rationale
+Sphinx is required to provide a robust and extensible documentation system that integrates with Python code and supports multiple output formats.
 
-Command-line interface documentation is generated using sphinx-click for any Click-based CLIs.
+Directives:
+- Generate API reference pages from code using `autodoc` and `autosummary`.
+- Parse Google and NumPy-style docstrings with `Napoleon`.
+- Provide deep links back to source code using `viewcode`.
+- Link to external projects, such as the Python standard library, with `intersphinx`.
+- Include and track TODOs during development using the `todo` extension.
+- Use `sphinx-click` for Click-based command-line interface documentation.
 
 ## Table of Contents
 
@@ -70,21 +73,23 @@ extensions = [
 html_theme = "sphinx_rtd_theme"
 ```
 
-### 2.1 Enabled Extensions and Rationale
+### 2.1 Enabled Extensions
 
-- sphinx.ext.autodoc � imports modules and pulls in docstrings to build API pages.
-- sphinx.ext.autosummary � auto-generates summary tables and stub pages for modules/classes/functions. autosummary_generate = True.
-- sphinx.ext.napoleon � supports Google/NumPy docstring styles. Both napoleon_google_docstring and napoleon_numpy_docstring are enabled. Attribute annotations are included (napoleon_attr_annotations = True).
-- sphinx.ext.viewcode � adds �View Source� links for documented objects, aiding traceability.
-- sphinx.ext.intersphinx � cross-links to external documentation. The Python stdlib mapping is enabled.
-- sphinx.ext.todo � allows .. todo:: directives. todo_include_todos = True during development.
-- sphinx_click � renders documentation for Click-based CLIs declaratively.
+Directives:
+- Use `sphinx.ext.autodoc` to import modules and pull in docstrings for API pages.
+- Use `sphinx.ext.autosummary` to auto-generate summary tables and stub pages.
+- Use `sphinx.ext.napoleon` to support Google and NumPy docstring styles.
+- Use `sphinx.ext.viewcode` to add "View Source" links for documented objects.
+- Use `sphinx.ext.intersphinx` to cross-link to external documentation.
+- Use `sphinx.ext.todo` to allow the inclusion of todo directives.
+- Use `sphinx_click` to render documentation for Click-based CLIs.
 
 ### 2.2 HTML Theme
 
-- Default theme: sphinx_rtd_theme (Read the Docs theme)
-  - Navigation is configured for readability with navigation_depth=4 and no collapses.
-- Alternative theme furo is available via the docs Nox sessions for experimentation, but the canonical build uses sphinx_rtd_theme as set in conf.py.
+Use `sphinx_rtd_theme` as the default theme.
+
+### Rationale
+The Read the Docs theme is required to provide a consistent and accessible interface for documentation.
 
 ### 2.3 Intersphinx
 
@@ -94,8 +99,9 @@ html_theme = "sphinx_rtd_theme"
 
 ### 2.4 Type Hints and Docstring Styles
 
-- autodoc_typehints = "description" � Sphinx/Napoleon shows type hints in the parameter/returns sections instead of inline signatures to improve readability for long types.
-- Google and NumPy docstring styles are both supported; prefer Google style for new content unless aligning with an established convention in a specific module.
+Directives:
+- Set `autodoc_typehints = "description"` to show type hints in the parameter and returns sections.
+- Prefer the Google docstring style for all new content.
 
 ### 2.5 Todos
 
@@ -105,20 +111,20 @@ html_theme = "sphinx_rtd_theme"
 
 Configure RTD builds via a YAML file located at docs/.readthedocs.yaml. Typical key settings:
 
-- version: 2 � RTD�s v2 configuration schema.
+- version: 2 ï¿½ RTDï¿½s v2 configuration schema.
 - build:
-  - os: ubuntu-20.04 � Linux image used for builds.
-  - tools.python: "3.12" � Python version used on RTD.
+  - os: ubuntu-20.04 ï¿½ Linux image used for builds.
+  - tools.python: "3.12" ï¿½ Python version used on RTD.
 - sphinx:
-  - configuration: docs/conf.py � RTD invokes Sphinx with this config file.
-- formats: all � Build all supported formats (HTML, PDF via LaTeX, and EPUB).
+  - configuration: docs/conf.py ï¿½ RTD invokes Sphinx with this config file.
+- formats: all ï¿½ Build all supported formats (HTML, PDF via LaTeX, and EPUB).
 - python.install:
-  - requirements: docs/requirements.txt � Additional doc-specific dependencies are installed from this pinned file.
-  - path: . � Installs the project itself into the RTD environment so autodoc can import modules.
+  - requirements: docs/requirements.txt ï¿½ Additional doc-specific dependencies are installed from this pinned file.
+  - path: . ï¿½ Installs the project itself into the RTD environment so autodoc can import modules.
 
 Notes and recommendations:
 - Keep docs/requirements.txt aligned with extensions and themes configured in docs/conf.py (e.g., sphinx, sphinx-rtd-theme, sphinx-click; optional furo, myst-parser). Pin versions to ensure reproducible RTD builds.
-- Local builds via nox -s docs-build / nox -s docs do not use .readthedocs.yaml; they rely on noxfile.py�s session dependencies. When changing Sphinx extensions or themes, update both the nox sessions and docs/requirements.txt to keep parity with RTD.
+- Local builds via nox -s docs-build / nox -s docs do not use .readthedocs.yaml; they rely on noxfile.pyï¿½s session dependencies. When changing Sphinx extensions or themes, update both the nox sessions and docs/requirements.txt to keep parity with RTD.
 - If the location of conf.py or the Python version changes, reflect those changes in docs/.readthedocs.yaml to avoid RTD build failures.
 
 
@@ -126,18 +132,20 @@ Notes and recommendations:
 
 Execute all commands via Nox to ensure reproducibility.
 
+### Rationale
+Using Nox is required to provide a consistent and isolated environment for documentation builds.
+
 ### 3.1 One-Off Build
 
-- Build static HTML into docs/_build:
-  - nox -s docs-build
-- Optional: pass extra sphinx-build options after the session name:
-  - nox -s docs-build -- -W  # treat warnings as errors
+Directives:
+- Build static HTML into `docs/_build` using `nox -s docs-build`.
+- Pass extra options after the session name if necessary (e.g., `nox -s docs-build -- -W`).
 
 ### 3.2 Live Rebuilds During Authoring
 
-- Serve docs with live reload on changes:
-  - nox -s docs
-- A browser window opens by default; disable this behavior by removing `--open-browser` in `noxfile.py` or by overriding with positional arguments.
+Directives:
+- Serve documentation with live reload using `nox -s docs`.
+- Disable the default browser opening behavior by removing `--open-browser` in `noxfile.py` if preferred.
 
 ### 3.3 Cleaning Builds
 
@@ -148,8 +156,10 @@ Execute all commands via Nox to ensure reproducibility.
 
 ### 4.1 reStructuredText vs. Markdown
 
-- Use reStructuredText (.rst) as the canonical format. Use `index.rst` and standard Sphinx/ReST directives.
-- Although the docs sessions install myst-parser, it is not currently enabled in conf.py. If enabling Markdown is desired in the future, add "myst_parser" to extensions and follow MyST�s syntax rules. Until then, prefer .rst.
+Use reStructuredText (.rst) as the canonical format for documentation.
+
+### Rationale
+ReST is the native format for Sphinx and provides the most comprehensive support for advanced directives and cross-referencing.
 
 ### 4.2 API Docs via Autodoc + Autosummary
 
@@ -185,39 +195,32 @@ Execute all commands via Nox to ensure reproducibility.
 
 ### 4.6 Writing Style
 
-The writing style for Sphinx documentation should be in the third-person. When explaining features and how things work,
-use the third-person descriptive voice. When instructing users on how to use things, use the third-person imperative
-voice that is active and issued as commands.
+Follow the [Writing Voice](guide_voice.md) guidelines for all documentation.
 
-#### 4.6.1 Third-Person Descriptive Voice
+### Rationale
+A consistent writing voice is required to maintain the "Standard-Setter" persona and ensure that all documentation is professional, objective, and actionable.
 
-Use the third-person descriptive voice to explain the behavior of features and systems. This typically involves using
-the third-person singular present tense.
-
-Example:
-"The `BaseObject` class provides a common interface for all objects in the package."
-
-#### 4.6.2 Third-Person Imperative Voice
-
-Use the third-person imperative voice when providing instructions or requirements to the user. The voice should be
-active and be issued as commands. This typically involves using words like "must," "should," or "shall" with a
-third-person subject.
-
-Example:
-"The user must install the package before running the examples."
+Directives:
+- Use the direct imperative mood for rules and requirements.
+- Use the third-person descriptive voice for explaining systems and features.
+- Avoid all pronouns to maintain neutrality.
+- Integrate RFC 2119 keywords naturally into sentences using lowercase.
 
 
 ## 5 Where Things Are Configured
 
-- docs/conf.py � Sphinx configuration (extensions, theme, intersphinx, napoleon, todo, autodoc/autosummary options).
-- docs/.readthedocs.yaml � Read the Docs build configuration (Python version, OS image, Sphinx entry point, output formats, and install steps).
-- noxfile.py � Sessions for building and serving the docs; installs Sphinx and selected extensions.
-- pyproject.toml � Project metadata and tooling configs (ruff, mypy, coverage) that indirectly affect example code in docs.
+- docs/conf.py - Sphinx configuration (extensions, theme, intersphinx, napoleon, todo, autodoc/autosummary options).
+- docs/.readthedocs.yaml - Read the Docs build configuration (Python version, OS image, Sphinx entry point, output formats, and install steps).
+- noxfile.py - Sessions for building and serving the docs; installs Sphinx and selected extensions.
+- pyproject.toml - Project metadata and tooling configs that indirectly affect example code in docs.
 
 
 ## 6 Style Guide
 
-It is suggested to include this style guide as a Git submodule repository in `docs/python-styleguide`. This keeps the style guide close to the project documentation to allow pinning a known-good revision and pulling updates. It is especially useful for projects with a large number of contributors and AI Agents helping with writing code.
+Include this style guide as a Git submodule in `docs/python-styleguide`.
+
+### Rationale
+Using a Git submodule is recommended to keep the style guide close to the project documentation, allowing for version pinning and easier updates.
 
 ### 6.1 Git Submodule
 
