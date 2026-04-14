@@ -76,7 +76,7 @@ Directives:
 Use Nox to provide reproducible automation by running tasks inside session‑scoped virtual environments.
 
 ### Rationale
-Nox is required to ensure that all developers and CI systems run tasks in identical, isolated environments, preventing "it works on my machine" issues.
+Nox is required to ensure that all developers and CI systems run tasks in identical, isolated environments, preventing local environment inconsistency issues.
 
 Directives:
 - Define sessions in `noxfile.py` at the repository root.

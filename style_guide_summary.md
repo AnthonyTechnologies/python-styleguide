@@ -4,8 +4,8 @@ This document is the primary entry point for AI coding agents to understand the 
 
 ## How to use this guide
 1. Follow imperative directives.
-2. Review detailed documentation via `@` pointers.
-3. Mirror templates in @./templates/.
+2. Review detailed documentation via Markdown links when working on specific topics.
+3. Mirror [`templates`](./templates) coding style.
 4. Consult tooling configurations in `pyproject.toml`, `noxfile.py`, and `.pre-commit-config.yaml`.
 
 ---
@@ -20,7 +20,7 @@ This document is the primary entry point for AI coding agents to understand the 
 ---
 
 ## 2 Project Structure
-*Refer to @./project_structure.md for full details.*
+*Refer to [`project_structure.md`](./project_structure.md) for full details.*
 
 ### Directives:
 - Use the `src/` layout. Place all installable packages under the `src/` directory.
@@ -28,8 +28,29 @@ This document is the primary entry point for AI coding agents to understand the 
 - Centralize configurations. Keep tool configurations (e.g., `pyproject.toml`, `noxfile.py`) at the repository root.
 - Separate resources. Use `docs/` for documentation, `examples/` for runnable usage examples, and `tutorials/` for step-by-step guides.
 
+### Typical Directory:
+```
+project_root/
+├── .github                 # GitHub workflow configurations
+├── docs/                   # Project documentation (incl. python-styleguide)
+├── examples/               # Runnable usage examples mirroring src/ API areas
+├── src/                    # Source code (installable packages live here)
+├── tests/                  # Test suite mirroring src/ (unit, integration, perf)
+├── tutorials/              # In‑depth, step‑by‑step guides
+├── .codecov.yml            # Code coverage configuration
+├── .editorconfig           # General config for code editors
+├── .gitignore              # Specifies which files Git should ignore
+├── .pre-commit-config.yaml # Pre-commit hook configurations
+├── CODE_OF_CONDUCT.rst     # Community standards
+├── CONTRIBUTING.rst        # How to contribute
+├── LICENSE                 # License
+├── noxfile.py              # Automation for tests, linting, docs, etc.
+├── pyproject.toml          # Config for the project and build/tooling
+└── README.rst              # Project overview (reStructuredText)
+```
+
 Files and classes must use `# Section Name #` markers to organize code.
-- **Class Structure**: Mirror the layout in @./templates/src/templatepackage/user.py.
+- **Class Structure**: Mirror the layout in [`templates/src/templatepackage/user.py`](./templates/src/templatepackage/user.py).
 - **Sections**: Use markers like `# Header #`, `# Imports #`, `# Classes #`, `# Static Methods #`, `# Instance Methods #`.
 
 ```python
@@ -48,7 +69,7 @@ class User:
 ---
 
 ## 3 Formatting
-*Refer to @./syntax/formatting.md for full details.*
+*Refer to [`formatting.md`](./syntax/formatting.md) for full details.*
 
 ### Directives:
 - Limit line length. All lines must be 120 characters or fewer.
@@ -64,7 +85,7 @@ class User:
 ---
 
 ## 4 Naming Conventions
-*Refer to @./syntax/naming.md for full details.*
+*Refer to [`naming.md`](./syntax/naming.md) for full details.*
 
 ### Directives:
 - Use descriptive names for all entities.
@@ -84,7 +105,7 @@ class User:
 ---
 
 ## 5 Typing
-*Refer to @./syntax/typing.md for full details.*
+*Refer to [`typing.md`](./syntax/typing.md) for full details.*
 
 ### Directives:
 - Python 3.14+ required.
@@ -96,7 +117,7 @@ class User:
 ---
 
 ## 6 Docstrings and Comments
-*Refer to @./syntax/docstrings.md and @./syntax/comments.md for full details.*
+*Refer to [`docstrings.md`](./syntax/docstrings.md) and [`comments.md`](./syntax/comments.md) for full details.*
 
 ### Directives:
 - Follow Google style. Use Google style as the baseline for all docstrings.
@@ -111,7 +132,7 @@ class User:
 ---
 
 ## 7 Strings
-*Refer to @./syntax/strings.md for full details.*
+*Refer to [`strings.md`](./syntax/strings.md) for full details.*
 
 ### Directives:
 - Use f-strings for all string formatting. Avoid `%` and `.format()`.
@@ -122,7 +143,7 @@ class User:
 ---
 
 ## 8 Exceptions and Logging
-*Refer to @./syntax/exceptions_error_messages.md and @./syntax/logging.md for full details.*
+*Refer to [`exceptions_error_messages.md`](./syntax/exceptions_error_messages.md) and [`logging.md`](./syntax/logging.md) for full details.*
 
 ### Directives:
 - Reserve `assert` for tests and examples. Production code must not use `assert` for logic; use `if` checks and explicit exceptions.
@@ -146,7 +167,7 @@ raise ValueError(f"Expected {expected}, got {actual}")
 ---
 
 ## 9 Semantics and File Layout
-*Refer to @./semantics.md and @./code_file_layout.md for full details.*
+*Refer to [`semantics.md`](./semantics.md) and [`code_file_layout.md`](./code_file_layout.md) for full details.*
 
 ### Directives:
 - Keep functions short and focused. Aim for fewer than 40 lines.
@@ -157,7 +178,7 @@ raise ValueError(f"Expected {expected}, got {actual}")
 ---
 
 ## 10 Testing
-*Refer to @./tests/unit_tests.md and @./tests/performance_tests.md for full details.*
+*Refer to [`unit_tests.md`](./tests/unit_tests.md) and [`performance_tests.md`](./tests/performance_tests.md) for full details.*
 
 ### Directives:
 - Use `pytest` for the testing framework.
@@ -169,7 +190,7 @@ raise ValueError(f"Expected {expected}, got {actual}")
 ---
 
 ## 12 Security and Bug Prevention
-*Refer to @./syntax/security.md and @./syntax/bugs.md for full details.*
+*Refer to [`security.md`](./syntax/security.md) and [`bugs.md`](./syntax/bugs.md) for full details.*
 
 ### Directives:
 - Never use `assert` for production logic.
@@ -181,7 +202,7 @@ raise ValueError(f"Expected {expected}, got {actual}")
 ---
 
 ## 13 Asynchronous Programming
-*Refer to @./syntax/async.md for full details.*
+*Refer to [`async.md`](./syntax/async.md) for full details.*
 
 ### Directives:
 - Avoid internal timeouts in async functions. Callers should manage timeouts.
@@ -190,7 +211,7 @@ raise ValueError(f"Expected {expected}, got {actual}")
 ---
 
 ## 14 Tooling
-*Refer to @./project_tools.md for full details.*
+*Refer to [`project_tools.md`](./project_tools.md) for full details.*
 
 ### Directives:
 - Use `ruff` for linting and formatting.

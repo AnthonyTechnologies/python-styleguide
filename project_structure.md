@@ -49,7 +49,6 @@ project_root/
 ├── tests/                  # Test suite mirroring src/ (unit, integration, perf)
 ├── tutorials/              # In‑depth, step‑by‑step guides
 ├── .codecov.yml            # Code coverage configuration
-├── .lint_tests.toml         # Local lint configuration for tests
 ├── .editorconfig           # General config for code editors
 ├── .gitignore              # Specifies which files Git should ignore
 ├── .pre-commit-config.yaml # Pre-commit hook configurations
